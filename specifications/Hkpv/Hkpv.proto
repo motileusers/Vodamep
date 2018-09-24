@@ -1,0 +1,117 @@
+syntax = "proto3";
+package Vodamep.Hkpv;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Vodamep.Hkpv.Model";
+
+message HkpvReport {   
+    Institution institution = 1;   
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    repeated Staff staffs = 4; 
+    repeated Person persons = 5;         
+    repeated Activity activities = 6;     
+}
+
+// Einrichtung
+message Institution {
+    string id = 1;
+    string name = 2;    
+}
+
+// Mitarbeiter, die im Zeitraum eine Leistung erbracht haben
+message Staff {
+    string id = 1;    
+    string family_name = 3;
+    string given_name = 4;    
+	string qualification = 5;
+    repeated Employment employments = 6;
+}
+
+message Employment {
+    google.protobuf.Timestamp from = 1;
+    google.protobuf.Timestamp to = 2;
+	oneof kind {
+	    float hours_per_week = 3; 
+		string other_institution_id = 4;	// Thema Wochenenddienst		
+	}
+}
+
+// Personen und Stammdaten, die im Zeitraum eine Leistung bezogen haben
+message Person {
+    string id = 1;        
+    string family_name = 2;
+    string given_name = 3;    
+    string postcode = 4;				// postcode und city müssen zusammen einem Wert aus der Liste der Orte entsprechen
+    string city = 5;
+	Gender gender = 6;
+	string ssn = 7;
+    google.protobuf.Timestamp birthday = 8;
+    string nationality = 9;             // Staatsbürgerschaft, Zwei-stelliges Länderkürzel nach Iso 3166-2
+	string insurance = 10;              // Ein Wert aus der Liste der Sozialversicherungen
+	CareAllowance care_allowance = 11;  // Pflegegeld, zum Stichtag Bis-Datum der Meldung
+	string religion = 12;				// Ein Wert aus der Liste der Religionen
+}
+
+// Leistungen, geblockt pro Einsatz (zwei Hausbesuche an diesem Tag -> zwei Einträge)
+message Activity {
+    google.protobuf.Timestamp date = 1;
+    string person_id = 2;
+    string staff_id = 3;    
+    repeated ActivityType entries = 4;       
+}
+
+// Leistungen mit Klientenbezug
+// LV=Leistungsvereinbarung, LP=Leistungspunkt
+// 1 LP = ca. 5 min
+enum ActivityType {  
+  undefined_activity = 0;
+  LV01 = 1;             // Beratungsstunde                                              (1 LP)
+  LV02 = 2;             // Hausbesuch                                                   (2 LP)
+  LV03 = 3;             // Hausbesuch mit besonderer Wegzeit                            (4 LP)
+  LV04 = 4;             // Ganzheitliche Körperpflege / rehabilitative Pflege           (4 LP)
+  LV05 = 5;             // Teilpflege/Prophylaxen                                       (2 LP)
+  LV06 = 6;             // Patientenbeobachtung/Vitalzeichenkontrolle                   (1 LP)
+  LV07 = 7;             // Wundversorgung                                               (2 LP) - medizinische Leistung
+  LV08 = 8;             // Medikamentengabe/Injektionen,Infusionen                      (1 LP) - medizinische Leistung
+  LV09 = 9;             // Katheter setzen,Urinal anlegen,Einlauf,Spülungen             (2 LP) - medizinische Leistung
+  LV10 = 10;            // Stoma-,Suprapub.-,Kath.-,Sonden- und Kanülenpflege/Absaugen  (2 LP) - medizinische Leistung
+  LV11 = 11;            // Physikalische Maßnahmen/Lagerung/Mobilisation                (2 LP)
+  LV12 = 12;            // Betreuung Schwerkranker/Sterbender bei Tag                   (2 LP)
+  LV13 = 13;            // Betreuung Schwerkranker bei Nacht/Sonn-/Feiertagen           (2 LP)
+  LV14 = 14;            // Begleitende Lebenshilfe/aktives Zuhören                      (3 LP)
+  LV15 = 15;            // Abklären,Information und Vermittlung,Dokumentation           (1 LP)
+  LV16 = 16;            // Beraten,Anlernen und Begleiten                               (2 LP)
+  LV17 = 17;            // Pflegebehelfe,Transporte                                     (3 LP)
+  LV31 = 31;            // Persönliche Beratung                                         (1 LP)  - ohne KlientenBezug
+  LV33 = 33;            // Telefonische Beratung                                        (1 LP)  - ohne KlientenBezug
+}
+
+// Pflegegeld
+// Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
+enum CareAllowance {
+  undefined_allowance = 0;
+  L1 = 1;
+  L2 = 2;
+  L3 = 3;
+  L4 = 4;
+  L5 = 5;
+  L6 = 6;
+  L7 = 7;	
+  any = 9;              // Pflegegeld ja, Stufe unbekannt
+  unknown = 88;         // unbekannt ob ja oder nein
+  none = 99;            // Keine Pflegegeld
+}
+
+enum Gender {
+  undefined_gender = 0;
+  male = 1;
+  female = 2;
+}
+
+
+/*
+Dokumentation zu Protobuf: https://developers.google.com/protocol-buffers/
+Online generator z.B. :https://protogen.marcgravell.com/
+*/ 

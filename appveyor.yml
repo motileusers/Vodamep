@@ -1,0 +1,39 @@
+version: 0.1.{build}
+image: Visual Studio 2017
+branches:
+  only:
+    - release
+skip_tags: true
+init:
+- ps: Set-Culture de-AT
+build_script:
+- ps: >-
+    if ($env:APPVEYOR_RDP_PASSWORD)
+    { 
+        $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+    }
+
+    $env:vodamepnative = $true
+
+    $env:vodamepversion = $env:APPVEYOR_BUILD_VERSION
+
+    .\build.ps1 -Target Publish
+test: off
+artifacts:
+- path: publish/dmc.zip
+  name: dmc.zip
+- path: publish/dms.zip
+  name: dms.zip
+- path: publish/dml.zip
+  name: dml.zip
+- path: publish/specifications.zip
+  name: specifications.zip
+- path: publish/Vodamep.*.nupkg  
+deploy:
+  release: vodamep-v$(appveyor_build_version)  
+  provider: GitHub
+  auth_token:
+    secure: ClNmDsT1ydvADFoQ3MyX5Cpes7dDVwofuo1AwmrMEOog9w07YsliTfUFBpqJ2fzf    
+  prerelease: true
+  on:
+    branch: release                # release from master branch only    
