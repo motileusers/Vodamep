@@ -29,7 +29,10 @@ namespace Vodamep.Hkpv.Validation
 
                     if (entries23 && !entries4)
                     {
-                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("4-17")));
+                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("4-17"))
+                        {
+                            Severity = Severity.Warning
+                        });
                     }
 
 

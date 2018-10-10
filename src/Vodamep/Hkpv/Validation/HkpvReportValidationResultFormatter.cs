@@ -34,9 +34,6 @@ namespace Vodamep.Hkpv.Validation
 
         public string Format(HkpvReport report, ValidationResult validationResult)
         {
-            if (!validationResult.Errors.Any())
-                return string.Empty;
-
             var result = new StringBuilder();
 
             result.Append(_template.Header(report, validationResult));
