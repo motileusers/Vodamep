@@ -22,32 +22,62 @@ namespace Vodamep.Client
         [ArgActionMethod, ArgDescription("Absenden der Meldung.")]
         public void Send(SendArgs args)
         {
-            var report = ReadReport(args.File);
+            var wildcard = args.File.IndexOf("*");
 
-            var address = args.Address.Trim();
+            string[] files;
 
-            address = address.EndsWith(@"\") ? address : $"{address}/";
-
-            var sendResult = report.Send(new Uri(address), args.User, args.Password).Result;
-
-            if (!string.IsNullOrEmpty(sendResult?.Message))
+            if (wildcard >= 0)
             {
-                Console.WriteLine(sendResult.Message);
-            }
-
-            if (!string.IsNullOrEmpty(sendResult?.ErrorMessage))
-            {
-                Console.WriteLine(sendResult.ErrorMessage);
-            }
-
-            if (!(sendResult?.IsValid ?? false))
-            {
-                HandleFailure("Fehlgeschlagen");
+                if (wildcard == 0)
+                {
+                    files = Directory.GetFiles(Directory.GetCurrentDirectory(), args.File);
+                }
+                else
+                {
+                    var dirIndex = args.File.Substring(0, wildcard).LastIndexOf(@"\");
+                    var dir = args.File.Substring(0, dirIndex);
+                    var pattern = args.File.Substring(dirIndex + 1);
+                    files = Directory.GetFiles(dir, pattern);
+                }
             }
             else
             {
-                Console.WriteLine("Erfolgreich");
+                files = new[] { args.File };
             }
+
+
+            foreach (var file in files)
+            {
+                var report = ReadReport(file);
+
+                var address = args.Address.Trim();
+
+                address = address.EndsWith(@"\") ? address : $"{address}/";
+
+                var sendResult = report.Send(new Uri(address), args.User, args.Password).Result;
+
+                if (!string.IsNullOrEmpty(sendResult?.Message))
+                {
+                    Console.WriteLine(sendResult.Message);
+                }
+
+                if (!string.IsNullOrEmpty(sendResult?.ErrorMessage))
+                {
+                    Console.WriteLine(sendResult.ErrorMessage);
+                }
+
+                if (!(sendResult?.IsValid ?? false))
+                {
+                    HandleFailure("Fehlgeschlagen");
+                }
+                else
+                {
+                    Console.WriteLine("Erfolgreich");
+                }
+            }
+
+
+
         }
 
         [ArgActionMethod, ArgDescription("Prüfung der Meldung.")]
@@ -67,7 +97,7 @@ namespace Vodamep.Client
                 {
                     var dirIndex = args.File.Substring(0, wildcard).LastIndexOf(@"\");
                     var dir = args.File.Substring(0, dirIndex);
-                    var pattern = args.File.Substring(wildcard);
+                    var pattern = args.File.Substring(dirIndex + 1);
                     files = Directory.GetFiles(dir, pattern);
                 }
             }

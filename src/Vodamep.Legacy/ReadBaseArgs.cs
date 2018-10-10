@@ -9,6 +9,8 @@ namespace Vodamep.Legacy
 
         public int Year { get; set; }
 
+        public string TargetDirectory { get; set; }
+
         [ArgDescription("Save as JSON.")]
         public bool Json { get; set; } = false;
     }

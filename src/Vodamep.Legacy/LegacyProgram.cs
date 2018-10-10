@@ -75,7 +75,7 @@ namespace Vodamep.Legacy
                     continue;
                 }
 
-                var filename = new Writer().Write(data, args.Json);
+                var filename = new Writer().Write(args.TargetDirectory, data, args.Json);
                 Console.WriteLine($"{filename} wurde erzeugt.");
             }
         }

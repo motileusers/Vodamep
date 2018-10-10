@@ -114,7 +114,7 @@ namespace Vodamep.Hkpv
         public static string GetFileName(HkpvReport report, bool asJson, bool compressed = true)
         {
 
-            var filename = $"{report.Institution.Id}_{report.FromD.Year}_{report.FromD.Month}_{report.GetSHA256Hash()}";
+            var filename = $"{report.Institution.Id}_{report.FromD.Year}_{report.FromD.Month.ToString("00")}";
 
             if (compressed)
                 return $"{filename}.zip";

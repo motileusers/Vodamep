@@ -8,7 +8,7 @@ namespace Vodamep.Legacy
 {
     public class Writer
     {
-        public string Write(ReadResult data, bool asJson = false)
+        public string Write(string path, ReadResult data, bool asJson = false)
         {
             var date = data.L.Select(x => x.Datum).First().FirstDateInMonth();
             var report = new HkpvReport()
@@ -69,7 +69,7 @@ namespace Vodamep.Legacy
                 report.Activities.Add(a);
             }
 
-            var filename = report.AsSorted().WriteToPath("", asJson: asJson, compressed: true);
+            var filename = report.AsSorted().WriteToPath(path, asJson: asJson, compressed: true);
 
             return filename;
         }

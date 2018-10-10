@@ -3,65 +3,71 @@
 
 // Frage: Ist Trennung nach Landesstelle notwendig? (Seite 51)
 01;Pensionsversicherungsanstalt der Angestellten
-02;Pensionsversicherung 
+02;Pensionsversicherungsanstalt der Arbeiter
 03;Sozialversicherungsanstalt der Bauern (UV)
-05;Versicherungsanstalt für Eisenbahnen und Bergbau 
-07;Versicherungsanstalt öffentlich Bediensteter 
-11;GKK Wien 
-12;GKK Niederösterreich 
-13;GKK Burgenland 
-14;GKK Oberösterreich 
-15;GKK Steiermark
-16;GKK Kärnten
-17;GKK Salzburg
-18;GKK Tirol
-19;GKK Vorarlberg 
-22;Wiener Verkehrsbetriebe 
-24;Mondi 
-25;Voestalpine Bahnsysteme 
-26;Zeltweg 
-28;Kapfenberg
-40;Sozialversicherungsanstalt der gewerblichen Wirtschaft 
-41;Sozialversicherungsanstalt der gewerblichen Wirtschaft, Landesstelle Wien 
-42;Sozialversicherungsanstalt der gewerblichen Wirtschaft, Landesstelle Niederösterreich 
-43;Sozialversicherungsanstalt der gewerblichen Wirtschaft, Landesstelle Burgenland 
-44;Sozialversicherungsanstalt der gewerblichen Wirtschaft, Landesstelle Oberösterreich 
-45;Sozialversicherungsanstalt der gewerblichen Wirtschaft, Landesstelle Steiermark 
-46;Sozialversicherungsanstalt der gewerblichen Wirtschaft, Landesstelle Kärnten 
-47;Sozialversicherungsanstalt der gewerblichen Wirtschaft, Landesstelle Salzburg 
-48;Sozialversicherungsanstalt der gewerblichen Wirtschaft, Landesstelle Tirol 
-49;Sozialversicherungsanstalt der gewerblichen Wirtschaft, Landesstelle Vorarlberg 
-50;Sozialversicherungsanstalt der Bauern 
-51;Sozialversicherungsanstalt der Bauern, Landesstelle Wien 
-52;Sozialversicherungsanstalt der Bauern, Landesstelle Niederösterreich 
-53;Sozialversicherungsanstalt der Bauern, Landesstelle Burgenland 
-54;Sozialversicherungsanstalt der Bauern, Landesstelle Oberösterreich 
-55;Sozialversicherungsanstalt der Bauern, Landesstelle Steiermark 
-56;Sozialversicherungsanstalt der Bauern, Landesstelle Kärnten 
-57;Sozialversicherungsanstalt der Bauern, Landesstelle Salzburg 
-58;Sozialversicherungsanstalt der Bauern, Landesstelle Tirol 
-59;Sozialversicherungsanstalt der Bauern, Landesstelle Vorarlberg 
-1A;Krankenfürsorgeanstalt der Bediensteten der Stadt Wien 
-2A;Krankenfürsorgeanstalt der Beamten der Stadtgemeinde Baden 
-4A;Krankenfürsorge für die Beamten der Landeshauptstadt Linz 
-4B;Kranken- und Unfallfürsorge für oberösterreichische Gemeindebeamte 
-4C;Krankenfürsorgeanstalt für oberösterreichische Landesbeamte 
-4D;Oberösterreichische Lehrer-Kranken- und Unfallfürsorge 
-4E;Krankenfürsorge für die Beamten des Magistrates Steyr 
-4F;Krankenfürsorge für oberösterreichische Beamten der Stadt Wels 
-5A;Krankenfürsorgeanstalt für die Beamten der Landeshauptstadt Graz 
-6A;Krankenfürsorgeanstalt für die Beamten der Stadt Villach 
-7A;Krankenfürsorgeanstalt der Magistratsbeamten der Landeshauptstadt Salzburg 
-7C;Krankenfürsorgeeinrichtung der Beamten der Stadtgemeinde Hallein  
-8B;Kranken- und Unfallfürsorge der Tiroler Gemeindebeamten 
-8C;Kranken- und Unfallfürsorge der Tiroler Landesbeamten 
-8D;Kranken- und Unfallfürsorge der Tiroler Landeslehrer
-1L;Magistrat der Stadt Wien 
-4L;Landesregierung Oberösterreich 
-4G;Magistrat der Stadt Steyr 
-
-
-// woher kommt das?
+04;Versicherungsanstalt des österreichischen Bergbaues
+05;Versicherungsanstalt der österreichischen Eisenbahnen
+06;Versicherungsanstalt des österreichischen Notariates
+07;Versicherungsanstalt öffentlich Bediensteter (BVA)
+08;Allgemeine Unfallversicherungsanstalt (allgemein)
+11;Gebietskrankenkasse Wien
+12;Gebietskrankenkasse Niederösterreich
+13;Gebietskrankenkasse Burgenland
+14;Gebietskrankenkasse Oberösterreich
+15;Gebietskrankenkasse Steiermark
+16;Gebietskrankenkasse Kärnten
+17;Gebietskrankenkasse Salzburg
+18;Gebietskrankenkasse Tirol
+19;Gebietskrankenkasse Vorarlberg
+1A;Krankenfürsorgeanstalt der Bediensteten der Stadt Wien
+1P;Post- und Telegraphenverwaltung
+20;Betriebskrankenkasse der Österreichischen Staatsdruckerei
+21;Betriebskrankenkasse der Austria Tabakwerke AG
+22;Betriebskrankenkasse der Wiener Verkehrsbetriebe
+23;Betriebskrankenkasse der Semperit AG
+24;Betriesbkrankenkasse der Neusiedler AG für Papierfabrikation
+25;Betriebskrankenkasse der Hütte Donawitz der VOEST Alpine AG
+26;Betriebskrankenkasse des Werkes Zeltweg der VOEST Alpine AG
+27;Betriebskrankenkasse des Werkes Kindberg der VOEST Alpine AG
+28;Betriebskrankenkasse für die Betriebe Kapfenberg der Firma B
+29;Betriebskrankenkasse der Firma Johann Pengg
+31;ehemalige Landwirtschaftskrankenkasse Wien
+32;ehemalige Landwirtschaftskrankenkasse Niederösterreich
+33;ehemalige Landwirtschaftskrankenkasse Burgenland
+34;ehemalige Landwirtschaftskrankenkasse Oberösterreich
+35;ehemalige Landwirtschaftskrankenkasse Steiermark
+36;ehemalige Landwirtschaftskrankenkasse Kärnten
+37;ehemalige Landwirtschaftskrankenkasse Salzburg
+38;ehemalige Landwirtschaftskrankenkasse Tirol
+39;ehemalige Landwirtschaftskrankenkasse Vorarlberg
+40;Sozialversicherungsanstalt der gewerblichen Wirtschaft (Hauptstelle)
+41;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Wien
+42;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Niederösterreich
+43;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Burgenland
+44;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Oberösterreich
+45;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Steiermark
+46;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Kärnten
+47;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Salzburg
+48;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Tirol
+49;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Vorarlberg
+4A;Krankenfürsorgeanstalt des Magistrates der Landeshauptstadt
+4B;Krankenfürsorge für oberösterreichische Gemeindebeamte
+4C;Krankenfürsorge für oberösterreichische Landesbeamte
+4E;Krankenfürsorgeanstalt der Beamten des Magistrates Steyr
+4F;Krankenfürsoge für die Beamten der Stadt Wels
+50;Sozialversicherungsanstalt der Bauern (PV)
+51;Sozialversicherungsanstalt der Bauern Landesstelle Wien
+52;Sozialversicherungsanstalt der Bauern Landesstelle Niederösterreich
+53;Sozialversicherungsanstalt der Bauern Landesstelle Burgenland
+54;Sozialversicherungsanstalt der Bauern Landesstelle Oberösterreich
+55;Sozialversicherungsanstalt der Bauern Landesstelle Steiermark
+56;Sozialversicherungsanstalt der Bauern Landesstelle Kärnten
+57;Sozialversicherungsanstalt der Bauern Landesstelle Salzburg
+58;Sozialversicherungsanstalt der Bauern Landesstelle Tirol
+59;Sozialversicherungsanstalt der Bauern Landesstelle Vorarlberg
+5A;Krankenfürsorgeanstalt für die Beamten der Landeshauptstadt
+5B;Krankenfürsorgeanstalt der Stadtgemeinde Mürzzuschlag
+6A;Krankenfürsorgeanstalt der Beamten der Stadt Villach
 80;Arbeitsmarktverwaltung - allgemein
 91;Bundesministerium für Unterricht und Kunst
 95;Bundesministerium für Landesverteidigung
@@ -80,4 +86,5 @@ S9;Bundessozialamt Vorarlberg
 SO;Sonstige
 SZ;Selbstzahler
 UB;unbekannt
+
  
