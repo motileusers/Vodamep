@@ -18,8 +18,6 @@ namespace Vodamep.Hkpv.Validation
 
                     var l = list;
 
-
-
                     var entries23 = l.Where(x => x == ActivityType.Lv02 || x == ActivityType.Lv03).Any();
 
 

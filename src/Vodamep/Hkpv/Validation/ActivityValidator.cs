@@ -30,7 +30,8 @@ namespace Vodamep.Hkpv.Validation
             this.RuleFor(x => x.Entries).NotEmpty();
             this.RuleForEach(x => x.Entries).NotEqual(ActivityType.UndefinedActivity);
 
-            this.Include(new ActivityValidator23Without417());
+            if (to >= new DateTime(2019, 01, 01))
+                this.Include(new ActivityValidator23Without417());
 
             this.Include(new ActivityValidator4141617Without123());
         }

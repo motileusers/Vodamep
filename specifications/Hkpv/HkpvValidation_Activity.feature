@@ -1,9 +1,19 @@
 ﻿#language: de-DE
 Funktionalität: Validierung der gemeldeten Aktivitäten der Datenmeldung
 
-Szenariogrundriss: Eine Aktivität 2 oder 3 aber keine Leistung 4-17 zu dieser Aktivität.
+Szenariogrundriss: Eine Aktivität 2 oder 3 aber keine Leistung 4-17 zu dieser Aktivität. Ab dem Jahr 2019 ist es ein Fehler.
     Angenommen die Meldung enthält die Aktivitäten '<Art>'
-    Dann enthält das Validierungsergebnis den Fehler 'Kein Eintrag '4-17' vorhanden.'
+	Und die Eigenschaft 'to' von 'HkpvReport' ist auf '2019-01-01' gesetzt
+	Dann enthält das Validierungsergebnis die Warnung 'Kein Eintrag '4-17'
+Beispiele:
+    | Art      |	
+    | 2        |
+    | 3        |	
+
+Szenariogrundriss: Eine Aktivität 2 oder 3 aber keine Leistung 4-17 zu dieser Aktivität.  Bis zum Jahr 2019 ist es korrekt.
+    Angenommen die Meldung enthält die Aktivitäten '<Art>'
+	Und die Eigenschaft 'to' von 'HkpvReport' ist auf '2018-12-31' gesetzt
+    Dann enthält das Validierungsergebnis nicht den Fehler 'Kein Eintrag '4-17' vorhanden.'
 Beispiele:
     | Art      |	
     | 2        |
@@ -59,10 +69,11 @@ Szenario: Es ist nur ein Hausbesuch pro Aktivitätsblock zulässig
 
 Szenariogrundriss: Beispiele für ungültige Aktivitäten
     Angenommen die Meldung enthält die Aktivitäten '<Art>'	
-    Dann enthält das Validierungsergebnis den Fehler '<Fehler>'	
+	Und die Eigenschaft 'to' von 'HkpvReport' ist auf '<Datum>' gesetzt
+    Dann enthält das Validierungsergebnis die Warnung '<Fehler>'
 Beispiele:
-    | Art    | Fehler                         |
-    | 2      | Kein Eintrag '4-17' vorhanden. |
+    | Art | Datum		 | Fehler |
+    | 2   |2019-01-20    |Kein Eintrag '4-17' vorhanden. |
 
 @weich
 Szenario: Eine Mitarbeiter hat eine Aktivität 1-17 öfter als 5 Mal an einem Tag bei einem Klienten.
