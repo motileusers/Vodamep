@@ -45,7 +45,6 @@ Actions
     Option         Description
     Source* (-S)
                    Insurances
-                   Religions
                    CountryCodes
                    Postcode_City
 
