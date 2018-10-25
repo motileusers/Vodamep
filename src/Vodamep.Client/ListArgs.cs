@@ -6,7 +6,6 @@ namespace Vodamep.Client
     public enum ListSources
     {
         Insurances,
-        Religions,
         CountryCodes,
         Postcode_City,
         Qualifications,

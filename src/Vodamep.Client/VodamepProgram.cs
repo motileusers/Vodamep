@@ -154,9 +154,6 @@ namespace Vodamep.Client
 
             switch (args.Source)
             {
-                case ListSources.Religions:
-                    provider = ReligionCodeProvider.Instance;
-                    break;
                 case ListSources.Insurances:
                     provider = InsuranceCodeProvider.Instance;
                     break;

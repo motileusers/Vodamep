@@ -34,7 +34,6 @@ namespace Vodamep.Legacy
                     Insurance = (a.Versicherung ?? string.Empty).Trim(),
                     Nationality = (a.Staatsbuergerschaft ?? string.Empty).Trim(),
                     CareAllowance = (CareAllowance)a.Pflegestufe,
-                    Religion = ReligionCodeProvider.Instance.Unknown,
                     Postcode = Postcode,
                     City = City,
                     Gender = GetGender(a.Geschlecht)

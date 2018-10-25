@@ -43,7 +43,6 @@ Beispiele:
     | birthday    | Geburtsdatum          |
     | family_name | Familienname          |
     | given_name  | Vorname               |
-    | religion    | Religion              |
     | insurance   | Versicherung          |
     | nationality | Staatsangehörigkeit   |
     | postcode    | Plz                   |
@@ -56,7 +55,6 @@ Szenariogrundriss: Eine Eigenschaft vom HkpvReport mit einem ungültigen Wert ge
     Und die Fehlermeldung lautet: 'Für '<Bezeichnung>' ist '<Wert>' kein gültiger Code.'
 Beispiele: 
     | Name        | Bezeichnung         | Wert |
-    | religion    | Religion            | test |
     | insurance   | Versicherung        | test |
     | nationality | Staatsangehörigkeit | test |
 

@@ -51,7 +51,6 @@ message Person {
     string nationality = 9;             // Staatsbürgerschaft, Zwei-stelliges Länderkürzel nach Iso 3166-2
 	string insurance = 10;              // Ein Wert aus der Liste der Sozialversicherungen
 	CareAllowance care_allowance = 11;  // Pflegegeld, zum Stichtag Bis-Datum der Meldung
-	string religion = 12;				// Ein Wert aus der Liste der Religionen
 }
 
 // Leistungen, geblockt pro Einsatz (zwei Hausbesuche an diesem Tag -> zwei Einträge)

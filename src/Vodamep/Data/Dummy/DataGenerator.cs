@@ -92,7 +92,6 @@ namespace Vodamep.Data.Dummy
                 FamilyName = _familynames[_rand.Next(_familynames.Length)],
                 GivenName = _names[_rand.Next(_names.Length)],
                 Insurance = "19",
-                Religion = "VAR",
                 Nationality = "AT",
                 CareAllowance = _careAllowances[_rand.Next(_careAllowances.Length)],
                 Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male

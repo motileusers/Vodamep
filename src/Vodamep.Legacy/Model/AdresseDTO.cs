@@ -20,8 +20,6 @@ namespace Vodamep.Legacy.Model
 
         public string Versicherungsnummer { get; set; }
 
-        public string Religion { get; set; } = Data.ReligionCodeProvider.Instance.Unknown;
-
         public int Pflegestufe { get; set; }
 
         public string Geschlecht { get; set; }
