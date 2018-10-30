@@ -75,15 +75,19 @@ namespace Vodamep.Api.Engines.SqlServer
                 connection.Open();
 
                 var institutionId = this.GetRowId("Institution", report.Institution.Id, connection);
-                var lastInfo = GetLast(report.Institution.Id, institutionId, connection);
+                
+                //var lastInfo = GetLast(report.Institution.Id, institutionId, connection);
 
-                var info = HkpvReportInfo.Create(report, lastInfo?.Id ?? -1, lastInfo?.Created ?? DateTime.Now);
+                // Skip Verhalten -> ausgeschaltet
+                //var info = HkpvReportInfo.Create(report, lastInfo?.Id ?? -1, lastInfo?.Created ?? DateTime.Now);
 
-                if (lastInfo != null && info.Equals(lastInfo))
-                {
-                    _logger.LogInformation("Report already exits. Skip saving.");
-                    return;
-                }
+                //if (lastInfo != null && info.Equals(lastInfo))
+                //{
+                //    _logger.LogInformation("Report already exits. Skip saving.");
+                //    return;
+                //}
+
+                var info = HkpvReportInfo.Create(report, -1, DateTime.Now);
 
                 this.SaveReport(connection, report, info, institutionId);
             }
