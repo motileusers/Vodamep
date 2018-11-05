@@ -75,6 +75,7 @@ Beispiele:
     | Name        | Bezeichnung   | Wert |
     | family_name | Familienname  | Chloé |
     | given_name  | Vorname       | Raphaël |
+    | given_name  | Vorname       | Sr. Anna |
 
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
