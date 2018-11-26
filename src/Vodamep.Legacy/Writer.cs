@@ -44,7 +44,31 @@ namespace Vodamep.Legacy
             {
                 var (Familyname, Givenname) = GetName(p.Pflegername);
 
-                report.Staffs.Add(new Staff() { Id = GetId(p.Pflegernummer), FamilyName = Familyname, GivenName = Givenname });
+                Staff staff = new Staff()
+                {
+                    Id = GetId(p.Pflegernummer),
+                    FamilyName = Familyname,
+                    GivenName = Givenname,
+                    Qualification = ""
+                };
+
+
+                var anstellungen = data.S.Where(x => x.Pflegernummer == p.Pflegernummer).OrderBy(x => x.Von);
+                foreach (var anstellung in anstellungen)
+                {
+                    Employment employment = new Employment()
+                    {
+                        FromD = anstellung.Von.GetValueOrDefault(),
+                        ToD = anstellung.Bis.GetValueOrDefault(),
+                        HoursPerWeek = 40 / anstellung.VZAE,
+                    };
+
+                    staff.Employments.Add(employment);
+                }
+                
+
+
+                report.Staffs.Add(staff);
             }
 
             foreach (var l in data.L.GroupBy(x => new { x.Datum, x.Adressnummer, x.Pfleger }))

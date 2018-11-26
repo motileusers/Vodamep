@@ -22,7 +22,7 @@ namespace Vodamep.Legacy
         [ArgDescription("Liest Daten aus dem connexia-Bestand.")]
         public void ReadConnexia(ReadConnexiaArgs args)
         {
-            var vereine = ConnexiaReader.GetVereine(args.GetSqlServerCS(), args.Year);
+            var vereine = ConnexiaReader.GetVereine(args.GetSqlServerCS(), args.Year, args.Verein);
             foreach (var verein in vereine)
             {
                 var reader = new ConnexiaReader(args.GetSqlServerCS(), verein.Vereinsnummer);

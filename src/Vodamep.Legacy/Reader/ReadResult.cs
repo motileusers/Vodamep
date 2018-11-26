@@ -8,6 +8,7 @@ namespace Vodamep.Legacy.Reader
 
         public AdresseDTO[] A { get; set; }
         public PflegerDTO[] P { get; set; }
+        public AnstellungDTO[] S { get; set; }
         public LeistungDTO[] L { get; set; }
         public VereinDTO V { get; set; }
     }

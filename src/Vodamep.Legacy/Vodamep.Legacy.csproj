@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LegacyProgram.cs" />
+    <Compile Include="Model\AnstellungDTO.cs" />
     <Compile Include="ReadBaseArgs.cs" />
     <Compile Include="ReadConnectionStringBaseArgs.cs" />
     <Compile Include="ReadConnexiaArgs.cs" />
