@@ -58,8 +58,8 @@ namespace Vodamep.Legacy
                 {
                     Employment employment = new Employment()
                     {
-                        FromD = anstellung.Von.GetValueOrDefault(),
-                        ToD = anstellung.Bis.GetValueOrDefault(),
+                        FromD = anstellung.Von,
+                        ToD = anstellung.Bis,
                         HoursPerWeek = 40 / anstellung.VZAE,
                     };
 
