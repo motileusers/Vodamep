@@ -8,7 +8,7 @@ using Vodamep.Hkpv.Model;
 
 namespace Vodamep.Hkpv.Validation
 {
-    internal class HkpvReportValidationResultListFormatter
+    public class HkpvReportValidationResultListFormatter
     {
 
         private readonly ResultFormatterTemplate _template;
@@ -37,58 +37,49 @@ namespace Vodamep.Hkpv.Validation
         {
             var result = new List<string>();
 
-            result.Add(_template.Header(report, validationResult).Trim());
-
             var severities = validationResult.Errors
                 .Where(x => !_ignoreWarnings || x.Severity == FluentValidation.Severity.Error)
-                .OrderBy(x => x.Severity)
-                .GroupBy(x => x.Severity);
+                .OrderBy(x => x.Severity);
 
             foreach (var severity in severities)
             {
-                result.Add(_template.HeaderSeverity(GetSeverityName(severity.Key)).Trim());
+                string message = "";
 
-                var entries = severity.Select(x => new
+                string info = this.GetInfo(report, severity.PropertyName);
+                message += info;
+
+                if (!String.IsNullOrWhiteSpace(info))
+                    message += " - ";
+
+                message += severity.ErrorMessage;
+
+
+                string value = "";
+                if (severity.AttemptedValue?.GetType() == typeof(DateTime))
                 {
-                    Info = this.GetInfo(report, x.PropertyName),
-                    Message = x.ErrorMessage,
-                    Value = x.AttemptedValue?.ToString()
-                }).ToArray();
-
-                foreach (var groupedInfos in entries.OrderBy(x => x.Info).GroupBy(x => x.Info))
+                    DateTime dateTime = (DateTime)severity.AttemptedValue;
+                    value += dateTime.ToShortDateString();
+                }
+                else
                 {
-                    result.Add(_template.FirstLine((groupedInfos.Key, groupedInfos.First().Message, groupedInfos.First().Value)).Trim());
-
-                    foreach (var info in groupedInfos.Skip(1))
-                    {
-                        result.Add(_template.Line((info.Message, info.Value)).Trim());
-                    }
+                    value = severity.AttemptedValue?.ToString();
                 }
 
-                result.Add(_template.FooterSeverity(severity.ToString()).Trim());
+                
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    message += " - ";
+                    message += value;
+                }
+
+                result.Add(message);
             }
 
-             result.RemoveAll(x => string.IsNullOrWhiteSpace(x));
             return result;
         }
 
         private static string GetIdPattern(string propertyName) => $@"{propertyName}\[(?<id>\d+)\]";
 
-
-        private string GetSeverityName(FluentValidation.Severity severity)
-        {
-            switch (severity)
-            {
-                case FluentValidation.Severity.Error:
-                    return "Fehler";
-                case FluentValidation.Severity.Warning:
-                    return "Warnung";
-                case FluentValidation.Severity.Info:
-                    return "Information";
-                default:
-                    return severity.ToString();
-            }
-        }
 
         private readonly GetNameByPatternStrategy[] _strategies;
 

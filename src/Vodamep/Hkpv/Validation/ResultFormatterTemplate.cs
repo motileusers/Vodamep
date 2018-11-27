@@ -42,5 +42,16 @@ namespace Vodamep.Hkpv.Validation
             Line = (x) => $"\t- {x.Message}{System.Environment.NewLine}",
             Linefeed = System.Environment.NewLine
         };
+
+        public static ResultFormatterTemplate List = new ResultFormatterTemplate()
+        {
+            Header = (report, vr) => "",
+            Footer = (report, vr) => "",
+            HeaderSeverity = (s) => "",
+            FooterSeverity = (s) => "",
+            FirstLine = (x) => $"{x.Info} - {x.Message}{(!string.IsNullOrEmpty(x.Value) ? $" ({x.Value})" : "")}{System.Environment.NewLine}",
+            Line = (x) => $"{x.Message}{System.Environment.NewLine}",
+            Linefeed = ""
+        };
     }
 }
