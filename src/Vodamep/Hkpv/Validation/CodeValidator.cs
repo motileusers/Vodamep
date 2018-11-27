@@ -14,13 +14,22 @@ namespace Vodamep.Hkpv.Validation
 
         protected override bool IsValid(PropertyValidatorContext context)
         {
+
+            string test = typeof(T).Name;
+
+            if (test == "QualificationCodeProvider")
+            {
+            }
+
             var code = context.PropertyValue as string;
 
             if (string.IsNullOrEmpty(code)) return true;
 
             var provider = CodeProviderBase.GetInstance<T>();
 
-            return provider.IsValid(code);
+            bool isValid = provider.IsValid(code);
+
+            return isValid;
         }
     }
 }

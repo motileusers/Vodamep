@@ -105,12 +105,20 @@ namespace Vodamep.Legacy.Reader
                                     where U.Funktion = 'PFL' 
                                       and not V.Funktion = 'PFL' 
                                       AND U.Verein = @verein
-                                      AND U.Wert IN @ids
-                                      AND coalesce(U.bis, GETDATE()) > @to";
+                                      AND U.Wert IN @ids";
 
-                var anstellungen = connection.Query<AnstellungDTO>(sqlAnstellung, new { verein = _verein, ids = pflegernummern, @to }).ToArray();
+                var anstellungen = connection.Query<AnstellungDTO>(sqlAnstellung, new { verein = _verein, ids = pflegernummern }).ToArray();
 
 
+                foreach (PflegerDTO p in pfleger)
+                {
+                    // Aktueller Berufstitel
+                    string aktuellerTitel = anstellungen.Where(x => x.Von < from && x.Pflegernummer == p.Pflegernummer)
+                                                      .OrderByDescending(x => x.Von).FirstOrDefault()?.Berufstitel;
+
+                    p.Berufstitel = aktuellerTitel;
+
+                }
 
 
 

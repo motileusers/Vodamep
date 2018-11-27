@@ -49,7 +49,7 @@ namespace Vodamep.Legacy
                     Id = GetId(p.Pflegernummer),
                     FamilyName = Familyname,
                     GivenName = Givenname,
-                    Qualification = ""
+                    Qualification = p.Berufstitel
                 };
 
 

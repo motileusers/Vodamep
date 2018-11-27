@@ -5,6 +5,8 @@
         public int Pflegernummer { get; set; }
         public string Pflegername { get; set; }
 
+        public string Berufstitel { get; set; }
+
 
     }
 }

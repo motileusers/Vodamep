@@ -1,12 +1,9 @@
-// von connexia (Dietmar)
+// von connexia (Hebenstreit Martin, 27.11.2018)
 
-DGKP;gehobener Dienst für Gesundheits- und Krankenpflege
-DPGKP;psychiatrisches Diplom
-DGKP_BSc;gehobener Dienst für Gesundheits- und Krankenpflege
-DSB;Diplomsozialbetreuer
-FSB;Fachsozialbetreuer
+DGKP;Gehobener Dienst für Gesundheits- und Krankenpflege
+DSB;Diplom-Sozialbetreuer
+FSB;Fach-Sozialbetreuer
 PFA;Pflegefachassistent
 PA;Pflegeassistent
-
-// zusätzlich (gibt es dazu ein Kürzel?)
-AB;Auszubildende
+HH;Heimhilfe
+AZB;Auszubildende
