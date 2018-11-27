@@ -7,7 +7,7 @@ using Vodamep.Hkpv.Model;
 
 namespace Vodamep.Hkpv.Validation
 {
-    internal class HkpvReportValidationResultFormatter
+    public class HkpvReportValidationResultFormatter
     {
 
         private readonly ResultFormatterTemplate _template;
@@ -34,6 +34,8 @@ namespace Vodamep.Hkpv.Validation
 
         public string Format(HkpvReport report, ValidationResult validationResult)
         {
+            
+
             var result = new StringBuilder();
 
             result.Append(_template.Header(report, validationResult));
