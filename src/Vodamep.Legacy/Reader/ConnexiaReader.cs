@@ -1,7 +1,9 @@
 ﻿using Dapper;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using Vodamep.Legacy.Model;
 
@@ -113,8 +115,25 @@ namespace Vodamep.Legacy.Reader
                 foreach (PflegerDTO p in pfleger)
                 {
                     // Aktueller Berufstitel
-                    string aktuellerTitel = anstellungen.Where(x => x.Von < from && x.Pflegernummer == p.Pflegernummer)
-                                                      .OrderByDescending(x => x.Von).FirstOrDefault()?.Berufstitel;
+                    List<AnstellungDTO> anstellungPflegerList = anstellungen.Where(x => x.Pflegernummer == p.Pflegernummer)
+                                                      .OrderByDescending(x => x.Von).ToList();
+
+                    List<AnstellungDTO> anstellungPflegerZeitraumList = anstellungPflegerList.Where(x => x.Von <= from)
+                                                      .OrderByDescending(x => x.Von).ToList();
+
+                    AnstellungDTO anstellung = anstellungPflegerZeitraumList.FirstOrDefault();
+
+                    if (anstellung == null)
+                    {
+                        anstellung = anstellungPflegerList.FirstOrDefault();
+                        Debug.WriteLine(String.Format("Pfleger {0} Verein {1} Monat {2}", p.Pflegernummer, _verein, from.ToShortDateString()));
+                    }
+
+
+                    string aktuellerTitel = anstellung?.Berufstitel;
+
+                    if (aktuellerTitel == null)
+                        aktuellerTitel = "";
 
                     p.Berufstitel = aktuellerTitel;
 
