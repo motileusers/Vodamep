@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -43,9 +44,11 @@ namespace Vodamep.Data
 
         public IEnumerable<string> GetCSV() => _dict.Select(x => $"{x.Key};{x.Value}");
 
+        public IReadOnlyDictionary<string, string> Values => new ReadOnlyDictionary<string, string>(_dict);
+
         protected abstract string ResourceName { get; }
 
-        public static CodeProviderBase GetInstance<T>()
+        internal static CodeProviderBase GetInstance<T>()
             where T : CodeProviderBase
         {
             CodeProviderBase result = null;
