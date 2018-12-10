@@ -16,7 +16,8 @@ namespace Vodamep.Hkpv.Validation
             // Änderung 5.11.2018, LH
             var r = new Regex(@"^[\p{L}][-\p{L} ]*[\p{L}]$");
             this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
-            this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
+
+            // keine Einschränkungen für Vornamen: (z.B. Auszubildende 02) this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
 
             // Änderung 27.11.2018, LH
             // Nicht für Bestandsdaten

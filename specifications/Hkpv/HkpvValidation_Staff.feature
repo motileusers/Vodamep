@@ -21,4 +21,3 @@ Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
 Beispiele: 
     | Name        | Bezeichnung         | Art    | Wert |    
     | family_name | Familienname        | Staff  | t@st |
-    | given_name  | Vorname             | Staff  | t@st |

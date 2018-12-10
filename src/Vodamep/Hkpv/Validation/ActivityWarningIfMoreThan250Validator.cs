@@ -22,7 +22,7 @@ namespace Vodamep.Hkpv.Validation
 
                     foreach (var entry in moreThan250)
                     {
-                        var p = a.Item2.Where(x => x.Id == entry.PersonId).First();
+                        var p = a.Item2.Where(x => x.Id == entry.PersonId).FirstOrDefault();
 
                         var f = new ValidationFailure($"{nameof(HkpvReport)}", Validationmessages.ActivityMoreThen250(p, entry.Sum))
                         {
