@@ -67,13 +67,20 @@ Szenario: Es ist nur ein Hausbesuch pro Aktivitätsblock zulässig
     Angenommen die Meldung enthält die Aktivitäten '02,02,15'
     Dann enthält das Validierungsergebnis den Fehler 'Es ist nur ein Hausbesuch pro Aktivitätsblock zulässig'	
 
-Szenariogrundriss: Beispiele für ungültige Aktivitäten
+Szenariogrundriss: Beispiele für möglicherweise ungültige Aktivitäten
     Angenommen die Meldung enthält die Aktivitäten '<Art>'	
 	Und die Eigenschaft 'to' von 'HkpvReport' ist auf '<Datum>' gesetzt
     Dann enthält das Validierungsergebnis die Warnung '<Fehler>'
 Beispiele:
     | Art | Datum		 | Fehler |
     | 2   |2019-01-20    |Kein Eintrag '4-17' vorhanden. |
+
+Szenariogrundriss: Beispiele für ungültige Aktivitäten
+    Angenommen die Meldung enthält die Aktivitäten '<Art>'	
+    Dann enthält das Validierungsergebnis den Fehler '<Fehler>'	
+Beispiele:
+    | Art    | Fehler                         |
+    | 0      | darf nicht 'UndefinedActivity' sein. |
 
 @weich
 Szenario: Eine Mitarbeiter hat eine Aktivität 1-17 öfter als 5 Mal an einem Tag bei einem Klienten.

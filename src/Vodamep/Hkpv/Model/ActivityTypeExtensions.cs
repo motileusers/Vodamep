@@ -35,6 +35,8 @@ namespace Vodamep.Hkpv.Model
                 case ActivityType.Lv31:
                 case ActivityType.Lv33:
                     return 1;
+                case ActivityType.UndefinedActivity:
+                    return 0;                    
                 default:
                     throw new NotImplementedException();
             }
