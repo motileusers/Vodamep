@@ -143,7 +143,7 @@ namespace Vodamep.Api
                 return;
             }
 
-            var test = _validationClient.ValidateByUserAndInstitutionAsync("test", "test");
+            var test = _validationClient.ValidateByUserAndInstitutionAsync(context.User.Identity?.Name, report.Institution.Id);
 
             var validationResult = await new HkpvReportValidator().ValidateAsync(report);
 
