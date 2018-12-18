@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using Connexia.Service.Client;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Vodamep.Api.Authentication;
@@ -35,8 +36,9 @@ namespace Vodamep.Api
 
             this.ConfigureAuth(services);
             this.ConfigureEngine(services);
+            this.ConfigureValidationClient(services);
 
-            services.AddTransient<VodamepHandler>(sp => new VodamepHandler(sp.GetService<Func<IEngine>>(), !IsAuthDisabled(_authConfig), _loggerFactory.CreateLogger<VodamepHandler>()));
+            services.AddTransient<VodamepHandler>(sp => new VodamepHandler(sp.GetService<Func<IEngine>>(), !IsAuthDisabled(_authConfig), _loggerFactory.CreateLogger<VodamepHandler>(), sp.GetService<IValidationClient>()));
             services.AddSingleton<DbUpdater>();
         }
 
@@ -51,6 +53,15 @@ namespace Vodamep.Api
             }
 
             app.UseVodamep();
+        }
+
+        private void ConfigureValidationClient(IServiceCollection services)
+        {
+
+            var validationClient = new ValidationClient();
+            validationClient.BaseUrl = _authConfig.Url;
+
+            services.AddSingleton(validationClient);
         }
 
         private void ConfigureEngine(IServiceCollection services)
@@ -79,7 +90,7 @@ namespace Vodamep.Api
         private void ConfigureAuth(IServiceCollection services)
         {
             _authConfig = _configuration.GetSection("BasicAuthentication").Get<BasicAuthenticationConfiguration>() ?? new BasicAuthenticationConfiguration();
-
+            
             if (IsAuthDisabled(_authConfig))
             {
                 this._logger?.LogInformation("Authentication is disabled");

@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Connexia.Service.Client;
 using Vodamep.Api.CmdQry;
 using Vodamep.Hkpv;
 using Vodamep.Hkpv.Model;
@@ -17,13 +18,14 @@ namespace Vodamep.Api
 {
     public class VodamepHandler
     {
-
+        private readonly IValidationClient _validationClient;
         private readonly Func<IEngine> _engineFactory;
         private readonly ILogger<VodamepHandler> _logger;
         private readonly bool _useAuthentication;
 
-        public VodamepHandler(Func<IEngine> engineFactory, bool useAuthentication, ILogger<VodamepHandler> logger)
+        public VodamepHandler(Func<IEngine> engineFactory, bool useAuthentication, ILogger<VodamepHandler> logger, IValidationClient validationClient)
         {
+            _validationClient = validationClient;
             _engineFactory = engineFactory;
             _logger = logger;
             _useAuthentication = useAuthentication;
@@ -140,6 +142,8 @@ namespace Vodamep.Api
                 await RespondError(context, $"Ungültiger Zeitraum: {year}-{month}, entspricht nicht {report.From}.");
                 return;
             }
+
+            var test = _validationClient.ValidateByUserAndInstitutionAsync("test", "test");
 
             var validationResult = await new HkpvReportValidator().ValidateAsync(report);
 

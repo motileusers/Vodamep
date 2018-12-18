@@ -7,23 +7,24 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 using Newtonsoft.Json.Linq;
+using Connexia.Service.Client;
 
 namespace Vodamep.Api.Authentication
 {
     public class RestVerifier
     {
-        private readonly RestVerifierClient client;
+        private readonly AuthenticationClient client;
 
         public RestVerifier(string url)
         {
-            client = new RestVerifierClient();
+            client = new AuthenticationClient();
             client.BaseUrl = url;
         }
 
-        public Task<bool> Verify((string username, string password) credentials)
+        public async Task<bool> Verify((string username, string password) credentials)
         {
-            Task<bool> result =  client.AuthenticateAsync(credentials.username, credentials.password, "HK");
-            return result;
+            AuthenticationResponse result = await  client.AuthenticateAsync(credentials.username, credentials.password, "HK");
+            return !string.IsNullOrWhiteSpace(result.Username);
         }
     }
 }
