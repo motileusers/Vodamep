@@ -118,7 +118,7 @@ namespace Vodamep.Legacy.Reader
                     List<AnstellungDTO> anstellungPflegerList = anstellungen.Where(x => x.Pflegernummer == p.Pflegernummer)
                                                       .OrderByDescending(x => x.Von).ToList();
 
-                    List<AnstellungDTO> anstellungPflegerZeitraumList = anstellungPflegerList.Where(x => x.Von <= from)
+                    List<AnstellungDTO> anstellungPflegerZeitraumList = anstellungPflegerList.Where(x => x.Von <= to)
                                                       .OrderByDescending(x => x.Von).ToList();
 
                     AnstellungDTO anstellung = anstellungPflegerZeitraumList.FirstOrDefault();

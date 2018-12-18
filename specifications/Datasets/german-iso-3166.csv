@@ -1,241 +1,252 @@
 ﻿// Ländercodes nach iso 3166-2
-AF;Afghanistan
-EG;Ägypten
-AL;Albanien
-DZ;Algerien
+
 AD;Andorra
-AO;Angola
-AI;Anguilla
-AQ;Antarktis
+AE;Vereinigte Arabische Emirate
+AF;Afghanistan
 AG;Antigua und Barbuda
-GQ;Äquatorial Guinea
-AR;Argentinien
+AI;Anguilla
+AL;Albanien
 AM;Armenien
-AW;Aruba
-AZ;Aserbaidschan
-ET;Äthiopien
+AO;Angola
+AQ;Antarktis
+AR;Argentinien
+AS;Samoa
+AT;Österreich
 AU;Australien
-BS;Bahamas
-BH;Bahrain
-BD;Bangladesh
-BB;Barbados
-BE;Belgien
-BZ;Belize
-BJ;Benin
-BM;Bermudas
-BT;Bhutan
-MM;Birma
-BO;Bolivien
+AW;Aruba
+AX;Aland Islands
+AZ;Aserbaidschan
 BA;Bosnien-Herzegowina
-BW;Botswana
-BV;Bouvet Inseln
-BR;Brasilien
-IO;Britisch-Indischer Ozean
-BN;Brunei
-BG;Bulgarien
+BB;Barbados
+BD;Bangladesh
+BE;Belgien
 BF;Burkina Faso
+BG;Bulgarien
+BH;Bahrain
 BI;Burundi
-CL;Chile
-CN;China
-CX;Christmas Island
+BJ;Benin
+BL;Saint Barthélemy
+BM;Bermudas
+BN;Brunei
+BO;Bolivien
+BQ;Bonaire, Sint Eustatius and Saba
+BR;Brasilien
+BS;Bahamas
+BT;Bhutan
+BV;Bouvet Inseln
+BW;Botswana
+BY;Weissrussland
+BZ;Belize
+CA;Kanada
+CC;Kokosinseln
+CD;Kongo, Demokratische Republik
+CF;Zentralafrikanische Republik
+CG;Kongo
+CH;Schweiz
+CI;Elfenbeinküste
 CK;Cook Inseln
+CL;Chile
+CM;Kamerun
+CN;China
+CO;Kolumbien
 CR;Costa Rica
-DK;Dänemark
+CU;Kuba
+CV;Kap Verde
+CW;Curaçao
+CX;Christmas Island
+CY;Zypern
+CZ;Tschechische Republik
 DE;Deutschland
 DJ;Djibuti
+DK;Dänemark
 DM;Dominika
 DO;Dominikanische Republik
+DZ;Algerien
 EC;Ecuador
-SV;El Salvador
-CI;Elfenbeinküste
-ER;Eritrea
 EE;Estland
-FK;Falkland Inseln
-FO;Färöer Inseln
-FJ;Fidschi
+EG;Ägypten
+EH;Westsahara
+ER;Eritrea
+ES;Spanien
+ET;Äthiopien
 FI;Finnland
+FJ;Fidschi
+FK;Falkland Inseln
+FM;Mikronesien
+FO;Färöer Inseln
 FR;Frankreich
-GF;französisch Guyana
-PF;Französisch Polynesien
-TF;Französisches Süd-Territorium
 GA;Gabun
-GM;Gambia
+GB;Grossbritannien (UK)
+GD;Grenada
 GE;Georgien
+GF;französisch Guyana
+GG;Guernsey
 GH;Ghana
 GI;Gibraltar
-GD;Grenada
-GR;Griechenland
-GL;GrÃ¶nland
-UK;GroÃŸbritannien
-GB;GroÃŸbritannien (UK)
-GP;Guadeloupe
-GU;Guam
-GT;Guatemala
+GL;Gröland
+GM;Gambia
 GN;Guinea
+GP;Guadeloupe
+GQ;Äquatorial Guinea
+GR;Griechenland
+GS;South Georgia, South Sandwich Isl.
+GT;Guatemala
+GU;Guam
 GW;Guinea Bissau
 GY;Guyana
-HT;Haiti
+HK;Hong Kong
 HM;Heard und McDonald Islands
 HN;Honduras
-HK;Hong Kong
-IN;Indien
+HR;Kroatien
+HT;Haiti
+HU;Ungarn
 ID;Indonesien
+IE;Irland
+IL;Israel
+IM;Isle of Man
+IN;Indien
+IO;Britisch-Indischer Ozean
 IQ;Irak
 IR;Iran
-IE;Irland
 IS;Island
-IL;Israel
 IT;Italien
+JE;Jersey
 JM;Jamaika
-JP;Japan
-YE;Jemen
 JO;Jordanien
-YU;Jugoslawien
-KY;Kaiman Inseln
-KH;Kambodscha
-CM;Kamerun
-CA;Kanada
-CV;Kap Verde
-KZ;Kasachstan
+JP;Japan
 KE;Kenia
 KG;Kirgisistan
+KH;Kambodscha
 KI;Kiribati
-CC;Kokosinseln
-CO;Kolumbien
 KM;Komoren
-CG;Kongo
-CD;Kongo, Demokratische Republik
-HR;Kroatien
-CU;Kuba
+KN;St. Kitts Nevis Anguilla
+KP;Nord Korea
+KR;Süd Korea
 KW;Kuwait
+KY;Kaiman Inseln
+KZ;Kasachstan
 LA;Laos
-LS;Lesotho
-LV;Lettland
 LB;Libanon
-LR;Liberia
-LY;Libyen
+LC;Saint Lucia
 LI;Liechtenstein
+LK;Sri Lanka
+LR;Liberia
+LS;Lesotho
 LT;Litauen
 LU;Luxemburg
-MO;Macao
-MG;Madagaskar
-MW;Malawi
-MY;Malaysia
-MV;Malediven
-ML;Mali
-MT;Malta
-MP;Marianen
+LV;Lettland
+LY;Libyen
 MA;Marokko
+MC;Monaco
+MD;Moldavien
+ME;Montenegro
+MF;Saint Martin (French part)
+MG;Madagaskar
 MH;Marshall Inseln
+MK;Mazedonien
+ML;Mali
+MM;Birma
+MN;Mongolei
+MO;Macao
+MP;Marianen
 MQ;Martinique
 MR;Mauretanien
-MU;Mauritius
-YT;Mayotte
-MK;Mazedonien
-MX;Mexiko
-FM;Mikronesien
-MZ;Mocambique
-MD;Moldavien
-MC;Monaco
-MN;Mongolei
 MS;Montserrat
+MT;Malta
+MU;Mauritius
+MV;Malediven
+MW;Malawi
+MX;Mexiko
+MY;Malaysia
+MZ;Mocambique
 NA;Namibia
-NR;Nauru
-NP;Nepal
 NC;Neukaledonien
-NZ;Neuseeland
+NE;Niger
+NF;Norfolk Inseln
+NG;Nigeria
 NI;Nicaragua
 NL;Niederlande
-AN;Niederländische Antillen
-NE;Niger
-NG;Nigeria
-NU;Niue
-KP;Nord Korea
-NF;Norfolk Inseln
 NO;Norwegen
+NP;Nepal
+NR;Nauru
+NU;Niue
+NZ;Neuseeland
 OM;Oman
-AT;Österreich
-PK;Pakistan
-PS;Palästina
-PW;Palau
 PA;Panama
-PG;Papua Neuguinea
-PY;Paraguay
 PE;Peru
+PF;Französisch Polynesien
+PG;Papua Neuguinea
 PH;Philippinen
-PN;Pitcairn
+PK;Pakistan
 PL;Polen
-PT;Portugal
+PM;St. Pierre und Miquelon
+PN;Pitcairn
 PR;Puerto Rico
+PS;Palästina
+PT;Portugal
+PW;Palau
+PY;Paraguay
 QA;Qatar
 RE;Reunion
-RW;Ruanda
 RO;Rumänien
+RS;Serbia
 RU;Russland
-LC;Saint Lucia
-ZM;Sambia
-AS;Samoa
-WS;Samoa
-SM;San Marino
-ST;Sao Tome
+RW;Ruanda
 SA;Saudi Arabien
-SE;Schweden
-CH;Schweiz
-SN;Senegal
-SC;Seychellen
-SL;Sierra Leone
-SG;Singapur
-SK;Slowakei -slowakische Republik-
-SI;Slowenien
 SB;Solomon Inseln
-SO;Somalia
-GS;South Georgia, South Sandwich Isl.
-ES;Spanien
-LK;Sri Lanka
-SH;St. Helena
-KN;St. Kitts Nevis Anguilla
-PM;St. Pierre und Miquelon
-VC;St. Vincent
-KR;Süd Korea
-ZA;Südafrika
+SC;Seychellen
 SD;Sudan
-SR;Surinam
+SE;Schweden
+SG;Singapur
+SH;St. Helena
+SI;Slowenien
 SJ;Svalbard und Jan Mayen Islands
-SZ;Swasiland
+SK;Slowakei -slowakische Republik-
+SL;Sierra Leone
+SM;San Marino
+SN;Senegal
+SO;Somalia
+SR;Surinam
+SS;South Sudan
+ST;Sao Tome and Principe
+SV;El Salvador
+SX;Sint Maarten (Dutch part)
 SY;Syrien
+SZ;Swasiland
+TC;Turks und Kaikos Inseln
+TD;Tschad
+TF;Französisches Süd-Territorium
+TG;Togo
+TH;Thailand
 TJ;Tadschikistan
+TK;Tokelau
+TL;Timor-Leste
+TM;Turkmenistan
+TN;Tunesien
+TO;Tonga
+TR;Türkei
+TT;Trinidad Tobago
+TV;Tuvalu
 TW;Taiwan
 TZ;Tansania
-TH;Thailand
-TP;Timor
-TG;Togo
-TK;Tokelau
-TO;Tonga
-TT;Trinidad Tobago
-TD;Tschad
-CZ;Tschechische Republik
-TN;Tunesien
-TR;Türkei
-TM;Turkmenistan
-TC;Turks und Kaikos Inseln
-TV;Tuvalu
-UG;Uganda
 UA;Ukraine
-HU;Ungarn
+UG;Uganda
+UM;United States Minor Outlying Islands
+US;Vereinigte Staaten von Amerika
 UY;Uruguay
 UZ;Usbekistan
-VU;Vanuatu
 VA;Vatikan
+VC;St. Vincent
 VE;Venezuela
-AE;Vereinigte Arabische Emirate
-US;Vereinigte Staaten von Amerika
-VN;Vietnam
 VG;Virgin Island (Brit.)
 VI;Virgin Island (USA)
+VN;Vietnam
+VU;Vanuatu
 WF;Wallis et Futuna
-BY;Weissrussland
-EH;Westsahara
-CF;Zentralafrikanische Republik
+WS;Samoa
+YE;Jemen
+YT;Mayotte
+ZA;Südafrika
+ZM;Sambia
 ZW;Zimbabwe
-CY;Zypern
 ZZ;Unbekannt
