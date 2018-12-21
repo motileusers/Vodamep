@@ -143,7 +143,15 @@ namespace Vodamep.Api
                 return;
             }
 
-            var test = _validationClient.ValidateByUserAndInstitutionAsync(context.User.Identity?.Name, report.Institution.Id);
+            try
+            {
+                var test = await _validationClient.ValidateByUserAndInstitutionAsync(context.User.Identity?.Name, report.Institution.Id);
+            }
+            catch (Exception exception)
+            {
+                await RespondError(context, "Benutzer darf keine Daten für diese Einrichtung senden");
+                return;
+            }
 
             var validationResult = await new HkpvReportValidator().ValidateAsync(report);
 
@@ -160,7 +168,7 @@ namespace Vodamep.Api
             var engine = _engineFactory();
 
             if (_useAuthentication)
-            { 
+            {
                 engine.Login(context.User);
             }
             else
