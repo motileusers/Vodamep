@@ -68,7 +68,7 @@ namespace Vodamep.Client
 
                 if (!(sendResult?.IsValid ?? false))
                 {
-                    HandleFailure("Fehlgeschlagen");
+                    HandleFailure("Fehlgeschlagen. " + sendResult.Message);
                 }
                 else
                 {
