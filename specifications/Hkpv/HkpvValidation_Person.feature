@@ -21,9 +21,13 @@ Szenario: Geburtsdatum und Datum aus der Sozialversicherungsnummer sollten über
     Dann enthält das Validierungsergebnis die Warnung 'Das Geburtsdatum 03.01.1966 unterscheidet sich vom Wert in der Versicherungsnummer 01.03.66.'
         Und es enthält keine Fehler
 
-Szenario: Die Versicherungsnummer ist nicht korrekt.
-    Angenommen die Eigenschaft 'ssn' von 'Person' ist auf '9999231054' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Die Versicherungsnummer 9999231054 ist nicht korrekt.'
+Szenariogrundriss: Die Versicherungsnummer ist nicht korrekt 3
+    Angenommen die Eigenschaft 'ssn' von 'Person' ist auf '<SSN>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Die Versicherungsnummer <SSN> ist nicht korrekt.'
+Beispiele:
+    | SSN			|
+	| 1234-23.01.54 | 
+    | 9999231054	| 
 
 Szenario: Versicherungsnummer ist nicht eindeutig.
     Angenommen eine Versicherungsnummer ist nicht eindeutig
