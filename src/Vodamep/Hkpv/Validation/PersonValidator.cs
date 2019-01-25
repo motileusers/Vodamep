@@ -17,7 +17,7 @@ namespace Vodamep.Hkpv.Validation
             var r = new Regex(@"^[\p{L}][-\p{L}. ]*[\p{L}.]$");
             this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
             this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
-
+            
             this.Include(new PersonBirthdayValidator());
             this.Include(new PersonSsnValidator());
 

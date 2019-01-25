@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Collections.Generic;
+using FluentValidation;
 using FluentValidation.Results;
 using System.Linq;
 using Vodamep.Hkpv.Model;
@@ -7,7 +8,7 @@ namespace Vodamep.Hkpv.Validation
 {
     internal class ActivityValidator4141617Without123 : AbstractValidator<Activity>
     {
-        public ActivityValidator4141617Without123()
+        public ActivityValidator4141617Without123(IEnumerable<Person> persons, IEnumerable<Staff> staffs)
         {
             RuleFor(x => x.Entries)
                 .Custom((list, ctx) =>
@@ -17,13 +18,30 @@ namespace Vodamep.Hkpv.Validation
 
                     var l = list;
 
+                    var activtiy = ctx.ParentContext.InstanceToValidate as Activity;
+                    string person = null;
+
+                    if (!string.IsNullOrWhiteSpace(activtiy.PersonId))
+                    {
+                        var p = persons.FirstOrDefault(x => x.Id == activtiy.PersonId);
+                        if (p != null)
+                            person = $"{p.GivenName} {p.FamilyName}";
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(activtiy.StaffId))
+                    {
+                        var s = staffs.FirstOrDefault(x => x.Id == activtiy.StaffId);
+                        if (s != null)
+                            person = $"{s.GivenName} {s.FamilyName}";
+                    }
+
                     var entries123 = l.Where(x => x == ActivityType.Lv01 || x == ActivityType.Lv02 || x == ActivityType.Lv03).Any();
                     
                     var entries4Except15 = l.Where(x => x != ActivityType.Lv15 && ((int)x > 3) && ((int)x <= 17)).Any();
                                         
                     if (entries4Except15 && !entries123)
                     {
-                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("1,2,3")));
+                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("1,2,3", person)));
                     }
                 });
         }
