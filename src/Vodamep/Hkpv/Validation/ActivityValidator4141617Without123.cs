@@ -41,7 +41,7 @@ namespace Vodamep.Hkpv.Validation
                                         
                     if (entries4Except15 && !entries123)
                     {
-                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("1,2,3", person)));
+                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("1,2,3", person, activtiy.DateD.ToShortDateString())));
                     }
                 });
         }

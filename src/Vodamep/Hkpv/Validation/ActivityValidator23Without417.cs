@@ -23,6 +23,7 @@ namespace Vodamep.Hkpv.Validation
 
 
                     var activtiy = ctx.ParentContext.InstanceToValidate as Activity;
+                   
                     string person = null;
 
                     if (!string.IsNullOrWhiteSpace(activtiy.PersonId))
@@ -39,13 +40,15 @@ namespace Vodamep.Hkpv.Validation
                             person = $"{s.GivenName} {s.FamilyName}";
                     }
 
+                    
+
                     var entries23 = l.Where(x => x == ActivityType.Lv02 || x == ActivityType.Lv03).Any();
                     
                     var entries4 = l.Where(x => ((int)x > 3)).Any();
                     
                     if (entries23 && !entries4)
                     {
-                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("4-17", person))
+                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("4-17", person, activtiy.DateD.ToShortDateString()))
                         {
                             Severity = Severity.Warning
                         });
