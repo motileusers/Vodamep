@@ -30,6 +30,8 @@ namespace Vodamep.Hkpv.Validation
             }
             else
             {
+                this.RuleFor(x => x.Qualification).NotEmpty();
+
                 this.RuleFor(x => x.Qualification)
                 .SetValidator(new CodeValidator<QualificationCodeProvider>())
                 .Unless(x => string.IsNullOrEmpty(x.Qualification));
