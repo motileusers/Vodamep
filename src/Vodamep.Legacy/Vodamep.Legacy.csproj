@@ -70,12 +70,6 @@
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vodamep\Vodamep.csproj">
-      <Project>{407fd744-34e9-458a-9df7-24e208bd30dc}</Project>
-      <Name>Vodamep</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Costura.Fody">
       <Version>2.0.1</Version>
     </PackageReference>
@@ -88,6 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vodamep\Vodamep.csproj">
+      <Project>{407fd744-34e9-458a-9df7-24e208bd30dc}</Project>
+      <Name>Vodamep</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
