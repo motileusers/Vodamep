@@ -1,6 +1,16 @@
 ﻿#language: de-DE
 Funktionalität: Validierung der gemeldeten Mitarbeiterinnen Datenmeldung
 
+Szenario: Qualifikation ist nicht gesetzt und das Jahr ist 2018.
+    Angenommen die Eigenschaft 'to' von 'HkpvReport' ist auf '2018-12-31' gesetzt
+	Und die Eigenschaft 'qualification' von 'Staff' ist nicht gesetzt
+ 	Dann enthält das Validierungsergebnis nicht den Fehler 'Qualification' darf nicht leer sein.'
+
+Szenario: Qualifikation ist nicht gesetzt und das Jahr ist 2019.
+    Angenommen die Eigenschaft 'to' von 'HkpvReport' ist auf '2019-01-01' gesetzt
+	Und die Eigenschaft 'qualification' von 'Staff' ist nicht gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Qualification' darf nicht leer sein.'
+	
 Szenario: StaffId ist nicht eindeutig.
     Angenommen der Id einer Mitarbeiterin ist nicht eindeutig
     Dann enthält das Validierungsergebnis den Fehler 'Der Id ist nicht eindeutig.'
@@ -21,3 +31,4 @@ Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
 Beispiele: 
     | Name        | Bezeichnung         | Art    | Wert |    
     | family_name | Familienname        | Staff  | t@st |
+
