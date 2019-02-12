@@ -30,7 +30,6 @@ namespace Vodamep.Specs.StepDefinitions
                 case FieldType.Enum:
                     field.Accessor.SetValue(m, 0);
                     break;
-
                 case FieldType.Message:
                     field.Accessor.SetValue(m, null);
                     break;

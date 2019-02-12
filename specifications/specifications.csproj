@@ -7,4 +7,10 @@
   <ItemGroup>    
     <PackageReference Include="Google.Protobuf" Version="3.6.1" />    
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="Hkpv\HkpvValidation_Employment.feature">
+      <Generator></Generator>
+    </None>
+  </ItemGroup>
 </Project>

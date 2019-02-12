@@ -54,6 +54,11 @@
       <Link>Features\HkpvValidation_Activity.feature</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\..\specifications\Hkpv\HkpvValidation_Employment.feature">
+      <Link>Features\HkpvValidation_Employment.feature</Link>
+      <LastGenOutput>HkpvValidation_Employment.feature.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\..\specifications\Hkpv\HkpvValidation_Person.feature">
       <Link>Features\HkpvValidation_Person.feature</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

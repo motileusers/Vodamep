@@ -13,8 +13,8 @@ namespace Vodamep.Hkpv.Validation
         {
             this.RuleFor(x => x.From).NotEmpty();
             this.RuleFor(x => x.To).NotEmpty();
-            this.RuleFor(x => x.HoursPerWeek).NotEmpty();
-            this.RuleFor(x => x.HoursPerWeek).InclusiveBetween(0, 100);
+         
+            this.RuleFor(x => x.HoursPerWeek).ExclusiveBetween(0, 100).WithMessage(Validationmessages.EmploymentHoursPerWeekMustBeBetween0And100);
           
         }
     }
