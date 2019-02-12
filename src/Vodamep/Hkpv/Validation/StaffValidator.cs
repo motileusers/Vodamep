@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Vodamep.Data;
 using Vodamep.Hkpv.Model;
@@ -12,10 +13,14 @@ namespace Vodamep.Hkpv.Validation
         {
             this.RuleFor(x => x.FamilyName).NotEmpty();
             this.RuleFor(x => x.GivenName).NotEmpty();
+            
+            this.RuleFor(x => x.Employments).Must(x => x != null && x.Count > 0).WithMessage(Validationmessages.StaffWithoutEmployment);
 
             // Änderung 5.11.2018, LH
             var r = new Regex(@"^[\p{L}][-\p{L} ]*[\p{L}]$");
             this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
+
+            this.RuleForEach(x => x.Employments).SetValidator(new EmploymentValidator());
 
             // keine Einschränkungen für Vornamen: (z.B. Auszubildende 02) this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
 

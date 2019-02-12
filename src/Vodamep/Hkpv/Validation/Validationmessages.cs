@@ -16,6 +16,7 @@ namespace Vodamep.Hkpv.Validation
         public static string PersonWithoutData => "Keine Stammdaten vorhanden";
         public static string WithoutEntry(string e, string person, string date ) => !string.IsNullOrWhiteSpace(person) ? $"Kein Eintrag '{e}' vorhanden. Person: {person}. Datum '{date}'":  $"Kein Eintrag '{e}' vorhanden. Datum '{date}'.";
         public static string WithoutActivity => $"Keine Aktivitäten.";
+        public static string StaffWithoutEmployment => $"Beim Mitarbeiter ist keine Beschäftigung vorhanden";
         public static string BirthdayNotInFuture => "'Geburtsdatum' darf nicht in der Zukunft liegen.";
         public static string BirthdayNotInSsn(Person data) => $"Das Geburtsdatum {data?.BirthdayD.ToString("dd.MM.yyyy")} unterscheidet sich vom Wert in der Versicherungsnummer {SSNHelper.Format(data?.Ssn, true).Substring(5)}.";
         public static string SsnNotValid => "Die Versicherungsnummer {PropertyValue} ist nicht korrekt.";

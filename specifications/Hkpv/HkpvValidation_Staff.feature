@@ -32,3 +32,8 @@ Beispiele:
     | Name        | Bezeichnung         | Art    | Wert |    
     | family_name | Familienname        | Staff  | t@st |
 
+Szenario: Mitarbeiter ohne Beschäftigung.
+    Angenommen es ist keine Beschäftigung beim Mitarbeiter vorhanden
+	Dann enthält das Validierungsergebnis den Fehler 'Beim Mitarbeiter ist keine Beschäftigung vorhanden'
+   
+

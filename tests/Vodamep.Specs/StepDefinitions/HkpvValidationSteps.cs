@@ -71,6 +71,8 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Persons[0].SetDefault(name);
             else if (type == nameof(Staff))
                 this.Report.Staffs[0].SetDefault(name);
+            else if (type == nameof(Employment))
+                this.Report.Staffs[0].Employments[0].SetDefault(name);
             else if (type == nameof(Activity))
                 foreach (var a in this.Report.Activities)
                     a.SetDefault(name);
@@ -87,6 +89,8 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Persons[0].SetValue(name, value);
             else if (type == nameof(Staff))
                 this.Report.Staffs[0].SetValue(name, value);
+            else if (type == nameof(Employment))
+                this.Report.Staffs[0].Employments[0].SetValue(name, value);
             else if (type == nameof(Activity))
                 foreach (var a in this.Report.Activities)
                     a.SetValue(name, value);
@@ -165,6 +169,13 @@ namespace Vodamep.Specs.StepDefinitions
             s.Id = s0.Id;
         }
 
+        [Given(@"es ist keine Beschäftigung beim Mitarbeiter vorhanden")]
+        public void GivenStaffWithoutEmployment()
+        {
+            var s0 = this.Report.Staffs[0];
+            var s = this.Report.AddDummyStaff();
+            this.Report.Staffs[0].Employments.Clear();
+        }
 
         [Given(@"eine Auszubildende hat die Aktivitäten '(.*)' dokumentiert")]
         public void GivenTraineeWithActivity(string values)
@@ -188,6 +199,7 @@ namespace Vodamep.Specs.StepDefinitions
         {
             this.Report.AddDummyPerson();
         }
+
         [Given(@"die Meldung enthält am '(.*)' die Beratungen '(.*)'")]
         public void GivenTheConsultationsAt(string date, string values)
         {
@@ -207,6 +219,8 @@ namespace Vodamep.Specs.StepDefinitions
                 m = this.Report.Persons[0];
             else if (type == nameof(Staff))
                 m = this.Report.Staffs[0];
+            else if (type == nameof(Staff))
+                m = this.Report.Staffs[0].Employments[0];
             else if (type == nameof(Activity))
                 m = this.Report.Activities[0];
             else

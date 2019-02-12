@@ -149,7 +149,7 @@ namespace Vodamep.Data.Dummy
                 Qualification = "DGKP"
             };
 
-            staff.Employments.Add(new Employment() { HoursPerWeek = 38.5F });
+            staff.Employments.Add(new Employment() { HoursPerWeek = 38.5F , FromD = DateTime.Now.AddDays(-3), ToD = DateTime.Now.AddDays(-1)});
 
             return staff;
         }
