@@ -16,7 +16,7 @@ Szenariogrundriss: Die Stundenanzahl ist zu hoch oder zu niedrig.
 	Dann enthält das Validierungsergebnis den Fehler 'Die Stundenanzahl muss größer 0 und kleiner 100 sein'
 Beispiele:
     | Wert	| 
-    | 0		| 
+    | 1		| 
     | 100	| 
 	
 Szenario: Stundenanzahl ist korrekt
