@@ -137,7 +137,7 @@ namespace Vodamep.Data.Dummy
             return SSNHelper.Format(string.Format("{0}{1}{2:ddMMyy}", nr, cd, date));
         }
 
-        public Staff CreateStaff()
+        public Staff CreateStaff(HkpvReport report)
         {
             var id = (_id++).ToString();
 
@@ -149,15 +149,20 @@ namespace Vodamep.Data.Dummy
                 Qualification = "DGKP"
             };
 
-            staff.Employments.Add(new Employment() { HoursPerWeek = 38.5F , FromD = DateTime.Now.AddDays(-3), ToD = DateTime.Now.AddDays(-1)});
+            staff.Employments.Add(new Employment()
+            {
+                HoursPerWeek = 38.5F,
+                FromD = report.FromD,
+                ToD = report.ToD
+            });
 
             return staff;
         }
 
-        public IEnumerable<Staff> CreateStaffs(int count)
+        public IEnumerable<Staff> CreateStaffs(HkpvReport report, int count)
         {
             for (var i = 0; i < count; i++)
-                yield return CreateStaff();
+                yield return CreateStaff(report);
         }
 
         private ActivityType[] CreateRandomActivities()

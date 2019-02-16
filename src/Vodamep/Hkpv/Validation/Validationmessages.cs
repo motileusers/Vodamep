@@ -18,6 +18,9 @@ namespace Vodamep.Hkpv.Validation
         public static string WithoutActivity => $"Keine Aktivitäten.";
         public static string StaffWithoutEmployment => $"Beim Mitarbeiter ist keine Beschäftigung vorhanden";
         public static string EmploymentHoursPerWeekMustBeBetween0And100 => $"Die Stundenanzahl muss größer 0 und kleiner 100 sein";
+        public static string InvalidEmploymentFromToReportRange(Staff data) => $"Das Anstellungsverhältniss von {data.GivenName} {data.FamilyName} muss innerhalb des Meldungszeitraums liegen.";
+        public static string EmploymentOverlap(Staff data) => $"Die Anstellungsverhälnisse bei {data.GivenName} {data.FamilyName} überschneiden sich.";
+        public static string InvalidEmploymentForActivity(Activity activity, Staff staff) => $"Eine Leistung vom {activity.DateD} liegt nicht im Anstellungszeitraum von Mitarbeiter {staff.GivenName} {staff.FamilyName}.";
         public static string BirthdayNotInFuture => "'Geburtsdatum' darf nicht in der Zukunft liegen.";
         public static string BirthdayNotInSsn(Person data) => $"Das Geburtsdatum {data?.BirthdayD.ToString("dd.MM.yyyy")} unterscheidet sich vom Wert in der Versicherungsnummer {SSNHelper.Format(data?.Ssn, true).Substring(5)}.";
         public static string SsnNotValid => "Die Versicherungsnummer {PropertyValue} ist nicht korrekt.";

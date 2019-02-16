@@ -12,11 +12,11 @@ namespace Vodamep.Hkpv.Validation
             RuleFor(x => x.Persons)
                 .Custom((list, ctx) =>
                 {
-                    var dublicates = list.Where(x => !string.IsNullOrEmpty(x.Ssn))
+                    var duplicates = list.Where(x => !string.IsNullOrEmpty(x.Ssn))
                         .GroupBy(x => x.Ssn)
                         .Where(x => x.Count() > 1);
 
-                    foreach (var entry in dublicates)
+                    foreach (var entry in duplicates)
                     {
                         ctx.AddFailure(new ValidationFailure(nameof(HkpvReport.Persons), Validationmessages.SsnNotUnique(entry)));
                     }

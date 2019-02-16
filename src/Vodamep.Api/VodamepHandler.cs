@@ -149,6 +149,7 @@ namespace Vodamep.Api
             }
             catch (Exception exception)
             {
+                _logger?.LogError(exception, "Benutzer darf keine Daten für diese Einrichtung senden");
                 await RespondError(context, "Benutzer darf keine Daten für diese Einrichtung senden");
                 return;
             }

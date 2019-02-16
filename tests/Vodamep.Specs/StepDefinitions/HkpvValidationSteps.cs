@@ -108,6 +108,41 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
 
+        [Given(@"die Meldung enthält die Anstellungen '(.*)' und die Leistungstage '(.*)'")]
+        public void GivenTheEmployments(string employments, string activities)
+        {
+            string[] fromTos = employments.Split(',');
+            Employment existingEmployment = this.Report.Staffs[0].Employments.First();
+            Activity existingActivity = this.Report.Activities.First();
+
+            this.Report.Staffs[0].Employments.Clear();
+            this.Report.Activities.Clear();
+
+            string[] activityDates = activities.Split(',');
+            foreach (string activityDate in activityDates)
+            {
+                var a = new Activity() { DateD = new DateTime(this.Report.FromD.Year, this.Report.FromD.Month, Convert.ToInt32(activityDate)), PersonId = existingActivity.PersonId, StaffId = existingActivity.StaffId };
+                a.Entries.Add(ActivityType.Lv01);
+
+                this.Report.Activities.Add(a);
+            }
+
+            foreach (string fromTo in fromTos)
+            {
+                string[] fromToValues = fromTo.Split('-');
+                DateTime from = new DateTime(this.Report.FromD.Year, this.Report.FromD.Month, Convert.ToInt32(fromToValues[0]));
+                DateTime to = new DateTime(this.Report.FromD.Year, this.Report.FromD.Month, Convert.ToInt32(fromToValues[1]));
+
+                this.Report.Staffs[0].Employments.Add(new Employment()
+                {
+                    HoursPerWeek = existingEmployment.HoursPerWeek,
+                    FromD = from,
+                    ToD = to
+                });
+            }
+        }
+
+
         [Given(@"die Meldung enthält die Aktivitäten '(.*?)'")]
         public void GivenTheActivities(string values)
         {
@@ -294,6 +329,9 @@ namespace Vodamep.Specs.StepDefinitions
 
             this.Report.Activities.Add(a);
         }
+
+
+
 
         private void AddDummyActivities(string personId, string staffId)
         {

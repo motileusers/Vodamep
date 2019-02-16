@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Vodamep.Data;
@@ -13,14 +15,12 @@ namespace Vodamep.Hkpv.Validation
         {
             this.RuleFor(x => x.FamilyName).NotEmpty();
             this.RuleFor(x => x.GivenName).NotEmpty();
-            
+
             this.RuleFor(x => x.Employments).Must(x => x != null && x.Count > 0).WithMessage(Validationmessages.StaffWithoutEmployment);
 
             // Änderung 5.11.2018, LH
             var r = new Regex(@"^[\p{L}][-\p{L} ]*[\p{L}]$");
             this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
-
-            this.RuleForEach(x => x.Employments).SetValidator(new EmploymentValidator());
 
             // keine Einschränkungen für Vornamen: (z.B. Auszubildende 02) this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
 
@@ -41,6 +41,39 @@ namespace Vodamep.Hkpv.Validation
                 .SetValidator(new CodeValidator<QualificationCodeProvider>())
                 .Unless(x => string.IsNullOrEmpty(x.Qualification));
             }
+
+
+            // Anstellung
+            this.RuleForEach(x => x.Employments).SetValidator(x => new EmploymentValidator(from, to, x));
+
+            // Anstellungszeiträume
+            RuleFor(x => x)
+                .Custom((staff, ctx) =>
+                {
+                    List<Employment> employments = staff.Employments?.OrderBy(x => x.FromD).ToList();
+                    HkpvReport report = ctx.ParentContext.InstanceToValidate as HkpvReport;
+
+                    for (int i = 1; i < employments.Count; i++)
+                    {
+                        Employment last = employments[i - 1];
+                        Employment current = employments[i];
+
+                        if (last.FromD != null && last.ToD != null &&
+                            current.FromD != null && current.ToD != null)
+                        {
+                            if (last.FromD >= from && last.ToD <= to &&
+                                current.FromD >= from && current.ToD <= to)
+                            {
+                                if (last.ToD >= current.FromD)
+                                {
+                                    var index = staff.Employments.IndexOf(current);
+                                    ctx.AddFailure(new ValidationFailure(ctx.PropertyName, Validationmessages.EmploymentOverlap(staff)));
+
+                                }
+                            }
+                        }
+                    }
+                });
 
         }
     }

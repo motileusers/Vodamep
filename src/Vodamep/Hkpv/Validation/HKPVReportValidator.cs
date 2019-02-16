@@ -53,10 +53,6 @@ namespace Vodamep.Hkpv.Validation
 
             this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator(r.FromD, r.ToD));
 
-            
-
-            
-
             this.Include(new ActivityMedicalByQualificationTraineeValidator());
 
             this.Include(new ActivityWarningIfMoreThan5Validator());
@@ -68,6 +64,9 @@ namespace Vodamep.Hkpv.Validation
             this.Include(new HkpvReportStaffIdValidator());
 
             this.Include(new PersonSsnIsUniqueValidator());
+
+            this.Include(new EmploymentActivityValidator());
+
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<HkpvReport> context, CancellationToken cancellation = default(CancellationToken))

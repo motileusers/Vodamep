@@ -23,7 +23,7 @@ namespace Vodamep.Data.Dummy
 
         public static Staff AddDummyStaff(this HkpvReport report)
         {
-            var s = DataGenerator.Instance.CreateStaff();
+            var s = DataGenerator.Instance.CreateStaff(report);
 
             report.Staffs.Add(s);
             return s;
@@ -31,7 +31,7 @@ namespace Vodamep.Data.Dummy
 
         public static Staff[] AddDummyStaffs(this HkpvReport report, int count)
         {
-            var s = DataGenerator.Instance.CreateStaffs(count).ToArray();
+            var s = DataGenerator.Instance.CreateStaffs(report, count).ToArray();
             report.Staffs.AddRange(s);
             return s;
         }

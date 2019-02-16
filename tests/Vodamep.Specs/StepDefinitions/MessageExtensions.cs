@@ -61,7 +61,7 @@ namespace Vodamep.Specs.StepDefinitions
                     break;
                 case FieldType.Double:
                 case FieldType.Float:
-                    field.Accessor.SetValue(m, double.Parse(value));
+                    field.Accessor.SetValue(m, float.Parse(value));
                     break;
                 case FieldType.Message:
                     if (field.MessageType == Timestamp.Descriptor)
