@@ -20,9 +20,10 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
-    | Name        | Bezeichnung         | Art          |    
-    | family_name | Familienname        | Staff        |
-    | given_name  | Vorname             | Staff        |
+    | Name          | Bezeichnung         | Art          |    
+    | family_name   | Familienname        | Staff        |
+    | given_name    | Vorname             | Staff        |
+	| qualification | Qualifikation       | Staff        |
 
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von '<Art>' ist auf '<Wert>' gesetzt

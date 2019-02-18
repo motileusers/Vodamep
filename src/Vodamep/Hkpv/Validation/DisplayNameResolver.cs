@@ -28,7 +28,9 @@ namespace Vodamep.Hkpv.Validation
             _dict.Add(nameof(Person.City), "Ort");
             _dict.Add(nameof(Person.Gender), "Geschlecht");
 
-            
+            _dict.Add(nameof(Staff.Qualification), "Qualifikation");
+
+
             _dict.Add(nameof(Activity.Date), "Datum");
             _dict.Add(nameof(Activity.DateD), "Datum");
             _dict.Add(nameof(Activity.Entries), "Einträge");
