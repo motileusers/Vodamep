@@ -26,6 +26,6 @@ namespace Vodamep.Data
 
         protected override string ResourceName => "Data.qualifications.csv";
         public override string Unknown => "";
-        public string Trainee => "AB";
+        public string Trainee => "AZB";
     }
 }
