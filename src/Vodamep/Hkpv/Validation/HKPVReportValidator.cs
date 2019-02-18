@@ -49,7 +49,12 @@ namespace Vodamep.Hkpv.Validation
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
 
 
-            this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r.FromD, r.ToD, r.Persons, r.Staffs));
+            this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r.FromD, r.ToD));
+            this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator4141617Without123(r.Persons, r.Staffs));
+
+            // Nur für neu gesendete Daten
+            this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator23Without417(r.Persons, r.Staffs)).Unless(x => x.ToD < new DateTime(2019, 01, 01));
+
 
             this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator(r.FromD, r.ToD));
 

@@ -15,11 +15,16 @@ namespace Vodamep.Hkpv.Validation
             : base()
         {
             //corert kann derzeit nicht mit AnonymousType umgehen. Vielleicht später:  new  { x.Activities, x.Staffs }
-            this.RuleFor(x => new Tuple<IList<Activity>, IEnumerable<Staff>>(x.Activities, x.Staffs))
-                .Custom((a, ctx) =>
+            this.RuleFor(x => x)
+                .Custom((x, ctx) =>
                {
-                   var activities = a.Item1;
-                   var staffs = a.Item2;
+                   HkpvReport report = ctx.ParentContext.InstanceToValidate as HkpvReport;
+
+                   var activities = report.Activities;
+                   var staffs = report.Staffs;
+                   DateTime from = report.FromD;
+                   DateTime to = report.ToD;
+
 
                    // Dictionary für schnellen Zugriff
                    Dictionary<string, Staff> staffsDict = staffs.GroupBy(p => p.Id)
@@ -32,17 +37,17 @@ namespace Vodamep.Hkpv.Validation
                            bool insideRange = false;
                            bool skipCheck = false;
 
-                           Staff staff = staffsDict[activity.StaffId];
-                           foreach (Employment employment in staff.Employments)
+                           Staff staffDict = staffsDict[activity.StaffId];
+                           EmploymentValidator employmentVal = new EmploymentValidator(from, to, staffDict);
+                           ActivityValidator activityVal = new ActivityValidator(from, to);
+
+                           foreach (Employment employment in staffDict.Employments)
                            {
-                               if (employment.FromD == null ||
-                                    employment.ToD == null ||
-                                    activity.DateD == DateTime.MinValue)
-                               {
-                                   skipCheck = true;
-                                   break;
-                               }
-                               else
+                               ValidationResult employmentResult = employmentVal.Validate(employment);
+                               ValidationResult activityResult = activityVal.Validate(activity);
+
+                               if (employmentResult.IsValid &&
+                                   activityResult.IsValid)
                                {
                                    if (activity.DateD >= employment.FromD &&
                                        activity.DateD <= employment.ToD)
@@ -51,12 +56,17 @@ namespace Vodamep.Hkpv.Validation
                                        break;
                                    }
                                }
+                               else
+                               {
+                                   skipCheck = true;
+                                   break;
+                               }
                            }
 
                            if (!insideRange && !skipCheck)
                            {
                                var index = activities.IndexOf(activity);
-                               ctx.AddFailure(new ValidationFailure($"{nameof(HkpvReport.Activities)}[{index}]", Validationmessages.InvalidEmploymentForActivity(activity, staff)));
+                               ctx.AddFailure(new ValidationFailure($"{nameof(HkpvReport.Activities)}[{index}]", Validationmessages.InvalidEmploymentForActivity(activity, staffDict)));
                            }
                        }
                    }

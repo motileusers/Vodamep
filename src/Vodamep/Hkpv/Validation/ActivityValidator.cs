@@ -8,7 +8,7 @@ namespace Vodamep.Hkpv.Validation
 {
     internal class ActivityValidator : AbstractValidator<Activity>
     {
-        public ActivityValidator(DateTime from, DateTime to, IEnumerable<Person> persons,  IEnumerable<Staff> staffs)
+        public ActivityValidator(DateTime from, DateTime to)
         {
             this.RuleFor(x => x.Date).NotEmpty();
             this.RuleFor(x => x.Date).SetValidator(new TimestampWithOutTimeValidator()).Unless(x => x.Date == null);
@@ -30,11 +30,6 @@ namespace Vodamep.Hkpv.Validation
 
             this.RuleFor(x => x.Entries).NotEmpty();
             this.RuleForEach(x => x.Entries).NotEqual(ActivityType.UndefinedActivity);
-            
-            if (to >= new DateTime(2019, 01, 01))
-                this.Include(new ActivityValidator23Without417(persons, staffs));
-
-            this.Include(new ActivityValidator4141617Without123(persons, staffs));
         }
     }
 
