@@ -4,12 +4,12 @@ Funktionalität: Validierung der gemeldeten Mitarbeiterinnen Datenmeldung
 Szenario: Qualifikation ist nicht gesetzt und das Jahr ist 2018.
     Angenommen die Eigenschaft 'to' von 'HkpvReport' ist auf '2018-12-31' gesetzt
 	Und die Eigenschaft 'qualification' von 'Staff' ist nicht gesetzt
- 	Dann enthält das Validierungsergebnis nicht den Fehler 'Qualification' darf nicht leer sein.'
+ 	Dann enthält das Validierungsergebnis nicht den Fehler 'Qualifikation' darf nicht leer sein.'
 
 Szenario: Qualifikation ist nicht gesetzt und das Jahr ist 2019.
     Angenommen die Eigenschaft 'to' von 'HkpvReport' ist auf '2019-01-01' gesetzt
 	Und die Eigenschaft 'qualification' von 'Staff' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Qualification' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Qualifikation' darf nicht leer sein.'
 	
 Szenario: StaffId ist nicht eindeutig.
     Angenommen der Id einer Mitarbeiterin ist nicht eindeutig
