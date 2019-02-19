@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Vodamep.Data;
 using Vodamep.Hkpv.Model;
@@ -8,6 +10,8 @@ namespace Vodamep.Legacy
 {
     public class Writer
     {
+        Dictionary<string, string> unknonwStaffIds = new Dictionary<string, string>();
+
         public string Write(string path, ReadResult data, bool asJson = false)
         {
             var date = data.L.Select(x => x.Datum).First().FirstDateInMonth();
@@ -53,9 +57,26 @@ namespace Vodamep.Legacy
                 };
 
 
-                var anstellungen = data.S.Where(x => x.Pflegernummer == p.Pflegernummer).OrderBy(x => x.Von);
+                var anstellungen = data.S.Where(x => x.Pflegernummer == p.Pflegernummer).OrderBy(x => x.Von.GetValueOrDefault(DateTime.MinValue));
                 foreach (var anstellung in anstellungen)
                 {
+                    if (anstellung.Von == null)
+                        anstellung.Von = DateTime.MinValue;
+
+                    if (anstellung.Bis == null)
+                        anstellung.Bis = DateTime.MaxValue;
+
+
+                    if (anstellung.Von < date)
+                        anstellung.Von = date;
+
+                    if (anstellung.Bis > date.LastDateInMonth())
+                        anstellung.Bis = date.LastDateInMonth();
+
+
+                    Debug.WriteLine(anstellung.Von + " " + anstellung.Bis);
+
+
                     Employment employment = new Employment()
                     {
                         FromD = anstellung.Von,
@@ -65,7 +86,7 @@ namespace Vodamep.Legacy
 
                     staff.Employments.Add(employment);
                 }
-                
+
 
 
                 report.Staffs.Add(staff);
@@ -94,6 +115,8 @@ namespace Vodamep.Legacy
 
             var filename = report.AsSorted().WriteToPath(path, asJson: asJson, compressed: false);
 
+            if (unknonwStaffIds.Count > 0)
+                Console.WriteLine($"Unbekannte PflegerIds: {String.Join(", ", unknonwStaffIds.Keys.ToArray())}");
             return filename;
         }
 
@@ -149,9 +172,10 @@ namespace Vodamep.Legacy
 
                     default:
 
-                        return "NA" + "-" + oldID;
+                        if (!unknonwStaffIds.ContainsKey(oldID.ToString()))
+                            unknonwStaffIds.Add(oldID.ToString(), oldID.ToString());
 
-                        throw new Exception(String.Format("Pfleger ID nicht vorhanden.", oldID));
+                        return "NA" + "-" + oldID;
                 }
 
             }
@@ -582,7 +606,10 @@ namespace Vodamep.Legacy
 
                     default:
 
-                        throw new Exception(String.Format("Pfleger ID nicht vorhanden.", oldID));
+                        if (!unknonwStaffIds.ContainsKey(oldID.ToString()))
+                            unknonwStaffIds.Add(oldID.ToString(), oldID.ToString());
+
+                        return "NA" + "-" + oldID;
                 }
             }
         }
@@ -625,7 +652,7 @@ namespace Vodamep.Legacy
 
             var plz = (a.Postleitzahl ?? string.Empty).Trim();
             var ort = (a.Ort ?? string.Empty).Trim();
-                        
+
             if (plz.Length > 4)
             {
                 // im Datenbestand gibt es "gebastelte" Postleitzahlen mit 6 Zeichen

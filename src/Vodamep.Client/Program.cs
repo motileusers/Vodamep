@@ -11,6 +11,11 @@ namespace Vodamep.Client
             try
             {
                 Args.InvokeAction<VodamepProgram>(args);
+
+#if DEBUG
+                Console.ReadKey();
+#endif
+
             }
             catch (Exception e)
             {

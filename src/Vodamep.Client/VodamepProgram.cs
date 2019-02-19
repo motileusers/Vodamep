@@ -183,12 +183,11 @@ namespace Vodamep.Client
             {
                 return HkpvReport.ReadFile(file);
             }
-            catch
+            catch (Exception ex)
             {
-
+                HandleFailure("Daten konnten nicht gelesen werden: " + ex.Message);
             }
 
-            HandleFailure("Daten konnten nicht gelesen werden.");
             return null;
         }
     }

@@ -109,19 +109,28 @@ namespace Vodamep.Legacy.Reader
                                       AND U.Verein = @verein
                                       AND U.Wert IN @ids";
 
-                var anstellungen = connection.Query<AnstellungDTO>(sqlAnstellung, new { verein = _verein, ids = pflegernummern }).ToArray();
+                string joined = string.Join(",", pflegernummern);
+
+                var anstellungenGesamt = connection.Query<AnstellungDTO>(sqlAnstellung, new { verein = _verein, ids = pflegernummern }).ToArray();
+                List<AnstellungDTO> anstellungen = new List<AnstellungDTO>();
 
 
                 foreach (PflegerDTO p in pfleger)
                 {
+                    // Liste mit Anstellungen für den Meldungszeitraum
+                    List<AnstellungDTO> anstellungPflegerList = anstellungenGesamt.Where(x => x.Pflegernummer == p.Pflegernummer)
+                                                                            .OrderBy(x => x.Von.GetValueOrDefault(DateTime.MinValue)).ToList();
+
+                    List<AnstellungDTO> anstellungPflegerZeitraumList = anstellungPflegerList.Where(x => (x.Bis.GetValueOrDefault(DateTime.MaxValue) >= from  && 
+                                                                                                          x.Von.GetValueOrDefault(DateTime.MinValue) <= to))
+                                                                                             .OrderBy(x => x.Von.GetValueOrDefault(DateTime.MinValue)).ToList();
+
+                    anstellungen.AddRange(anstellungPflegerZeitraumList);
+
+
+
                     // Aktueller Berufstitel
-                    List<AnstellungDTO> anstellungPflegerList = anstellungen.Where(x => x.Pflegernummer == p.Pflegernummer)
-                                                      .OrderByDescending(x => x.Von).ToList();
-
-                    List<AnstellungDTO> anstellungPflegerZeitraumList = anstellungPflegerList.Where(x => x.Von <= to)
-                                                      .OrderByDescending(x => x.Von).ToList();
-
-                    AnstellungDTO anstellung = anstellungPflegerZeitraumList.FirstOrDefault();
+                    AnstellungDTO anstellung = anstellungPflegerZeitraumList.LastOrDefault();
 
                     if (anstellung == null)
                     {
@@ -151,7 +160,7 @@ namespace Vodamep.Legacy.Reader
 
                 var verein = connection.QueryFirst<VereinDTO>(sqlVerein, new { verein = _verein });
 
-                return new ReadResult() { A = adressen, P = pfleger, L = leistungen, V = verein, S = anstellungen };
+                return new ReadResult() { A = adressen, P = pfleger, L = leistungen, V = verein, S = anstellungen.ToArray() };
             }
         }
 
