@@ -10,10 +10,38 @@ namespace Vodamep.Hkpv.Validation
 {
     internal class EmploymentActivityValidator : AbstractValidator<HkpvReport>
     {
+        /// <summary>
+        /// Resultat für gruppierte Fehler pro Mitarbeiter
+        /// </summary>
+        class StaffResult
+        {
+            /// <summary>
+            /// Kleinstes Datum mit Fehlern
+            /// </summary>
+            public Nullable<DateTime> MinDate { get; set; }
+
+            /// <summary>
+            /// Größtes Datum mit Fehlern
+            /// </summary>
+            public Nullable<DateTime> MaxDate { get; set; }
+
+            /// <summary>
+            /// Mitarbeiter
+            /// </summary>
+            public Staff Staff { get; set; }
+
+            /// <summary>
+            /// Anzahl der Aktivitäten
+            /// </summary>
+            public int CountOfUnemployedActivities { get; set; }
+        }
+
+
 
         public EmploymentActivityValidator()
             : base()
         {
+
             //corert kann derzeit nicht mit AnonymousType umgehen. Vielleicht später:  new  { x.Activities, x.Staffs }
             this.RuleFor(x => x)
                 .Custom((x, ctx) =>
@@ -21,27 +49,34 @@ namespace Vodamep.Hkpv.Validation
                    HkpvReport report = ctx.ParentContext.InstanceToValidate as HkpvReport;
 
                    var activities = report.Activities;
-                   var staffs = report.Staffs;
                    DateTime from = report.FromD;
                    DateTime to = report.ToD;
 
+                   // Dictionary von Staffs mit Resultat
+                   Dictionary<string, StaffResult> resultDict = new Dictionary<string, StaffResult>();
+                   foreach (Staff staff in report.Staffs)
+                   {
+                       if (!resultDict.ContainsKey(staff.Id))
+                           resultDict.Add(staff.Id, new StaffResult()
+                           {
+                               Staff = staff
+                           });
 
-                   // Dictionary für schnellen Zugriff
-                   Dictionary<string, Staff> staffsDict = staffs.GroupBy(p => p.Id)
-                                                                .ToDictionary(g => g.Key, g => g.First());
+                   }
 
+                   // Alle Activities prüfen
                    foreach (Activity activity in activities)
                    {
-                       if (staffsDict.ContainsKey(activity.StaffId))
+                       if (resultDict.ContainsKey(activity.StaffId))
                        {
                            bool insideRange = false;
                            bool skipCheck = false;
 
-                           Staff staffDict = staffsDict[activity.StaffId];
-                           EmploymentValidator employmentVal = new EmploymentValidator(from, to, staffDict);
+                           StaffResult staffResult = resultDict[activity.StaffId];
+                           EmploymentValidator employmentVal = new EmploymentValidator(from, to, staffResult.Staff);
                            ActivityValidator activityVal = new ActivityValidator(from, to);
 
-                           foreach (Employment employment in staffDict.Employments)
+                           foreach (Employment employment in staffResult.Staff.Employments)
                            {
                                ValidationResult employmentResult = employmentVal.Validate(employment);
                                ValidationResult activityResult = activityVal.Validate(activity);
@@ -65,10 +100,31 @@ namespace Vodamep.Hkpv.Validation
 
                            if (!insideRange && !skipCheck)
                            {
-                               var index = activities.IndexOf(activity);
-                               ctx.AddFailure(new ValidationFailure($"{nameof(HkpvReport.Activities)}[{index}]", Validationmessages.InvalidEmploymentForActivity(activity, staffDict)));
+                               staffResult.CountOfUnemployedActivities++;
+
+                               if (staffResult.MinDate == null ||
+                                   activity.DateD < staffResult.MinDate)
+                               {
+                                   staffResult.MinDate = activity.DateD;
+                               }
+
+                               if (staffResult.MaxDate == null ||
+                                   activity.DateD > staffResult.MaxDate)
+                               {
+                                   staffResult.MaxDate = activity.DateD;
+                               }
                            }
                        }
+                   }
+
+
+                   // Jeden Mitarbeiter nur einmal als Fehler ausgeben
+                   List<StaffResult> errors = resultDict.Values.Where(s => s.CountOfUnemployedActivities > 0).ToList();
+                   foreach (StaffResult staffResult in errors)
+                   {
+                       var index = report.Staffs.IndexOf(staffResult.Staff);
+
+                       ctx.AddFailure(new ValidationFailure($"{nameof(HkpvReport.Staffs)}[{index}]", Validationmessages.InvalidEmploymentForActivity(staffResult.Staff, staffResult.CountOfUnemployedActivities, staffResult.MinDate.Value, staffResult.MaxDate.Value)));
                    }
 
                });

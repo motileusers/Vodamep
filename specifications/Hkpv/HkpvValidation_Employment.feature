@@ -48,8 +48,8 @@ Beispiele:
 
 Szenariogrundriss: Leistungen nicht im Anstellungsverhältnis
     Angenommen die Meldung enthält die Anstellungen '<Anstellungen>' und die Leistungstage '<Leistungstage>'
-    Dann enthält das Validierungsergebnis den Fehler 'liegt nicht im Anstellungszeitraum'
+    Dann enthält das Validierungsergebnis den Fehler 'gibt es kein Anstellungsverhältnis für'
 Beispiele:
     | Anstellungen  | Leistungstage | 
-    | 1-2,5-28		| 1,4			| 
+    | 1-2,6-28		| 1,4,5,6		| 
 
