@@ -1,6 +1,8 @@
 ﻿using PowerArgs;
 using System;
 using System.Linq;
+using Vodamep.Hkpv.Model;
+using Vodamep.Hkpv.Validation;
 using Vodamep.Legacy.Reader;
 
 namespace Vodamep.Legacy
@@ -29,15 +31,6 @@ namespace Vodamep.Legacy
 
                 this.Read(reader, args);
             }
-        }
-
-        [ArgActionMethod]
-        [ArgDescription("Liest Daten aus der Version 45 von TransDok.")]
-        public void ReadTd45(ReadTd45Args args)
-        {
-            var reader = new Td45Reader(args.GetSqlServerCS());
-
-            this.Read(reader, args);
         }
 
         private void Read(IReader reader, ReadBaseArgs args)
@@ -80,5 +73,30 @@ namespace Vodamep.Legacy
             }
         }
 
+        [ArgActionMethod]
+        [ArgDescription("Liest Daten aus der Version 45 von TransDok.")]
+        public string ReadTd45(ReadTd45Args args)
+        {
+            var filename = "";
+
+            var year = args.Year;
+            if (year == 0) year = DateTime.Today.AddMonths(-1).Year;
+            var month = args.Month;
+            if (month == 0) month = DateTime.Today.AddMonths(-1).Month;
+
+            var reader = new Td45Reader(args.GetSqlServerCS());
+
+            var data = reader.Read(year, month);
+            
+            if (data == null || data.Equals(ReadResult.Empty))
+            {
+                Console.WriteLine($"Keine Daten für {year}-{month}.");
+            }
+
+            filename = new Writer().Write(args.TargetDirectory, data, args.Json);
+            Console.WriteLine($"{filename} wurde erzeugt.");
+
+            return filename;
+        }
     }
 }
