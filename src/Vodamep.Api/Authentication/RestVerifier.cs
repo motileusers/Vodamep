@@ -23,7 +23,7 @@ namespace Vodamep.Api.Authentication
 
         public async Task<bool> Verify((string username, string password) credentials)
         {
-            AuthenticationResponse result = await  client.AuthenticateAsync(credentials.username, credentials.password, "DATA");
+            AuthenticationResponse result = await  client.AuthenticateAsync(credentials.username, credentials.password, "asdf");
             return !string.IsNullOrWhiteSpace(result?.Username);
         }
     }
