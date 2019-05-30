@@ -127,6 +127,27 @@ namespace Vodamep.Legacy
             {
                 switch (oldID)
                 {
+                    // Dornbirn
+                    case 224: return "1213";
+                    case 1215: return "1215";
+                    case 1174: return "1174";
+                    case 1265: return "1265";
+                    case 263: return "1063";
+                    case 1098: return "1098";
+                    case 1272: return "1272";
+                    case 575: return "575";
+                    case 1188: return "1188";
+                    case 566: return "566";
+                    case 1224: return "1224";
+                    case 1114: return "1114";
+                    case 5034: return "5034";
+                    case 1040: return "1040";
+                    case 1061: return "1061";
+                    case 1175: return "1175";
+                    case 1214: return "1214";
+                    case 714: return "714";
+
+
                     case 89: return "3";
                     case 1213: return "12";
                     case 1063: return "19";
@@ -184,25 +205,6 @@ namespace Vodamep.Legacy
                 switch (oldID)
                 {
 
-                    // Dornbirn
-                    case 224: return "1213";
-                    case 1215: return "1215";
-                    case 1174: return "1174";
-                    case 1265: return "1265";
-                    case 263: return "1063";
-                    case 1098: return "1098";
-                    case 1272: return "1272";
-                    case 575: return "575";
-                    case 1188: return "1188";
-                    case 566: return "566";
-                    case 1224: return "1224";
-                    case 1114: return "1114";
-                    case 5034: return "5034";
-                    case 1040: return "1040";
-                    case 1061: return "1061";
-                    case 1175: return "1175";
-                    case 1214: return "1214";
-                    case 714: return "714";
 
                     // Götzis, Lustenau, ...
                     case 304: return "304";
