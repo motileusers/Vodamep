@@ -95,7 +95,7 @@ namespace Vodamep.Legacy.Reader
                 var sqlAnstellung = @"select
                                       U.von Von,
                                       U.bis Bis,
-                                      CONVERT(DECIMAL, REPLACE(REPLACE(V.Wert, '%', ''), ',', '.')) AS VZAE,  
+                                      CONVERT(DECIMAL, REPLACE(REPLACE(V.Wert, '%', ''), ',', '.')) / 100 AS VZAE,  
                                       U.Wert Pflegernummer,
                                       V.Funktion Berufstitel
                                     from Zeit Z,
