@@ -55,20 +55,11 @@ GROUP BY q.SeniorID, q.PflegerID, convert(smalldatetime,convert(varchar(8),q.Dat
 
                 var adressnummern = leistungen.Where(x => x.Leistung < 20).Select(x => x.Adressnummer).Distinct().ToArray();
 
-                var sqlReligion = @"
-SELECT TOP 1 s2.WertText FROM tblSenior2 s2 
-WHERE s2.ctlName IN ('Religion', 'Konfession', 'ReligionAndere')
-	AND LEN(COALESCE(s2.WertText,'')) > 0 AND @to between s2.vonDatum and s2.bisDatum
-	AND s2.SeniorID = s.SeniorID
-ORDER BY CASE WHEN s2.ctlName Like 'Religion' THEN 1 ELSE 0 END, s2.vonDatum DESC";
-
                 var sqlAdressen = $@"SELECT s.SeniorID AS Adressnummer, 
     coalesce(s.Nachname, '???') AS Name_1, coalesce(s.Vorname, '???') AS Name_2,
     q.Postleitzahl, q.Ort, s1.Geburtsdatum,
 	(SELECT TOP 1 Land FROM tblLand WHERE Bezeichnung LIKE s1.Staatsangehörigkeit) AS Staatsbuergerschaft,
-    v.Code AS Versicherung, s1.VNummer1 AS Versicherungsnummer,
-    ({ sqlReligion}) AS Religion,
-s1.Geschlecht
+    v.Code AS Versicherung, s1.VNummer1 AS Versicherungsnummer, s1.Geschlecht
 FROM tblSenior s
 INNER JOIN tblSenior1 s1 ON s.SeniorID = s1.SeniorID
 LEFT JOIN tblVersicherung v ON v.Versicherung = s1.Versicherung1
@@ -105,17 +96,29 @@ FROM tblSenior s WHERE s.SeniorID IN @ids;";
 
                 var pflegernummern = leistungen.Select(x => x.Pfleger).Distinct().ToArray();
 
-                var sqlPfleger = @"SELECT PflegerID AS Pflegernummer, coalesce(Nachname, '???') + ' ' + coalesce(Vorname, '???') AS Pflegername 
-FROM tblPfleger WHERE PflegerID in @ids;";
+                var sqlPfleger = @"SELECT p.PflegerID AS Pflegernummer, coalesce(p.Nachname, '???') + ' ' + coalesce(p.Vorname, '???') AS Pflegername,
+	COALESCE((SELECT TOP 1 CASE WHEN Tätigkeit LIKE 'DGK%' THEN 'DGKP' ELSE Tätigkeit END
+		FROM dbo.fnTdPflegerDienstverhältnisInfo(@from, @to) pdv WHERE pdv.PflegerID = p.PflegerID),'') AS Berufstitel
+FROM tblPfleger p WHERE p.PflegerID IN @ids;";
 
-                var pfleger = connection.Query<PflegerDTO>(sqlPfleger, new { ids = pflegernummern }).ToArray();
+                var pfleger = connection.Query<PflegerDTO>(sqlPfleger, new { from = from, to = to, ids = pflegernummern }).ToArray();
 
-                var sqlVerein = @"SELECT convert(int,Wert) AS Vereinsnummer, '' AS Bezeichnung 
-FROM tblEinstellungText WHERE Bezeichnung like 'IGKDatenHeim';";
+                var sqlAnstellung = @"SELECT CASE WHEN AnstellungVon BETWEEN @from AND @to THEN AnstellungVon ELSE @from END AS Von,
+	CASE WHEN AnstellungBis BETWEEN @from AND @to THEN AnstellungBis ELSE @to END AS Bis,
+	AnstellungWert1/8.0 AS VZAE, PflegerID AS Pflegernummer,
+	COALESCE(CASE WHEN Tätigkeit LIKE 'DGK%' THEN 'DGKP' ELSE Tätigkeit END,'') AS Berufstitel
+FROM dbo.fnTdPflegerDienstverhältnisInfo(@from, @to) WHERE PflegerID IN @ids;";
+
+                var anstellung = connection.Query<AnstellungDTO>(sqlAnstellung, new { from = from, to = to, ids = pflegernummern }).ToArray();
+
+                var sqlVerein = @"SELECT TOP 1 convert(int,coalesce(Wert,'0')) AS Vereinsnummer, 
+	coalesce((SELECT TOP 1 Wert FROM tblEinstellungText 
+		WHERE Bezeichnung like 'ConnexiaVereinsbezeichnung'),'') AS Bezeichnung 
+FROM tblEinstellungText WHERE Bezeichnung like 'ConnexiaVereinsnummer';";
 
                 var verein = connection.QueryFirst<VereinDTO>(sqlVerein);
 
-                return new ReadResult() { A = adressen, P = pfleger, L = leistungen, V = verein };
+                return new ReadResult() { A = adressen, P = pfleger, S = anstellung, L = leistungen, V = verein };
             }
         }
     }

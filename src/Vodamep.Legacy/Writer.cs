@@ -81,7 +81,7 @@ namespace Vodamep.Legacy
                     {
                         FromD = anstellung.Von,
                         ToD = anstellung.Bis,
-                        HoursPerWeek = 40 / anstellung.VZAE,
+                        HoursPerWeek = 40 * anstellung.VZAE,
                     };
 
                     staff.Employments.Add(employment);
