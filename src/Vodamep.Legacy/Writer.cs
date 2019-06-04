@@ -127,6 +127,27 @@ namespace Vodamep.Legacy
             {
                 switch (oldID)
                 {
+                    // Dornbirn
+                    case 224: return "1213";
+                    case 1215: return "1215";
+                    case 1174: return "1174";
+                    case 1265: return "1265";
+                    case 263: return "1063";
+                    case 1098: return "1098";
+                    case 1272: return "1272";
+                    case 575: return "575";
+                    case 1188: return "1188";
+                    case 566: return "566";
+                    case 1224: return "1224";
+                    case 1114: return "1114";
+                    case 5034: return "5034";
+                    case 1040: return "1040";
+                    case 1061: return "1061";
+                    case 1175: return "1175";
+                    case 1214: return "1214";
+                    case 714: return "714";
+
+
                     case 89: return "3";
                     case 1213: return "12";
                     case 1063: return "19";
@@ -183,6 +204,61 @@ namespace Vodamep.Legacy
             {
                 switch (oldID)
                 {
+
+
+                    // Götzis, Lustenau, ...
+                    case 304: return "304";
+                    case 319: return "5015";
+                    case 5036: return "5036";
+                    case 5007: return "5007";
+                    case 1317: return "1317";
+                    case 1144: return "1144";
+                    case 12: return "214";
+                    case 14: return "296";
+                    case 60: return "465";
+                    case 322: return "1332";
+                    case 213: return "1043";
+                    case 244: return "1094";
+                    case 243: return "1107";
+                    case 42: return "702";
+                    case 11: return "215";
+                    case 295: return "1220";
+                    case 276: return "1035";
+                    case 210: return "1034";
+                    case 19: return "348";
+                    case 13: return "218";
+                    case 298: return "1228";
+                    case 310: return "1126";
+                    case 313: return "1273";
+                    case 214: return "12";
+                    case 1007: return "187";
+                    case 465: return "60";
+                    case 1043: return "213";
+                    case 1094: return "244";
+                    case 698: return "698";
+                    case 1107: return "243";
+                    case 724: return "198";
+                    case 702: return "42";
+                    case 215: return "11";
+                    case 1220: return "295";
+                    case 1035: return "276";
+                    case 1034: return "210";
+                    case 1006: return "1006";
+                    case 1246: return "1246";
+                    case 348: return "15";
+                    case 218: return "13";
+                    case 1228: return "298";
+                    case 1222: return "296";
+                    case 296: return "14";
+                    case 1126: return "310";
+                    case 5015: return "5015";
+                    case 1273: return "313";
+                    case 1229: return "1229";
+                    case 1231: return "1231";
+                    case 5013: return "5013";
+                    case 5032: return "5032";
+
+
 
                     case -1233: return "76D2CBF6-0F5E-48D0-9550-E71E08BE59AC";
                     case 697: return "00000000-0000-0000-0000-000000001001";
