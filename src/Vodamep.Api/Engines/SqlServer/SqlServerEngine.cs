@@ -75,25 +75,23 @@ namespace Vodamep.Api.Engines.SqlServer
                 connection.Open();
 
                 var institutionId = this.GetRowId("Institution", report.Institution.Id, connection);
+
+                var lastInfo = GetLast(report.Institution.Id, institutionId, connection);
+
+                var info = HkpvReportInfo.Create(report, lastInfo?.Id ?? -1, lastInfo?.Created ?? DateTime.Now);
+
+                string state = null;
+
+                if (lastInfo != null && info.Equals(lastInfo))
+                {
+                    state = "DUPLICATE";
+                }
                 
-                //var lastInfo = GetLast(report.Institution.Id, institutionId, connection);
-
-                // Skip Verhalten -> ausgeschaltet
-                //var info = HkpvReportInfo.Create(report, lastInfo?.Id ?? -1, lastInfo?.Created ?? DateTime.Now);
-
-                //if (lastInfo != null && info.Equals(lastInfo))
-                //{
-                //    _logger.LogInformation("Report already exits. Skip saving.");
-                //    return;
-                //}
-
-                var info = HkpvReportInfo.Create(report, -1, DateTime.Now);
-
-                this.SaveReport(connection, report, info, institutionId);
+                this.SaveReport(connection, report, info, institutionId, state);
             }
         }
 
-        private void SaveReport(SqlConnection connection, HkpvReport report, HkpvReportInfo info, int institutionId)
+        private void SaveReport(SqlConnection connection, HkpvReport report, HkpvReportInfo info, int institutionId, string state)
         {
             using (var ms = report.WriteToStream(asJson: false, compressed: true))
             {
@@ -106,6 +104,8 @@ namespace Vodamep.Api.Engines.SqlServer
                 insert.Parameters.AddWithValue("@month", info.Month);
                 insert.Parameters.AddWithValue("@year", info.Year);
                 insert.Parameters.AddWithValue("@date", DateTime.Now);
+                if (!string.IsNullOrWhiteSpace(state))
+                    insert.Parameters.AddWithValue("@state", state);
                 insert.Parameters.AddWithValue("@data", ms.ToArray());
                 try
                 {
@@ -166,9 +166,9 @@ namespace Vodamep.Api.Engines.SqlServer
                 {
                     var info = new HkpvReportInfo()
                     {
-                        Id = reader.GetInt32(0),
-                        Month = reader.GetInt16(1),
-                        Year = reader.GetInt16(2),
+                        //Id = reader.GetInt32(0),
+                        Month = Convert.ToInt32(reader.GetDecimal(1)),
+                        Year = Convert.ToInt32(reader.GetDecimal(2)),
                         HashSHA256 = reader.GetString(3),
                         Created = reader.GetDateTime(4),
                         Institution = institution

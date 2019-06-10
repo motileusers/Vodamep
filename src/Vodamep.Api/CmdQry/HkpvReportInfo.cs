@@ -37,13 +37,11 @@ namespace Vodamep.Api.CmdQry
                 return true;
             }
             
-            if (Id != other.Id) return false;
             if (Month != other.Month) return false;
             if (Year != other.Year) return false;
             if (Institution != other.Institution) return false;
             if (HashSHA256 != other.HashSHA256) return false;
-            if (Created != other.Created) return false;
-
+      
             return true;
         }
 
