@@ -80,7 +80,7 @@ namespace Vodamep.Api.Engines.SqlServer
 
                 var info = HkpvReportInfo.Create(report, lastInfo?.Id ?? -1, lastInfo?.Created ?? DateTime.Now);
 
-                string state = null;
+                string state = "";
 
                 if (lastInfo != null && info.Equals(lastInfo))
                 {
@@ -107,8 +107,7 @@ namespace Vodamep.Api.Engines.SqlServer
                 insert.Parameters.AddWithValue("@month", info.Month);
                 insert.Parameters.AddWithValue("@year", info.Year);
                 insert.Parameters.AddWithValue("@date", DateTime.Now);
-                if (!string.IsNullOrWhiteSpace(state))
-                    insert.Parameters.AddWithValue("@state", state);
+                insert.Parameters.AddWithValue("@state", state);
                 insert.Parameters.AddWithValue("@data", ms.ToArray());
                 try
                 {
