@@ -156,28 +156,36 @@ namespace Vodamep.Api.Engines.SqlServer
 
         private HkpvReportInfo GetLast(string institution, int institudionId, SqlConnection connection)
         {
-            var command =
-                new SqlCommand(
-                    $"SELECT top 1 [Id],[Month],[Year],[Hash_SHA256],[Date] from [Message] where [InstitutionId] =  @institudionId ORDER BY [Date] desc",
-                    connection);
-            command.Parameters.AddWithValue("@institudionId", institudionId);
-
-            using (var reader = command.ExecuteReader())
+            try
             {
-                if (reader.Read())
-                {
-                    var info = new HkpvReportInfo()
-                    {
-                        //Id = reader.GetInt32(0),
-                        Month = Convert.ToInt32(reader.GetDecimal(1)),
-                        Year = Convert.ToInt32(reader.GetDecimal(2)),
-                        HashSHA256 = reader.GetString(3),
-                        Created = reader.GetDateTime(4),
-                        Institution = institution
-                    };
+                var command =
+                    new SqlCommand(
+                        $"SELECT top 1 [Id],[Month],[Year],[Hash_SHA256],[Date] from [Message] where [InstitutionId] =  @institudionId ORDER BY [Date] desc",
+                        connection);
+                command.Parameters.AddWithValue("@institudionId", institudionId);
 
-                    return info;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        var info = new HkpvReportInfo()
+                        {
+                            //Id = reader.GetInt32(0),
+                            Month = reader.GetInt16(1),
+                            Year = reader.GetInt16(2),
+                            HashSHA256 = reader.GetString(3),
+                            Created = reader.GetDateTime(4),
+                            Institution = institution
+                        };
+
+                        return info;
+                    }
                 }
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation(exception.Message);
+                throw exception;
             }
 
 
