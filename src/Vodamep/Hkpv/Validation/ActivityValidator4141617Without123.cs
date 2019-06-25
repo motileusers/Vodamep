@@ -19,7 +19,8 @@ namespace Vodamep.Hkpv.Validation
                     var l = list;
 
                     var activtiy = ctx.ParentContext.InstanceToValidate as Activity;
-                    string person = null;
+                    string person = string.Empty;
+                    string staff = string.Empty;
 
                     if (!string.IsNullOrWhiteSpace(activtiy.PersonId))
                     {
@@ -32,16 +33,16 @@ namespace Vodamep.Hkpv.Validation
                     {
                         var s = staffs.FirstOrDefault(x => x.Id == activtiy.StaffId);
                         if (s != null)
-                            person = $"{s.GivenName} {s.FamilyName}";
+                            staff = $"{s.GivenName} {s.FamilyName}";
                     }
 
                     var entries123 = l.Where(x => x == ActivityType.Lv01 || x == ActivityType.Lv02 || x == ActivityType.Lv03).Any();
-                    
+
                     var entries4Except15 = l.Where(x => x != ActivityType.Lv15 && ((int)x > 3) && ((int)x <= 17)).Any();
-                                        
+
                     if (entries4Except15 && !entries123)
                     {
-                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("1,2,3", person, activtiy.DateD.ToShortDateString())));
+                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("1,2,3", person, staff, activtiy.DateD.ToShortDateString())));
                     }
                 });
         }

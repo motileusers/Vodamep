@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
+using System.Collections.Generic;
 using System.Linq;
 using Vodamep.Hkpv.Model;
 
@@ -17,14 +17,15 @@ namespace Vodamep.Hkpv.Validation
                     if (!list?.Any() ?? false)
                         return;
 
-                   var a =  ctx.ParentContext.InstanceToValidate;
+                    var a = ctx.ParentContext.InstanceToValidate;
 
                     var l = list;
 
 
                     var activtiy = ctx.ParentContext.InstanceToValidate as Activity;
-                   
-                    string person = null;
+
+                    string person = string.Empty;
+                    string staff = string.Empty;
 
                     if (!string.IsNullOrWhiteSpace(activtiy.PersonId))
                     {
@@ -37,18 +38,18 @@ namespace Vodamep.Hkpv.Validation
                     {
                         var s = staffs.FirstOrDefault(x => x.Id == activtiy.StaffId);
                         if (s != null)
-                            person = $"{s.GivenName} {s.FamilyName}";
+                            staff = $"{s.GivenName} {s.FamilyName}";
                     }
 
-                    
+
 
                     var entries23 = l.Where(x => x == ActivityType.Lv02 || x == ActivityType.Lv03).Any();
-                    
+
                     var entries4 = l.Where(x => ((int)x > 3)).Any();
-                    
+
                     if (entries23 && !entries4)
                     {
-                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("4-17", person, activtiy.DateD.ToShortDateString()))
+                        ctx.AddFailure(new ValidationFailure($"{nameof(Activity.Entries)}", Validationmessages.WithoutEntry("4-17", person, staff, activtiy.DateD.ToShortDateString()))
                         {
                             Severity = Severity.Warning
                         });

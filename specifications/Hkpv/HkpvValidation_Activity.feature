@@ -4,7 +4,7 @@ Funktionalität: Validierung der gemeldeten Aktivitäten der Datenmeldung
 Szenariogrundriss: Eine Aktivität 2 oder 3 aber keine Leistung 4-17 zu dieser Aktivität. Ab dem Jahr 2019 ist es ein Fehler.
     Angenommen die Meldung enthält die Aktivitäten '<Art>'
 	Und die Eigenschaft 'to' von 'HkpvReport' ist auf '2019-01-01' gesetzt
-	Dann enthält das Validierungsergebnis die Warnung 'Kein Eintrag '4-17'
+	Dann enthält das Validierungsergebnis die Warnung 'Kein Eintrag '4-17''
 Beispiele:
     | Art      |	
     | 2        |
@@ -13,7 +13,7 @@ Beispiele:
 Szenariogrundriss: Eine Aktivität 2 oder 3 aber keine Leistung 4-17 zu dieser Aktivität.  Bis zum Jahr 2019 ist es korrekt.
     Angenommen die Meldung enthält die Aktivitäten '<Art>'
 	Und die Eigenschaft 'to' von 'HkpvReport' ist auf '2018-12-31' gesetzt
-    Dann enthält das Validierungsergebnis nicht den Fehler 'Kein Eintrag '4-17' vorhanden.'
+    Dann enthält das Validierungsergebnis nicht den Fehler 'Kein Eintrag '4-17''
 Beispiele:
     | Art      |	
     | 2        |
@@ -73,7 +73,7 @@ Szenariogrundriss: Beispiele für möglicherweise ungültige Aktivitäten
     Dann enthält das Validierungsergebnis die Warnung '<Fehler>'
 Beispiele:
     | Art | Datum		 | Fehler |
-    | 2   |2019-01-20    |Kein Eintrag '4-17' vorhanden. |
+    | 2   |2019-01-20    |Kein Eintrag '4-17' |
 
 Szenariogrundriss: Beispiele für ungültige Aktivitäten
     Angenommen die Meldung enthält die Aktivitäten '<Art>'	
