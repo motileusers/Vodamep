@@ -40,12 +40,7 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.4" />    
     <PackageReference Include="System.Data.SqlClient" Version="4.5.0" />    
   </ItemGroup>
-
-  <ItemGroup Condition="'$(CoreRT)' == 'True'">
-    <RdXmlFile Include="rd.xml" />    
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-26615-01" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Vodamep\Vodamep.csproj" />
   </ItemGroup>
