@@ -15,7 +15,7 @@ namespace Vodamep.Hkpv.Validation
         public static string IdIsMissing(string id) => $"Der Id '{id}' fehlt.";
         public static string PersonWithoutPersonalDate => "Kein Personenbezug vorhanden";
         public static string PersonWithoutData => "Keine Stammdaten vorhanden";
-        public static string WithoutEntry(string e, string person, string date) => !string.IsNullOrWhiteSpace(person) ? $"Kein Eintrag '{e}' vorhanden. Person: {person}. Datum '{date}'" : $"Kein Eintrag '{e}' vorhanden. Datum '{date}'.";
+        public static string WithoutEntry(string e, string person, string staff, string date) => $"Kein Eintrag '{e}': bei '{person}', von '{staff}', am '{date}'.";
         public static string WithoutActivity => $"Keine Aktivitäten.";
         public static string StaffWithoutEmployment => $"Beim Mitarbeiter ist keine Beschäftigung vorhanden";
         public static string EmploymentHoursPerWeekMustBeBetween0And100 => $"Die Stundenanzahl muss größer 0 und kleiner 100 sein";

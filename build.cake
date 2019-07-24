@@ -1,4 +1,5 @@
-#tool "Google.Protobuf.Tools"
+#tool nuget:?package=Google.Protobuf.Tools&version=3.6.1
+#addin nuget:?package=Cake.Warp&version=0.2.0
 
 var target = Argument("target", "Default");
 var configuration = "Release";
@@ -134,14 +135,15 @@ Task("PublishLegacy")
 
 Task("PublishClient")	
 	.Does(() =>
-	{	
-
-		EnsureDirectoryExists(publishDir);
+	{		
+		
 		CleanDirectory(publishDir + "/dmc");
 		if (FileExists(publishDir + "/dmc.zip"))
 		{
 			DeleteFile(publishDir + "/dmc.zip");
 		}
+
+		EnsureDirectoryExists(publishDir + "/dmc/dmc_warp/");
 
 		var ms = new DotNetCoreMSBuildSettings();
 
@@ -150,39 +152,32 @@ Task("PublishClient")
 			Configuration = "Release",			
 			OutputDirectory = publishDir + "/dmc",
 			MSBuildSettings = ms,
-			Runtime = "win-x64"
-		};	
+			Runtime = "win-x64",
+			SelfContained = true
+		};			
 		
-		settings.MSBuildSettings = settings.MSBuildSettings.WithProperty("CoreRT", "True");
-
-		// compression wird derzeit noch nicht unterstützt: workaround
-		// https://github.com/dotnet/corert/issues/5496
-		settings.MSBuildSettings = settings.MSBuildSettings.WithProperty("NativeCompilationDuringPublish", "False");		
-
 		DotNetCorePublish("./src/Vodamep.Client/Vodamep.Client.csproj", settings); 
 
-		settings.MSBuildSettings = settings.MSBuildSettings.WithProperty("NativeCompilationDuringPublish", "True");		
+		Warp(publishDir+ "/dmc",
+			 "dmc.exe", 
+			publishDir+ "/dmc/dmc_warp/dmc.exe",
+			WarpPlatforms.WindowsX64
+			);
 
-		DotNetCorePublish("./src/Vodamep.Client/Vodamep.Client.csproj", settings); 
-		
-		var files = new [] {
-			publishDir + "/dmc/dmc.exe",
-			publishDir + "/dmc/clrcompression.dll"
-		};
-
-		Zip(publishDir + "/dmc", publishDir + "/dmc.zip", files);
+		Zip(publishDir + "/dmc/dmc_warp", publishDir + "/dmc.zip");
 	});
 
 Task("PublishApi")	
 	.Does(() =>
 	{	
-
-		EnsureDirectoryExists(publishDir);
+		
 		CleanDirectory(publishDir + "/dms");
 		if (FileExists(publishDir + "/dms.zip"))
 		{
 			DeleteFile(publishDir + "/dms.zip");
 		}
+
+		EnsureDirectoryExists(publishDir + "/dms/dms_warp/");
 
 		var ms = new DotNetCoreMSBuildSettings();
 
@@ -191,31 +186,27 @@ Task("PublishApi")
 			Configuration = "Release",			
 			OutputDirectory = publishDir + "/dms",
 			MSBuildSettings = ms,
-			Runtime = "win-x64"
+			Runtime = "win-x64",
+			SelfContained = true
 		};	
 		
-		settings.MSBuildSettings = settings.MSBuildSettings.WithProperty("CoreRT", "True");
-
-		// compression wird derzeit noch nicht unterstützt: workaround
-		// https://github.com/dotnet/corert/issues/5496
-		settings.MSBuildSettings = settings.MSBuildSettings.WithProperty("NativeCompilationDuringPublish", "False");		
-
-		DotNetCorePublish("./src/Vodamep.Api/Vodamep.Api.csproj", settings); 
-
-		settings.MSBuildSettings = settings.MSBuildSettings.WithProperty("NativeCompilationDuringPublish", "True");		
-
 		DotNetCorePublish("./src/Vodamep.Api/Vodamep.Api.csproj", settings); 
 		
-		var files = new [] {
-			publishDir + "/dms/dms.exe",
-			publishDir + "/dms/libuv.dll",
-			publishDir + "/dms/clrcompression.dll",
-			publishDir + "/dms/sni.dll",
+		Warp(publishDir+ "/dms",
+			 "dms.exe", 
+			publishDir+ "/dms/dms_warp/dms.exe",
+			WarpPlatforms.WindowsX64
+			);
+
+		var files = new [] {						
 			publishDir + "/dms/web.config",
-			publishDir + "/dms/appsettings.json"
+			publishDir + "/dms/appsettings.json",
+			publishDir + "/dms/nlog.config",
 		};
 
-		Zip(publishDir + "/dms", publishDir + "/dms.zip", files);
+		CopyFiles(files, publishDir + "/dms/dms_warp");
+
+		Zip(publishDir + "/dms/dms_warp", publishDir + "/dms.zip");
 	});
 
 Task("PublishSpecs")	
