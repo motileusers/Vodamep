@@ -7,24 +7,24 @@ using Vodamep.Hkpv.Model;
 
 namespace Vodamep.Hkpv.Validation
 {
-    internal class ActivityWarningIfMoreThan250Validator : AbstractValidator<HkpvReport>
+    internal class ActivityWarningIfMoreThan350Validator : AbstractValidator<HkpvReport>
     {
-        public ActivityWarningIfMoreThan250Validator()
+        public ActivityWarningIfMoreThan350Validator()
             : base()
         {
             this.RuleFor(x => new Tuple<IList<Activity>, IEnumerable<Person>>(x.Activities, x.Persons))
                 .Custom((a, ctx) =>
                 {
-                    var moreThan250 = a.Item1.Where(x => x.PersonId != string.Empty)
+                    var moreThan350 = a.Item1.Where(x => x.PersonId != string.Empty)
                         .GroupBy(x => x.PersonId)
                         .Select(x => new { PersonId = x.Key, Sum = x.Sum(y => y.GetLP()) })
-                        .Where(x => x.Sum > 250);
+                        .Where(x => x.Sum > 350);
 
-                    foreach (var entry in moreThan250)
+                    foreach (var entry in moreThan350)
                     {
                         var p = a.Item2.Where(x => x.Id == entry.PersonId).FirstOrDefault();
 
-                        var f = new ValidationFailure($"{nameof(HkpvReport)}", Validationmessages.ActivityMoreThen250(p, entry.Sum))
+                        var f = new ValidationFailure($"{nameof(HkpvReport)}", Validationmessages.ActivityMoreThen350(p, entry.Sum))
                         {
                             Severity = Severity.Warning
                         };

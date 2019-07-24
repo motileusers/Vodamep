@@ -94,15 +94,16 @@ Szenario: Eine Mitarbeiter hat eine Aktivität 31 oder 33 öfter als 5 Mal an ei
     Und es enthält keine Warnungen
 
 @weich
-Szenario: Ein Klienten hat jeden Tag Leistungen dokumentiert, in Summe mehr als 250 LP.
+Szenario: Ein Klienten hat jeden Tag Leistungen dokumentiert, in Summe mehr als 350 LP.
     Angenommen die Meldung enthält jeden Tag die Aktivitäten '2,04,04,04,15'
-    Dann enthält das Validierungsergebnis die Warnung 'wurden mehr als 250 LP in einem Monat erfasst.'
+    Dann enthält das Validierungsergebnis die Warnung 'wurden mehr als 350 LP in einem Monat erfasst.'
 
-Szenario: Ein Klienten hat innerhalb kurzer Zeit mehr als 250 LP gemeldet.
+Szenario: Ein Klienten hat innerhalb kurzer Zeit mehr als 350 LP gemeldet.
     Angenommen die Meldung enthält am '2008-04-30' die Aktivitäten '02,04,04,04,04,05,05,05,05,06,06,06,07,07,07,08,08,08,09,09,09,10,10,10,11,11,11,12,12,12,13,13,13,14,14,14,15,15,15,16,16,16,17,17,17'	
     Angenommen die Meldung enthält am '2008-04-29' die Aktivitäten '02,04,04,04,04,05,05,05,05,06,06,06,07,07,07,08,08,08,09,09,09,10,10,10,11,11,11,12,12,12,13,13,13,14,14,14,15,15,15,16,16,16,17,17,17'	
     Angenommen die Meldung enthält am '2008-04-28' die Aktivitäten '02,04,04,04,04,05,05,05,05,06,06,06,07,07,07,08,08,08,09,09,09,10,10,10,11,11,11,12,12,12,13,13,13,14,14,14,15,15,15,16,16,16,17,17,17'	
-    Dann enthält das Validierungsergebnis die Warnung 'wurden mehr als 250 LP in einem Monat erfasst.'
+    Angenommen die Meldung enthält am '2008-04-27' die Aktivitäten '02,04,04,04,04,05,05,05,05,06,06,06,07,07,07,08,08,08,09,09,09,10,10,10,11,11,11,12,12,12,13,13,13,14,14,14,15,15,15,16,16,16,17,17,17'	
+    Dann enthält das Validierungsergebnis die Warnung 'wurden mehr als 350 LP in einem Monat erfasst.'
 
 Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
     Angenommen die Meldung enthält am '2058-04-30' die Aktivitäten '02,15'

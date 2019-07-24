@@ -62,7 +62,7 @@ namespace Vodamep.Hkpv.Validation
 
             this.Include(new ActivityWarningIfMoreThan5Validator());
 
-            this.Include(new ActivityWarningIfMoreThan250Validator());            
+            this.Include(new ActivityWarningIfMoreThan350Validator());            
 
             this.Include(new HkpvReportPersonIdValidator());
 
