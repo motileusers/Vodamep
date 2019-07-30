@@ -85,7 +85,7 @@ Task("Build")
 
 		var msBuildSettings = new MSBuildSettings {
     		Verbosity = Verbosity.Minimal,
-    		ToolVersion = MSBuildToolVersion.VS2017,
+    		ToolVersion = MSBuildToolVersion.VS2019,
     		Configuration = configuration
     	};
 
@@ -124,7 +124,7 @@ Task("PublishLegacy")
 
 		var msBuildSettings = new MSBuildSettings {
     		Verbosity = Verbosity.Minimal,
-    		ToolVersion = MSBuildToolVersion.VS2017,
+    		ToolVersion = MSBuildToolVersion.VS2019,
     		Configuration = configuration
     	};
 
