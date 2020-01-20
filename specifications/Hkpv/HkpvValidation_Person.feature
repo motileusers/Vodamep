@@ -32,6 +32,7 @@ Beispiele:
 Szenariogrundriss: Die Versicherungsnummer ist korrekt
     Angenommen die Eigenschaft 'ssn' von 'Person' ist auf '<SSN>' gesetzt
     Dann enthält das Validierungsergebnis keine Fehler
+Beispiele:
     | SSN			|
     | 1237010180	| 
 
