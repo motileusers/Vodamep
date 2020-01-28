@@ -56,5 +56,15 @@ namespace Vodamep.Hkpv.Model
 
         public MemoryStream WriteToStream(bool asJson = false, bool compressed = true) => new HkpvReportSerializer().WriteToStream(this, asJson, compressed);
 
+        public string[] Diff(HkpvReport report)
+        {
+            var result = new string[2];
+
+            var properties = this.GetType().GetProperties();
+            
+
+
+            return result;
+        }
     }
 }

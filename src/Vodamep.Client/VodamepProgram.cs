@@ -45,7 +45,6 @@ namespace Vodamep.Client
                 files = new[] { args.File };
             }
 
-
             foreach (var file in files)
             {
                 var report = ReadReport(file);
@@ -75,9 +74,6 @@ namespace Vodamep.Client
                     Console.WriteLine("Erfolgreich");
                 }
             }
-
-
-
         }
 
         [ArgActionMethod, ArgDescription("Prüfung der Meldung.")]
@@ -119,7 +115,6 @@ namespace Vodamep.Client
                 Console.WriteLine(message);
             }
         }
-
 
         [ArgActionMethod, ArgDescription("Meldung neu verpacken.")]
         public void PackFile(PackFileArgs args)
@@ -176,6 +171,21 @@ namespace Vodamep.Client
 
         }
 
+        [ArgActionMethod, ArgDescription("Diff von zwei Dateien erzeugen.")]
+        public void Diff(DiffArgs args)
+        {
+            var fileName1 = args.File1;
+            var fileName2 = args.File2;
+
+            var file1 = HkpvReport.ReadFile(fileName1);
+            var file2 = HkpvReport.ReadFile(fileName2);
+
+            var difference = file1.Diff(file2);
+
+            var output = args.FileOutput;
+            
+            Console.WriteLine($"{file1} diff {file2} erzeugt {args.FileOutput}.");
+        }
 
         private HkpvReport ReadReport(string file)
         {
