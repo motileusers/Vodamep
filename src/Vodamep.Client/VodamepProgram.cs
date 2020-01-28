@@ -184,7 +184,12 @@ namespace Vodamep.Client
 
             var output = args.FileOutput;
             
-            Console.WriteLine($"{file1} diff {file2} erzeugt {args.FileOutput}.");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine($" {args.File1} diff {args.File2} erzeugt {args.FileOutput}");
+            Console.WriteLine("-------------------------------------------");
+
         }
 
         private HkpvReport ReadReport(string file)
