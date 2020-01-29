@@ -1,5 +1,7 @@
 ﻿using PowerArgs;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Vodamep.Data;
@@ -181,14 +183,28 @@ namespace Vodamep.Client
             var file2 = HkpvReport.ReadFile(fileName2);
 
             var difference = file1.Diff(file2);
+            var result = new List<string>();
 
-            var output = args.FileOutput;
-            
+            foreach (var line in difference)
+            {
+                var resultLine = string.Join(';', line);
+                result.Add(resultLine);
+            }
+
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("-------------------------------------------");
             Console.WriteLine($" {args.File1} diff {args.File2} erzeugt {args.FileOutput}");
             Console.WriteLine("-------------------------------------------");
+            Console.WriteLine();
+            Console.WriteLine();
+            
+            Console.Write(result);
+            File.WriteAllLines(args.FileOutput, result);
+            
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("press any key to continue");
 
         }
 
