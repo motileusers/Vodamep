@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using Connexia.Service.Client;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Vodamep.Api.Authentication;
@@ -34,6 +35,16 @@ namespace Vodamep.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
             services.AddRouting();
 
             this.ConfigureAuth(services);
@@ -57,7 +68,6 @@ namespace Vodamep.Api
 
         private void ConfigureValidationClient(IServiceCollection services)
         {
-
             var validationClient = new ValidationClient();
             validationClient.BaseUrl = _authConfig.Url;
 
@@ -66,11 +76,6 @@ namespace Vodamep.Api
 
         private void ConfigureEngine(IServiceCollection services)
         {
-            services.Configure<IISServerOptions>(options =>
-            {
-                options.AllowSynchronousIO = true;
-            });
-
             var sqlEngineConfig = this._configuration.GetSection(nameof(SqlServerEngine)).Get<SqlServerEngineConfiguration>() ?? new SqlServerEngineConfiguration();
 
             if (!string.IsNullOrEmpty(sqlEngineConfig.ConnectionString))
