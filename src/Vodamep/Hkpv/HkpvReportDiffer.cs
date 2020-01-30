@@ -23,7 +23,7 @@ namespace Vodamep.Hkpv
             return tabString;
         }
 
-        private string[] CreateResultLine(object value1, object value2, string name, int level)
+        private string[] Diff(object value1, object value2, string name, int level)
         {
             var tabs = CreateTabs(level);
             var resultLine = new string[4];
@@ -62,7 +62,7 @@ namespace Vodamep.Hkpv
 
             if (IsValueType(obj1.GetType()) && IsValueType(obj2.GetType()))
             {
-                result.Add(CreateResultLine(obj1, obj2, "", level));
+                result.Add(Diff(obj1, obj2, "", level));
             }
 
             var simpleProperties = obj1.GetType().GetProperties().Where(IsValueType).ToArray();
@@ -72,7 +72,7 @@ namespace Vodamep.Hkpv
                 var value1 = propertyInfo.GetValue(obj1);
                 var value2 = propertyInfo.GetValue(obj2);
 
-                result.Add(CreateResultLine(value1, value2, name, level));
+                result.Add(Diff(value1, value2, name, level));
             }
 
             var objectProperties = obj1.GetType().GetProperties().Where(a => !IsValueType(a) && !a.PropertyType.IsGenericType).ToArray();

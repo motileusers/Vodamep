@@ -191,21 +191,26 @@ namespace Vodamep.Client
                 result.Add(resultLine);
             }
 
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("-------------------------------------------");
-            Console.WriteLine($" {args.File1} diff {args.File2} erzeugt {args.FileOutput}");
-            Console.WriteLine("-------------------------------------------");
-            Console.WriteLine();
-            Console.WriteLine();
+            var message = $" {args.File1} diff {args.File2} erzeugt {args.FileOutput}";
             
-            Console.Write(result);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine(CreateLine(message.Length + 1));
+            Console.WriteLine(message);
+            Console.WriteLine(CreateLine(message.Length + 1));
+
             File.WriteAllLines(args.FileOutput, result);
             
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("press any key to continue");
+        }
 
+        private string CreateLine(int length)
+        {
+            var result = string.Empty;
+            for (int i = 0; i < length; i++)
+            {
+                result += "-";
+            }
+            return result;
         }
 
         private HkpvReport ReadReport(string file)
