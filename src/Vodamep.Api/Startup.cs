@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using Connexia.Service.Client;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Vodamep.Api.Authentication;
@@ -30,8 +31,20 @@ namespace Vodamep.Api
             this._logger = loggerFactory.CreateLogger<Startup>();
         }
 
+        public IConfiguration Configuration => _configuration;
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
             services.AddRouting();
 
             this.ConfigureAuth(services);
@@ -42,10 +55,8 @@ namespace Vodamep.Api
             services.AddSingleton<DbUpdater>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            env.ConfigureNLog("nlog.config");
-            
             var useAuthentication = !IsAuthDisabled(_authConfig);
             if (useAuthentication)
             {
@@ -57,7 +68,6 @@ namespace Vodamep.Api
 
         private void ConfigureValidationClient(IServiceCollection services)
         {
-
             var validationClient = new ValidationClient();
             validationClient.BaseUrl = _authConfig.Url;
 
@@ -90,7 +100,7 @@ namespace Vodamep.Api
         private void ConfigureAuth(IServiceCollection services)
         {
             _authConfig = _configuration.GetSection("BasicAuthentication").Get<BasicAuthenticationConfiguration>() ?? new BasicAuthenticationConfiguration();
-            
+
             if (IsAuthDisabled(_authConfig))
             {
                 this._logger?.LogInformation("Authentication is disabled");
@@ -133,10 +143,6 @@ namespace Vodamep.Api
             throw new Exception(msg);
         }
 
-
         private bool IsAuthDisabled(BasicAuthenticationConfiguration configuration) => string.IsNullOrEmpty(configuration?.Mode) || string.Equals(_authConfig.Mode, BasicAuthenticationConfiguration.Mode_Disabled, StringComparison.CurrentCultureIgnoreCase);
     }
-
-
-
 }
