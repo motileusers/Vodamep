@@ -10,7 +10,7 @@ namespace Vodamep.Client
         [ArgRequired, ArgShortcut("F2"), ArgPosition(2)]
         public string File2 { get; set; }
 
-        [ArgRequired, ArgShortcut("FO"), ArgPosition(3)]
-        public string FileOutput { get; set; }
+        [ArgRequired, ArgShortcut("H"), ArgPosition(4), DefaultValue(true)]
+        public bool HideUnchanged { get; set; }
     }
 }

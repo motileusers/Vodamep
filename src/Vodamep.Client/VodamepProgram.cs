@@ -179,28 +179,15 @@ namespace Vodamep.Client
             var fileName1 = args.File1;
             var fileName2 = args.File2;
 
-            var file1 = HkpvReport.ReadFile(fileName1);
-            var file2 = HkpvReport.ReadFile(fileName2);
+            var report1 = HkpvReport.ReadFile(fileName1);
+            var report2 = HkpvReport.ReadFile(fileName2);
 
-            var difference = file1.Diff(file2);
-            var result = new List<string>();
+            var difference = report1.Diff(report2);
 
-            foreach (var line in difference)
-            {
-                var resultLine = string.Join(';', line);
-                result.Add(resultLine);
-            }
+            var formatter = new HkpvDiffResultFormatter(args.HideUnchanged);
+            var message = formatter.Format(difference);
 
-            var message = $" {args.File1} diff {args.File2} erzeugt {args.FileOutput}";
-            
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine(CreateLine(message.Length + 1));
             Console.WriteLine(message);
-            Console.WriteLine(CreateLine(message.Length + 1));
-
-            File.WriteAllLines(args.FileOutput, result);
-            
         }
 
         private string CreateLine(int length)

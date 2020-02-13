@@ -1,10 +1,10 @@
 ﻿namespace Vodamep.Hkpv
 {
-    internal enum ModifiedStatus
+    public enum Status
     {
-        UnModified,
+        Unchanged,
         Added,
         Removed,
-        Modified
+        Changed
     }
 }

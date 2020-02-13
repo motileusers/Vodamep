@@ -6,63 +6,37 @@ using System.Reflection;
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
 using Vodamep.Hkpv.Model;
+using Vodamep.Hkpv.Validation;
 
 namespace Vodamep.Hkpv
 {
     internal class HkpvReportDiffer
     {
-        private string CreateTabs(int level)
+        private HkpReportDiffResult Diff(object value1, object value2, string name, int level)
         {
-            return string.Empty;
+            var result = new HkpReportDiffResult();
 
-            var tabString = "";
-            for (int i = 0; i < level; i++)
-            {
-                tabString += "\t";
-            }
-            return tabString;
+            result.PropertyName = name;
+            result.Type = value1?.GetType();
+            result.Value1 = value1;
+            result.Value2 = value2;
+            result.Status = value1?.ToString() == value2?.ToString() ? Status.Unchanged : Status.Changed;
+
+            return result;
         }
 
-        private string[] Diff(object value1, object value2, string name, int level)
+        public HkpReportDiffResult Diff(object obj1, object obj2, int level = 0)
         {
-            var tabs = CreateTabs(level);
-            var resultLine = new string[4];
-            resultLine[1] = name;
+            if (obj1 == null || obj2 == null)
+                return null;
 
-            if (value1.ToString() == value2.ToString())
-            {
-                resultLine[0] = ModifiedStatus.UnModified.ToString();
-                resultLine[2] = tabs + value1;
-                resultLine[3] = tabs + value2;
-            }
-            else
-            {
-                resultLine[0] = ModifiedStatus.Modified.ToString();
-                resultLine[2] = tabs + value1;
-                resultLine[3] = tabs + value2;
-            }
+            var result = new HkpReportDiffResult();
 
-            return resultLine;
-        }
-
-        public IEnumerable<string[]> Diff(object obj1, object obj2, int level = 0)
-        {
-            if (obj1 == null && obj2 == null)
-                return new List<string[]>(); ;
-
-            if (obj1 == null)
-                return new List<string[]>(); ;
-
-            if (obj2 == null)
-                return new List<string[]>(); ;
-
-            var result = new List<string[]>();
-
-            result.Add(new[] { Environment.NewLine + obj1.GetType().Name });
+            result.Type = obj1.GetType();
 
             if (IsValueType(obj1.GetType()) && IsValueType(obj2.GetType()))
             {
-                result.Add(Diff(obj1, obj2, "", level));
+                result.Children.Add(Diff(obj1, obj2, "", level));
             }
 
             var simpleProperties = obj1.GetType().GetProperties().Where(IsValueType).ToArray();
@@ -72,7 +46,7 @@ namespace Vodamep.Hkpv
                 var value1 = propertyInfo.GetValue(obj1);
                 var value2 = propertyInfo.GetValue(obj2);
 
-                result.Add(Diff(value1, value2, name, level));
+                result.Children.Add(Diff(value1, value2, name, level));
             }
 
             var objectProperties = obj1.GetType().GetProperties().Where(a => !IsValueType(a) && !a.PropertyType.IsGenericType).ToArray();
@@ -86,7 +60,7 @@ namespace Vodamep.Hkpv
                 var subProperty1 = propertyInfo.GetValue(obj1);
                 var subProperty2 = propertyInfo.GetValue(obj2);
 
-                result.AddRange(Diff(subProperty1, subProperty2, level + 1));
+                result.Children.Add(Diff(subProperty1, subProperty2, level + 1));
             }
 
             var collections = obj1.GetType().GetProperties().Where(a => a.PropertyType.IsGenericType);
@@ -115,29 +89,23 @@ namespace Vodamep.Hkpv
                 //check added elements
                 for (var i = 0; i < list2.Count; i++)
                 {
-                    var addElement = this.FindNonExistingElements(list2[i], list1, level, 3);
+                    var addElement = this.FindNonExistingElements(list2[i], list1, Status.Added);
 
                     if (addElement == null)
                         continue;
 
-                    if (string.IsNullOrWhiteSpace(addElement[0]))
-                        addElement[0] = ModifiedStatus.Added.ToString();
-
-                    result.Add(addElement);
+                    result.Children.Add(addElement);
                 }
 
                 //check deleted elements
                 for (var i = 0; i < list1.Count; i++)
                 {
-                    var removedElement = this.FindNonExistingElements(list1[i], list2, level, 2);
+                    var removedElement = this.FindNonExistingElements(list1[i], list2, Status.Removed);
 
                     if (removedElement == null)
                         continue;
 
-                    if (string.IsNullOrWhiteSpace(removedElement[0]))
-                        removedElement[0] = ModifiedStatus.Removed.ToString();
-
-                    result.Add(removedElement);
+                    result.Children.Add(removedElement);
                 }
 
                 //compare existing elements
@@ -145,15 +113,31 @@ namespace Vodamep.Hkpv
                 {
                     if (!IsValueType(list1[i].GetType()))
                     {
-                        result.AddRange(Diff(list1[i], list2[i], level + 1));
+                        result.Children.Add(Diff(list1[i], list2[i], level + 1));
                     }
                 }
             }
 
-            return result.ToArray();
+            if (result.Status == Status.Unchanged)
+            {
+                foreach (var child in  result.Children)
+                {
+                    if (child.Status != Status.Unchanged)
+                    {
+                        result.Status = Status.Changed;
+                        break;
+                    }
+                }
+            }
+
+            result.Status = result.Status != Status.Unchanged ? result.Status :
+                result.Children.Where(x => x != null).Any(y => y.Status != Status.Unchanged) ? Status.Changed :
+                Status.Unchanged;
+
+            return result;
         }
 
-        private string[] FindNonExistingElements(object item, IList others, int nrOfTabs, int nameIndex)
+        private HkpReportDiffResult FindNonExistingElements(object item, IList others, Status status)
         {
             var othersFirstItem = others != null && others.Count > 0 ? others[0] : null;
 
@@ -171,18 +155,13 @@ namespace Vodamep.Hkpv
 
             if (IsValueType(item.GetType()))
             {
-                var result = new string[4];
-                result[nameIndex] = CreateTabs(nrOfTabs) + item;
-
-                if (others.Contains(item))
-                {
-                    result[0] = ModifiedStatus.UnModified.ToString();
-                    result[2] = CreateTabs(nrOfTabs) + item;
-                    result[3] = CreateTabs(nrOfTabs) + item;
-                }
+                var result = new HkpReportDiffResult();
+                
+                result.Value1 = item;
+                result.Type = item.GetType();
+                result.Status = others.Contains(item) ? Status.Unchanged : status;
 
                 return result;
-
             }
 
             var propertyDefinitions = new[] { "Id", "DateD" };
@@ -204,16 +183,16 @@ namespace Vodamep.Hkpv
                         }
                     }
 
-                    var result = new string[4];
-                    result[nameIndex] = CreateTabs(nrOfTabs) + id;
+                    var result = new HkpReportDiffResult();
+                    result.PropertyName = id.ToString();
                     return result;
                 }
             }
 
-            var foundResult = new string[4];
-            foundResult[0] = ModifiedStatus.UnModified.ToString();
-            foundResult[2] = CreateTabs(nrOfTabs) + item;
-            foundResult[3] = CreateTabs(nrOfTabs) + item;
+            var foundResult = new HkpReportDiffResult();
+            foundResult.Status = Status.Unchanged;
+            foundResult.Value1 =  item;
+            foundResult.Value2 = item;
 
             return foundResult;
         }
