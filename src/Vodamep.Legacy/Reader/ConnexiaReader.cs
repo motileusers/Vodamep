@@ -57,25 +57,59 @@ namespace Vodamep.Legacy.Reader
 
                 var adressen = connection.Query<AdresseDTO>(sqlAdressen, new { ids = adressnummern }).ToArray();
 
-                var pflegestufenSql = @"SELECT d.Adressnummer, d.Detail
-                                        FROM Doku as d
-                                        INNER JOIN (
-	                                        SELECT d0.Adressnummer, min(d0.Datum) as Datum FROM Doku as d0
-	                                        WHERE d0.Gruppe='21' AND d0.Datum <= @to AND d0.Adressnummer in @ids 
-	                                        group by d0.Adressnummer) as dd on d.Adressnummer = dd.Adressnummer and d.Gruppe='21' and d.Datum = dd.Datum";
+                //adressen = adressen.Where(x => x.Adressnummer == 37525).ToArray();
+
+                // Vorgänger Version
+                //var pflegestufenSql = @"SELECT d.Adressnummer, d.Detail
+                //                        FROM Doku as d
+                //                        INNER JOIN (
+	            //                         SELECT d0.Adressnummer, min(d0.Datum) as Datum FROM Doku as d0
+	            //                         WHERE d0.Gruppe='21' AND d0.Datum <= @to AND d0.Adressnummer in @ids 
+	            //                         group by d0.Adressnummer) as dd on d.Adressnummer = dd.Adressnummer and d.Gruppe='21' and d.Datum = dd.Datum";
 
 
-                var pflegestufen = connection.Query<(int Adressnummer, string Wert)>(pflegestufenSql, new { to = to, ids = adressnummern }).ToArray();
+                var pflegestufenSql = @"Select Adressnummer, Detail, Datum
+                                        from Doku
+                                        where Adressnummer in @ids
+                                        and Gruppe = '21'
+                                        and Datum <= @to
+                                        order by Datum desc";
+
+
+
+                var pflegestufen = connection.Query<(int Adressnummer, string Wert, DateTime Datum)>(pflegestufenSql, new { to = to, ids = adressnummern }).ToArray();
 
                 foreach (var a in adressen)
                 {
-                    var ps = pflegestufen.Where(x => x.Adressnummer == a.Adressnummer).Select(x => x.Wert).FirstOrDefault();
 
-                    if (string.IsNullOrEmpty(ps))
+                    var psList = pflegestufen.Where(x => x.Adressnummer == a.Adressnummer).OrderByDescending(x => x.Datum);
+
+                    if (psList.Count() == 0)
                         a.Pflegestufe = (int)Hkpv.Model.CareAllowance.Unknown;
                     else
-                        a.Pflegestufe = int.Parse(ps);
+                    {
+
+                        // Als default den, der zuletzt vor dieser Meldung gesendet wurde
+                        var psFound = psList.FirstOrDefault();
+
+                        foreach (var ps in psList)
+                        {
+
+                            // Wenn wir noch einen jüngeren Wert im Monat finden, dann nehmen wir den, 
+                            // gemäß der alten Logik
+                            DateTime dateTime = ps.Datum;
+                            if (dateTime.Month == month &&
+                                dateTime.Year == year)
+                            {
+                                psFound = ps;
+
+                            }
+                        }
+
+                        a.Pflegestufe = int.Parse(psFound.Wert);
+                    }
                 }
+
 
                 var pflegernummern = leistungen.Select(x => x.Pfleger).Distinct().ToArray();
 
