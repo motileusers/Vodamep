@@ -12,5 +12,8 @@
     <None Update="Hkpv\HkpvValidation_Employment.feature">
       <Generator></Generator>
     </None>
+    <None Update="Hkpv\HkpvDiff_Report.feature">
+      <Generator></Generator>
+    </None>
   </ItemGroup>
 </Project>

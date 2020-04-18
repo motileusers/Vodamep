@@ -66,5 +66,7 @@ namespace Vodamep.Hkpv.Model
 
         public  HkpReportDiffResult Diff(HkpvReport report) => new HkpvReportDiffer().Diff(this, report);
 
+        public List<DiffObject> DiffList(HkpvReport report) => new HkpvReportDiffer().DiffList(this, report);
+
     }
 }

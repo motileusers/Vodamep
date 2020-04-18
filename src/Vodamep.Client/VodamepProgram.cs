@@ -190,6 +190,23 @@ namespace Vodamep.Client
             Console.WriteLine(message);
         }
 
+        [ArgActionMethod, ArgDescription("Diff von zwei Dateien erzeugen.")]
+        public void DiffList(DiffArgs args)
+        {
+            var fileName1 = args.File1;
+            var fileName2 = args.File2;
+
+            var report1 = HkpvReport.ReadFile(fileName1);
+            var report2 = HkpvReport.ReadFile(fileName2);
+
+            var difference = report1.DiffList(report2);
+
+            var formatter = new HkpvDiffResultFormatter(args.HideUnchanged);
+            //var message = formatter.Format(difference);
+
+            //Console.WriteLine(message);
+        }
+
         private string CreateLine(int length)
         {
             var result = string.Empty;

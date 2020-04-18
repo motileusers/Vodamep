@@ -12,19 +12,6 @@ namespace Vodamep.Hkpv
 {
     internal class HkpvReportDiffer
     {
-        private HkpReportDiffResult Diff(object value1, object value2, string name, int level)
-        {
-            var result = new HkpReportDiffResult();
-
-            result.PropertyName = name;
-            result.Type = value1?.GetType();
-            result.Value1 = value1;
-            result.Value2 = value2;
-            result.Status = value1?.ToString() == value2?.ToString() ? Status.Unchanged : Status.Changed;
-
-            return result;
-        }
-
         public HkpReportDiffResult Diff(object obj1, object obj2, int level = 0)
         {
             if (obj1 == null || obj2 == null)
@@ -133,6 +120,310 @@ namespace Vodamep.Hkpv
             result.Status = result.Status != Status.Unchanged ? result.Status :
                 result.Children.Where(x => x != null).Any(y => y.Status != Status.Unchanged) ? Status.Changed :
                 Status.Unchanged;
+
+            return result;
+        }
+
+        public List<DiffObject> DiffList(HkpvReport DiffActivity, HkpvReport report2)
+        {
+            var result = new List<DiffObject>();
+
+            result.Add(this.FindChangedActivity(DiffActivity, report2));
+            result.Add(this.DiffStaffActivity(DiffActivity, report2));
+            result.Add(this.DiffPersonActivity(DiffActivity, report2));
+            result.Add(this.DiffEmployments(DiffActivity, report2));
+
+            result.AddRange(this.FindAddPersons(DiffActivity, report2));
+            result.AddRange(this.FindChangedPersons(DiffActivity, report2));
+            result.AddRange(this.FindMissingPersons(DiffActivity, report2));
+
+            result.AddRange(this.FindAddStaff(DiffActivity, report2));
+            result.AddRange(this.FindChangedStaff(DiffActivity, report2));
+            result.AddRange(this.FindMissingStaffs(DiffActivity, report2));
+
+            result.RemoveAll(x => x.Difference == Difference.Unchanged);
+
+            return result;
+        }
+
+        private DiffObject DiffStaffActivity(HkpvReport report1, HkpvReport report2)
+        {
+            var result = new DiffObject();
+            var sum1 = 0;
+            var sum2 = 0;
+
+            result.Section = Section.Summary;
+            result.DifferenceId = DifferenceIdType.StaffActivity;
+            result.Order = 1;
+            result.Type = typeof(int);
+
+            foreach (var activity in report1.Activities.Where(x => !string.IsNullOrWhiteSpace(x.StaffId)))
+            {
+                sum1 += activity.Entries.Count;
+            }
+
+            foreach (var activity in report2.Activities.Where(x => !string.IsNullOrWhiteSpace(x.StaffId)))
+            {
+                sum2 += activity.Entries.Count;
+            }
+
+            result.Difference = sum1 == sum2 ? Difference.Unchanged : Difference.Difference;
+            result.Value1 = sum1;
+            result.Value2 = sum2;
+
+            return result;
+        }
+
+        private DiffObject DiffPersonActivity(HkpvReport report1, HkpvReport report2)
+        {
+            var result = new DiffObject();
+            var sum1 = 0;
+            var sum2 = 0;
+
+            result.Section = Section.Summary;
+            result.DifferenceId = DifferenceIdType.PersonActivity;
+            result.Order = 2;
+            result.Type = typeof(int);
+
+            foreach (var activity in report1.Activities.Where(x => !string.IsNullOrWhiteSpace(x.PersonId)))
+            {
+                sum1 += activity.Entries.Count;
+            }
+
+            foreach (var activity in report2.Activities.Where(x => !string.IsNullOrWhiteSpace(x.PersonId)))
+            {
+                sum2 += activity.Entries.Count;
+            }
+
+            result.Difference = sum1 == sum2 ? Difference.Unchanged : Difference.Difference;
+            result.Value1 = sum1;
+            result.Value2 = sum2;
+
+            return result;
+        }
+
+        private DiffObject DiffEmployments(HkpvReport report1, HkpvReport report2)
+        {
+            double standardHoursPerWeek = 40;
+
+            var result = new DiffObject();
+            var sum1 = 0.0;
+            var sum2 = 0.0;
+
+            result.Section = Section.Summary;
+            result.DifferenceId = DifferenceIdType.Employment;
+            result.Order = 3;
+            result.Type = typeof(double);
+
+            foreach (var staff in report1.Staffs)
+            {
+                foreach (var employment in staff.Employments)
+                {
+                    sum1 += employment.HoursPerWeek / standardHoursPerWeek;
+                }
+            }
+
+            foreach (var staff in report2.Staffs)
+            {
+                foreach (var employment in staff.Employments)
+                {
+                    sum2 += employment.HoursPerWeek / standardHoursPerWeek;
+                }
+            }
+
+            result.Difference = Math.Abs(sum1 - sum2) <= 0 ? Difference.Unchanged : Difference.Difference;
+            result.Value1 = sum1;
+            result.Value2 = sum2;
+
+            return result;
+        }
+        
+        private IEnumerable<DiffObject> FindAddPersons(HkpvReport report1, HkpvReport report2)
+        {
+            return report2.Persons.Where(x => report1.Persons.All(y => x.Id != y.Id))
+                .Select(z => 
+                    new DiffObject
+                    {
+                        Section = Section.Summary,
+                        DifferenceId = DifferenceIdType.Person,
+                        Order = 4,
+                        Type = typeof(int),
+                        Difference = Difference.Added,
+                        Value1 = z.Id
+                    });
+        }
+
+        private IEnumerable<DiffObject> FindChangedPersons(HkpvReport report1, HkpvReport report2)
+        {
+            var result = new List<DiffObject>();
+
+            foreach (var person in report1.Persons)
+            {
+                var otherPerson = report2.Persons.FirstOrDefault(x => x.Id == person.Id);
+
+                if (otherPerson == null)
+                {
+                    continue;
+                }
+
+                var diff = this.Diff(person, otherPerson);
+
+                if (diff.Status == Status.Changed)
+                {
+                    result.Add(new DiffObject
+                    {
+                        Section = Section.Summary,
+                        DifferenceId = DifferenceIdType.Person,
+                        Order = 5,
+                        Difference = Difference.Difference,
+                        Type = typeof(int),
+                        Value1 = person.Id,
+                    });
+                }
+            }
+
+            return result;
+
+        }
+
+        private IEnumerable<DiffObject> FindMissingPersons(HkpvReport report1, HkpvReport report2)
+        {
+            return report1.Persons.Where(x => report2.Persons.All(y => x.Id != y.Id))
+                .Select(z =>
+                    new DiffObject
+                    {
+                        Section = Section.Summary,
+                        DifferenceId = DifferenceIdType.Person,
+                        Order = 6,
+                        Type = typeof(int),
+                        Difference = Difference.Missing,
+                        Value1 = z.Id
+                    });
+        }
+
+        private IEnumerable<DiffObject> FindAddStaff(HkpvReport report1, HkpvReport report2)
+        {
+            return report2.Staffs.Where(x => report1.Staffs.All(y => x.Id != y.Id))
+                .Select(z =>
+                    new DiffObject
+                    {
+                        Section = Section.Summary,
+                        DifferenceId = DifferenceIdType.Staff,
+                        Order = 4,
+                        Type = typeof(int),
+                        Difference = Difference.Added,
+                        Value1 = z.Id
+                    });
+        }
+
+        private IEnumerable<DiffObject> FindChangedStaff(HkpvReport report1, HkpvReport report2)
+        {
+            var result = new List<DiffObject>();
+
+            foreach (var staff in report1.Staffs)
+            {
+                var otherStaff = report2.Staffs.FirstOrDefault(x => x.Id == staff.Id);
+
+                if (otherStaff == null)
+                {
+                    continue;
+                }
+
+                var diff = this.Diff(staff, otherStaff);
+
+                if (diff.Status == Status.Changed)
+                {
+                    result.Add(new DiffObject
+                    {
+                        Section = Section.Summary,
+                        DifferenceId = DifferenceIdType.Staff,
+                        Order = 5,
+                        Difference = Difference.Difference,
+                        Type = typeof(int),
+                        Value1 = staff.Id,
+                    });
+                }
+            }
+
+            return result;
+
+        }
+
+        private IEnumerable<DiffObject> FindMissingStaffs(HkpvReport report1, HkpvReport report2)
+        {
+            return report1.Staffs.Where(x => report2.Staffs.All(y => x.Id != y.Id))
+                .Select(z =>
+                    new DiffObject
+                    {
+                        Section = Section.Summary,
+                        DifferenceId = DifferenceIdType.Staff,
+                        Order = 6,
+                        Type = typeof(int),
+                        Difference = Difference.Missing,
+                        Value1 = z.Id
+                    });
+        }
+
+        private DiffObject FindChangedActivity(HkpvReport report1, HkpvReport report2)
+        {
+
+
+            bool isChanged = false;
+
+            for (int i = 0; i < report1.Activities.Count; i++)
+            {
+                var activity = report1.Activities[i];
+                var otherActivity = report2.Activities.FirstOrDefault(x => x.DateD == activity.DateD &&
+                                                                          x.PersonId == activity.PersonId &&
+                                                                          x.StaffId == activity.StaffId);
+
+                if (otherActivity == null)
+                {
+                    isChanged = true;
+                    break;
+                }
+
+                isChanged |= !activity.Entries.SequenceEqual(otherActivity.Entries);
+
+            }
+
+            for (int i = 0; i < report2.Activities.Count; i++)
+            {
+                var activity = report2.Activities[i];
+                var otherActivity = report1.Activities.FirstOrDefault(x => x.DateD == activity.DateD &&
+                                                                           x.PersonId == activity.PersonId &&
+                                                                           x.StaffId == activity.StaffId);
+
+                if (otherActivity == null)
+                {
+                    isChanged = true;
+                    break;
+                }
+
+                isChanged |= !activity.Entries.SequenceEqual(otherActivity.Entries);
+
+            }
+
+
+            return new DiffObject
+            {
+                Section = Section.Summary,
+                DifferenceId = DifferenceIdType.Activity,
+                Order = 0,
+                //Difference = isChanged ? Difference.Difference : Difference.Unchanged,
+                Difference = Difference.Unchanged
+            };
+        }
+
+        private HkpReportDiffResult Diff(object value1, object value2, string name, int level)
+        {
+            var result = new HkpReportDiffResult();
+
+            result.PropertyName = name;
+            result.Type = value1?.GetType();
+            result.Value1 = value1;
+            result.Value2 = value2;
+            result.Status = value1?.ToString() == value2?.ToString() ? Status.Unchanged : Status.Changed;
 
             return result;
         }
