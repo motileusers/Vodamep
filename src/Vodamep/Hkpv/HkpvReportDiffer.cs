@@ -12,19 +12,12 @@ namespace Vodamep.Hkpv
 {
     internal class HkpvReportDiffer
     {
-        public HkpReportDiffResult Diff(object obj1, object obj2, int level = 0)
+        public HkpReportDiffResult Diff(object obj1, object obj2, int level = 0, bool ignoreChildLevels = false)
         {
             if (obj1 == null || obj2 == null)
                 return null;
 
             var result = new HkpReportDiffResult();
-
-            result.Type = obj1.GetType();
-
-            if (IsValueType(obj1.GetType()) && IsValueType(obj2.GetType()))
-            {
-                result.Children.Add(Diff(obj1, obj2, "", level));
-            }
 
             var simpleProperties = obj1.GetType().GetProperties().Where(IsValueType).ToArray();
             foreach (var propertyInfo in simpleProperties)
@@ -36,78 +29,114 @@ namespace Vodamep.Hkpv
                 result.Children.Add(Diff(value1, value2, name, level));
             }
 
-            var objectProperties = obj1.GetType().GetProperties().Where(a => !IsValueType(a) && !a.PropertyType.IsGenericType).ToArray();
-            foreach (var propertyInfo in objectProperties)
+            result.Type = obj1.GetType();
+
+            if (!ignoreChildLevels)
             {
-                if (propertyInfo.PropertyType == typeof(MessageParser<HkpvReport>) || propertyInfo.PropertyType == typeof(MessageDescriptor) || propertyInfo.PropertyType == typeof(Google.Protobuf.WellKnownTypes.Timestamp))
+                if (IsValueType(obj1.GetType()) && IsValueType(obj2.GetType()))
                 {
-                    continue;
+                    result.Children.Add(Diff(obj1, obj2, "", level));
                 }
 
-                var subProperty1 = propertyInfo.GetValue(obj1);
-                var subProperty2 = propertyInfo.GetValue(obj2);
-
-                result.Children.Add(Diff(subProperty1, subProperty2, level + 1));
-            }
-
-            var collections = obj1.GetType().GetProperties().Where(a => a.PropertyType.IsGenericType);
-            foreach (var propertyInfoCollection in collections)
-            {
-                if (propertyInfoCollection.PropertyType.BaseType == typeof(MessageParser) || propertyInfoCollection.PropertyType == typeof(MessageDescriptor))
+                var objectProperties = obj1.GetType().GetProperties().Where(a => !IsValueType(a) && !a.PropertyType.IsGenericType).ToArray();
+                foreach (var propertyInfo in objectProperties)
                 {
-                    continue;
-                }
-
-                var list1 = propertyInfoCollection.GetValue(obj1) as IList;
-                var list2 = propertyInfoCollection.GetValue(obj2) as IList;
-
-                if (list1 == null)
-                {
-                    //todo
-                    continue;
-                }
-
-                if (list2 == null)
-                {
-                    //todo
-                    continue;
-                }
-
-                //check added elements
-                for (var i = 0; i < list2.Count; i++)
-                {
-                    var addElement = this.FindNonExistingElements(list2[i], list1, Status.Added);
-
-                    if (addElement == null)
-                        continue;
-
-                    result.Children.Add(addElement);
-                }
-
-                //check deleted elements
-                for (var i = 0; i < list1.Count; i++)
-                {
-                    var removedElement = this.FindNonExistingElements(list1[i], list2, Status.Removed);
-
-                    if (removedElement == null)
-                        continue;
-
-                    result.Children.Add(removedElement);
-                }
-
-                //compare existing elements
-                for (var i = 0; i < list1.Count && i < list2.Count; i++)
-                {
-                    if (!IsValueType(list1[i].GetType()))
+                    if (propertyInfo.PropertyType == typeof(MessageParser<HkpvReport>) || propertyInfo.PropertyType == typeof(MessageDescriptor) || propertyInfo.PropertyType == typeof(Google.Protobuf.WellKnownTypes.Timestamp))
                     {
-                        result.Children.Add(Diff(list1[i], list2[i], level + 1));
+                        continue;
+                    }
+
+                    var subProperty1 = propertyInfo.GetValue(obj1);
+                    var subProperty2 = propertyInfo.GetValue(obj2);
+
+                    result.Children.Add(Diff(subProperty1, subProperty2, level + 1));
+                }
+
+                var collections = obj1.GetType().GetProperties().Where(a => a.PropertyType.IsGenericType);
+                foreach (var propertyInfoCollection in collections)
+                {
+                    if (propertyInfoCollection.PropertyType.BaseType == typeof(MessageParser) || propertyInfoCollection.PropertyType == typeof(MessageDescriptor))
+                    {
+                        continue;
+                    }
+
+                    var list1 = propertyInfoCollection.GetValue(obj1) as IList;
+                    var list2 = propertyInfoCollection.GetValue(obj2) as IList;
+
+                    if (list1 == null)
+                    {
+                        //todo
+                        continue;
+                    }
+
+                    if (list2 == null)
+                    {
+                        //todo
+                        continue;
+                    }
+
+                    //check added elements
+                    for (var i = 0; i < list2.Count; i++)
+                    {
+                        var addElement = this.FindNonExistingElements(list2[i], list1, Status.Added);
+
+                        if (addElement == null)
+                        {
+                            if (list1.Count != list2.Count)
+                            {
+                                addElement = new HkpReportDiffResult();
+                                addElement.Status = Status.Added;
+                                addElement.Value1 = list2[i];
+                                addElement.Value2 = list2[i];
+
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                        result.Children.Add(addElement);
+                    }
+
+                    //check deleted elements
+                    for (var i = 0; i < list1.Count; i++)
+                    {
+                        var removedElement = this.FindNonExistingElements(list1[i], list2, Status.Removed);
+
+                        if (removedElement == null)
+                        {
+                            if (list1.Count != list2.Count)
+                            {
+                                removedElement = new HkpReportDiffResult();
+                                removedElement.Status = Status.Removed;
+                                removedElement.Value1 = list1[i];
+                                removedElement.Value2 = list1[i];
+
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                        result.Children.Add(removedElement);
+                    }
+
+                    //compare existing elements
+                    for (var i = 0; i < list1.Count && i < list2.Count; i++)
+                    {
+                        if (!IsValueType(list1[i].GetType()))
+                        {
+                            result.Children.Add(Diff(list1[i], list2[i], level + 1));
+                        }
                     }
                 }
             }
 
             if (result.Status == Status.Unchanged)
             {
-                foreach (var child in  result.Children)
+                foreach (var child in result.Children)
                 {
                     if (child.Status != Status.Unchanged)
                     {
@@ -157,17 +186,25 @@ namespace Vodamep.Hkpv
             result.Order = 1;
             result.Type = typeof(int);
 
+            var isEntryTypeChanged = false;
+
             foreach (var activity in report1.Activities.Where(x => !string.IsNullOrWhiteSpace(x.StaffId)))
             {
                 sum1 += activity.Entries.Count;
+
+                var otherActivity = report2.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId);
+                isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
             }
 
             foreach (var activity in report2.Activities.Where(x => !string.IsNullOrWhiteSpace(x.StaffId)))
             {
                 sum2 += activity.Entries.Count;
+
+                var otherActivity = report2.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId);
+                isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
             }
 
-            result.Difference = sum1 == sum2 ? Difference.Unchanged : Difference.Difference;
+            result.Difference = !isEntryTypeChanged && sum1 == sum2 ? Difference.Unchanged : Difference.Difference;
             result.Value1 = sum1;
             result.Value2 = sum2;
 
@@ -185,22 +222,37 @@ namespace Vodamep.Hkpv
             result.Order = 2;
             result.Type = typeof(int);
 
+            var isEntryTypeChanged = false;
+
             foreach (var activity in report1.Activities.Where(x => !string.IsNullOrWhiteSpace(x.PersonId)))
             {
                 sum1 += activity.Entries.Count;
+
+                var otherActivity = report2.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId);
+                if (otherActivity != null)
+                {
+                    isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
+                }
             }
 
             foreach (var activity in report2.Activities.Where(x => !string.IsNullOrWhiteSpace(x.PersonId)))
             {
                 sum2 += activity.Entries.Count;
+
+                var otherActivity = report1.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId);
+                if (otherActivity != null)
+                {
+                    isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
+                }
             }
 
-            result.Difference = sum1 == sum2 ? Difference.Unchanged : Difference.Difference;
+            result.Difference = !isEntryTypeChanged && sum1 == sum2 ? Difference.Unchanged : Difference.Difference;
             result.Value1 = sum1;
             result.Value2 = sum2;
 
             return result;
         }
+
 
         private DiffObject DiffEmployments(HkpvReport report1, HkpvReport report2)
         {
@@ -237,11 +289,11 @@ namespace Vodamep.Hkpv
 
             return result;
         }
-        
+
         private IEnumerable<DiffObject> FindAddPersons(HkpvReport report1, HkpvReport report2)
         {
             return report2.Persons.Where(x => report1.Persons.All(y => x.Id != y.Id))
-                .Select(z => 
+                .Select(z =>
                     new DiffObject
                     {
                         Section = Section.Summary,
@@ -266,7 +318,7 @@ namespace Vodamep.Hkpv
                     continue;
                 }
 
-                var diff = this.Diff(person, otherPerson);
+                var diff = this.Diff(person, otherPerson, 0, true);
 
                 if (diff.Status == Status.Changed)
                 {
@@ -331,6 +383,7 @@ namespace Vodamep.Hkpv
 
                 var diff = this.Diff(staff, otherStaff);
 
+
                 if (diff.Status == Status.Changed)
                 {
                     result.Add(new DiffObject
@@ -366,7 +419,6 @@ namespace Vodamep.Hkpv
 
         private DiffObject FindChangedActivity(HkpvReport report1, HkpvReport report2)
         {
-
 
             bool isChanged = false;
 
@@ -415,6 +467,35 @@ namespace Vodamep.Hkpv
             };
         }
 
+        private bool AreChanged(IEnumerable<ActivityType> activities1, IEnumerable<ActivityType> activities2)
+        {
+            if (activities1 == null || activities2 == null)
+            {
+                return true;
+            }
+
+            var list1 = activities1.ToList();
+            var list2 = activities2.ToList();
+
+            if (list1.Count != list2.Count)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                var a = list1[i].ToString();
+                var b = list2[i].ToString();
+
+                if (list1[i].ToString().CompareTo(list2[i].ToString()) != 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private HkpReportDiffResult Diff(object value1, object value2, string name, int level)
         {
             var result = new HkpReportDiffResult();
@@ -432,6 +513,8 @@ namespace Vodamep.Hkpv
         {
             var othersFirstItem = others != null && others.Count > 0 ? others[0] : null;
 
+            var type = item.GetType();
+
             if (othersFirstItem == null)
             {
                 return null;
@@ -447,7 +530,7 @@ namespace Vodamep.Hkpv
             if (IsValueType(item.GetType()))
             {
                 var result = new HkpReportDiffResult();
-                
+
                 result.Value1 = item;
                 result.Type = item.GetType();
                 result.Status = others.Contains(item) ? Status.Unchanged : status;
@@ -455,7 +538,7 @@ namespace Vodamep.Hkpv
                 return result;
             }
 
-            var propertyDefinitions = new[] { "Id", "DateD" };
+            var propertyDefinitions = new[] { "Id", "DateD", "From" };
 
             foreach (var propertyDefinition in propertyDefinitions)
             {
@@ -482,7 +565,7 @@ namespace Vodamep.Hkpv
 
             var foundResult = new HkpReportDiffResult();
             foundResult.Status = Status.Unchanged;
-            foundResult.Value1 =  item;
+            foundResult.Value1 = item;
             foundResult.Value2 = item;
 
             return foundResult;

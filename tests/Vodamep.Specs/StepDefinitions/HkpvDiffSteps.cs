@@ -51,7 +51,7 @@ namespace Vodamep.Specs.StepDefinitions
             this.GivenReportAddPersons(this.Report1, values);
         }
 
-        [Given(@"die Meldung1 enthält den Klienten '(.*?)' mit mit '(.*)' Klientenleistungen")]
+        [Given(@"die Meldung1 enthält den Klienten '(.*?)' mit '(.*)' Klientenleistungen")]
         public void GivenReport1AddPerson(string id, int nrOfActivities)
         {
             this.GivenReportAddPerson(this.Report1, id, nrOfActivities);
@@ -63,7 +63,7 @@ namespace Vodamep.Specs.StepDefinitions
             this.GivenReportAddPersons(this.Report2, values);
         }
 
-        [Given(@"die Meldung2 enthält den Klienten '(.*?)' mit mit '(.*)' Klientenleistungen")]
+        [Given(@"die Meldung2 enthält den Klienten '(.*?)' mit '(.*)' Klientenleistungen")]
         public void GivenReport2AddPerson(string id, int nrOfActivities)
         {
             this.GivenReportAddPerson(this.Report2, id, nrOfActivities);
@@ -114,7 +114,7 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
         [Then(@"das '(.*?)'. Element besitzt den Status '(.*?)' mit der Id '(.*?)', dem Wert1 '(.*?)' und dem Wert2 '(.*?)'")]
-        public void ThenTheResultDoesNotContainsEntry22(int index, Difference difference, DifferenceIdType differenceId, string value1, string value2)
+        public void ThenTheResultDoesNotContainsEntry(int index, Difference difference, DifferenceIdType differenceId, string value1, string value2)
         {
             index = index - 1;
 
