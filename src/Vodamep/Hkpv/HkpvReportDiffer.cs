@@ -153,22 +153,22 @@ namespace Vodamep.Hkpv
             return result;
         }
 
-        public List<DiffObject> DiffList(HkpvReport DiffActivity, HkpvReport report2)
+        public List<DiffObject> DiffList(HkpvReport report1, HkpvReport report2)
         {
             var result = new List<DiffObject>();
 
-            result.Add(this.FindChangedActivity(DiffActivity, report2));
-            result.Add(this.DiffStaffActivity(DiffActivity, report2));
-            result.Add(this.DiffPersonActivity(DiffActivity, report2));
-            result.Add(this.DiffEmployments(DiffActivity, report2));
+            result.Add(this.FindChangedActivity(report1, report2));
+            result.Add(this.DiffStaffActivity(report1, report2));
+            result.Add(this.DiffPersonActivity(report1, report2));
+            result.Add(this.DiffEmployments(report1, report2));
 
-            result.AddRange(this.FindAddPersons(DiffActivity, report2));
-            result.AddRange(this.FindChangedPersons(DiffActivity, report2));
-            result.AddRange(this.FindMissingPersons(DiffActivity, report2));
+            result.AddRange(this.FindAddPersons(report1, report2));
+            result.AddRange(this.FindChangedPersons(report1, report2));
+            result.AddRange(this.FindMissingPersons(report1, report2));
 
-            result.AddRange(this.FindAddStaff(DiffActivity, report2));
-            result.AddRange(this.FindChangedStaff(DiffActivity, report2));
-            result.AddRange(this.FindMissingStaffs(DiffActivity, report2));
+            result.AddRange(this.FindAddStaff(report1, report2));
+            result.AddRange(this.FindChangedStaff(report1, report2));
+            result.AddRange(this.FindMissingStaffs(report1, report2));
 
             result.RemoveAll(x => x.Difference == Difference.Unchanged);
 
@@ -192,16 +192,22 @@ namespace Vodamep.Hkpv
             {
                 sum1 += activity.Entries.Count;
 
-                var otherActivity = report2.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId);
-                isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
+                var otherActivity = report2.Activities.FirstOrDefault(x => x.StaffId == activity.StaffId && x.DateD == activity.DateD);
+                if (otherActivity != null)
+                {
+                    isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
+                }
             }
 
             foreach (var activity in report2.Activities.Where(x => !string.IsNullOrWhiteSpace(x.StaffId)))
             {
                 sum2 += activity.Entries.Count;
 
-                var otherActivity = report2.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId);
-                isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
+                var otherActivity = report1.Activities.FirstOrDefault(x => x.StaffId == activity.StaffId && x.DateD == activity.DateD);
+                if (otherActivity != null)
+                {
+                    isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
+                }
             }
 
             result.Difference = !isEntryTypeChanged && sum1 == sum2 ? Difference.Unchanged : Difference.Difference;
@@ -228,7 +234,7 @@ namespace Vodamep.Hkpv
             {
                 sum1 += activity.Entries.Count;
 
-                var otherActivity = report2.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId);
+                var otherActivity = report2.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId && x.DateD == activity.DateD);
                 if (otherActivity != null)
                 {
                     isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
@@ -239,7 +245,7 @@ namespace Vodamep.Hkpv
             {
                 sum2 += activity.Entries.Count;
 
-                var otherActivity = report1.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId);
+                var otherActivity = report1.Activities.FirstOrDefault(x => x.PersonId == activity.PersonId && x.DateD == activity.DateD);
                 if (otherActivity != null)
                 {
                     isEntryTypeChanged |= this.AreChanged(activity.Entries, otherActivity.Entries);
