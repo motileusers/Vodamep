@@ -9,7 +9,7 @@ namespace Vodamep.Hkpv.Validation
         private static Regex Pattern = new Regex(@"^(?<nr>\d{3})(?<cd>\d)(?<tt>(0?[1-9]|[12][0-9]|3[01]))(?<mm>(0?[1-9]|1[0123]))(?<jj>\d{1,2})$");
 
         private static Regex ParsePattern = new Regex(@"^(?<nr>\d{3})(?<cd>\d)(?<tt>(0?[1-9]|[12][0-9]|3[01]))(?<mm>(0?[1-9]|1[0123]))?(?<jj>\d{1,2})$");
-        
+
         public static bool IsValid(string vnummer)
         {
             if (string.IsNullOrEmpty(vnummer))
@@ -17,23 +17,33 @@ namespace Vodamep.Hkpv.Validation
 
             bool result = false;
 
-            vnummer = Format(vnummer);
-
-            if (!string.IsNullOrEmpty(vnummer))
+            try
             {
-                var m = Pattern.Match(vnummer);
-                if (m.Success)
+
+                vnummer = Format(vnummer);
+
+                if (!string.IsNullOrEmpty(vnummer))
                 {
-                    var numberPart = string.Format("{0:D3}", int.Parse(m.Groups["nr"].Value));
-                    var birthdatePart = string.Format("{0:D2}{1:D2}{2:D2}", int.Parse(m.Groups["tt"].Value), int.Parse(m.Groups["mm"].Value), int.Parse(m.Groups["jj"].Value));
-
-                    var cd = int.Parse(m.Groups["cd"].Value);
-
-                    if (cd == GetCheckDigit(numberPart, birthdatePart))
+                    var m = Pattern.Match(vnummer);
+                    if (m.Success)
                     {
-                        result = true;
+
+                        var numberPart = string.Format("{0:D3}", int.Parse(m.Groups["nr"].Value));
+                        var birthdatePart = string.Format("{0:D2}{1:D2}{2:D2}", int.Parse(m.Groups["tt"].Value),
+                            int.Parse(m.Groups["mm"].Value), int.Parse(m.Groups["jj"].Value));
+
+                        var cd = int.Parse(m.Groups["cd"].Value);
+
+                        if (cd == GetCheckDigit(numberPart, birthdatePart))
+                        {
+                            result = true;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                result = false;
             }
 
             return result;

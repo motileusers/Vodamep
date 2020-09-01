@@ -33,7 +33,8 @@ Szenariogrundriss: Die Versicherungsnummer ist nicht korrekt
 Beispiele:
     | SSN			|
     | 9999231054	| 
-    | 1237-01.01.80	| 
+    | 1237-01.01.80 |
+    | 181113        |
 
 Szenariogrundriss: Die Versicherungsnummer ist korrekt
     Angenommen die Eigenschaft 'ssn' von 'Person' ist auf '<SSN>' gesetzt
