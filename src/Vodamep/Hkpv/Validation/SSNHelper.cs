@@ -17,6 +17,8 @@ namespace Vodamep.Hkpv.Validation
 
             bool result = false;
 
+
+            //try catch is a quick fix to "181138" issue
             try
             {
 
