@@ -1,0 +1,125 @@
+syntax = "proto3";
+package Vodamep.Mkkp;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Vodamep.Mkkp.Model";
+
+message MkkpReport {   
+    Institution institution = 1;   
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    repeated Staff staffs = 4; 
+    repeated Person persons = 5;         
+    repeated Activity activities = 6;     
+    repeated Activity travel_times = 7;     
+}
+
+// Einrichtung - immer Connexia
+message Institution {
+    string id = 1;
+    string name = 2;    
+}
+
+// Mitarbeiter, die im Zeitraum eine Leistung erbracht haben
+message Staff {
+    string id = 1;    
+    string family_name = 3;
+    string given_name = 4;    
+}
+
+// Personen, die im Zeitraum eine Leistung bezogen haben
+message Person {
+    string id = 1;
+    string family_name = 2;
+    string given_name = 3;    
+    google.protobuf.Timestamp birthday = 4;
+	Gender gender = 5;
+    string postcode = 6;				// postcode und city müssen zusammen einem Wert aus der Liste der Orte entsprechen
+    string city = 7;
+	CareAllowance care_allowance = 8;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
+	string insurance = 9;               // Ein Wert aus der Liste der Sozialversicherungen
+}
+
+// Leistungen
+message Activity {
+    string id = 1;
+    google.protobuf.Timestamp date = 2;
+    string person_id = 3;
+    string staff_id = 4;
+    string place_of_Action = 5;
+    repeated ActivityType entries = 6; 
+    int32 minutes = 7;
+    string referrer = 8;
+    string other_referrer = 9;
+    string hospital_doctor = 10;
+    string local_doctor = 11;
+    repeated DiagnosisGroup diagnoses = 12;
+}
+
+// Wegzeiten
+message TravelTime {
+    string id = 1;
+    google.protobuf.Timestamp date = 2;
+    string staff_id = 3;
+    int32 minutes = 4;
+}
+
+// Leistungstypen
+// Beschreibung in activitytypes.csv
+enum ActivityType {  
+  undefined_activity = 0;
+  Body = 1;
+  MedicalCommon = 2;
+  MedicalDiet = 3;
+  MedicalVital = 4;
+  MedicalWound = 5;
+  MedicalInjection = 6;
+  MedicalVentilationTubes = 7;
+  Accompanying = 8;
+}
+
+// Diagnosegruppen
+// Beschreibung in diagnosisgroups.csv
+enum DiagnosisGroup { 
+    undefined_diagnosis = 0;
+    OncologicalDisease = 1;
+    Premature = 2;
+    NeurologicalDisease = 3;
+    SurgicalCare = 4;
+    MetabolicDisease = 5;
+    HeartDisease = 6;
+    GeneticDisease = 7;
+    PalliativeCare1 = 8;
+    PalliativeCare2 = 9;
+    PalliativeCare3 = 10;
+    PalliativeCare4 = 11;
+}
+
+// Pflegegeld
+// Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
+enum CareAllowance {
+  undefined_allowance = 0;
+  L1 = 1;
+  L2 = 2;
+  L3 = 3;
+  L4 = 4;
+  L5 = 5;
+  L6 = 6;
+  L7 = 7;	
+  any = 9;              // Pflegegeld ja, Stufe unbekannt
+  unknown = 88;         // unbekannt ob ja oder nein
+  none = 99;            // Keine Pflegegeld
+}
+
+enum Gender {
+  undefined_gender = 0;
+  male = 1;
+  female = 2;
+}
+
+
+/*
+Dokumentation zu Protobuf: https://developers.google.com/protocol-buffers/
+Online generator z.B. :https://protogen.marcgravell.com/
+*/ 

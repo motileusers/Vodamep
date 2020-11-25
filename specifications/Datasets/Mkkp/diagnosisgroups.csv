@@ -1,0 +1,13 @@
+﻿// Diagnosegruppen MKKP
+
+OncologicalDisease;Onkologische Erkrankung	
+Premature;Frühgeborene
+NeurologicalDisease;neurologische Erkrankung
+SurgicalCare;chirurgische Versorgung nach operativen Eingriffen	
+MetabolicDisease;Stoffwechselerkrankung	
+HeartDisease;Herzerkrankungen	
+GeneticDisease;genetische Erkrankungen	
+PalliativeCare1;Palliative Versorgung: IMPaCCT 1	
+PalliativeCare2;Palliative Versorgung: IMPaCCT 2	
+PalliativeCare3;Palliative Versorgung: IMPaCCT 3	
+PalliativeCare4;Palliative Versorgung: IMPaCCT 4

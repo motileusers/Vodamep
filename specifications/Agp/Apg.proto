@@ -1,0 +1,120 @@
+syntax = "proto3";
+package Vodamep.Agp;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Vodamep.Agp.Model";
+
+message AgpReport {   
+    Institution institution = 1;   
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    repeated Staff staffs = 4; 
+    repeated Person persons = 5;         
+    repeated Activity activities = 6;     
+    repeated TravelTime travel_times = 7;     
+}
+
+// Einrichtung
+message Institution {
+    string id = 1;
+    string name = 2;    
+}
+
+// Mitarbeiter, die im Zeitraum eine Leistung erbracht haben
+message Staff {
+    string id = 1;    
+    string family_name = 3;
+    string given_name = 4;    
+}
+
+// Personen, die im Zeitraum eine Leistung bezogen haben
+message Person {
+    string id = 1;        
+    google.protobuf.Timestamp birthday = 2;
+	Gender gender = 3;
+    string postcode = 4;				// postcode und city müssen zusammen einem Wert aus der Liste der Orte entsprechen
+    string city = 5;
+	CareAllowance care_allowance = 6;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
+	string insurance = 7;               // Ein Wert aus der Liste der Sozialversicherungen
+}
+
+// Leistungen
+message Activity {
+    string id = 1;
+    google.protobuf.Timestamp date = 2;
+    string person_id = 3;
+    string staff_id = 4;
+    string place_of_Action = 5;
+    repeated ActivityType entries = 6; 
+    int32 minutes = 7;
+    string referrer = 8;
+    string other_referrer = 9;
+    string hospital_doctor = 10;
+    string local_doctor = 11;
+    repeated DiagnosisGroup diagnoses = 12;
+}
+
+// Wegzeiten
+message TravelTime {
+    string id = 1;
+    google.protobuf.Timestamp date = 2;
+    string staff_id = 3;
+    int32 minutes = 4;
+}
+
+// Leistungstypen
+// Beschreibung in activitytypes.csv
+enum ActivityType { 
+    undefined_activity = 0;
+    Clearing = 1;
+    ObservationsAssessment = 2;
+    GeriatricPsychiatric = 3;
+    GuidancePartner = 4;
+    GuidanceClient = 5;
+    CareDocumentation = 6;
+    ContactPartner = 7;
+    ExecutionTransport = 8;
+    Miscellaneous = 9;
+}
+
+// Diagnosegruppen
+// Beschreibung in diagnosisgroups.csv
+enum DiagnosisGroup { 
+    undefined_diagnosis = 0;
+    DementiaProgress = 1;
+    AddictionDisease = 2;
+    DepressionMania = 3;
+    Schizophrenia = 4;
+    DelusionalDisease = 5;
+    AnxietyDisorders = 6;
+    OtherDiseases = 7;
+}
+
+// Pflegegeld
+// Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
+enum CareAllowance {
+  undefined_allowance = 0;
+  L1 = 1;
+  L2 = 2;
+  L3 = 3;
+  L4 = 4;
+  L5 = 5;
+  L6 = 6;
+  L7 = 7;	
+  any = 9;              // Pflegegeld ja, Stufe unbekannt
+  unknown = 88;         // unbekannt ob ja oder nein
+  none = 99;            // Keine Pflegegeld
+}
+
+enum Gender {
+  undefined_gender = 0;
+  male = 1;
+  female = 2;
+}
+
+
+/*
+Dokumentation zu Protobuf: https://developers.google.com/protocol-buffers/
+Online generator z.B. :https://protogen.marcgravell.com/
+*/ 
