@@ -112,12 +112,62 @@ namespace Vodamep.Data.Dummy
             return person;
 
         }
+
+        public Person CreatePerson(int index)
+        {
+            var person = new Person()
+            {
+                Id = index.ToString(),
+                FamilyName = _familynames[index],
+                GivenName = _names[index],
+                Insurance = "19",
+                Nationality = "AT",
+                CareAllowance = _careAllowances[index],
+                Gender = index % 2 == 1 ? Gender.Female : Gender.Male
+            };
+
+            // die Anschrift
+            {
+                var address = _addresses[index].Split(';');
+
+                person.Postcode = address[6];
+                person.City = address[3];
+            }
+
+            person.BirthdayD = new DateTime(1920, 01, 01).AddDays(index);
+
+            person.Ssn = CreateFirstPossibleSSN(person.BirthdayD, index);
+
+            return person;
+        } 
+
         public IEnumerable<Person> CreatePersons(int count)
         {
             for (var i = 0; i < count; i++)
                 yield return CreatePerson();
         }
 
+
+        public string CreateFirstPossibleSSN(DateTime date, int index)
+        {
+            int nr;
+            int cd;
+
+            while (true)
+            {
+                nr = index + 100;
+
+                cd = SSNHelper.GetCheckDigit(nr.ToString("000"), date.ToString("ddMMyy"));
+
+                if (cd >= 0 && cd <= 9)
+                    break;
+
+                index++;
+
+            }
+
+            return SSNHelper.Format(string.Format("{0}{1}{2:ddMMyy}", nr, cd, date));
+        }
 
         public string CreateRandomSSN(DateTime date)
         {
@@ -155,6 +205,31 @@ namespace Vodamep.Data.Dummy
                 FromD = report.FromD,
                 ToD = report.ToD
             });
+
+            return staff;
+        }
+
+        public Staff CreateStaff(HkpvReport report, int index, int nrOfEmployments, float employment)
+        {
+            var id = index.ToString();
+
+            var staff = new Staff
+            {
+                Id = id,
+                FamilyName = _familynames[index],
+                GivenName = _names[index],
+                Qualification = "DGKP"
+            };
+
+            for (int i = 0; i < nrOfEmployments; i++)
+            {
+                staff.Employments.Add(new Employment()
+                {
+                    HoursPerWeek = employment,
+                    FromD = report.FromD,
+                    ToD = report.ToD
+                });
+            }
 
             return staff;
         }

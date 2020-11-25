@@ -1,5 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net.Security;
+using System.Reflection;
+using Google.Protobuf;
+using Google.Protobuf.Collections;
+using Google.Protobuf.Reflection;
 using Vodamep.Data.Dummy;
 namespace Vodamep.Hkpv.Model
 {
@@ -55,6 +63,10 @@ namespace Vodamep.Hkpv.Model
         public void WriteToFile(string filename, bool asJson = false, bool compressed = true) => new HkpvReportSerializer().WriteToFile(this, filename, asJson, compressed);
 
         public MemoryStream WriteToStream(bool asJson = false, bool compressed = true) => new HkpvReportSerializer().WriteToStream(this, asJson, compressed);
+
+        public  HkpReportDiffResult Diff(HkpvReport report) => new HkpvReportDiffer().Diff(this, report);
+
+        public List<DiffObject> DiffList(HkpvReport report) => new HkpvReportDiffer().DiffList(this, report);
 
     }
 }
