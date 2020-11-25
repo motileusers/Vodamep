@@ -1,5 +1,7 @@
 ﻿using PowerArgs;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Vodamep.Data;
@@ -45,7 +47,6 @@ namespace Vodamep.Client
                 files = new[] { args.File };
             }
 
-
             foreach (var file in files)
             {
                 var report = ReadReport(file);
@@ -75,9 +76,6 @@ namespace Vodamep.Client
                     Console.WriteLine("Erfolgreich");
                 }
             }
-
-
-
         }
 
         [ArgActionMethod, ArgDescription("Prüfung der Meldung.")]
@@ -119,7 +117,6 @@ namespace Vodamep.Client
                 Console.WriteLine(message);
             }
         }
-
 
         [ArgActionMethod, ArgDescription("Meldung neu verpacken.")]
         public void PackFile(PackFileArgs args)
@@ -176,6 +173,49 @@ namespace Vodamep.Client
 
         }
 
+        [ArgActionMethod, ArgDescription("Diff von zwei Dateien erzeugen.")]
+        public void Diff(DiffArgs args)
+        {
+            var fileName1 = args.File1;
+            var fileName2 = args.File2;
+
+            var report1 = HkpvReport.ReadFile(fileName1);
+            var report2 = HkpvReport.ReadFile(fileName2);
+
+            var difference = report1.Diff(report2);
+
+            var formatter = new HkpvDiffResultFormatter(args.HideUnchanged);
+            var message = formatter.Format(difference);
+
+            Console.WriteLine(message);
+        }
+
+        [ArgActionMethod, ArgDescription("Diff von zwei Dateien erzeugen.")]
+        public void DiffList(DiffArgs args)
+        {
+            var fileName1 = args.File1;
+            var fileName2 = args.File2;
+
+            var report1 = HkpvReport.ReadFile(fileName1);
+            var report2 = HkpvReport.ReadFile(fileName2);
+
+            var difference = report1.DiffList(report2);
+
+            var formatter = new HkpvDiffResultFormatter(args.HideUnchanged);
+            //var message = formatter.Format(difference);
+
+            //Console.WriteLine(message);
+        }
+
+        private string CreateLine(int length)
+        {
+            var result = string.Empty;
+            for (int i = 0; i < length; i++)
+            {
+                result += "-";
+            }
+            return result;
+        }
 
         private HkpvReport ReadReport(string file)
         {
