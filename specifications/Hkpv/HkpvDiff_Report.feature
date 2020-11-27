@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: HkpvDiffReport
+Funktionalität: Unterschiede zwischen zwei Meldungen
 
 Szenario: Fehlender Klient.
 	Angenommen die Meldung1 enthält die Klienten '1,2,3' mit Leistungen
