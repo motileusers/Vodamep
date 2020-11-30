@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: Validierung der Datenmeldung
+Funktionalität: Hkpv - Validierung der Datenmeldung
 
 Szenario: Korrekt befüllt
     Angenommen eine Meldung ist korrekt befüllt

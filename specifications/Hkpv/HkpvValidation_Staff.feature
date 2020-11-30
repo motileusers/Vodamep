@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: Validierung der gemeldeten Mitarbeiterinnen Datenmeldung
+Funktionalität: Hkpv - Validierung der gemeldeten Mitarbeiterinnen Datenmeldung
 
 Szenario: Qualifikation ist nicht gesetzt und das Jahr ist 2018.
     Angenommen die Eigenschaft 'to' von 'HkpvReport' ist auf '2018-12-31' gesetzt

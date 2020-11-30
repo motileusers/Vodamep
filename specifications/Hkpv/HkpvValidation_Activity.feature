@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: Validierung der gemeldeten Aktivitäten der Datenmeldung
+Funktionalität: Hkpv - Validierung der gemeldeten Aktivitäten der Datenmeldung
 
 Szenariogrundriss: Eine Aktivität 2 oder 3 aber keine Leistung 4-17 zu dieser Aktivität, ab dem Jahr 2019 ist es ein Fehler.
     Angenommen die Meldung enthält die Aktivitäten '<Art>'
