@@ -37,6 +37,8 @@ message Person {
     string city = 5;
 	CareAllowance care_allowance = 6;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
 	string insurance = 7;               // Ein Wert aus der Liste der Sozialversicherungen
+    string referrer = 8;
+    string other_referrer = 9;
 }
 
 // Leistungen
@@ -45,14 +47,12 @@ message Activity {
     google.protobuf.Timestamp date = 2;
     string person_id = 3;
     string staff_id = 4;
-    string place_of_Action = 5;
+    string place_of_Action = 5;        // Ein Wert aus der Liste places_of_action.csv
     repeated ActivityType entries = 6; 
     int32 minutes = 7;
-    string referrer = 8;
-    string other_referrer = 9;
-    string hospital_doctor = 10;
-    string local_doctor = 11;
-    repeated DiagnosisGroup diagnoses = 12;
+    string hospital_doctor = 8;
+    string local_doctor = 9;
+    repeated DiagnosisGroup diagnoses = 10;
 }
 
 // Wegzeiten

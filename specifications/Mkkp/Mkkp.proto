@@ -39,6 +39,8 @@ message Person {
     string city = 7;
 	CareAllowance care_allowance = 8;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
 	string insurance = 9;               // Ein Wert aus der Liste der Sozialversicherungen
+    string referrer = 10;
+    string other_referrer = 11;
 }
 
 // Leistungen
@@ -50,8 +52,6 @@ message Activity {
     string place_of_Action = 5;
     repeated ActivityType entries = 6; 
     int32 minutes = 7;
-    string referrer = 8;
-    string other_referrer = 9;
     string hospital_doctor = 10;
     string local_doctor = 11;
     repeated DiagnosisGroup diagnoses = 12;
