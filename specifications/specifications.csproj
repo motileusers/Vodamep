@@ -9,10 +9,31 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Update="Agp\AgpValidation_Report.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Agp\AgpValidation_Staff.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Agp\AgpValidation_Person.feature">
+      <Generator></Generator>
+    </None>
     <None Update="Hkpv\HkpvValidation_Employment.feature">
       <Generator></Generator>
     </None>
     <None Update="Hkpv\HkpvDiff_Report.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mkkp\MkkpValidation_Activity.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mkkp\MkkpValidation_Person.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mkkp\MkkpValidation_Staff.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mkkp\MkkpValidation_Report.feature">
       <Generator></Generator>
     </None>
   </ItemGroup>

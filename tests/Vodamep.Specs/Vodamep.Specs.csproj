@@ -78,6 +78,9 @@
       <Link>Features\HkpvDiff_Report.feature</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\..\specifications\Mkkp\MkkpValidation_Report.feature">
+      <Link>Features\MkkpValidation_Report.feature</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SpecFlow.xUnitAdapter">

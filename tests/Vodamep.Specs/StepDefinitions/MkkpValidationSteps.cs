@@ -23,10 +23,16 @@ namespace Vodamep.Specs.StepDefinitions
         private MkkpReportValidationResult _result;
         private Activity _dummyActivities;
 
-        // todo
-
         public MkkpValidationSteps()
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
+
+            var loc = new MkkpDisplayNameResolver();
+            ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
+
+            // todo
+
         }
 
         public MkkpReport Report { get; private set; }
@@ -44,5 +50,8 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
+
+
+        // todo
     }
 }
