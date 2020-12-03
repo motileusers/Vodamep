@@ -47,7 +47,7 @@ message Activity {
     google.protobuf.Timestamp date = 2;
     string person_id = 3;
     string staff_id = 4;
-    string place_of_Action = 5;        // Ein Wert aus der Liste places_of_action.csv
+    string place_of_Action = 5;         // Ein Wert aus der Liste places_of_action.csv
     repeated ActivityType entries = 6; 
     int32 minutes = 7;
     string hospital_doctor = 8;
@@ -81,7 +81,7 @@ enum ActivityType {
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    undefined_diagnosis = 0;
+    UndefinedDiagnosis = 0;
     DementiaProgress = 1;
     AddictionDisease = 2;
     DepressionMania = 3;
@@ -89,6 +89,16 @@ enum DiagnosisGroup {
     DelusionalDisease = 5;
     AnxietyDisorders = 6;
     OtherDiseases = 7;
+}
+
+// Einsatzorte
+// Beschreibung in places_of_action.csv
+enum PlacesOfAction { 
+    Residence
+    LkhRankweil
+    Base
+    MedicalOrination
+    OtherPlace
 }
 
 // Pflegegeld

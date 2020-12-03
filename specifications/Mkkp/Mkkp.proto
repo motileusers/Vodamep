@@ -49,7 +49,7 @@ message Activity {
     google.protobuf.Timestamp date = 2;
     string person_id = 3;
     string staff_id = 4;
-    string place_of_Action = 5;
+    string place_of_Action = 5;          // Ein Wert aus der Liste places_of_action.csv
     repeated ActivityType entries = 6; 
     int32 minutes = 7;
     string hospital_doctor = 10;
@@ -82,7 +82,7 @@ enum ActivityType {
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    undefined_diagnosis = 0;
+    UndefinedDiagnosis = 0;
     OncologicalDisease = 1;
     Premature = 2;
     NeurologicalDisease = 3;
@@ -94,6 +94,14 @@ enum DiagnosisGroup {
     PalliativeCare2 = 9;
     PalliativeCare3 = 10;
     PalliativeCare4 = 11;
+}
+
+// Einsatzorte
+// Beschreibung in places_of_action.csv
+enum PlacesOfAction { 
+    Residence
+    KindergartenPlaygroup
+    OtherPlace
 }
 
 // Pflegegeld

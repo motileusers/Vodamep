@@ -6,13 +6,13 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
-    | Name        | Bezeichnung     |
-    | date        | Datum           |
-    | person_id   | Personen-ID     |
-    | staff_id    | Mitarbeiter-ID  |
-    | minutes     | Leistungszeit   |
-    | referrer    | Zuweiser        |
-    | place_of_Action    | Zuweiser        |
+    | Name              | Bezeichnung     |
+    | date              | Datum           |
+    | person_id         | Personen-ID     |
+    | staff_id          | Mitarbeiter-ID  |
+    | minutes           | Leistungszeit   |
+    | referrer          | Zuweiser        |
+    | place_of_Action   | Einsatzort      |
 
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
@@ -23,10 +23,14 @@ Beispiele:
     | date | Datum       |
 
 #todo: Alle Aktivitätstypen aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
+#todo: und umgekehrt
 #todo: Alle Diagnosegruppen aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
+#todo: und umgekehrt
+#todo: Alle Einsatzorte aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
+#todo: und umgekehrt
 
 #todo: Referrer muss aus der Liste der referrers kommen
-#todo: PlaceOfAction muss aus der Liste der referrers kommen
+#todo: PlaceOfAction muss aus der Liste der places_of_action kommen
 
 
 #todo: wenn referer = Other, dann muss other_referrer befüllt sein
