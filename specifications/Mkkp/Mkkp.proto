@@ -99,9 +99,9 @@ enum DiagnosisGroup {
 // Einsatzorte
 // Beschreibung in places_of_action.csv
 enum PlacesOfAction { 
-    Residence
-    KindergartenPlaygroup
-    OtherPlace
+    Residence = 0;
+    KindergartenPlaygroup = 1;
+    OtherPlace = 2;
 }
 
 // Pflegegeld

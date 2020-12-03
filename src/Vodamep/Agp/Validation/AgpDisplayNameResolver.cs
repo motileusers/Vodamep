@@ -29,6 +29,8 @@ namespace Vodamep.Agp.Validation
             _dict.Add(nameof(Person.City), "Ort");
             _dict.Add(nameof(Person.Insurance), "Versicherung");
             _dict.Add(nameof(Person.CareAllowance), "Pflegegeld");
+            _dict.Add(nameof(Person.Referrer), "Zuweiser");
+            _dict.Add(nameof(Person.OtherReferrer), "Sonstiger Zuweiser");
 
             _dict.Add(nameof(Activity.Id), "Leistungs-ID");
             _dict.Add(nameof(Activity.Date), "Datum");
@@ -38,10 +40,8 @@ namespace Vodamep.Agp.Validation
             _dict.Add(nameof(Activity.PlaceOfAction), "Einsatzort");
             _dict.Add(nameof(Activity.Entries), "Leistungsbereiche");
             _dict.Add(nameof(Activity.Minutes), "Leistungszeit");
-            _dict.Add(nameof(Activity.Referrer), "Zuweiser");
-            _dict.Add(nameof(Activity.OtherReferrer), "Sonstiger Zuweiser");
             _dict.Add(nameof(Activity.HospitalDoctor), "Betreuender Arzt (Krankenhaus)");
-            _dict.Add(nameof(Activity.Referrer), "Betreuender Arzt (Niedergelassener Bereich");
+            _dict.Add(nameof(Activity.LocalDoctor), "Betreuender Arzt (Niedergelassener Bereich");
             _dict.Add(nameof(Activity.Diagnoses), "Erkrankungen / Diagnose");
 
             _dict.Add(nameof(TravelTime.Id), "Wegzeiten-ID");

@@ -94,11 +94,11 @@ enum DiagnosisGroup {
 // Einsatzorte
 // Beschreibung in places_of_action.csv
 enum PlacesOfAction { 
-    Residence
-    LkhRankweil
-    Base
-    MedicalOrination
-    OtherPlace
+    Residence = 0;
+    LkhRankweil = 1;
+    Base = 2;
+    MedicalOrination = 3;
+    OtherPlace = 4;
 }
 
 // Pflegegeld
