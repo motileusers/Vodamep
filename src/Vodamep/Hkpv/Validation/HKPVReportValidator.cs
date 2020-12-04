@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Hkpv.Model;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.Hkpv.Validation
 {
@@ -71,7 +72,6 @@ namespace Vodamep.Hkpv.Validation
             this.Include(new PersonSsnIsUniqueValidator());
 
             this.Include(new EmploymentActivityValidator());
-
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<HkpvReport> context, CancellationToken cancellation = default(CancellationToken))

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Vodamep.Hkpv.Model;
+using Vodamep.Hkpv.Validation;
 
-namespace Vodamep.Hkpv.Validation
+namespace Vodamep.ValidationBase
 {
     internal class Validationmessages
     {

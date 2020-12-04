@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using System.Linq;
 using Vodamep.Hkpv.Model;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.Hkpv.Validation
 {

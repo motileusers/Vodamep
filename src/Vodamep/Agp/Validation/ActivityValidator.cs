@@ -1,11 +1,9 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Vodamep.Hkpv.Model;
+﻿using System;
+using FluentValidation;
+using Vodamep.Agp.Model;
 using Vodamep.ValidationBase;
 
-namespace Vodamep.Hkpv.Validation
+namespace Vodamep.Agp.Validation
 {
     internal class ActivityValidator : AbstractValidator<Activity>
     {
@@ -25,13 +23,8 @@ namespace Vodamep.Hkpv.Validation
 
             this.RuleFor(x => x.StaffId).NotEmpty();
 
-            this.RuleFor(x => x.PersonId).NotEmpty().Unless(x => x.WithoutPersonId());
-            this.RuleFor(x => x.PersonId).Empty().Unless(x => x.RequiresPersonId());
-
-
             this.RuleFor(x => x.Entries).NotEmpty();
             this.RuleForEach(x => x.Entries).NotEqual(ActivityType.UndefinedActivity);
         }
     }
-
 }

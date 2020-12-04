@@ -1,7 +1,8 @@
 ﻿using FluentValidation.Validators;
 using Google.Protobuf.WellKnownTypes;
+using Vodamep.Hkpv.Validation;
 
-namespace Vodamep.Hkpv.Validation
+namespace Vodamep.ValidationBase
 {
     internal class TimestampWithOutTimeValidator : PropertyValidator
     {

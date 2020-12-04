@@ -1,7 +1,7 @@
 ﻿using FluentValidation.Validators;
 using Vodamep.Data;
 
-namespace Vodamep.Hkpv.Validation
+namespace Vodamep.ValidationBase
 {
     internal class CodeValidator<T> : PropertyValidator
         where T: CodeProviderBase

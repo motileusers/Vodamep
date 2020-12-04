@@ -1,32 +1,19 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
-using System.Text.RegularExpressions;
+using Vodamep.Agp.Model;
 using Vodamep.Data;
-using Vodamep.Hkpv.Model;
 using Vodamep.ValidationBase;
 
-namespace Vodamep.Hkpv.Validation
+namespace Vodamep.Agp.Validation
 {
     internal class PersonValidator : AbstractValidator<Person>
     {
         public PersonValidator()
         {
-            this.RuleFor(x => x.FamilyName).NotEmpty();
-            this.RuleFor(x => x.GivenName).NotEmpty();
-
-            // Änderung 5.11.2018, LH
-            var r = new Regex(@"^[\p{L}][-\p{L}. ]*[\p{L}.]$");
-            this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
-            this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
-            
+         
             this.Include(new PersonBirthdayValidator());
-            this.Include(new PersonSsnValidator());
-
+           
             this.RuleFor(x => x.Insurance).NotEmpty();
             this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<InsuranceCodeProvider>());
-            
-            this.RuleFor(x => x.Nationality).NotEmpty();
-            this.RuleFor(x => x.Nationality).SetValidator(new CodeValidator<CountryCodeProvider>());
 
             this.RuleFor(x => x.CareAllowance).NotEmpty();
 
