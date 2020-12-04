@@ -1,9 +1,8 @@
 ﻿// Diagnosegruppen AGP
 
-DementiaProgress;Dementielle Entwicklung 	
-AddictionDisease;Suchterkrankung
-DepressionMania;Depression, Manie 	
-Schizophrenia;Schizophrenie 	
-DelusionalDisease;Wahnerkrankung
-AnxietyDisorders;Angst, Panikstörungen
-OtherDiseases;andere Erkrankungen
+DementiaDisease;Demenzielle Erkrankungen
+AffectiveDisorder;Affektive Störungen
+SchizophreniaDelusionalDisorder;Schizophrene Psychosen und wahnhafte Störungen
+AnxietyAdjustmentObsessiveDisorder;Angst, Zwang und Anpassungsstörungen
+DependenceIllnesse;Abhängigkeitserkrankungen
+NonOrganicSleepingDisorder;Nichtorganische Schlafstörungen im Alter

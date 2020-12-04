@@ -81,15 +81,14 @@ enum ActivityType {
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    UndefinedDiagnosis = 0;
-    DementiaProgress = 1;
-    AddictionDisease = 2;
-    DepressionMania = 3;
-    Schizophrenia = 4;
-    DelusionalDisease = 5;
-    AnxietyDisorders = 6;
-    OtherDiseases = 7;
+    DementiaDisease = 0;
+    AffectiveDisorder = 1;
+    SchizophreniaDelusionalDisorder = 2;
+    AnxietyAdjustmentObsessiveDisorder = 3;
+    DependenceIllnesse = 4;
+    NonOrganicSleepingDisorder = 5;
 }
+
 
 // Einsatzorte
 // Beschreibung in places_of_action.csv
