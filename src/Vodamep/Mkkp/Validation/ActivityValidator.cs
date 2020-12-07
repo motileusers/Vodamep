@@ -27,7 +27,6 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.PersonId).Empty();
 
             this.RuleFor(x => x.Entries).NotEmpty();
-            this.RuleForEach(x => x.Entries).NotEqual(ActivityType.UndefinedActivity);
         }
     }
 }

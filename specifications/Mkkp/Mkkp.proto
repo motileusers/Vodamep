@@ -41,6 +41,9 @@ message Person {
 	string insurance = 9;               // Ein Wert aus der Liste der Sozialversicherungen
     string referrer = 10;
     string other_referrer = 11;
+    string hospital_doctor = 12;
+    string local_doctor = 13;
+    repeated DiagnosisGroup diagnoses = 14;
 }
 
 // Leistungen
@@ -52,9 +55,7 @@ message Activity {
     string place_of_Action = 5;          // Ein Wert aus der Liste places_of_action.csv
     repeated ActivityType entries = 6; 
     int32 minutes = 7;
-    string hospital_doctor = 10;
-    string local_doctor = 11;
-    repeated DiagnosisGroup diagnoses = 12;
+    bool patient_contact = 8;
 }
 
 // Wegzeiten
@@ -68,32 +69,30 @@ message TravelTime {
 // Leistungstypen
 // Beschreibung in activitytypes.csv
 enum ActivityType {  
-  undefined_activity = 0;
-  Body = 1;
-  MedicalCommon = 2;
-  MedicalDiet = 3;
-  MedicalVital = 4;
-  MedicalWound = 5;
-  MedicalInjection = 6;
-  MedicalVentilationTubes = 7;
-  Accompanying = 8;
+  Body = 0;
+  MedicalCommon = 1;
+  MedicalDiet = 2;
+  MedicalVital = 3;
+  MedicalWound = 4;
+  MedicalInjection = 5;
+  MedicalVentilationTubes = 6;
+  Accompanying = 7;
 }
 
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    UndefinedDiagnosis = 0;
-    OncologicalDisease = 1;
-    Premature = 2;
-    NeurologicalDisease = 3;
-    SurgicalCare = 4;
-    MetabolicDisease = 5;
-    HeartDisease = 6;
-    GeneticDisease = 7;
-    PalliativeCare1 = 8;
-    PalliativeCare2 = 9;
-    PalliativeCare3 = 10;
-    PalliativeCare4 = 11;
+    OncologicalDisease = 0;
+    Premature = 1;
+    NeurologicalDisease = 2;
+    SurgicalCare = 3;
+    MetabolicDisease = 4;
+    HeartDisease = 5;
+    GeneticDisease = 6;
+    PalliativeCare1 = 7;
+    PalliativeCare2 = 8;
+    PalliativeCare3 = 9;
+    PalliativeCare4 = 10;
 }
 
 // Einsatzorte

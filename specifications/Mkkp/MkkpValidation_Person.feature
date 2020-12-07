@@ -33,6 +33,7 @@ Beispiele:
     | postcode    | Plz                   |
     | city        | Ort                   |
     | gender      | Geschlecht            |    
+    | referrer    | Zuweiser              |
 
 Szenariogrundriss: Eine Eigenschaft vom AgpReport mit einem ungültigen Wert gesetzt.
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
@@ -68,4 +69,16 @@ Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
 Beispiele:
     | Name     | Bezeichnung  |
     | birthday | Geburtsdatum |
+
+
+
+
+#todo: Referrer muss aus der Liste der referrers kommen
+#todo: wenn referer = Other, dann muss other_referrer befüllt sein
     
+#todo: Alle Diagnosegruppen aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
+#todo: und umgekehrt
+
+
+#todo: keine doppelten Diagnosegruppen
+#todo: mindestens 1 Diagnosegruppen vorhanden

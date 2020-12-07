@@ -11,7 +11,6 @@ Beispiele:
     | person_id         | Personen-ID     |
     | staff_id          | Mitarbeiter-ID  |
     | minutes           | Leistungszeit   |
-    | referrer          | Zuweiser        |
     | place_of_Action   | Einsatzort      |
 
 
@@ -24,24 +23,23 @@ Beispiele:
 
 #todo: Alle Aktivitätstypen aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
 #todo: und umgekehrt
-#todo: Alle Diagnosegruppen aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
-#todo: und umgekehrt
 #todo: Alle Einsatzorte aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
 #todo: und umgekehrt
 
-#todo: Referrer muss aus der Liste der referrers kommen
 #todo: PlaceOfAction muss aus der Liste der places_of_action kommen
 
 
-#todo: wenn referer = Other, dann muss other_referrer befüllt sein
+#todo: minutes Werte Bereich: 10 - 210 Minuten
+#todo: minutes dürfen nur in 5 Minuten Schritten eingegeben werden
 
-#todo: keine doppelten Leistungstypen
 
-#todo: mindestens 1 Leistungstyp vorhanden
+#todo: Mehrfache Leistungstypen pro Leistung --> kein Fehler
+#todo: Mehrfache Leistungen pro Klient am gleichen Tag
+#todo: keine doppelten Leistungstypen innerhalb einer Aktivität
+#todo: mindestens 1 Leistungstyp pro Leistung vorhanden
 
-#todo: keine doppelten Diagnosegruppen
+#todo: PatientContact nur erlaubt, wenn nur ein Leistungstyp (und nur dieser) mit Accompanying vorhanden ist
 
-#todo: mindestens 1 Diagnosegruppen vorhanden
 
 #todo: Alle folgenden Tests müssen für diesen Report angepasst werden
 Szenario: Eine Aktivität ist nach dem Meldungszeitraum.

@@ -39,6 +39,9 @@ message Person {
 	string insurance = 7;               // Ein Wert aus der Liste der Sozialversicherungen
     string referrer = 8;
     string other_referrer = 9;
+    string hospital_doctor = 10;
+    string local_doctor = 11;
+    repeated DiagnosisGroup diagnoses = 12;
 }
 
 // Leistungen
@@ -50,9 +53,6 @@ message Activity {
     string place_of_Action = 5;         // Ein Wert aus der Liste places_of_action.csv
     repeated ActivityType entries = 6; 
     int32 minutes = 7;
-    string hospital_doctor = 8;
-    string local_doctor = 9;
-    repeated DiagnosisGroup diagnoses = 10;
 }
 
 // Wegzeiten
@@ -66,16 +66,15 @@ message TravelTime {
 // Leistungstypen
 // Beschreibung in activitytypes.csv
 enum ActivityType { 
-    undefined_activity = 0;
-    Clearing = 1;
-    ObservationsAssessment = 2;
-    GeriatricPsychiatric = 3;
-    GuidancePartner = 4;
-    GuidanceClient = 5;
-    CareDocumentation = 6;
-    ContactPartner = 7;
-    ExecutionTransport = 8;
-    Miscellaneous = 9;
+    Clearing = 0;
+    ObservationsAssessment = 1;
+    GeriatricPsychiatric = 2;
+    GuidancePartner = 3;
+    GuidanceClient = 4;
+    CareDocumentation = 5;
+    ContactPartner = 6;
+    ExecutionTransport = 7;
+    Miscellaneous = 8;
 }
 
 // Diagnosegruppen

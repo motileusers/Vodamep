@@ -46,3 +46,8 @@ Beispiele:
     | Name     | Bezeichnung  |
     | birthday | Geburtsdatum |
     
+
+
+
+
+#todo: wenn referer = Other, dann muss other_referrer befüllt sein
