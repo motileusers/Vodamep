@@ -11,7 +11,6 @@ Beispiele:
     | person_id         | Personen-ID     |
     | staff_id          | Mitarbeiter-ID  |
     | minutes           | Leistungszeit   |
-    | place_of_Action   | Einsatzort      |
 
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
@@ -39,6 +38,8 @@ Beispiele:
 #todo: mindestens 1 Leistungstyp pro Leistung vorhanden
 
 #todo: PatientContact nur erlaubt, wenn nur ein Leistungstyp mit Accompanying (und nur dieser) vorhanden ist
+
+
 
 
 #todo: Alle folgenden Tests müssen für diesen Report angepasst werden

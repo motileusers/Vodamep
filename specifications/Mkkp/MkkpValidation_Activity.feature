@@ -26,7 +26,12 @@ Beispiele:
 #todo: Alle Einsatzorte aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
 #todo: und umgekehrt
 
+#todo: PatientContact nur erlaubt, wenn nur ein Leistungstyp mit Accompanying (und nur dieser, kein anderere Leistungstyp gesetzt) vorhanden ist
+
 #todo: PlaceOfAction muss aus der Liste der places_of_action kommen
+#todo: Wenn PatientContact = true, dann muss PlaceOfAction nicht befüllt sein
+#todo: Wenn PatientContact = false, dann muss PlaceOfAction befüllt sein
+
 
 
 #todo: minutes Werte Bereich: 10 - 210 Minuten
@@ -38,7 +43,6 @@ Beispiele:
 #todo: keine doppelten Leistungstypen innerhalb einer Aktivität
 #todo: mindestens 1 Leistungstyp pro Leistung vorhanden
 
-#todo: PatientContact nur erlaubt, wenn nur ein Leistungstyp mit Accompanying (und nur dieser) vorhanden ist
 
 
 #todo: Alle folgenden Tests müssen für diesen Report angepasst werden
