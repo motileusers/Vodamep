@@ -30,6 +30,7 @@ Beispiele:
     | postcode    | Plz                   |
     | city        | Ort                   |
     | gender      | Geschlecht            |    
+    | referrer    | Zuweiser              |
 
 Szenariogrundriss: Eine Eigenschaft vom MkkpReport mit einem ungültigen Wert gesetzt.
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
@@ -38,6 +39,25 @@ Szenariogrundriss: Eine Eigenschaft vom MkkpReport mit einem ungültigen Wert ge
 Beispiele: 
     | Name        | Bezeichnung         | Wert |
     | insurance   | Versicherung        | test |
+
+
+Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
+    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: ''<Bezeichnung>' weist ein ungültiges Format auf.'
+Beispiele: 
+    | Name              | Bezeichnung                   | Wert |
+    | hospital_doctor   | Arzt Krankenhaus              | t@st |
+    | local_doctor      | Arzt Niedergelassener Bereich | t@st |
+
+	
+Szenariogrundriss: Der Name einer Person enthält ein spezielles, aber gültiges Zeichen
+    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+Beispiele: 
+    | Name              | Bezeichnung                   | Wert              |
+    | hospital_doctor   | Arzt Krankenhaus              | Dr. Frank         |
+    | local_doctor      | Arzt Niedergelassener Bereich | Dr. Dr. Frank     |
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
     Angenommen die Datums-Eigenschaft '<Name>' von 'Person' hat eine Uhrzeit gesetzt
@@ -50,4 +70,13 @@ Beispiele:
 
 
 
+#todo: Referrer muss aus der Liste der referrers kommen
 #todo: wenn referer = Other, dann muss other_referrer befüllt sein
+
+
+#todo: Alle Diagnosegruppen aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
+#todo: und umgekehrt
+
+
+#todo: keine doppelten Diagnosegruppen
+#todo: mindestens 1 Diagnosegruppen vorhanden
