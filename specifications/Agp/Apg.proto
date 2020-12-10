@@ -91,7 +91,7 @@ enum DiagnosisGroup {
 
 // Einsatzorte
 // Beschreibung in places_of_action.csv
-enum PlacesOfAction { 
+enum PlaceOfAction { 
     Residence = 0;
     LkhRankweil = 1;
     Base = 2;
