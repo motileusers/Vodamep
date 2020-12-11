@@ -7,4 +7,5 @@ MedicalVital;Medizinische Pflege: Vitalzeichen / Monitoring
 MedicalWound;Medizinische Pflege: Wundversorgung
 MedicalInjection;Medizinische Pflege: zentraler/peripherer Gefäßzugang bzw. Injektionen
 MedicalVentilationTubes;Medizinische Pflege: Beatmung, Kanülenwechsel, Tracheostomapflege
-Accompanying;Begleitende Maßnahmen
+AccompanyingWithContact;Begleitende Maßnahmen mit Patientenkontakt
+AccompanyingWithoutContact;Begleitende Maßnahmen ohne Patientenkontakt

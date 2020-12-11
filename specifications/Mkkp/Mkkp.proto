@@ -55,7 +55,6 @@ message Activity {
     string place_of_Action = 5;          // Ein Wert aus der Liste places_of_action.csv
     repeated ActivityType entries = 6; 
     int32 minutes = 7;
-    bool patient_contact = 8;
 }
 
 // Wegzeiten
@@ -76,7 +75,8 @@ enum ActivityType {
   MedicalWound = 4;
   MedicalInjection = 5;
   MedicalVentilationTubes = 6;
-  Accompanying = 7;
+  AccompanyingWithContact = 7;
+  AccompanyingWithoutContact = 8;
 }
 
 // Diagnosegruppen

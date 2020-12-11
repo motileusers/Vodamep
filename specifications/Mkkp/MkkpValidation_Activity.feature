@@ -26,16 +26,21 @@ Beispiele:
 #todo: Alle Einsatzorte aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
 #todo: und umgekehrt
 
-#todo: PatientContact nur erlaubt, wenn nur ein Leistungstyp mit Accompanying (und nur dieser, kein anderere Leistungstyp gesetzt) vorhanden ist
-
 #todo: PlaceOfAction muss aus der Liste der places_of_action kommen
-#todo: Wenn PatientContact = true, dann muss PlaceOfAction nicht befüllt sein
-#todo: Wenn PatientContact = false, dann muss PlaceOfAction befüllt sein
 
 
+#todo: Activities Minutes Werte Bereich: > 0 (sonst unlimitiert)
+#todo: Activities Minutes dürfen nur in 5 Minuten Schritten eingegeben werden
+#todo: Activities Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten
 
-#todo: minutes Werte Bereich: Mindestens 10 Minuten, kein Maximum
+
+#todo: Traveltimes Minutes Werte Bereich: > 0 (sonst unlimitiert)
+#todo: Traveltimes Minutes darf nicht > als 5 Stunden sein
+#todo: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
+
+#todo: minutes Werte Bereich: > 0 (sonst unlimitiert)
 #todo: minutes dürfen nur in 5 Minuten Schritten eingegeben werden
+#todo: Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten
 
 
 #todo: Mehrfache Leistungstypen pro Leistung --> kein Fehler

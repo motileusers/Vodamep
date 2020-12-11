@@ -28,8 +28,14 @@ Beispiele:
 #todo: PlaceOfAction muss aus der Liste der places_of_action kommen
 
 
-#todo: minutes Werte Bereich: 10 - 210 Minuten
-#todo: minutes dürfen nur in 5 Minuten Schritten eingegeben werden
+#todo: Activities Minutes Werte Bereich: > 0 (sonst unlimitiert)
+#todo: Activities Minutes dürfen nur in 5 Minuten Schritten eingegeben werden
+#todo: Activities Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten
+
+#todo: Traveltimes Minutes Werte Bereich: > 0 (sonst unlimitiert)
+#todo: Traveltimes Minutes darf nicht > als 5 Stunden sein
+#todo: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
+
 
 
 #todo: Mehrfache Leistungen pro Klient pro Tag --> kein Fehler
