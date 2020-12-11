@@ -98,8 +98,11 @@ enum DiagnosisGroup {
 // Beschreibung in places_of_action.csv
 enum PlaceOfAction { 
     Residence = 0;
-    KindergartenPlaygroup = 1;
-    OtherPlace = 2;
+    Kindergarten = 1;
+    School = 2;
+    OutpatientHospital = 3;
+    LocalDoctor = 4;
+    OtherPlace = 5;
 }
 
 // Pflegegeld

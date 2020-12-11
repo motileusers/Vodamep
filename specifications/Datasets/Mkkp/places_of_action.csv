@@ -1,8 +1,9 @@
 ﻿// Einsatzorte
 
 Residence;Wohnort
-KindergartenPlaygroup;Kindergarten / Spielgruppe
+Kindergarten;Kindergarten
+School;Schule
+OutpatientHospital;Ambulanz/Krankenhaus
+LocalDoctor;Niedergel. Fachärztin, -arzt
 OtherPlace;Sonstiger
-
-
 
