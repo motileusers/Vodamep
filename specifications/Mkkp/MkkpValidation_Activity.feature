@@ -34,7 +34,7 @@ Beispiele:
 
 
 
-#todo: minutes Werte Bereich: 10 - 210 Minuten
+#todo: minutes Werte Bereich: Mindestens 10 Minuten, kein Maximum
 #todo: minutes dürfen nur in 5 Minuten Schritten eingegeben werden
 
 

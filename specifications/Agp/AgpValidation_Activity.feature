@@ -32,6 +32,9 @@ Beispiele:
 #todo: minutes dürfen nur in 5 Minuten Schritten eingegeben werden
 
 
+#todo: Mehrfache Leistungen pro Klient pro Tag --> kein Fehler
+
+
 #todo: Mehrfache Leistungstypen pro Leistung --> kein Fehler
 #todo: Mehrfache Leistungen pro Klient am gleichen Tag --> kein Fehler
 #todo: keine doppelten Leistungstypen innerhalb einer Aktivität
