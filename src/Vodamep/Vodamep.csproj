@@ -42,7 +42,7 @@
     <EmbeddedResource Include="..\..\specifications\Datasets\Mkkp\referrer.csv" Link="Data\Mkkp\referrer.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\Agp\referrer.csv" Link="Data\Agp\referrer.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\Agp\places_of_action.csv" Link="Data\Agp\places_of_action.csv" />
-    <None Include="..\..\specifications\Datasets\Mkkp\places_of_action.csv" Link="Data\Mkkp\places_of_action.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Mkkp\places_of_action.csv" Link="Data\Mkkp\places_of_action.csv" />
     <None Include="..\..\specifications\Hkpv\Hkpv.proto" Link="Hkpv\Model\Hkpv.proto" />
     <None Include="..\..\specifications\Mkkp\Mkkp.proto" Link="Mkkp\Model\Mkkp.proto" />
   </ItemGroup>

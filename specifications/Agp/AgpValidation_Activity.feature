@@ -20,13 +20,6 @@ Beispiele:
     | Name | Bezeichnung |
     | date | Datum       |
 
-#todo: Alle Aktivitätstypen aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
-#todo: und umgekehrt
-#todo: Alle Einsatzorte aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
-#todo: und umgekehrt
-
-#todo: PlaceOfAction muss aus der Liste der places_of_action kommen
-
 
 #todo: Activities Minutes Werte Bereich: > 0 (sonst unlimitiert)
 #todo: Activities Minutes dürfen nur in 5 Minuten Schritten eingegeben werden

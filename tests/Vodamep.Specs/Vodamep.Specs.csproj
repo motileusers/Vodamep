@@ -78,8 +78,21 @@
       <Link>Features\HkpvDiff_Report.feature</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\..\specifications\Mkkp\MkkpValidation_Activity.feature">
+      <Link>Features\MkkpValidation_Activity.feature</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\specifications\Mkkp\MkkpValidation_Person.feature">
+      <Link>Features\MkkpValidation_Person.feature</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\..\specifications\Mkkp\MkkpValidation_Report.feature">
       <Link>Features\MkkpValidation_Report.feature</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\specifications\Mkkp\MkkpValidation_Staff.feature">
+      <Link>Features\MkkpValidation_Staff.feature</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
