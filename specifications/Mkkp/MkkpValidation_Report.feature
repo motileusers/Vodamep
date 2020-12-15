@@ -2,7 +2,7 @@
 Funktionalität: Mkkp - Validierung der Datenmeldung
 
 Szenario: Korrekt befüllt
-    Angenommen eine Meldung ist korrekt befüllt
+    Angenommen eine Meldung2 ist korrekt befüllt
     Dann enthält das Validierungsergebnis keine Fehler
     Und es enthält keine Warnungen
     

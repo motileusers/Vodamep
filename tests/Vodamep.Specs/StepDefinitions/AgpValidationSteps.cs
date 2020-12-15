@@ -44,5 +44,12 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
+
+        [Given(@"eine Meldung2 ist korrekt befüllt")]
+        public void GivenAValidReport()
+        {
+            // nichts zu tun
+        }
+
     }
 }

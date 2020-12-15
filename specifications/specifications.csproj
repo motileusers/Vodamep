@@ -40,4 +40,9 @@
       <Generator></Generator>
     </None>
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Datasets\Agp\" />
+    <Folder Include="Datasets\Mkkp\" />
+  </ItemGroup>
 </Project>

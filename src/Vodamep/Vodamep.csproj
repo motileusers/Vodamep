@@ -53,4 +53,15 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Agp\Model\" />
+    <Folder Include="Agp\Validation\" />
+    <Folder Include="Mkkp\Model\" />
+    <Folder Include="Mkkp\Validation\" />
+    <Folder Include="Mohi\Model\" />
+    <Folder Include="Mohi\Validation\" />
+    <Folder Include="ReportBase\" />
+    <Folder Include="ValidationBase\" />
+  </ItemGroup>
+
 </Project>
