@@ -2,9 +2,9 @@
 Funktionalität: Mkkp - Validierung der gemeldeten Aktivitäten der Datenmeldung
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
-    Angenommen die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
+    Angenommen Mkkp: die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
+    Dann enthält das Mkkp Validierungsergebnis genau einen Fehler
+    Und die Mkkp Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
     | Name              | Bezeichnung     |
     | date              | Datum           |
@@ -15,8 +15,8 @@ Beispiele:
 
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
-    Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
+    Angenommen Mkkp: die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
+    Dann enthält das Mkkp Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
 Beispiele:
     | Name | Bezeichnung |
     | date | Datum       |
