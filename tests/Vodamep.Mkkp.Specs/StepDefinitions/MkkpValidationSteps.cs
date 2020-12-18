@@ -139,14 +139,14 @@ namespace Vodamep.Specs.StepDefinitions
             field.Accessor.SetValue(m, ts);
         }
 
-        [Then(@"*enthält (das Mkkp Validierungsergebnis )?keine Fehler")]
+        [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
         {
             Assert.True(this.Result.IsValid);
             Assert.Empty(this.Result.Errors.Where(x => x.Severity == Severity.Error));
         }
 
-        [Then(@"*enthält (das Mkkp Validierungsergebnis )?keine Warnungen")]
+        [Then(@"*enthält (das Validierungsergebnis )?keine Warnungen")]
         public void ThenTheResultContainsNoWarnings(string dummy)
         {
             Assert.Empty(this.Result.Errors.Where(x => x.Severity == Severity.Warning));

@@ -51,29 +51,29 @@ Beispiele:
 
 
 #todo: Alle folgenden Tests müssen für diesen Report angepasst werden
-Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
-    Angenommen die Meldung enthält am '2058-04-30'
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss kleiner oder gleich (.*) sein'
+#Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
+#    Angenommen die Meldung enthält am '2058-04-30'
+#    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss kleiner oder gleich (.*) sein'
 
 #todo: Test anpassen Anpassen
-Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
-    Angenommen die Meldung enthält am '2008-04-30'
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss grösser oder gleich (.*) sein.'
+#Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
+#    Angenommen die Meldung enthält am '2008-04-30'
+#    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss grösser oder gleich (.*) sein.'
 
 #todo: Test anpassen Anpassen
-Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons.
-    Angenommen die Meldung enthält bei der Person 'unbekannteId'
-    Dann enthält das Validierungsergebnis den Fehler 'Der Id 'unbekannteId' fehlt'
+#Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons.
+#    Angenommen die Meldung enthält bei der Person 'unbekannteId'
+#    Dann enthält das Validierungsergebnis den Fehler 'Der Id 'unbekannteId' fehlt'
 
 #todo: Test anpassen Anpassen
-Szenario: Eine Aktivität ohne entsprechenden Eintrag in Staffs.
-    Angenommen die Meldung enthält von der Mitarbeiterin 'unbekannteId' die Aktivitäten '02,15'
-    Dann enthält das Validierungsergebnis den Fehler 'Der Id 'unbekannteId' fehlt'
+#Szenario: Eine Aktivität ohne entsprechenden Eintrag in Staffs.
+#    Angenommen die Meldung enthält von der Mitarbeiterin 'unbekannteId' die Aktivitäten '02,15'
+#    Dann enthält das Validierungsergebnis den Fehler 'Der Id 'unbekannteId' fehlt'
 
-Szenario: Eine Person ohne Aktivität.
-    Angenommen zu einer Person sind keine Aktivitäten dokumentiert
-    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
+#Szenario: Eine Person ohne Aktivität.
+#    Angenommen zu einer Person sind keine Aktivitäten dokumentiert
+#    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
 
-Szenario: Eine Mitarbeiterin ohne Aktivität.
-    Angenommen zu einer Mitarbeiterin sind keine Aktivitäten dokumentiert
-    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
+#Szenario: Eine Mitarbeiterin ohne Aktivität.
+#    Angenommen zu einer Mitarbeiterin sind keine Aktivitäten dokumentiert
+#    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
