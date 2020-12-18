@@ -35,25 +35,38 @@ namespace Vodamep.Mkkp.Validation
             _dict.Add(nameof(Person.LocalDoctor), "Betreuender Arzt (Niedergelassener Bereich");
             _dict.Add(nameof(Person.Diagnoses), "Erkrankungen / Diagnose");
 
-            _dict.Add(nameof(Activity.Id), "Leistungs-ID");
-            _dict.Add(nameof(Activity.Date), "Datum");
-            _dict.Add(nameof(Activity.DateD), "Datum");
-            _dict.Add(nameof(Activity.PersonId), "Personen-ID");
-            _dict.Add(nameof(Activity.StaffId), "Mitarbeiter-ID");
-            _dict.Add(nameof(Activity.PlaceOfAction), "Einsatzort");
-            _dict.Add(nameof(Activity.Entries), "Leistungsbereiche");
-            _dict.Add(nameof(Activity.Minutes), "Leistungszeit");
+            if (!_dict.ContainsKey(nameof(Activity.Id)))
+                _dict.Add(nameof(Activity.Id), "Leistungs-ID");
+            if (!_dict.ContainsKey(nameof(Activity.Date)))
+                _dict.Add(nameof(Activity.Date), "Datum");
+            if (!_dict.ContainsKey(nameof(Activity.DateD)))
+                _dict.Add(nameof(Activity.DateD), "Datum");
+            if (!_dict.ContainsKey(nameof(Activity.PersonId)))
+                _dict.Add(nameof(Activity.PersonId), "Personen-ID");
+            if (!_dict.ContainsKey(nameof(Activity.StaffId)))
+                _dict.Add(nameof(Activity.StaffId), "Mitarbeiter-ID");
+            if (!_dict.ContainsKey(nameof(Activity.PlaceOfAction)))
+                _dict.Add(nameof(Activity.PlaceOfAction), "Einsatzort");
+            if (!_dict.ContainsKey(nameof(Activity.Entries)))
+                _dict.Add(nameof(Activity.Entries), "Leistungsbereiche");
+            if (!_dict.ContainsKey(nameof(Activity.Minutes)))
+                _dict.Add(nameof(Activity.Minutes), "Leistungszeit");
 
-            _dict.Add(nameof(TravelTime.Id), "Wegzeiten-ID");
-            _dict.Add(nameof(TravelTime.Date), "Datum");
-            _dict.Add(nameof(TravelTime.DateD), "Datum");
-            _dict.Add(nameof(TravelTime.StaffId), "Mitarbeiter-ID");
-            _dict.Add(nameof(TravelTime.Minutes), "Wegzeit");
+            if (!_dict.ContainsKey(nameof(TravelTime.Id)))
+                _dict.Add(nameof(TravelTime.Id), "Wegzeiten-ID");
+            if (!_dict.ContainsKey(nameof(TravelTime.Date)))
+                _dict.Add(nameof(TravelTime.Date), "Datum");
+            if (!_dict.ContainsKey(nameof(TravelTime.DateD)))
+                _dict.Add(nameof(TravelTime.DateD), "Datum");
+            if (!_dict.ContainsKey(nameof(TravelTime.StaffId)))
+                _dict.Add(nameof(TravelTime.StaffId), "Mitarbeiter-ID");
+            if (!_dict.ContainsKey(nameof(TravelTime.Minutes)))
+                _dict.Add(nameof(TravelTime.Minutes), "Wegzeit");
 
         }
 
         public string GetDisplayName(string name)
-        {            
+        {
             if (!string.IsNullOrEmpty(name) && _dict.TryGetValue(name, out string value))
                 return value;
 

@@ -31,8 +31,14 @@ namespace Vodamep.Specs.StepDefinitions
             var loc = new MkkpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
-            // todo
+            var date = DateTime.Today.AddMonths(-1);
+            this.Report = MkkpDataGenerator.Instance.CreateMkkpReport(date.Year, date.Month, 1, 1, false);
 
+            this.AddDummyActivities(Report.Persons[0].Id, Report.Staffs[0].Id);
+
+            var consultation = new Activity() { Date = this.Report.From, StaffId = Report.Staffs[0].Id };
+            consultation.Entries.Add(ActivityType.MedicalInjection);
+            this.Report.Activities.Add(consultation);
         }
 
         public MkkpReport Report { get; private set; }
@@ -59,49 +65,45 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"Mkkp: der Id einer Person ist nicht eindeutig")]
         public void GivenPersonIdNotUnique()
         {
-            //var p0 = this.Report.Persons[0];
+            var p0 = this.Report.Persons[0];
 
-            //var p = this.Report.AddDummyPerson();
+            var p = this.Report.AddDummyPerson();
 
-            //p.Id = p0.Id;
-            //p.Id = p0.Id;
+            p.Id = p0.Id;
+            p.Id = p0.Id;
         }
 
         [Given(@"Mkkp: die Eigenschaft '(\w*)' von '(\w*)' ist nicht gesetzt")]
         public void GivenThePropertyIsDefault(string name, string type)
         {
-            //if (type == nameof(MkpvReport))
-            //    this.Report.SetDefault(name);
-            //else if (type == nameof(Person))
-            //    this.Report.Persons[0].SetDefault(name);
-            //else if (type == nameof(Staff))
-            //    this.Report.Staffs[0].SetDefault(name);
-            //else if (type == nameof(Employment))
-            //    this.Report.Staffs[0].Employments[0].SetDefault(name);
-            //else if (type == nameof(Activity))
-            //    foreach (var a in this.Report.Activities)
-            //        a.SetDefault(name);
-            //else
-            //    throw new NotImplementedException();
+            if (type == nameof(MkkpReport))
+                this.Report.SetDefault(name);
+            else if (type == nameof(Person))
+                this.Report.Persons[0].SetDefault(name);
+            else if (type == nameof(Staff))
+                this.Report.Staffs[0].SetDefault(name);
+            else if (type == nameof(Activity))
+                foreach (var a in this.Report.Activities)
+                    a.SetDefault(name);
+            else
+                throw new NotImplementedException();
         }
 
         [Given(@"Mkkp: die Eigenschaft '(\w*)' von '(\w*)' ist auf '(.*)' gesetzt")]
         public void GivenThePropertyIsSetTo(string name, string type, string value)
         {
-            //if (type == nameof(HkpvReport))
-            //    this.Report.SetValue(name, value);
-            //else if (type == nameof(Person))
-            //    this.Report.Persons[0].SetValue(name, value);
-            //else if (type == nameof(Staff))
-            //    this.Report.Staffs[0].SetValue(name, value);
-            //else if (type == nameof(Employment))
-            //    this.Report.Staffs[0].Employments[0].SetValue(name, value);
-            //else if (type == nameof(Activity))
-            //    foreach (var a in this.Report.Activities)
-            //        a.SetValue(name, value);
+            if (type == nameof(MkkpReport))
+                this.Report.SetValue(name, value);
+            else if (type == nameof(Person))
+                this.Report.Persons[0].SetValue(name, value);
+            else if (type == nameof(Staff))
+                this.Report.Staffs[0].SetValue(name, value);
+            else if (type == nameof(Activity))
+                foreach (var a in this.Report.Activities)
+                    a.SetValue(name, value);
 
-            //else
-            //    throw new NotImplementedException();
+            else
+                throw new NotImplementedException();
         }
 
         [Given(@"Mkkp: der Id einer Mitarbeiterin ist nicht eindeutig")]
@@ -109,44 +111,42 @@ namespace Vodamep.Specs.StepDefinitions
         {
             var s0 = this.Report.Staffs[0];
 
-            //var s = this.Report.AddDummyStaff();
+            var s = this.Report.AddDummyStaff();
 
-            //s.Id = s0.Id;
+            s.Id = s0.Id;
         }
 
 
         [Given(@"Mkkp: die Datums-Eigenschaft '(\w*)' von '(\w*)' hat eine Uhrzeit gesetzt")]
         public void GivenThePropertyHasATime(string name, string type)
         {
-            //IMessage m;
-            //if (type == nameof(HkpvReport))
-            //    m = this.Report;
-            //else if (type == nameof(Person))
-            //    m = this.Report.Persons[0];
-            //else if (type == nameof(Staff))
-            //    m = this.Report.Staffs[0];
-            //else if (type == nameof(Staff))
-            //    m = this.Report.Staffs[0].Employments[0];
-            //else if (type == nameof(Activity))
-            //    m = this.Report.Activities[0];
-            //else
-            //    throw new NotImplementedException();
+            IMessage m;
+            if (type == nameof(MkkpReport))
+                m = this.Report;
+            else if (type == nameof(Person))
+                m = this.Report.Persons[0];
+            else if (type == nameof(Staff))
+                m = this.Report.Staffs[0];
+            else if (type == nameof(Activity))
+                m = this.Report.Activities[0];
+            else
+                throw new NotImplementedException();
 
-            //var field = m.GetField(name);
-            //var ts = (field.Accessor.GetValue(m) as Timestamp) ?? this.Report.From;
+            var field = m.GetField(name);
+            var ts = (field.Accessor.GetValue(m) as Timestamp) ?? this.Report.From;
 
-            //ts.Seconds = ts.Seconds + 60 * 60;
-            //field.Accessor.SetValue(m, ts);
+            ts.Seconds = ts.Seconds + 60 * 60;
+            field.Accessor.SetValue(m, ts);
         }
 
-        [Then(@"*enthält (das Mkkp Validierungsergebnis )?keine Fehler")]
+        [Then(@"*Mkkp: enthält (das Mkkp Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
         {
             Assert.True(this.Result.IsValid);
             Assert.Empty(this.Result.Errors.Where(x => x.Severity == Severity.Error));
         }
 
-        [Then(@"*enthält (das Mkkp Validierungsergebnis )?keine Warnungen")]
+        [Then(@"*Mkkp: enthält (das Mkkp Validierungsergebnis )?keine Warnungen")]
         public void ThenTheResultContainsNoWarnings(string dummy)
         {
             Assert.Empty(this.Result.Errors.Where(x => x.Severity == Severity.Warning));
@@ -171,6 +171,24 @@ namespace Vodamep.Specs.StepDefinitions
         public void ThenTheResultContainsJust(string message)
         {
             Assert.Equal(message, this.Result.Errors.Select(x => x.ErrorMessage).Distinct().Single());
+        }
+
+        private void AddDummyActivities(string personId, string staffId)
+        {
+
+            _dummyActivities = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId };
+            _dummyActivities.Entries.Add(new[] { ActivityType.Body, ActivityType.MedicalDiet, ActivityType.MedicalWound });
+
+            this.Report.Activities.Add(_dummyActivities);
+        }
+
+        private void RemoveDummyActivities()
+        {
+            if (_dummyActivities != null)
+            {
+                this.Report.Activities.Remove(_dummyActivities);
+                _dummyActivities = null;
+            }
         }
     }
 }
