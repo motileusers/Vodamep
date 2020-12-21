@@ -7,9 +7,8 @@ using Vodamep.Mkkp.Model;
 
 namespace Vodamep.Data.Dummy
 {
-    internal class MkkpDataGenerator
+    internal class MkkpDataGenerator : GeneratorBase
     {
-
         private static MkkpDataGenerator _instance;
 
         public static MkkpDataGenerator Instance
@@ -25,45 +24,17 @@ namespace Vodamep.Data.Dummy
         }
 
 
-        private long _id = 1;
-        private Random _rand = new Random();
-        private string[] _addresses;
-        private string[] _names;
-        private string[] _familynames;
-        private string[] _activities;
-        private CareAllowance[] _careAllowances = new[] { CareAllowance.L1, CareAllowance.L2, CareAllowance.L3,
-                CareAllowance.L4, CareAllowance.L5, CareAllowance.L5, CareAllowance.L7,
-                CareAllowance.Any, CareAllowance.Unknown };
-
-
         private MkkpDataGenerator()
         {
-            _addresses = ReadRessource("gemplzstr_8.csv").ToArray();
-            _names = ReadRessource("Vornamen.txt").ToArray();
-            _familynames = ReadRessource("Nachnamen.txt").ToArray();
-            _activities = ReadRessource("Aktivitäten.txt").ToArray();
+
         }
 
-
-        private IEnumerable<string> ReadRessource(string name)
-        {
-            var assembly = this.GetType().Assembly;
-            var resourceStream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.Data.Dummy.{name}");
-
-            using (var reader = new StreamReader(resourceStream, Encoding.UTF8))
-            {
-                while (!reader.EndOfStream)
-                {
-                    yield return reader.ReadLine();
-                }
-            }
-        }
 
         public MkkpReport CreateMkkpReport(int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
         {
             var report = new MkkpReport()
             {
-                Institution = new Institution() { Id = "kpv_test", Name = "Testverein" }
+                Institution = new Institution() { Id = "mkkp_test", Name = "Testverein" }
             };
 
             var from = year.HasValue || month.HasValue ? new DateTime(year ?? DateTime.Today.Year, month ?? DateTime.Today.Month, 1) : DateTime.Today.FirstDateInMonth().AddMonths(-1);
@@ -75,8 +46,8 @@ namespace Vodamep.Data.Dummy
             report.AddDummyPersons(persons);
             report.AddDummyStaffs(staffs);
 
-            //if (addActivities)
-            //    report.AddDummyActivities();
+            if (addActivities)
+                report.AddDummyActivities();
 
             return report;
         }
@@ -91,9 +62,23 @@ namespace Vodamep.Data.Dummy
                 FamilyName = _familynames[_rand.Next(_familynames.Length)],
                 GivenName = _names[_rand.Next(_names.Length)],
                 Insurance = "19",
-                CareAllowance = _careAllowances[_rand.Next(_careAllowances.Length)],
-                Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male
+
+                CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
+                            .Where(x => x != CareAllowance.Any)
+                            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 1)),
+
+                Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
+
+                Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
+                            .Where(x => x != Referrer.OtherReferrer &&
+                                        x != Referrer.UndefinedReferrer)
+                            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 2)),
+
+                HospitalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
+                LocalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
             };
+
+            person.Diagnoses.Add(DiagnosisGroup.Premature);
 
             // die Anschrift
             {
@@ -105,7 +90,6 @@ namespace Vodamep.Data.Dummy
 
             person.BirthdayD = new DateTime(1920, 01, 01).AddDays(_rand.Next(20000));
 
-          
             return person;
 
         }
@@ -118,9 +102,24 @@ namespace Vodamep.Data.Dummy
                 FamilyName = _familynames[index],
                 GivenName = _names[index],
                 Insurance = "19",
-                CareAllowance = _careAllowances[index],
-                Gender = index % 2 == 1 ? Gender.Female : Gender.Male
+
+                CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
+                            .Where(x => x != CareAllowance.Any)
+                            .ElementAt(index),
+
+                Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
+
+                Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
+                            .Where(x => x != Referrer.OtherReferrer &&
+                                        x != Referrer.UndefinedReferrer)
+                            .ElementAt(index),
+
+                HospitalDoctor = "Dr. " + _familynames[index],
+                LocalDoctor = "Dr. " + _familynames[index],
             };
+
+            person.Diagnoses.Add(DiagnosisGroup.Premature);
+
 
             // die Anschrift
             {
@@ -133,32 +132,12 @@ namespace Vodamep.Data.Dummy
             person.BirthdayD = new DateTime(1920, 01, 01).AddDays(index);
 
             return person;
-        } 
+        }
 
         public IEnumerable<Person> CreatePersons(int count)
         {
             for (var i = 0; i < count; i++)
                 yield return CreatePerson();
-        }
-
-        public IEnumerable<Staff> CreateStaffs(MkkpReport report, int count)
-        {
-            for (var i = 0; i < count; i++)
-                yield return CreateStaff(report);
-        }
-
-        public Staff CreateStaff()
-        {
-            var id = (_id++).ToString();
-
-            var staff = new Staff
-            {
-                Id = id,
-                FamilyName = _familynames[_rand.Next(_familynames.Length)],
-                GivenName = _names[_rand.Next(_names.Length)],
-            };
-
-            return staff;
         }
 
         public Staff CreateStaff(MkkpReport report)
@@ -189,7 +168,11 @@ namespace Vodamep.Data.Dummy
             return staff;
         }
 
-    
+        public IEnumerable<Staff> CreateStaffs(MkkpReport report, int count)
+        {
+            for (var i = 0; i < count; i++)
+                yield return CreateStaff(report);
+        }
 
         private ActivityType[] CreateRandomActivities()
         {
@@ -206,11 +189,11 @@ namespace Vodamep.Data.Dummy
             {
                 StaffId = staffId,
                 PersonId = personId,
-                DateD = date                
+                DateD = date
             };
 
             var activities = CreateRandomActivities();
-            result.Entries.AddRange(activities.OrderBy(x =>x));
+            result.Entries.AddRange(activities.OrderBy(x => x));
 
             return result;
         }
@@ -238,6 +221,8 @@ namespace Vodamep.Data.Dummy
                     if (!result.Where(x => x.PersonId == personId && x.StaffId == staff.Id && x.DateD.Equals(date)).Any())
                     {
                         var a = CreateRandomActivity(personId, staff.Id, date);
+
+                        minuten -= a.Minutes;
 
                         result.Add(a);
                     }

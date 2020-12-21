@@ -1,9 +1,9 @@
 ﻿// Einsatzorte
 
-Residence;Wohnort
-Kindergarten;Kindergarten
-School;Schule
-OutpatientHospital;Ambulanz/Krankenhaus
-LocalDoctor;Niedergel. Fachärztin, -arzt
+ResidencePlace;Wohnort
+KindergartenPlace;Kindergarten
+SchoolPlace;Schule
+OutpatientHospitalPlace;Ambulanz/Krankenhaus
+LocalDoctorPlace;Niedergel. Fachärztin, -arzt
 OtherPlace;Sonstiger
 

@@ -8,57 +8,34 @@ using Vodamep.Hkpv.Validation;
 
 namespace Vodamep.Data.Dummy
 {
-    internal class DataGenerator
+    internal class HkpvDataGenerator : GeneratorBase
     {
 
-        private static DataGenerator _instance;
+        private static HkpvDataGenerator _instance;
 
-        public static DataGenerator Instance
+        public static HkpvDataGenerator Instance
         {
             get
             {
 
                 if (_instance == null)
-                    _instance = new DataGenerator();
+                    _instance = new HkpvDataGenerator();
 
                 return _instance;
             }
         }
 
 
-        private long _id = 1;
-        private Random _rand = new Random();
-        private string[] _addresses;
-        private string[] _names;
-        private string[] _familynames;
-        private string[] _activities;
         private CareAllowance[] _careAllowances = new[] { CareAllowance.L1, CareAllowance.L2, CareAllowance.L3,
                 CareAllowance.L4, CareAllowance.L5, CareAllowance.L5, CareAllowance.L7,
                 CareAllowance.Any, CareAllowance.Unknown };
 
 
-        private DataGenerator()
+        private HkpvDataGenerator()
         {
-            _addresses = ReadRessource("gemplzstr_8.csv").ToArray();
-            _names = ReadRessource("Vornamen.txt").ToArray();
-            _familynames = ReadRessource("Nachnamen.txt").ToArray();
-            _activities = ReadRessource("Aktivitäten.txt").ToArray();
+
         }
 
-
-        private IEnumerable<string> ReadRessource(string name)
-        {
-            var assembly = this.GetType().Assembly;
-            var resourceStream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.Data.Dummy.{name}");
-
-            using (var reader = new StreamReader(resourceStream, Encoding.UTF8))
-            {
-                while (!reader.EndOfStream)
-                {
-                    yield return reader.ReadLine();
-                }
-            }
-        }
 
         public HkpvReport CreateHkpvReport(int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
         {

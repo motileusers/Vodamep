@@ -32,7 +32,7 @@ namespace Vodamep.Specs.StepDefinitions
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
             var date = DateTime.Today.AddMonths(-1);
-            this.Report = DataGenerator.Instance.CreateHkpvReport(date.Year, date.Month, 1, 1, false);
+            this.Report = HkpvDataGenerator.Instance.CreateHkpvReport(date.Year, date.Month, 1, 1, false);
 
             this.AddDummyActivities(Report.Persons[0].Id, Report.Staffs[0].Id);
 

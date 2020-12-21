@@ -106,6 +106,8 @@ Task("Test")
 			NoBuild = true			
 		};
 		
+		return;
+		
         foreach(var file in GetFiles("./tests/**/*.csproj")) 
 		{
 			Information("{0}", file);

@@ -35,63 +35,63 @@ namespace Vodamep.Data.Dummy
             return s;
         }
 
-        //public static Activity AddDummyActivity(this HkpvReport report, string code, DateTime? date = null)
-        //{
-        //    if (!report.Persons.Any())
-        //        report.AddDummyPerson();
+        public static Activity AddDummyActivity(this MkkpReport report, string code, DateTime? date = null)
+        {
+            if (!report.Persons.Any())
+                report.AddDummyPerson();
 
+            if (!report.Staffs.Any())
+                report.AddDummyStaff();
+
+            var a = new Activity()
+            {
+                PersonId = report.Persons[0].Id,
+                StaffId = report.Staffs[0].Id,
+                DateD = date ?? report.FromD
+            };
+
+            a.Entries.AddRange(code.Split(',').Select(x => (ActivityType)int.Parse(x)).OrderBy(x => x));
+
+            report.Activities.Add(a);
+
+            return a;
+        }
+
+        //public static Activity AddDummyConsultation(this MkkpReport report, string code, DateTime? date = null)
+        //{
         //    if (!report.Staffs.Any())
         //        report.AddDummyStaff();
 
         //    var a = new Activity()
         //    {
-        //        PersonId = report.Persons[0].Id,
         //        StaffId = report.Staffs[0].Id,
         //        DateD = date ?? report.FromD
         //    };
 
         //    a.Entries.AddRange(code.Split(',').Select(x => (ActivityType)int.Parse(x)).OrderBy(x => x));
 
-        //    report.Activities.Add(a);
 
         //    return a;
         //}
 
-        //public static Activity AddDummyConsultation(this HkpvReport report, string code, DateTime? date = null)
-        //{
-        //    if (!report.Staffs.Any())
-        //        report.AddDummyStaff();
+        public static Activity[] AddDummyActivities(this MkkpReport report)
+        {
+            if (report.FromD == null)
+                report.FromD = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-1);
 
-        //    var a = new Activity()
-        //    {
-        //        StaffId = report.Staffs[0].Id,
-        //        DateD = date ?? report.FromD
-        //    };
+            if (report.ToD == null)
+                report.ToD = report.FromD.LastDateInMonth();
 
-        //    a.Entries.AddRange(code.Split(',').Select(x => (ActivityType)int.Parse(x)).OrderBy(x => x));
+            if (report.Staffs.Count == 0)
+                report.AddDummyStaff();
 
+            if (report.Persons.Count == 0)
+                report.AddDummyPerson();
 
-        //    return a;
-        //}
-
-        //public static Activity[] AddDummyActivities(this HkpvReport report)
-        //{
-        //    if (report.FromD == null)
-        //        report.FromD = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-1);
-
-        //    if (report.ToD == null)
-        //        report.ToD = report.FromD.LastDateInMonth();
-
-        //    if (report.Staffs.Count == 0)
-        //        report.AddDummyStaff();
-
-        //    if (report.Persons.Count == 0)
-        //        report.AddDummyPerson();
-
-        //    var a = DataGenerator.Instance.CreateActivities(report);
-        //    report.Activities.AddRange(a);
-        //    return a;
-        //}
+            var a = MkkpDataGenerator.Instance.CreateActivities(report);
+            report.Activities.AddRange(a);
+            return a;
+        }
 
     }
 }

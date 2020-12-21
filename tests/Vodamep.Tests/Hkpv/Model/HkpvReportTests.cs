@@ -11,7 +11,7 @@ namespace Vodamep.Hkpv.Model.Tests
 
         public HkpvReportTests()
         {
-            this.Report = DataGenerator.Instance.CreateHkpvReport(null, null, 0, 0, false);
+            this.Report = HkpvDataGenerator.Instance.CreateHkpvReport(null, null, 0, 0, false);
         }
 
         protected HkpvReport Report { get; }

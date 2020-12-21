@@ -13,11 +13,11 @@ namespace Vodamep.Tests.Agp.Model
             //todo das Miscellaneous fehlt im CSV
 
             var list1 = new[] {
-                PlaceOfAction.Base,
-                PlaceOfAction.LkhRankweil,
-                PlaceOfAction.MedicalOrination,
+                PlaceOfAction.BasePlace,
+                PlaceOfAction.LkhRankweilPlace,
+                PlaceOfAction.MedicalOrinationPlace,
                 PlaceOfAction.OtherPlace,
-                PlaceOfAction.Residence,
+                PlaceOfAction.ResidencePlace,
               }.Select(x => x.ToString());
 
             var values = PlaceOfActionProvider.Instance.Values.Select(x => x.Key);

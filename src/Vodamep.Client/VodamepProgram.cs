@@ -137,7 +137,7 @@ namespace Vodamep.Client
             int? month = args.Month;
             if (month < 1 || month > 12) month = null;
 
-            var r = DataGenerator.Instance.CreateHkpvReport(year, month, args.Persons, args.Staffs, args.AddActivities);
+            var r = HkpvDataGenerator.Instance.CreateHkpvReport(year, month, args.Persons, args.Staffs, args.AddActivities);
 
             var file = r.WriteToPath("", asJson: args.Json, compressed: !args.NoCompression);
 

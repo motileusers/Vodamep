@@ -158,7 +158,7 @@ namespace Vodamep.Specs.StepDefinitions
 
                 int.TryParse(strId, out id);
 
-                var person = DataGenerator.Instance.CreatePerson(id);
+                var person = HkpvDataGenerator.Instance.CreatePerson(id);
                 report.Persons.Add(person);
 
                 var activity = new Activity();
@@ -174,7 +174,7 @@ namespace Vodamep.Specs.StepDefinitions
         {
             int.TryParse(strId, out int id);
 
-            var person = DataGenerator.Instance.CreatePerson(id);
+            var person = HkpvDataGenerator.Instance.CreatePerson(id);
             report.Persons.Add(person);
 
             for (int i = 0; i < nrOfClientActivities; i++)
@@ -194,7 +194,7 @@ namespace Vodamep.Specs.StepDefinitions
 
             int.TryParse(strId, out id);
 
-            var staff = DataGenerator.Instance.CreateStaff(report, id, nrOfEmployments,  employment);
+            var staff = HkpvDataGenerator.Instance.CreateStaff(report, id, nrOfEmployments,  employment);
             report.Staffs.Add(staff);
 
             for (var i = 0; i < nrOfStaffActivities; i++)

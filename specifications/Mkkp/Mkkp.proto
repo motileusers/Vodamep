@@ -39,7 +39,7 @@ message Person {
     string city = 7;
 	CareAllowance care_allowance = 8;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
 	string insurance = 9;               // Ein Wert aus der Liste der Sozialversicherungen
-    string referrer = 10;
+    Referrer referrer = 10;
     string other_referrer = 11;
     string hospital_doctor = 12;
     string local_doctor = 13;
@@ -68,41 +68,59 @@ message TravelTime {
 // Leistungstypen
 // Beschreibung in activitytypes.csv
 enum ActivityType {  
-  Body = 0;
-  MedicalCommon = 1;
-  MedicalDiet = 2;
-  MedicalVital = 3;
-  MedicalWound = 4;
-  MedicalInjection = 5;
-  MedicalVentilationTubes = 6;
-  AccompanyingWithContact = 7;
-  AccompanyingWithoutContact = 8;
+  UndefinedActivity = 0;
+  Body = 1;
+  MedicalCommon = 2;
+  MedicalDiet = 3;
+  MedicalVital = 4;
+  MedicalWound = 5;
+  MedicalInjection = 6;
+  MedicalVentilationTubes = 7;
+  AccompanyingWithContact = 8;
+  AccompanyingWithoutContact = 9;
 }
 
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    OncologicalDisease = 0;
-    Premature = 1;
-    NeurologicalDisease = 2;
-    SurgicalCare = 3;
-    HeartDisease = 4;
-    GeneticDisease = 5;
-    PalliativeCare1 = 6;
-    PalliativeCare2 = 7;
-    PalliativeCare3 = 8;
-    PalliativeCare4 = 9;
+    UndefinedDiagnosisGroup = 0;
+    OncologicalDisease = 1;
+    Premature = 2;
+    NeurologicalDisease = 3;
+    SurgicalCare = 4;
+    HeartDisease = 5;
+    GeneticDisease = 6;
+    PalliativeCare1 = 7;
+    PalliativeCare2 = 8;
+    PalliativeCare3 = 9;
+    PalliativeCare4 = 10;
 }
 
 // Einsatzorte
 // Beschreibung in places_of_action.csv
 enum PlaceOfAction { 
-    Residence = 0;
-    Kindergarten = 1;
-    School = 2;
-    OutpatientHospital = 3;
-    LocalDoctor = 4;
-    OtherPlace = 5;
+    UndefinedPlace = 0;
+    ResidencePlace = 1;
+    KindergartenPlace = 2;
+    SchoolPlace = 3;
+    OutpatientHospitalPlace = 4;
+    LocalDoctorPlace = 5;
+    OtherPlace = 6;
+}
+
+
+
+// Zuweiser
+// Beschreibung in referrer.csv
+// Protobuf erwartet eindeutige EnumKeys, auch zwischen unterschiedlichen enums, drum der AnhhangRef
+// Place und Referrer können sich dabei überscheiden
+enum Referrer { 
+    UndefinedReferrer = 0;
+    LkhFeldkirchReferrer = 1;
+    KhDornbirnReferrer = 2;
+    LkhBregenzReferrer = 3;
+    PrivateSpecialistsReferrer = 4;
+    OtherReferrer = 5;
 }
 
 // Pflegegeld

@@ -37,7 +37,7 @@ message Person {
     string city = 5;
 	CareAllowance care_allowance = 6;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
 	string insurance = 7;               // Ein Wert aus der Liste der Sozialversicherungen
-    string referrer = 8;
+    Referrer referrer = 8;
     string other_referrer = 9;
     string hospital_doctor = 10;
     string local_doctor = 11;
@@ -66,38 +66,58 @@ message TravelTime {
 // Leistungstypen
 // Beschreibung in activitytypes.csv
 enum ActivityType { 
-    Clearing = 0;
-    ObservationsAssessment = 1;
-    GeriatricPsychiatric = 2;
-    GuidancePartner = 3;
-    GuidanceClient = 4;
-    CareDocumentation = 5;
-    ContactPartner = 6;
-    ExecutionTransport = 7;
-    Miscellaneous = 8;
+    UndefinedActivity = 0;
+    Clearing = 1;
+    ObservationsAssessment = 2;
+    GeriatricPsychiatric = 3;
+    GuidancePartner = 4;
+    GuidanceClient = 5;
+    CareDocumentation = 6;
+    ContactPartner = 7;
+    ExecutionTransport = 8;
+    Miscellaneous = 9;
 }
 
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    DementiaDisease = 0;
-    AffectiveDisorder = 1;
-    SchizophreniaDelusionalDisorder = 2;
-    AnxietyAdjustmentObsessiveDisorder = 3;
-    DependenceIllnesse = 4;
-    NonOrganicSleepingDisorder = 5;
+    UndefinedDiagnosisGroup = 0;
+    DementiaDisease = 1;
+    AffectiveDisorder = 2;
+    SchizophreniaDelusionalDisorder = 3;
+    AnxietyAdjustmentObsessiveDisorder = 4;
+    DependenceIllnesse = 5;
+    NonOrganicSleepingDisorder = 6;
 }
 
 
 // Einsatzorte
 // Beschreibung in places_of_action.csv
 enum PlaceOfAction { 
-    Residence = 0;
-    LkhRankweil = 1;
-    Base = 2;
-    MedicalOrination = 3;
-    OtherPlace = 4;
+    UndefinedPlace = 0;
+    ResidencePlace = 1;
+    LkhRankweilPlace = 2;
+    BasePlace = 3;
+    MedicalOrinationPlace = 4;
+    OtherPlace = 5;
 }
+
+
+// Zuweiser
+// Beschreibung in referrer.csv
+// Protobuf erwartet eindeutige EnumKeys, auch zwischen unterschiedlichen enums, drum der AnhhangRef
+enum Referrer { 
+    UndefinedReferrer = 0;
+    FamilyDoctorReferrer = 1;
+    MedicalSpecialistReferrer = 2;
+    RelativesReferrer = 3;
+    LkhRankweilReferrer = 4;
+    HomeHealthCareReferrer = 5;
+    CaseManagementReferrer = 6;
+    MobileCareServiceReferrer = 7;
+    OtherReferrer = 8;
+}
+
 
 // Pflegegeld
 // Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)

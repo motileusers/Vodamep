@@ -1,9 +1,9 @@
 ﻿// Einsatzorte
 
-Residence;Wohnort
-LkhRankweil;LKH Rankweil
-Base;Stützpunkt
-MedicalOrination;Ärztliche Ordination
+ResidencePlace;Wohnort
+LkhRankweilPlace;LKH Rankweil
+BasePlace;Stützpunkt
+MedicalOrinationPlace;Ärztliche Ordination
 OtherPlace;Sonstiger
 
 
