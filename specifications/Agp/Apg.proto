@@ -50,7 +50,7 @@ message Activity {
     google.protobuf.Timestamp date = 2;
     string person_id = 3;
     string staff_id = 4;
-    string place_of_Action = 5;         // Ein Wert aus der Liste places_of_action.csv
+    PlaceOfAction place_of_Action = 5;         // Ein Wert aus der Liste places_of_action.csv
     repeated ActivityType entries = 6; 
     int32 minutes = 7;
 }

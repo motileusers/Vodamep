@@ -106,7 +106,7 @@ Task("Test")
 			NoBuild = true			
 		};
 		
-		return;
+		// return;
 		
         foreach(var file in GetFiles("./tests/**/*.csproj")) 
 		{
