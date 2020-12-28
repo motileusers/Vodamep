@@ -10,14 +10,14 @@ namespace Vodamep.Tests.Agp.Model
         [Fact]
         public void AsSorted_ReturnspectedResult()
         {
-            //todo das Miscellaneous fehlt im CSV
+            //todo im CSV stehen die Einträge mit einem Place Postfix
 
             var list1 = new[] {
-                PlaceOfAction.BasePlace,
-                PlaceOfAction.LkhRankweilPlace,
-                PlaceOfAction.MedicalOrinationPlace,
+                PlaceOfAction.Base,
+                PlaceOfAction.LkhRankweil,
+                PlaceOfAction.MedicalOrination,
                 PlaceOfAction.OtherPlace,
-                PlaceOfAction.ResidencePlace,
+                PlaceOfAction.Residence,
               }.Select(x => x.ToString());
 
             var values = PlaceOfActionProvider.Instance.Values.Select(x => x.Key);

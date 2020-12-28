@@ -61,16 +61,16 @@ namespace Vodamep.Data.Dummy
                 Id = id,
                 Insurance = "19",
 
-                CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
-                            .Where(x => x != CareAllowance.Any)
-                            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 1)),
+                //CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
+                //            .Where(x => x != CareAllowance.Any)
+                //            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 1)),
 
                 Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
 
-                Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
-                            .Where(x => x != Referrer.OtherReferrer &&
-                                        x != Referrer.UndefinedReferrer)
-                            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 2)),
+                //Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
+                //            .Where(x => x != Referrer.OtherReferrer &&
+                //                        x != Referrer.UndefinedReferrer)
+                //            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 2)),
 
                 HospitalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
                 LocalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
@@ -105,10 +105,10 @@ namespace Vodamep.Data.Dummy
 
                 Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
 
-                Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
-                            .Where(x => x != Referrer.OtherReferrer &&
-                                        x != Referrer.UndefinedReferrer)
-                            .ElementAt(index),
+                //Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
+                //            .Where(x => x != Referrer.OtherReferrer &&
+                //                        x != Referrer.UndefinedReferrer)
+                            //.ElementAt(index),
 
                 HospitalDoctor = "Dr. " + _familynames[index],
                 LocalDoctor = "Dr. " + _familynames[index],
