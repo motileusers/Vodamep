@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: Mkkp - Validierung der gemeldeten Personen einer Datenmeldung
+Funktionalität: Agp - Validierung der gemeldeten Personen einer Datenmeldung
 
 Szenario: Es wurde ein ungültiger Ort angegeben.
     Angenommen die Eigenschaft 'postcode' von 'Person' ist auf '6900' gesetzt

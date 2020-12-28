@@ -55,7 +55,6 @@
 
   <ItemGroup>
     <Folder Include="Agp\Model\" />
-    <Folder Include="Agp\Validation\" />
     <Folder Include="Mkkp\Model\" />
     <Folder Include="Mohi\Model\" />
     <Folder Include="Mohi\Validation\" />

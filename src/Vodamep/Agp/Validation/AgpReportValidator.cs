@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Agp.Model;
+using Vodamep.Mkkp.Validation;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Agp.Validation
@@ -57,7 +58,7 @@ namespace Vodamep.Agp.Validation
             //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator23Without417(r.Persons, r.Staffs)).Unless(x => x.ToD < new DateTime(2019, 01, 01));
 
 
-            //this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator(r.FromD, r.ToD));
+            this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator());
 
             //this.Include(new ActivityMedicalByQualificationTraineeValidator());
 
@@ -67,7 +68,7 @@ namespace Vodamep.Agp.Validation
 
             //this.Include(new HkpvReportPersonIdValidator());
 
-            //this.Include(new HkpvReportStaffIdValidator());
+            this.Include(new AgpReportStaffIdValidator());
 
             //this.Include(new PersonSsnIsUniqueValidator());
 

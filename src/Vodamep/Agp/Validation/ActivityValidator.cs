@@ -21,6 +21,10 @@ namespace Vodamep.Agp.Validation
                 this.RuleFor(x => x.DateD).LessThanOrEqualTo(to).Unless(x => x.Date == null);
             }
 
+            this.RuleFor(x => x.PersonId).NotEmpty();
+
+            this.RuleFor(x => x.Minutes).NotEmpty();
+
             this.RuleFor(x => x.StaffId).NotEmpty();
 
             this.RuleFor(x => x.Entries).NotEmpty();

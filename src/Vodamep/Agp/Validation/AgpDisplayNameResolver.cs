@@ -35,7 +35,10 @@ namespace Vodamep.Agp.Validation
             _dict.Add(nameof(Person.LocalDoctor), "Betreuender Arzt (Niedergelassener Bereich");
             _dict.Add(nameof(Person.Diagnoses), "Erkrankungen / Diagnose");
 
-            _dict.Add(nameof(Activity.Id), "Leistungs-ID");
+            _dict.Add(nameof(Staff.GivenName), "Vorname");
+            _dict.Add(nameof(Staff.FamilyName), "Familienname");
+            
+            //_dict.Add(nameof(Activity.Id), "Leistungs-ID");
             _dict.Add(nameof(Activity.Date), "Datum");
             _dict.Add(nameof(Activity.DateD), "Datum");
             _dict.Add(nameof(Activity.PersonId), "Personen-ID");
@@ -44,11 +47,11 @@ namespace Vodamep.Agp.Validation
             _dict.Add(nameof(Activity.Entries), "Leistungsbereiche");
             _dict.Add(nameof(Activity.Minutes), "Leistungszeit");
 
-            _dict.Add(nameof(TravelTime.Id), "Wegzeiten-ID");
-            _dict.Add(nameof(TravelTime.Date), "Datum");
-            _dict.Add(nameof(TravelTime.DateD), "Datum");
-            _dict.Add(nameof(TravelTime.StaffId), "Mitarbeiter-ID");
-            _dict.Add(nameof(TravelTime.Minutes), "Wegzeit");
+            //_dict.Add(nameof(TravelTime.Id), "Wegzeiten-ID");
+            //_dict.Add(nameof(TravelTime.Date), "Datum");
+            //_dict.Add(nameof(TravelTime.DateD), "Datum");
+            //_dict.Add(nameof(TravelTime.StaffId), "Mitarbeiter-ID");
+            //_dict.Add(nameof(TravelTime.Minutes), "Wegzeit");
 
         }
 
