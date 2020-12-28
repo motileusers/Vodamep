@@ -63,16 +63,16 @@ namespace Vodamep.Data.Dummy
                 GivenName = _names[_rand.Next(_names.Length)],
                 Insurance = "19",
 
-                //CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
-                //            .Where(x => x != CareAllowance.Any)
-                //            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 1)),
+                CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
+                            .Where(x => x != CareAllowance.Any)
+                            .ElementAt(_rand.Next(Enum.GetValues(typeof(CareAllowance)).Length - 1)),
 
                 Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
 
-                //Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
-                //            .Where(x => x != Referrer.OtherReferrer &&
-                //                        x != Referrer.UndefinedReferrer)
-                //            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 2)),
+                Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
+                            .Where(x => x != Referrer.OtherReferrer &&
+                                        x != Referrer.UndefinedReferrer)
+                            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 2)),
 
                 HospitalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
                 LocalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
@@ -114,8 +114,8 @@ namespace Vodamep.Data.Dummy
                 //                        x != Referrer.UndefinedReferrer)
                 //            .ElementAt(index),
 
-                HospitalDoctor = "Dr. " + _familynames[index],
-                LocalDoctor = "Dr. " + _familynames[index],
+                HospitalDoctor = $"Dr. {_familynames[_rand.Next(_familynames.Length)]}",
+                LocalDoctor = $"Dr. {_familynames[_rand.Next(_familynames.Length)]}",
             };
 
             person.Diagnoses.Add(DiagnosisGroup.Premature);
@@ -185,11 +185,16 @@ namespace Vodamep.Data.Dummy
 
         private Activity CreateRandomActivity(string personId, string staffId, DateTime date)
         {
+            var placeOfActionValues = Enum.GetValues(typeof(PlaceOfAction));
+            var placeOfAction = (PlaceOfAction) placeOfActionValues.GetValue(_rand.Next(placeOfActionValues.Length));
+
             var result = new Activity()
             {
                 StaffId = staffId,
                 PersonId = personId,
-                DateD = date
+                DateD = date,
+                PlaceOfAction = placeOfAction
+
             };
 
             var activities = CreateRandomActivities();

@@ -57,7 +57,6 @@
     <Folder Include="Agp\Model\" />
     <Folder Include="Agp\Validation\" />
     <Folder Include="Mkkp\Model\" />
-    <Folder Include="Mkkp\Validation\" />
     <Folder Include="Mohi\Model\" />
     <Folder Include="Mohi\Validation\" />
     <Folder Include="ReportBase\" />

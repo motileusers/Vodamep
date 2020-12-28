@@ -24,9 +24,12 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.StaffId).NotEmpty();
 
             this.RuleFor(x => x.PersonId).NotEmpty();
-            this.RuleFor(x => x.PersonId).Empty();
 
             this.RuleFor(x => x.Entries).NotEmpty();
+
+            this.RuleFor(x => x.Minutes).NotEmpty();
+
+            this.RuleFor(x => x.PlaceOfAction).NotEmpty();
         }
     }
 }

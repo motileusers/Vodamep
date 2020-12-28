@@ -10,14 +10,12 @@ namespace Vodamep.Tests.Agp.Model
         [Fact]
         public void AsSorted_ReturnspectedResult()
         {
-            //todo im CSV stehen die Einträge mit einem Place Postfix
-
             var list1 = new[] {
-                PlaceOfAction.Base,
-                PlaceOfAction.LkhRankweil,
-                PlaceOfAction.MedicalOrination,
+                PlaceOfAction.BasePlace,
+                PlaceOfAction.LkhRankweilPlace,
+                PlaceOfAction.MedicalOrinationPlace,
                 PlaceOfAction.OtherPlace,
-                PlaceOfAction.Residence,
+                PlaceOfAction.ResidencePlace,
               }.Select(x => x.ToString());
 
             var values = PlaceOfActionProvider.Instance.Values.Select(x => x.Key);

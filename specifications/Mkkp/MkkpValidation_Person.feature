@@ -25,17 +25,17 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
-    | Name                  | Bezeichnung                       |
-    | family_name           | Geburtsdatum                      |
-    | given_name            | Versicherung                      |
-    | birthday              | Geburtsdatum                      |
-    | insurance             | Versicherung                      |
-    | postcode              | Plz                               |
-    | city                  | Ort                               |
-    | gender                | Geschlecht                        |    
-    | referrer              | Zuweiser                          |
-    | hospital_doctor       | Arzt Krankenhaus                  |
-    | local_doctor          | Arzt Niedergelassener Bereich     |
+    | Name                  | Bezeichnung                                   |
+    | family_name           | Familienname                                  |
+    | given_name            | Vorname                                       |
+    | birthday              | Geburtsdatum                                  |
+    | insurance             | Versicherung                                  |
+    | postcode              | Plz                                           |
+    | city                  | Ort                                           |
+    | gender                | Geschlecht                                    |    
+    | referrer              | Zuweiser                                      |
+    | hospital_doctor       | Betreuender Arzt (Krankenhaus)                |
+    | local_doctor          | Betreuender Arzt (Niedergelassener Bereich)   |
 
 
 Szenariogrundriss: Eine Eigenschaft vom AgpReport mit einem ungültigen Wert gesetzt.
@@ -51,23 +51,23 @@ Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: ''<Bezeichnung>' weist ein ungültiges Format auf.'
 Beispiele: 
-    | Name              | Bezeichnung                   | Wert |
-    | family_name       | Familienname                  | t@st |
-    | given_name        | Vorname                       | t@st |
-    | hospital_doctor   | Arzt Krankenhaus              | t@st |
-    | local_doctor      | Arzt Niedergelassener Bereich | t@st |
+    | Name              | Bezeichnung                                   | Wert |
+    | family_name       | Familienname                                  | t@st |
+    | given_name        | Vorname                                       | t@st |
+    | hospital_doctor   | Betreuender Arzt (Krankenhaus)                | t@st |
+    | local_doctor      | Betreuender Arzt (Niedergelassener Bereich)   | t@st |
 
 	
 Szenariogrundriss: Der Name einer Person enthält ein spezielles, aber gültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-    Dann enthält das Mkkp Validierungsergebnis keine Fehler
+    Dann enthält das Validierungsergebnis keine Fehler
 Beispiele: 
-    | Name              | Bezeichnung                   | Wert              |
-    | family_name       | Familienname                  | Chloé             |
-    | given_name        | Vorname                       | Raphaël           |
-    | given_name        | Vorname                       | Sr. Anna          |
-    | hospital_doctor   | Arzt Krankenhaus              | Dr. Frank         |
-    | local_doctor      | Arzt Niedergelassener Bereich | Dr. Dr. Frank     |
+    | Name              | Bezeichnung                                   | Wert              |
+    | family_name       | Familienname                                  | Chloé             |
+    | given_name        | Vorname                                       | Raphaël           |
+    | given_name        | Vorname                                       | Sr. Anna          |
+    | hospital_doctor   | Betreuender Arzt (Krankenhaus)                | Dr. Frank         |
+    | local_doctor      | Betreuender Arzt (Niedergelassener Bereich)   | Dr. Dr. Frank     |
 
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten

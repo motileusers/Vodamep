@@ -1,10 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Vodamep.Data;
 using Vodamep.Mkkp.Model;
 using Vodamep.ValidationBase;
 
@@ -59,7 +57,7 @@ namespace Vodamep.Mkkp.Validation
             // Nur für neu gesendete Daten
             //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator23Without417(r.Persons, r.Staffs)).Unless(x => x.ToD < new DateTime(2019, 01, 01));
 
-            //this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator(r.FromD, r.ToD));
+            this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator());
 
             //this.Include(new ActivityMedicalByQualificationTraineeValidator());
 
@@ -67,9 +65,9 @@ namespace Vodamep.Mkkp.Validation
 
             //this.Include(new ActivityWarningIfMoreThan350Validator());
 
-            //this.Include(new HkpvReportPersonIdValidator());
+            this.Include(new MkkpReportPersonIdValidator());
 
-            //this.Include(new HkpvReportStaffIdValidator());
+            this.Include(new MkkpReportStaffIdValidator());
 
             //this.Include(new PersonSsnIsUniqueValidator());
 
@@ -84,38 +82,6 @@ namespace Vodamep.Mkkp.Validation
         public override ValidationResult Validate(ValidationContext<MkkpReport> context)
         {
             return new MkkpReportValidationResult(base.Validate(context));
-        }
-    }
-
-    internal class PersonValidator : AbstractValidator<Person>
-    {
-        public PersonValidator()
-        {
-            this.RuleFor(x => x.FamilyName).NotEmpty();
-            this.RuleFor(x => x.GivenName).NotEmpty();
-          
-            // Änderung 5.11.2018, LH
-            var r = new Regex(@"^[\p{L}][-\p{L}. ]*[\p{L}.]$");
-            this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
-            this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
-
-            this.Include(new PersonBirthdayValidator());
-            
-            this.RuleFor(x => x.Insurance).NotEmpty();
-            this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<InsuranceCodeProvider>());
-
-                   this.RuleFor(x => x.CareAllowance).NotEmpty();
-
-            this.RuleFor(x => x.Postcode).NotEmpty();
-            this.RuleFor(x => x.City).NotEmpty();
-            this.RuleFor(x => $"{x.Postcode} {x.City}")
-                .SetValidator(new CodeValidator<Postcode_CityProvider>())
-                .Unless(x => string.IsNullOrEmpty(x.City) || string.IsNullOrEmpty(x.Postcode))
-                .WithMessage(Validationmessages.InvalidPostCode_City);
-
-            this.RuleFor(x => x.Gender).NotEmpty();
-
-
         }
     }
 }

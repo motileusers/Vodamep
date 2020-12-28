@@ -21,7 +21,9 @@ namespace Vodamep.Mkkp.Validation
             _dict.Add(nameof(MkkpReport.FromD), "Von");
             _dict.Add(nameof(MkkpReport.Institution), "Einrichtung");
 
-            _dict.Add(nameof(Person.Id), "Personen-ID");
+            _dict.Add(nameof(Person.Id), "ID");
+            _dict.Add(nameof(Person.FamilyName), "Familienname");
+            _dict.Add(nameof(Person.GivenName), "Vorname");
             _dict.Add(nameof(Person.Birthday), "Geburtsdatum");
             _dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
             _dict.Add(nameof(Person.Gender), "Geschlecht");
@@ -32,7 +34,7 @@ namespace Vodamep.Mkkp.Validation
             _dict.Add(nameof(Person.Referrer), "Zuweiser");
             _dict.Add(nameof(Person.OtherReferrer), "Sonstiger Zuweiser");
             _dict.Add(nameof(Person.HospitalDoctor), "Betreuender Arzt (Krankenhaus)");
-            _dict.Add(nameof(Person.LocalDoctor), "Betreuender Arzt (Niedergelassener Bereich");
+            _dict.Add(nameof(Person.LocalDoctor), "Betreuender Arzt (Niedergelassener Bereich)");
             _dict.Add(nameof(Person.Diagnoses), "Erkrankungen / Diagnose");
 
             if (!_dict.ContainsKey(nameof(Activity.Id)))

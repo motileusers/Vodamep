@@ -12,6 +12,7 @@ using Vodamep.Data.Dummy;
 using Vodamep.Mkkp.Model;
 using Vodamep.Mkkp.Validation;
 using Xunit;
+using Enum = System.Enum;
 
 namespace Vodamep.Specs.StepDefinitions
 {
@@ -21,7 +22,7 @@ namespace Vodamep.Specs.StepDefinitions
     {
 
         private MkkpReportValidationResult _result;
-        private Activity _dummyActivities;
+        private Activity _dummyActivity;
 
         public MkkpValidationSteps()
         {
@@ -34,11 +35,11 @@ namespace Vodamep.Specs.StepDefinitions
             var date = DateTime.Today.AddMonths(-1);
             this.Report = MkkpDataGenerator.Instance.CreateMkkpReport(date.Year, date.Month, 1, 1, false);
 
-            this.AddDummyActivities(Report.Persons[0].Id, Report.Staffs[0].Id);
+            this.AddDummyActivity(Report.Persons[0].Id, Report.Staffs[0].Id);
 
-            var consultation = new Activity() { Date = this.Report.From, StaffId = Report.Staffs[0].Id };
-            consultation.Entries.Add(ActivityType.MedicalInjection);
-            this.Report.Activities.Add(consultation);
+            //var consultation = new Activity() { Date = this.Report.From, StaffId = Report.Staffs[0].Id };
+            //consultation.Entries.Add(ActivityType.MedicalInjection);
+            //this.Report.Activities.Add(consultation);
         }
 
         public MkkpReport Report { get; private set; }
@@ -173,21 +174,26 @@ namespace Vodamep.Specs.StepDefinitions
             Assert.Equal(message, this.Result.Errors.Select(x => x.ErrorMessage).Distinct().Single());
         }
 
-        private void AddDummyActivities(string personId, string staffId)
+        private void AddDummyActivity(string personId, string staffId)
         {
+            var random = new Random();
 
-            _dummyActivities = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId };
-            _dummyActivities.Entries.Add(new[] { ActivityType.Body, ActivityType.MedicalDiet, ActivityType.MedicalWound });
+            var placeOfActionValues = Enum.GetValues(typeof(PlaceOfAction));
+            var placeOfAction = (PlaceOfAction)placeOfActionValues.GetValue(random.Next(placeOfActionValues.Length));
 
-            this.Report.Activities.Add(_dummyActivities);
+            var minutes = random.Next(Math.Min(500, 6000));
+            _dummyActivity = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction};
+            _dummyActivity.Entries.Add(new[] { ActivityType.Body, ActivityType.MedicalDiet, ActivityType.MedicalWound });
+
+            this.Report.Activities.Add(_dummyActivity);
         }
 
         private void RemoveDummyActivities()
         {
-            if (_dummyActivities != null)
+            if (_dummyActivity != null)
             {
-                this.Report.Activities.Remove(_dummyActivities);
-                _dummyActivities = null;
+                this.Report.Activities.Remove(_dummyActivity);
+                _dummyActivity = null;
             }
         }
     }
