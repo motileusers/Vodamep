@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Agp.Model;
-using Vodamep.Mkkp.Validation;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Agp.Validation
@@ -66,7 +65,7 @@ namespace Vodamep.Agp.Validation
 
             //this.Include(new ActivityWarningIfMoreThan350Validator());
 
-            //this.Include(new HkpvReportPersonIdValidator());
+            this.Include(new AgpReportPersonIdValidator());
 
             this.Include(new AgpReportStaffIdValidator());
 

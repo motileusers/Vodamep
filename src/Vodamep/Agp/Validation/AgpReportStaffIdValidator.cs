@@ -7,7 +7,7 @@ using Vodamep.Agp.Model;
 using Vodamep.ValidationBase;
 
 
-namespace Vodamep.Mkkp.Validation
+namespace Vodamep.Agp.Validation
 {
     internal class AgpReportStaffIdValidator : AbstractValidator<AgpReport>
     {

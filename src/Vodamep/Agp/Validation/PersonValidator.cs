@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Text.RegularExpressions;
+using FluentValidation;
 using Vodamep.Agp.Model;
 using Vodamep.Data;
 using Vodamep.ValidationBase;
@@ -9,7 +10,15 @@ namespace Vodamep.Agp.Validation
     {
         public PersonValidator()
         {
-         
+            this.RuleFor(x => x.Referrer).NotEmpty();
+            this.RuleFor(x => x.HospitalDoctor).NotEmpty();
+            this.RuleFor(x => x.LocalDoctor).NotEmpty();
+
+            // Änderung 5.11.2018, LH
+            var r = new Regex(@"^[\p{L}][-\p{L}. ]*[\p{L}.]$");
+            this.RuleFor(x => x.HospitalDoctor).Matches(r).Unless(x => string.IsNullOrEmpty(x.HospitalDoctor));
+            this.RuleFor(x => x.LocalDoctor).Matches(r).Unless(x => string.IsNullOrEmpty(x.LocalDoctor));
+
             this.Include(new PersonBirthdayValidator());
            
             this.RuleFor(x => x.Insurance).NotEmpty();

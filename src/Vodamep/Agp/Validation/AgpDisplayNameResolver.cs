@@ -32,7 +32,7 @@ namespace Vodamep.Agp.Validation
             _dict.Add(nameof(Person.Referrer), "Zuweiser");
             _dict.Add(nameof(Person.OtherReferrer), "Sonstiger Zuweiser");
             _dict.Add(nameof(Person.HospitalDoctor), "Betreuender Arzt (Krankenhaus)");
-            _dict.Add(nameof(Person.LocalDoctor), "Betreuender Arzt (Niedergelassener Bereich");
+            _dict.Add(nameof(Person.LocalDoctor), "Betreuender Arzt (Niedergelassener Bereich)");
             _dict.Add(nameof(Person.Diagnoses), "Erkrankungen / Diagnose");
 
             _dict.Add(nameof(Staff.GivenName), "Vorname");
