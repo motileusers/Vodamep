@@ -12,7 +12,6 @@ Beispiele:
     | staff_id          | Mitarbeiter-ID  |
     | minutes           | Leistungszeit   |
 
-
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
     Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
@@ -20,25 +19,55 @@ Beispiele:
     | Name | Bezeichnung |
     | date | Datum       |
 
-Szenario: Minuten Werten müssen > 0 sein
-    Angenommen die Eigenschaft 'from' von 'AgpReport' ist auf '2018-04-04' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Von' muss der erste Tag des Monats sein.'
-
-Szenariogrundriss: Minuten Werten müssen > 0 sein
+Szenariogrundriss: Minuten Werte müssen > 0 sein
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' weist ein ungültiges Format auf.'
+    Und die Fehlermeldung lautet: 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
 Beispiele: 
     | Wert |
     | 0 |
     | -1 |
 
-#todo: Activities Minutes Werte Bereich: > 0 (sonst unlimitiert)
-#todo: Activities Minutes dürfen nur in 5 Minuten Schritten eingegeben werden
-#todo: Activities Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten
+Szenariogrundriss: Minuten  dürfen nur in 5 Minuten Schritten eingegeben werden
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Minutes dürfen nur in 5 Minuten Schritten eingegeben werden.'
+Beispiele: 
+    | Wert |
+    | 1 |
+    | 3 |
+    | 17 |
 
-#todo: Traveltimes Minutes Werte Bereich: > 0 (sonst unlimitiert)
-#todo: Traveltimes Minutes darf nicht > als 5 Stunden sein
+Szenariogrundriss: Minuten  dürfen nur in 5 Minuten Schritten eingegeben werden - korrekt
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+    Und es enthält keine Warnungen
+Beispiele: 
+    | Wert |
+    | 5 |
+    | 10 |
+    | 15 |
+
+Szenario: Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '605' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten.'
+
+Szenariogrundriss: TravelTime Werte müssen > 0 sein
+    Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+Beispiele: 
+    | Wert |
+    | 0 |
+    | -1 |
+
+Szenario: Summe TravelTimes darf 5 Stunden nicht überschreiten
+    Angenommen die Eigenschaft 'minutes' von 'TravelTimes' ist auf '305' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Summe Reisezeiten darf 5 Stunden nicht überschreiten.'
+
+
 #todo: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
 
 

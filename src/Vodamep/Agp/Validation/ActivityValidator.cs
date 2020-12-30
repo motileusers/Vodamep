@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentValidation;
+using FluentValidation.Results;
 using Vodamep.Agp.Model;
 using Vodamep.ValidationBase;
 
@@ -23,11 +24,20 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.PersonId).NotEmpty();
 
-            this.RuleFor(x => x.Minutes).NotEmpty();
-
             this.RuleFor(x => x.StaffId).NotEmpty();
 
             this.RuleFor(x => x.Entries).NotEmpty();
+        
+            this.RuleFor(x => x.Minutes).GreaterThan(0);
+            this.RuleFor(x => x.Minutes)
+                .Custom((minute, ctx) =>
+                {
+                    if (minute > 0 && minute % 5 != 0)
+                    {
+                        ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.MinutesHasToBeEnteredInFiveMinuteSteps));
+                    }
+                });
         }
+
     }
 }

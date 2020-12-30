@@ -53,6 +53,8 @@ namespace Vodamep.Specs.StepDefinitions
                 case FieldType.Int32:
                 case FieldType.SInt32:
                 case FieldType.SInt64:
+                    field.Accessor.SetValue(m, int.Parse(value));
+                    break;
                 case FieldType.UInt32:
                 case FieldType.UInt64:
                 case FieldType.SFixed32:

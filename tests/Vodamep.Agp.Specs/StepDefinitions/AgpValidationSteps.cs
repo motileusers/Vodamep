@@ -87,6 +87,9 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Staffs[0].SetValue(name, value);
             //else if (type == nameof(Employment))
             //    this.Report.Staffs[0].Employments[0].SetValue(name, value);
+            else if (type == nameof(TravelTime))
+                foreach (var a in this.Report.TravelTimes)
+                    a.SetValue(name, value);
             else if (type == nameof(Activity))
                 foreach (var a in this.Report.Activities)
                     a.SetValue(name, value);
