@@ -33,6 +33,10 @@ namespace Vodamep.ValidationBase
         public static string FirstDateInMOnth => "'{PropertyName}' muss der erste Tag des Monats sein.";
         public static string InvalidCode => "Für '{PropertyName}' ist '{PropertyValue}' kein gültiger Code.";
         public static string InvalidPostCode_City => "'{PropertyValue}' ist kein gültiger Ort.";
+        public static string ReferrerIsOtherRefererreThenOtherReferrerMustBeSet => "Wenn der Zuweiser ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.";
+        public static string DoubledDiagnosisGroups => "Es dürfen keine doppelten Diagnosegruppen vorhanden sein.";
+        public static string AtLeastOneDiagnosisGroup => "Es muss mindestens eine Diagnosegruppe vorhanden sein.";
+
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

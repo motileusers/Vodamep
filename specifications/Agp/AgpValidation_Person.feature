@@ -32,7 +32,7 @@ Beispiele:
     | gender      | Geschlecht            |    
     | referrer    | Zuweiser              |
 
-Szenariogrundriss: Eine Eigenschaft vom MkkpReport mit einem ungültigen Wert gesetzt.
+Szenariogrundriss: Eine Eigenschaft ist mit einem ungültigen Wert gesetzt.
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: 'Für '<Bezeichnung>' ist '<Wert>' kein gültiger Code.'
@@ -68,15 +68,21 @@ Beispiele:
     
 
 
-
-
 #todo: Referrer muss aus der Liste der referrers kommen
-#todo: wenn referer = Other, dann muss other_referrer befüllt sein
+
+Szenario: Der Zuweiser ist 'Anderer', dann muss 'Anderer Zuweiser' befüllt sein
+    Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'OtherReferrer' gesetzt
+    Und die Eigenschaft 'other_referrer' von 'Person' ist nicht gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Wenn der Zuweiser ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.'
 
 
 #todo: Alle Diagnosegruppen aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
 #todo: und umgekehrt
 
+Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
+    Angenommen die Diagnose(n) ist auf 'AffectiveDisorder, AffectiveDisorder' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen vorhanden sein.'
 
-#todo: keine doppelten Diagnosegruppen
-#todo: mindestens 1 Diagnosegruppen vorhanden
+Szenario: Es muss mindestens eine Diagnosegruppe vorhanden sein
+    Angenommen die Diagnose(n) ist auf '' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen vorhanden sein.'

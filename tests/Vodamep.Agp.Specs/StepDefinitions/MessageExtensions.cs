@@ -3,6 +3,7 @@ using Google.Protobuf.Reflection;
 using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Linq;
+using Enum = Google.Protobuf.WellKnownTypes.Enum;
 
 namespace Vodamep.Specs.StepDefinitions
 {
@@ -56,8 +57,10 @@ namespace Vodamep.Specs.StepDefinitions
                 case FieldType.UInt64:
                 case FieldType.SFixed32:
                 case FieldType.SFixed64:
-                case FieldType.Enum:
                     field.Accessor.SetValue(m, long.Parse(value));
+                    break;
+                case FieldType.Enum:
+                    field.Accessor.SetValue(m, System.Enum.Parse(field.Accessor.Descriptor.EnumType.ClrType, value));
                     break;
                 case FieldType.Double:
                 case FieldType.Float:

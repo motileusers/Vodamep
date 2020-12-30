@@ -138,6 +138,30 @@ namespace Vodamep.Specs.StepDefinitions
             field.Accessor.SetValue(m, ts);
         }
 
+        [Given(@"die Diagnose\(n\) ist auf '(.*)' gesetzt")]
+        public void GivenTheDiagnosisGroupIsSetTo(string value)
+        {
+            this.Report.Persons[0].Diagnoses.Clear();
+
+            if (value.Contains(','))
+            {
+                var diagnosis = value.Split(',').Select(x => (DiagnosisGroup) Enum.Parse(typeof(DiagnosisGroup), x));
+                this.Report.Persons[0].Diagnoses.AddRange(diagnosis);
+            }
+            else if (Enum.TryParse(value, out DiagnosisGroup diagnosis))
+            {
+                this.Report.Persons[0].Diagnoses.Add(diagnosis);
+            }
+            else if (value == "")
+            {
+                //nothing do do, already emptied yet
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)

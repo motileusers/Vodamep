@@ -20,6 +20,18 @@ Beispiele:
     | Name | Bezeichnung |
     | date | Datum       |
 
+Szenario: Minuten Werten müssen > 0 sein
+    Angenommen die Eigenschaft 'from' von 'AgpReport' ist auf '2018-04-04' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Von' muss der erste Tag des Monats sein.'
+
+Szenariogrundriss: Minuten Werten müssen > 0 sein
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: ''<Bezeichnung>' weist ein ungültiges Format auf.'
+Beispiele: 
+    | Wert |
+    | 0 |
+    | -1 |
 
 #todo: Activities Minutes Werte Bereich: > 0 (sonst unlimitiert)
 #todo: Activities Minutes dürfen nur in 5 Minuten Schritten eingegeben werden

@@ -35,6 +35,14 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.Gender).NotEmpty();
 
+            this.RuleFor(x => x.OtherReferrer).NotEmpty()
+                .When(y => y.Referrer == Referrer.OtherReferrer)
+                .WithMessage(Validationmessages.ReferrerIsOtherRefererreThenOtherReferrerMustBeSet);
+
+            this.RuleFor(x => x.Diagnoses).NotEmpty().WithMessage(Validationmessages.AtLeastOneDiagnosisGroup);
+            this.Include(new DiagnosisGroupIsUniqueValidator());
+
+
 
         }
     }
