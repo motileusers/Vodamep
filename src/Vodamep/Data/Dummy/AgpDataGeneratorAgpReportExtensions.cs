@@ -36,6 +36,13 @@ namespace Vodamep.Data.Dummy
             return s;
         }
 
+        public static TravelTime AddDummyTravelTime (this AgpReport report)
+        {
+            var tt = AgpDataGenerator.Instance.CreateTravelTimes(report);
+            report.TravelTimes.Add(tt);
+            return tt;
+        }
+
         //public static Activity AddDummyActivity(this HkpvReport report, string code, DateTime? date = null)
         //{
         //    if (!report.Persons.Any())

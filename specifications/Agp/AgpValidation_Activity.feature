@@ -67,9 +67,10 @@ Szenario: Summe TravelTimes darf 5 Stunden nicht überschreiten
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: 'Summe Reisezeiten darf 5 Stunden nicht überschreiten.'
 
-
-#todo: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
-
+Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
+    Angenommen es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeite pro Tag erlaubt.'
 
 
 #todo: Mehrfache Leistungen pro Klient pro Tag --> kein Fehler

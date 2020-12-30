@@ -39,6 +39,7 @@ namespace Vodamep.ValidationBase
         public static string MinutesHasToBeEnteredInFiveMinuteSteps => "Minutes dürfen nur in 5 Minuten Schritten eingegeben werden.";
         public static string MaxSumOfMinutesPerStaffMemberIs10Hours => "Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten.";
         public static string MaxSumOfMinutesTravelTimesIs10Hours => "Summe Reisezeiten darf 5 Stunden nicht überschreiten.";
+        public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeiten pro Tag erlaubt.";
 
 
         public static string GetRange(DateTime minDate, DateTime maxDate)

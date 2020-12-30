@@ -56,6 +56,7 @@ namespace Vodamep.Agp.Validation
             this.RuleForEach(report => report.TravelTimes).SetValidator(r => new TravelTimeValidator());
             
             this.Include(new SumOfTravelTimesMustBeLowerThan5HoursValidator());
+            this.Include(new OnlyOneTravelTimesEntryPerStaffMemberAndDayValidator());
 
 
             //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator4141617Without123(r.Persons, r.Staffs));

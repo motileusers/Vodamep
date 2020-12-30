@@ -10,16 +10,7 @@ namespace Vodamep.Agp.Validation
     {
         public TravelTimeValidator()
         {
-            
             this.RuleFor(x => x.Minutes).GreaterThan(0);
-            //this.RuleFor(x => x.Minutes)
-            //    .Custom((minute, ctx) =>
-            //    {
-            //        if (minute > 0 && minute % 5 != 0)
-            //        {
-            //            ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.MinutesHasToBeEnteredInFiveMinuteSteps));
-            //        }
-            //    });
         }
 
     }

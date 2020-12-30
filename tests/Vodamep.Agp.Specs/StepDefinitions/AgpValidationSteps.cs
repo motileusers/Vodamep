@@ -148,7 +148,7 @@ namespace Vodamep.Specs.StepDefinitions
 
             if (value.Contains(','))
             {
-                var diagnosis = value.Split(',').Select(x => (DiagnosisGroup) Enum.Parse(typeof(DiagnosisGroup), x));
+                var diagnosis = value.Split(',').Select(x => (DiagnosisGroup)Enum.Parse(typeof(DiagnosisGroup), x));
                 this.Report.Persons[0].Diagnoses.AddRange(diagnosis);
             }
             else if (Enum.TryParse(value, out DiagnosisGroup diagnosis))
@@ -165,6 +165,18 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
+        [Given(@"es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen")]
+        public void GivenTravelTimesAreAdded()
+        {
+            var existingTravelTime = this.Report.TravelTimes.First();
+            this.Report.TravelTimes.Add(new TravelTime { 
+                Id = existingTravelTime.Id,
+                Date = existingTravelTime.Date, 
+                DateD = existingTravelTime.DateD,
+                Minutes = 125,
+                StaffId = existingTravelTime.StaffId
+            });
+        }
 
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
