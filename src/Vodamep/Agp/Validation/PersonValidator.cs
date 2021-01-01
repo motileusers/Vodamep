@@ -41,9 +41,6 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.Diagnoses).NotEmpty().WithMessage(Validationmessages.AtLeastOneDiagnosisGroup);
             this.Include(new DiagnosisGroupIsUniqueValidator());
-
-
-
         }
     }
 }
