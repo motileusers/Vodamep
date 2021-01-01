@@ -66,8 +66,6 @@ Beispiele:
     | Name     | Bezeichnung  |
     | birthday | Geburtsdatum |
     
-
-
 #todo: Referrer muss aus der Liste der referrers kommen
 
 Szenario: Der Zuweiser ist 'Anderer', dann muss 'Anderer Zuweiser' befüllt sein

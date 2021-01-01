@@ -72,19 +72,29 @@ Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: 'Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeite pro Tag erlaubt.'
 
+Szenario: Mehrfache Leistungen pro Klient pro Tag
+    Angenommen es werden zusätzliche Leistungen pro Klient an einem Tag eingetragen
+    Dann enthält das Validierungsergebnis keine Fehler
+    Und es enthält keine Warnungen
 
-#todo: Mehrfache Leistungen pro Klient pro Tag --> kein Fehler
+Szenario: Mehrfache Leistungstypen pro Leistung
+    Angenommen die Leistungstypen 'Clearing,CareDocumentation' sind für eine Aktivität gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+    Und es enthält keine Warnungen
 
+Szenario: Doppelte Leistungen innerhalb einer Aktivität
+    Angenommen die Leistungstypen 'CareDocumentation,CareDocumentation' sind für eine Aktivität gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.'
 
-#todo: Mehrfache Leistungstypen pro Leistung --> kein Fehler
-#todo: Mehrfache Leistungen pro Klient am gleichen Tag --> kein Fehler
-#todo: keine doppelten Leistungstypen innerhalb einer Aktivität
-#todo: mindestens 1 Leistungstyp pro Leistung vorhanden
+Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
+   Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt
+   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' darf nicht leer sein.'
+
+Szenario: PatientContact nur erlaubt, wenn nur ein Leistungstyp mit Accompanying (und nur dieser) vorhanden ist
+   Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt
+   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' darf nicht leer sein.'
 
 #todo: PatientContact nur erlaubt, wenn nur ein Leistungstyp mit Accompanying (und nur dieser) vorhanden ist
-
-
-
 
 #todo: Alle folgenden Tests müssen für diesen Report angepasst werden
 #Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
@@ -106,10 +116,10 @@ Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
 #    Angenommen die Meldung enthält von der Mitarbeiterin 'unbekannteId' die Aktivitäten '02,15'
 #    Dann enthält das Validierungsergebnis den Fehler 'Der Id 'unbekannteId' fehlt'
 
-#Szenario: Eine Person ohne Aktivität.
-#    Angenommen zu einer Person sind keine Aktivitäten dokumentiert
-#    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
+Szenario: Eine Person ohne Aktivität.
+    Angenommen zu einer Person sind keine Aktivitäten dokumentiert
+    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
 
-#Szenario: Eine Mitarbeiterin ohne Aktivität.
-#    Angenommen zu einer Mitarbeiterin sind keine Aktivitäten dokumentiert
-#    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
+Szenario: Eine Mitarbeiterin ohne Aktivität.
+    Angenommen zu einer Mitarbeiterin sind keine Aktivitäten dokumentiert
+    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'

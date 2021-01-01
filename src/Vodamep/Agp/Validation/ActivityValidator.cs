@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 using Vodamep.Agp.Model;
@@ -27,7 +28,19 @@ namespace Vodamep.Agp.Validation
             this.RuleFor(x => x.StaffId).NotEmpty();
 
             this.RuleFor(x => x.Entries).NotEmpty();
-        
+            this.RuleFor(x => x.Entries).Custom((entries, ctx) =>
+            {
+                var query = entries.GroupBy(x => x)
+                    .Where(x => x.Count() > 1)
+                    .Select(group => group.Key);
+
+                if (query.Count() > 1)
+                {
+                    ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.WithinAnActivityThereAreNoDoubledActivityTypesAllowed));
+                }
+
+            });
+
             this.RuleFor(x => x.Minutes).GreaterThan(0);
             this.RuleFor(x => x.Minutes)
                 .Custom((minute, ctx) =>
