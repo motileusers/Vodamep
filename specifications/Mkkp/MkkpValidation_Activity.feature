@@ -3,16 +3,17 @@ Funktionalität: Mkkp - Validierung der gemeldeten Aktivitäten der Datenmeldung
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler '<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
     | Name              | Bezeichnung     |
     | date              | Datum           |
     | person_id         | Personen-ID     |
     | staff_id          | Mitarbeiter-ID  |
-    | minutes           | Leistungszeit   |
     | place_of_Action   | Einsatzort      |
 
+Szenario: Leistungszeit muss > 0 sein 
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist nicht gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
     Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
@@ -87,12 +88,12 @@ Szenario: Mehrfache Leistungen pro Klient pro Tag
     Und es enthält keine Warnungen
 
 Szenario: Mehrfache Leistungstypen pro Leistung
-    Angenommen die Leistungstypen 'Clearing,CareDocumentation' sind für eine Aktivität gesetzt
+    Angenommen die Leistungstypen 'Body,MedicalDiet' sind für eine Aktivität gesetzt
     Dann enthält das Validierungsergebnis keine Fehler
     Und es enthält keine Warnungen
 
 Szenario: Doppelte Leistungen innerhalb einer Aktivität
-    Angenommen die Leistungstypen 'CareDocumentation,CareDocumentation' sind für eine Aktivität gesetzt
+    Angenommen die Leistungstypen 'MedicalDiet,MedicalDiet' sind für eine Aktivität gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.'
 
 Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein

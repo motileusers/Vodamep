@@ -25,8 +25,7 @@ Szenario: Die Meldung darf nicht die Zukunft betreffen.
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'MkkpReport' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
     | Name        | Bezeichnung |
     | from        | Von         |

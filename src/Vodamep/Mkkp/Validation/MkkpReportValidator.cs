@@ -51,6 +51,8 @@ namespace Vodamep.Mkkp.Validation
 
             this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r.FromD, r.ToD));
 
+            this.Include(new SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator());
+
             //todo wird das hier auch benötigt
             //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator4141617Without123(r.Persons, r.Staffs));
 

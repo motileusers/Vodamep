@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using FluentValidation;
+using FluentValidation.Results;
 using Vodamep.Mkkp.Model;
 using Vodamep.ValidationBase;
 
@@ -26,10 +28,31 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.PersonId).NotEmpty();
 
             this.RuleFor(x => x.Entries).NotEmpty();
+            this.RuleFor(x => x.Entries).Custom((entries, ctx) =>
+            {
+                var query = entries.GroupBy(x => x)
+                    .Where(x => x.Count() > 1)
+                    .Select(group => group.Key);
 
-            this.RuleFor(x => x.Minutes).NotEmpty();
+                if (query.Count() > 1)
+                {
+                    ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.WithinAnActivityThereAreNoDoubledActivityTypesAllowed));
+                }
+
+            });
+
+            this.RuleFor(x => x.Minutes).GreaterThan(0);
+            this.RuleFor(x => x.Minutes)
+                .Custom((minute, ctx) =>
+                {
+                    if (minute > 0 && minute % 5 != 0)
+                    {
+                        ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.MinutesHasToBeEnteredInFiveMinuteSteps));
+                    }
+                });
 
             this.RuleFor(x => x.PlaceOfAction).NotEmpty();
+
         }
     }
 }

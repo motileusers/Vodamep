@@ -7,8 +7,7 @@ Szenario: StaffId ist nicht eindeutig.
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von '<Art>' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
     | Name          | Bezeichnung         | Art          |    
     | id            | ID                  | Staff        |

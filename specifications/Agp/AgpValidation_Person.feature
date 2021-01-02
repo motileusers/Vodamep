@@ -83,4 +83,4 @@ Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
 
 Szenario: Es muss mindestens eine Diagnosegruppe vorhanden sein
     Angenommen die Diagnose(n) ist auf '' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe vorhanden sein.'

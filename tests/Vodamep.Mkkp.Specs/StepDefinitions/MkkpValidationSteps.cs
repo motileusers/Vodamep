@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using TechTalk.SpecFlow;
-using Vodamep.Data;
 using Vodamep.Data.Dummy;
 using Vodamep.Mkkp.Model;
 using Vodamep.Mkkp.Validation;
@@ -167,7 +166,7 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen")]
         public void GivenTravelTimesAreAdded()
         {
-            var existingTravelTime = this.Report.TravelTimes.First();
+            var existingTravelTime = this.Report.TravelTimes.FirstOrDefault();
 
             //hier müssten travel times stehen
 
@@ -193,7 +192,9 @@ namespace Vodamep.Specs.StepDefinitions
                 DateD = existingActivity.DateD,
                 Minutes = 125,
                 StaffId = existingActivity.StaffId,
-                PersonId = existingActivity.PersonId
+                PersonId = existingActivity.PersonId,
+                PlaceOfAction = PlaceOfAction.ResidencePlace,
+                Entries = { ActivityType.MedicalDiet}
             });
         }
 
@@ -275,7 +276,7 @@ namespace Vodamep.Specs.StepDefinitions
             var placeOfActionValues = Enum.GetValues(typeof(PlaceOfAction));
             var placeOfAction = (PlaceOfAction)placeOfActionValues.GetValue(random.Next(placeOfActionValues.Length));
 
-            var minutes = random.Next(Math.Min(500, 6000));
+            var minutes = random.Next(Math.Min(100, 3000)) * 5;
             _dummyActivity = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction};
             _dummyActivity.Entries.Add(new[] { ActivityType.Body, ActivityType.MedicalDiet, ActivityType.MedicalWound });
 

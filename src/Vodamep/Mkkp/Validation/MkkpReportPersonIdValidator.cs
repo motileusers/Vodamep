@@ -22,6 +22,27 @@ namespace Vodamep.Mkkp.Validation
                         ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Persons)}[{index}]", Validationmessages.IdIsNotUnique));
                     }
                 });
+
+            //corert kann derzeit nicht mit AnonymousType umgehen. Vielleicht später: new { x.Staffs, x.Activities, x.Consultations }
+            this.RuleFor(x => new Tuple<IList<Person>, IEnumerable<Activity>>(x.Persons, x.Activities))
+                .Custom((a, ctx) =>
+                {
+                    var persons = a.Item1;
+                    var activities = a.Item2;
+
+                    var idPersons = persons.Select(x => x.Id).Distinct().ToArray();
+                    var idActivities = (
+                        activities.Select(x => x.StaffId)
+                    ).Distinct().ToArray();
+
+                    foreach (var id in idPersons.Except(idActivities))
+                    {
+                        var item = persons.Where(x => x.Id == id).First();
+                        var index = persons.IndexOf(item);
+                        ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Persons)}[{index}]", Validationmessages.WithoutActivity));
+
+                    }
+                });
         }
     }
 }

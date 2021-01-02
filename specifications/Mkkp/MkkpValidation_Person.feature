@@ -22,8 +22,7 @@ Szenario: PersonId ist nicht eindeutig.
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
     | Name                  | Bezeichnung                                   |
     | family_name           | Familienname                                  |
@@ -48,8 +47,7 @@ Beispiele:
 
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' weist ein ungültiges Format auf.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' weist ein ungültiges Format auf.'
 Beispiele: 
     | Name              | Bezeichnung                                   | Wert |
     | family_name       | Familienname                                  | t@st |
@@ -97,4 +95,4 @@ Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
 
 Szenario: Es muss mindestens eine Diagnosegruppe vorhanden sein
     Angenommen die Diagnose(n) ist auf '' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe vorhanden sein.'

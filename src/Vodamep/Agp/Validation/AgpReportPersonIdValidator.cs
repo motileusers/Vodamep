@@ -43,7 +43,6 @@ namespace Vodamep.Agp.Validation
 
                     }
                 });
-
         }
     }
 }
