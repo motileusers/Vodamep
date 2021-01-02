@@ -164,6 +164,76 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
+        [Given(@"es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen")]
+        public void GivenTravelTimesAreAdded()
+        {
+            var existingTravelTime = this.Report.TravelTimes.First();
+
+            //hier müssten travel times stehen
+
+            //this.Report.TravelTimes.Add(new TravelTime
+            //{
+            //    Id = existingTravelTime.Id,
+            //    Date = existingTravelTime.Date,
+            //    DateD = existingTravelTime.DateD,
+            //    Minutes = 125,
+            //    StaffId = existingTravelTime.StaffId
+            //});
+            throw new NotImplementedException();
+        }
+
+        [Given(@"es werden zusätzliche Leistungen pro Klient an einem Tag eingetragen")]
+        public void GivenAdditonalActivitiesPerClientAndDay()
+        {
+            var existingActivity = this.Report.Activities.First();
+            this.Report.Activities.Add(new Activity()
+            {
+                Id = existingActivity.Id,
+                Date = existingActivity.Date,
+                DateD = existingActivity.DateD,
+                Minutes = 125,
+                StaffId = existingActivity.StaffId,
+                PersonId = existingActivity.PersonId
+            });
+        }
+
+        [Given(@"die Leistungstypen '(.*)' sind für eine Aktivität gesetzt")]
+        public void GivenTheActivitiyTypesAreSetTo(string value)
+        {
+            this.Report.Activities[0].Entries.Clear();
+
+            if (value.Contains(','))
+            {
+                var activityTypes = value.Split(',').Select(x => (ActivityType)Enum.Parse(typeof(ActivityType), x));
+                this.Report.Activities[0].Entries.AddRange(activityTypes);
+            }
+            else if (Enum.TryParse(value, out ActivityType activityType))
+            {
+                this.Report.Activities[0].Entries.Add(activityType);
+            }
+            else if (value == "")
+            {
+                //nothing do do, already emptied yet
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        [Given(@"zu einer Person sind keine Aktivitäten dokumentiert")]
+        public void GivenAPersonWithoutActivities()
+        {
+            this.Report.Activities[0].PersonId = this.Report.Persons.First().Id + "id";
+        }
+
+        [Given(@"zu einer Mitarbeiterin sind keine Aktivitäten dokumentiert")]
+        public void GivenAStaffMemberWithoutActivities()
+        {
+            this.Report.Activities[0].StaffId = this.Report.Staffs.First().Id + "id";
+        }
+
+
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
         {

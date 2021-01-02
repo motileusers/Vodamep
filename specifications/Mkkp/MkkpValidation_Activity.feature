@@ -28,27 +28,76 @@ Beispiele:
 
 #todo: PlaceOfAction muss aus der Liste der places_of_action kommen
 
+Szenariogrundriss: Minuten Werte müssen > 0 sein
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+Beispiele: 
+    | Wert |
+    | 0 |
+    | -1 |
 
-#todo: Activities Minutes Werte Bereich: > 0 (sonst unlimitiert)
-#todo: Activities Minutes dürfen nur in 5 Minuten Schritten eingegeben werden
-#todo: Activities Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten
+Szenariogrundriss: Minuten  dürfen nur in 5 Minuten Schritten eingegeben werden
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Minutes dürfen nur in 5 Minuten Schritten eingegeben werden.'
+Beispiele: 
+    | Wert |
+    | 1 |
+    | 3 |
+    | 17 |
 
+Szenariogrundriss: Minuten  dürfen nur in 5 Minuten Schritten eingegeben werden - korrekt
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+    Und es enthält keine Warnungen
+Beispiele: 
+    | Wert |
+    | 5 |
+    | 10 |
+    | 15 |
 
-#todo: Traveltimes Minutes Werte Bereich: > 0 (sonst unlimitiert)
-#todo: Traveltimes Minutes darf nicht > als 5 Stunden sein
-#todo: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
+Szenario: Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '605' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten.'
 
-#todo: minutes Werte Bereich: > 0 (sonst unlimitiert)
-#todo: minutes dürfen nur in 5 Minuten Schritten eingegeben werden
-#todo: Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten
+Szenariogrundriss: TravelTime Werte müssen > 0 sein
+    Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+Beispiele: 
+    | Wert |
+    | 0 |
+    | -1 |
 
+Szenario: Summe TravelTimes darf 5 Stunden nicht überschreiten
+    Angenommen die Eigenschaft 'minutes' von 'TravelTimes' ist auf '305' gesetzt
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Summe Reisezeiten darf 5 Stunden nicht überschreiten.'
 
-#todo: Mehrfache Leistungstypen pro Leistung --> kein Fehler
-#todo: Mehrfache Leistungen pro Klient am gleichen Tag --> kein Fehler
-#todo: keine doppelten Leistungstypen innerhalb einer Aktivität
-#todo: mindestens 1 Leistungstyp pro Leistung vorhanden
+Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
+    Angenommen es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen
+    Dann enthält das Validierungsergebnis genau einen Fehler
+    Und die Fehlermeldung lautet: 'Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeite pro Tag erlaubt.'
+ 
+Szenario: Mehrfache Leistungen pro Klient pro Tag
+    Angenommen es werden zusätzliche Leistungen pro Klient an einem Tag eingetragen
+    Dann enthält das Validierungsergebnis keine Fehler
+    Und es enthält keine Warnungen
 
+Szenario: Mehrfache Leistungstypen pro Leistung
+    Angenommen die Leistungstypen 'Clearing,CareDocumentation' sind für eine Aktivität gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+    Und es enthält keine Warnungen
 
+Szenario: Doppelte Leistungen innerhalb einer Aktivität
+    Angenommen die Leistungstypen 'CareDocumentation,CareDocumentation' sind für eine Aktivität gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.'
+
+Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
+   Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt
+   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' darf nicht leer sein.'
 
 #todo: Alle folgenden Tests müssen für diesen Report angepasst werden
 #Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
@@ -70,10 +119,10 @@ Beispiele:
 #    Angenommen die Meldung enthält von der Mitarbeiterin 'unbekannteId' die Aktivitäten '02,15'
 #    Dann enthält das Validierungsergebnis den Fehler 'Der Id 'unbekannteId' fehlt'
 
-#Szenario: Eine Person ohne Aktivität.
-#    Angenommen zu einer Person sind keine Aktivitäten dokumentiert
-#    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
+Szenario: Eine Person ohne Aktivität.
+    Angenommen zu einer Person sind keine Aktivitäten dokumentiert
+    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
 
-#Szenario: Eine Mitarbeiterin ohne Aktivität.
-#    Angenommen zu einer Mitarbeiterin sind keine Aktivitäten dokumentiert
-#    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
+Szenario: Eine Mitarbeiterin ohne Aktivität.
+    Angenommen zu einer Mitarbeiterin sind keine Aktivitäten dokumentiert
+    Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
