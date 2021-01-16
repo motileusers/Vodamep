@@ -169,9 +169,10 @@ namespace Vodamep.Specs.StepDefinitions
         public void GivenTravelTimesAreAdded()
         {
             var existingTravelTime = this.Report.TravelTimes.First();
-            this.Report.TravelTimes.Add(new TravelTime { 
+            this.Report.TravelTimes.Add(new TravelTime
+            {
                 Id = existingTravelTime.Id,
-                Date = existingTravelTime.Date, 
+                Date = existingTravelTime.Date,
                 DateD = existingTravelTime.DateD,
                 Minutes = 125,
                 StaffId = existingTravelTime.StaffId
@@ -189,7 +190,9 @@ namespace Vodamep.Specs.StepDefinitions
                 DateD = existingActivity.DateD,
                 Minutes = 125,
                 StaffId = existingActivity.StaffId,
-                PersonId = existingActivity.PersonId
+                PersonId = existingActivity.PersonId,
+                PlaceOfAction = PlaceOfAction.BasePlace,
+                Entries = { ActivityType.GeriatricPsychiatric }
             });
         }
 
@@ -270,7 +273,7 @@ namespace Vodamep.Specs.StepDefinitions
             var placeOfActionValues = Enum.GetValues(typeof(PlaceOfAction));
             var placeOfAction = (PlaceOfAction)placeOfActionValues.GetValue(random.Next(placeOfActionValues.Length));
 
-            var minutes = random.Next(Math.Min(500, 6000));
+            var minutes = random.Next(Math.Min(100, 1200)) * 5;
             var activity = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };
             activity.Entries.Add(new[] { ActivityType.Clearing, ActivityType.ContactPartner, ActivityType.GuidancePartner });
 

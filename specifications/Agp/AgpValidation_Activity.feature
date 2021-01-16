@@ -3,14 +3,16 @@ Funktionalität: Agp - Validierung der gemeldeten Aktivitäten der Datenmeldung
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
-    Dann Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
     | Name              | Bezeichnung     |
     | date              | Datum           |
     | person_id         | Personen-ID     |
     | staff_id          | Mitarbeiter-ID  |
-    | minutes           | Leistungszeit   |
+
+Szenario: Leistungszeit muss > 0 sein 
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist nicht gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
     Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt

@@ -32,7 +32,7 @@ namespace Vodamep.Mkkp.Validation
 
                     var idPersons = persons.Select(x => x.Id).Distinct().ToArray();
                     var idActivities = (
-                        activities.Select(x => x.StaffId)
+                        activities.Select(x => x.PersonId)
                     ).Distinct().ToArray();
 
                     foreach (var id in idPersons.Except(idActivities))

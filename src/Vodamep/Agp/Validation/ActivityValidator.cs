@@ -34,7 +34,7 @@ namespace Vodamep.Agp.Validation
                     .Where(x => x.Count() > 1)
                     .Select(group => group.Key);
 
-                if (query.Count() > 1)
+                if (query.Any())
                 {
                     ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.WithinAnActivityThereAreNoDoubledActivityTypesAllowed));
                 }

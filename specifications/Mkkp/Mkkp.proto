@@ -12,7 +12,7 @@ message MkkpReport {
     repeated Staff staffs = 4; 
     repeated Person persons = 5;         
     repeated Activity activities = 6;     
-    repeated Activity travel_times = 7;     
+    repeated TravelTime travel_times = 7;     
 }
 
 // Einrichtung - immer Connexia

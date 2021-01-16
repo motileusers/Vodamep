@@ -37,7 +37,7 @@ Beispiele:
     | local_doctor          | Betreuender Arzt (Niedergelassener Bereich)   |
 
 
-Szenariogrundriss: Eine Eigenschaft vom AgpReport mit einem ungültigen Wert gesetzt.
+Szenariogrundriss: Eine Eigenschaft vom Report mit einem ungültigen Wert gesetzt.
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: 'Für '<Bezeichnung>' ist '<Wert>' kein gültiger Code.'

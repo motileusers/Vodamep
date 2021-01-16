@@ -21,7 +21,8 @@ namespace Vodamep.Agp.Validation
             _dict.Add(nameof(AgpReport.FromD), "Von");
             _dict.Add(nameof(AgpReport.Institution), "Einrichtung");
 
-            _dict.Add(nameof(Person.Id), "Personen-ID");
+            //alle Ids werden auf "ID" geprüft.
+            _dict.Add(nameof(Person.Id), "ID");
             _dict.Add(nameof(Person.Birthday), "Geburtsdatum");
             _dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
             _dict.Add(nameof(Person.Gender), "Geschlecht");

@@ -168,17 +168,14 @@ namespace Vodamep.Specs.StepDefinitions
         {
             var existingTravelTime = this.Report.TravelTimes.FirstOrDefault();
 
-            //hier müssten travel times stehen
-
-            //this.Report.TravelTimes.Add(new TravelTime
-            //{
-            //    Id = existingTravelTime.Id,
-            //    Date = existingTravelTime.Date,
-            //    DateD = existingTravelTime.DateD,
-            //    Minutes = 125,
-            //    StaffId = existingTravelTime.StaffId
-            //});
-            throw new NotImplementedException();
+            this.Report.TravelTimes.Add(new TravelTime
+            {
+                Id = existingTravelTime.Id,
+                Date = existingTravelTime.Date,
+                DateD = existingTravelTime.DateD,
+                Minutes = 125,
+                StaffId = existingTravelTime.StaffId
+            });
         }
 
         [Given(@"es werden zusätzliche Leistungen pro Klient an einem Tag eingetragen")]
@@ -258,7 +255,9 @@ namespace Vodamep.Specs.StepDefinitions
         [Then(@"enthält das Validierungsergebnis den Fehler '(.*)'")]
         public void ThenTheResultContainsAnError(string message)
         {
-            var pattern = new Regex(message, RegexOptions.IgnoreCase);
+            var pattern = new Regex(Regex.Escape(message), RegexOptions.IgnoreCase);
+
+            var isSame = Result.Errors.FirstOrDefault(x => x.ErrorMessage == message);
 
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }

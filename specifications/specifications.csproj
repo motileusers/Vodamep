@@ -18,7 +18,7 @@
     <None Update="Agp\AgpValidation_Person.feature">
       <Generator></Generator>
     </None>
-    <None Update="Agp\AgpValidation_Activity.old.feature">
+    <None Update="Agp\AgpValidation_Activity.feature">
       <Generator></Generator>
     </None>
     <None Update="Hkpv\HkpvValidation_Employment.feature">
