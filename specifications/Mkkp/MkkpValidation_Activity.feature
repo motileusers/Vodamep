@@ -101,12 +101,12 @@ Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' darf nicht leer sein.'
 
 Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
-    Angenommen die Eigenschaft 'date' von 'Activity' ist nicht gesetzt
+    Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2058-09-29' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss kleiner oder gleich (.*) sein'
-
-#Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
-#    Angenommen die Meldung enthält am '2008-04-30'
-#    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss grösser oder gleich (.*) sein.'
+    
+Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
+    Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2008-04-30' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss grösser oder gleich (.*) sein.'
 
 #todo: Test anpassen Anpassen
 #Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons.
