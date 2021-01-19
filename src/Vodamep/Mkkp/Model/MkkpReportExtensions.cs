@@ -10,7 +10,7 @@ using Vodamep.Mkkp.Validation;
 
 namespace Vodamep.Mkkp.Model
 {
-    public static class AgpReportExtensions
+    public static class MkkpReportExtensions
     {
         public static MkkpReport AddPerson(this MkkpReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static MkkpReport AddPersons(this MkkpReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
@@ -21,18 +21,27 @@ namespace Vodamep.Mkkp.Model
             return m;
         }
 
-        // todo
-
+        public static Task<SendResult> Send(this MkkpReport report, Uri address, string username, string password) => new MkkpReportSendClient(address).Send(report, username, password);
 
         public static MkkpReportValidationResult Validate(this MkkpReport report) => (MkkpReportValidationResult)new MkkpReportValidator().Validate(report);
 
-        // todo
+        public static string ValidateToText(this MkkpReport report, bool ignoreWarnings) => new MkkpReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
+
+        public static IEnumerable<string> ValidateToEnumerable(this MkkpReport report, bool ignoreWarnings) => new MkkpReportValidationResultListFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
 
         public static MkkpReport AsSorted(this MkkpReport report)
         {
-            var result = new MkkpReport();
+            var result = new MkkpReport()
+            {
+                Institution = report.Institution,
+                From = report.From,
+                To = report.To
+            };
 
-            // todo
+            result.Activities.AddRange(report.Activities.AsSorted());
+
+            result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
+            result.Staffs.AddRange(report.Staffs.OrderBy(x => x.Id));
 
             return result;
         }

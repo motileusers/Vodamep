@@ -1,20 +1,19 @@
 ﻿using System.Linq;
 using System.Text;
 using FluentValidation.Results;
-using Vodamep.Agp.Model;
+using Vodamep.Mkkp.Model;
 
-namespace Vodamep.Agp.Validation
+namespace Vodamep.Mkkp.Validation
 {
-    public class AgpReportValidationResultFormatter : AgpReportValidationResultFormatterBase
+    public class MkkpReportValidationResultFormatter : MkkpReportValidationResultFormatterBase
     {
         
-        public AgpReportValidationResultFormatter(ResultFormatterTemplate template, bool ignoreWarnings = false) : base(template, ignoreWarnings)
+        public MkkpReportValidationResultFormatter(ResultFormatterTemplate template, bool ignoreWarnings = false) : base(template, ignoreWarnings)
         {
         }
 
-        public string Format(AgpReport report, ValidationResult validationResult)
+        public string Format(MkkpReport report, ValidationResult validationResult)
         {
-
 
             var result = new StringBuilder();
 
