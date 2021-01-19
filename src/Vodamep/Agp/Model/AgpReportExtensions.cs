@@ -1,8 +1,12 @@
 ﻿using Google.Protobuf;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Vodamep.Agp.Validation;
+
+using ResultFormatterTemplate = Vodamep.Agp.Validation.ResultFormatterTemplate;
 
 namespace Vodamep.Agp.Model
 {
@@ -17,18 +21,28 @@ namespace Vodamep.Agp.Model
             return m;
         }
 
-        // todo
-
+        public static Task<SendResult> Send(this AgpReport report, Uri address, string username, string password) => new AgpReportSendClient(address).Send(report, username, password);
 
         public static AgpReportValidationResult Validate(this AgpReport report) => (AgpReportValidationResult)new AgpReportValidator().Validate(report);
 
-        // todo
+        public static string ValidateToText(this AgpReport report, bool ignoreWarnings) => new AgpReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
+
+        public static IEnumerable<string> ValidateToEnumerable(this AgpReport report, bool ignoreWarnings) => new AgpReportValidationResultListFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
 
         public static AgpReport AsSorted(this AgpReport report)
         {
-            var result = new AgpReport();
+            var result = new AgpReport()
+            {
+                Institution = report.Institution,
+                From = report.From,
+                To = report.To
+            };
 
-            // todo
+            result.Activities.AddRange(report.Activities.AsSorted());
+
+            result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
+            result.Staffs.AddRange(report.Staffs.OrderBy(x => x.Id));
+            result.TravelTimes.AddRange(report.TravelTimes.OrderBy(x => x.Id));
 
             return result;
         }

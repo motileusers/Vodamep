@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Vodamep.Hkpv
+
+namespace Vodamep.ReportBase
 {
-    public class HkpReportDiffResult
+    public class DiffResult
     {
         public Status Status { get; set; }
 
@@ -15,6 +16,6 @@ namespace Vodamep.Hkpv
 
         public object Value2 { get; set; }
 
-        public IList<HkpReportDiffResult> Children { get; set; } = new List<HkpReportDiffResult>();
+        public IList<DiffResult> Children { get; set; } = new List<DiffResult>();
     }
 }

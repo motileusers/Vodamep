@@ -9,6 +9,8 @@ using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Google.Protobuf.Reflection;
 using Vodamep.Data.Dummy;
+using Vodamep.ReportBase;
+
 namespace Vodamep.Hkpv.Model
 {
     public partial class HkpvReport
@@ -64,7 +66,7 @@ namespace Vodamep.Hkpv.Model
 
         public MemoryStream WriteToStream(bool asJson = false, bool compressed = true) => new HkpvReportSerializer().WriteToStream(this, asJson, compressed);
 
-        public  HkpReportDiffResult Diff(HkpvReport report) => new HkpvReportDiffer().Diff(this, report);
+        public  DiffResult Diff(HkpvReport report) => new HkpvReportDiffer().Diff(this, report);
 
         public List<DiffObject> DiffList(HkpvReport report) => new HkpvReportDiffer().DiffList(this, report);
 

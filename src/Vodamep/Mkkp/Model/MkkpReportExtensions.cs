@@ -10,7 +10,7 @@ using Vodamep.Mkkp.Validation;
 
 namespace Vodamep.Mkkp.Model
 {
-    public static class MkkpReportExtensions
+    public static class AgpReportExtensions
     {
         public static MkkpReport AddPerson(this MkkpReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static MkkpReport AddPersons(this MkkpReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));

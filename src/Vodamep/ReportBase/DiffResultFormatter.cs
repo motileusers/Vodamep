@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml.Schema;
-using FluentValidation.Results;
-using Vodamep.Hkpv.Model;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Hkpv.Validation
 {
-    public class HkpvDiffResultFormatter
+    public class DiffResultFormatter
     {
 
         private readonly bool _hideUnchanged;
 
-        public HkpvDiffResultFormatter(bool hideUnchanged = true)
+        public DiffResultFormatter(bool hideUnchanged = true)
         {
             _hideUnchanged = hideUnchanged;
         }
 
-        public string Format(HkpReportDiffResult diffResult)
+        public string Format(DiffResult diffResult)
         {
             var stringBuilder = new StringBuilder();
 
@@ -27,7 +23,7 @@ namespace Vodamep.Hkpv.Validation
             return stringBuilder.ToString();
         }
 
-        public void Format(HkpReportDiffResult diffResult, StringBuilder stringBuilder, int level)
+        public void Format(DiffResult diffResult, StringBuilder stringBuilder, int level)
         {
             if (diffResult == null || (_hideUnchanged && diffResult.Status == Status.Unchanged)) return;
 

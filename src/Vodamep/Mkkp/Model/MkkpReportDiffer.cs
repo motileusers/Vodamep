@@ -5,12 +5,13 @@ using System.Linq;
 using System.Reflection;
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
-using Vodamep.Hkpv.Model;
+using Vodamep.Hkpv;
+using Vodamep.Mkkp.Model;
 using Vodamep.ReportBase;
 
-namespace Vodamep.Hkpv
+namespace Vodamep.Mkkp
 {
-    internal class HkpvReportDiffer
+    internal class MkkpReportDiffer
     {
         public DiffResult Diff(object obj1, object obj2, int level = 0, bool ignoreChildLevels = false)
         {
@@ -41,7 +42,7 @@ namespace Vodamep.Hkpv
                 var objectProperties = obj1.GetType().GetProperties().Where(a => !IsValueType(a) && !a.PropertyType.IsGenericType).ToArray();
                 foreach (var propertyInfo in objectProperties)
                 {
-                    if (propertyInfo.PropertyType == typeof(MessageParser<HkpvReport>) || propertyInfo.PropertyType == typeof(MessageDescriptor) || propertyInfo.PropertyType == typeof(Google.Protobuf.WellKnownTypes.Timestamp))
+                    if (propertyInfo.PropertyType == typeof(MessageParser<MkkpReport>) || propertyInfo.PropertyType == typeof(MessageDescriptor) || propertyInfo.PropertyType == typeof(Google.Protobuf.WellKnownTypes.Timestamp))
                     {
                         continue;
                     }
@@ -153,7 +154,7 @@ namespace Vodamep.Hkpv
             return result;
         }
 
-        public List<DiffObject> DiffList(HkpvReport report1, HkpvReport report2)
+        public List<DiffObject> DiffList(MkkpReport report1, MkkpReport report2)
         {
             var result = new List<DiffObject>();
 
@@ -175,7 +176,7 @@ namespace Vodamep.Hkpv
             return result;
         }
 
-        private DiffObject DiffStaffActivity(HkpvReport report1, HkpvReport report2)
+        private DiffObject DiffStaffActivity(MkkpReport report1, MkkpReport report2)
         {
             var result = new DiffObject();
             var sum1 = 0;
@@ -217,7 +218,7 @@ namespace Vodamep.Hkpv
             return result;
         }
 
-        private DiffObject DiffPersonActivity(HkpvReport report1, HkpvReport report2)
+        private DiffObject DiffPersonActivity(MkkpReport report1, MkkpReport report2)
         {
             var result = new DiffObject();
             var sum1 = 0;
@@ -260,7 +261,7 @@ namespace Vodamep.Hkpv
         }
 
 
-        private DiffObject DiffEmployments(HkpvReport report1, HkpvReport report2)
+        private DiffObject DiffEmployments(MkkpReport report1, MkkpReport report2)
         {
             double standardHoursPerWeek = 40;
 
@@ -275,18 +276,18 @@ namespace Vodamep.Hkpv
 
             foreach (var staff in report1.Staffs)
             {
-                foreach (var employment in staff.Employments)
-                {
-                    sum1 += employment.HoursPerWeek / standardHoursPerWeek;
-                }
+                //foreach (var employment in staff.Employments)
+                //{
+                //    sum1 += employment.HoursPerWeek / standardHoursPerWeek;
+                //}
             }
 
             foreach (var staff in report2.Staffs)
             {
-                foreach (var employment in staff.Employments)
-                {
-                    sum2 += employment.HoursPerWeek / standardHoursPerWeek;
-                }
+                //foreach (var employment in staff.Employments)
+                //{
+                //    sum2 += employment.HoursPerWeek / standardHoursPerWeek;
+                //}
             }
 
             result.Difference = Math.Abs(sum1 - sum2) <= 0 ? Difference.Unchanged : Difference.Difference;
@@ -296,7 +297,7 @@ namespace Vodamep.Hkpv
             return result;
         }
 
-        private IEnumerable<DiffObject> FindAddPersons(HkpvReport report1, HkpvReport report2)
+        private IEnumerable<DiffObject> FindAddPersons(MkkpReport report1, MkkpReport report2)
         {
             return report2.Persons.Where(x => report1.Persons.All(y => x.Id != y.Id))
                 .Select(z =>
@@ -311,7 +312,7 @@ namespace Vodamep.Hkpv
                     });
         }
 
-        private IEnumerable<DiffObject> FindChangedPersons(HkpvReport report1, HkpvReport report2)
+        private IEnumerable<DiffObject> FindChangedPersons(MkkpReport report1, MkkpReport report2)
         {
             var result = new List<DiffObject>();
 
@@ -344,7 +345,7 @@ namespace Vodamep.Hkpv
 
         }
 
-        private IEnumerable<DiffObject> FindMissingPersons(HkpvReport report1, HkpvReport report2)
+        private IEnumerable<DiffObject> FindMissingPersons(MkkpReport report1, MkkpReport report2)
         {
             return report1.Persons.Where(x => report2.Persons.All(y => x.Id != y.Id))
                 .Select(z =>
@@ -359,7 +360,7 @@ namespace Vodamep.Hkpv
                     });
         }
 
-        private IEnumerable<DiffObject> FindAddStaff(HkpvReport report1, HkpvReport report2)
+        private IEnumerable<DiffObject> FindAddStaff(MkkpReport report1, MkkpReport report2)
         {
             return report2.Staffs.Where(x => report1.Staffs.All(y => x.Id != y.Id))
                 .Select(z =>
@@ -374,7 +375,7 @@ namespace Vodamep.Hkpv
                     });
         }
 
-        private IEnumerable<DiffObject> FindChangedStaff(HkpvReport report1, HkpvReport report2)
+        private IEnumerable<DiffObject> FindChangedStaff(MkkpReport report1, MkkpReport report2)
         {
             var result = new List<DiffObject>();
 
@@ -408,7 +409,7 @@ namespace Vodamep.Hkpv
 
         }
 
-        private IEnumerable<DiffObject> FindMissingStaffs(HkpvReport report1, HkpvReport report2)
+        private IEnumerable<DiffObject> FindMissingStaffs(MkkpReport report1, MkkpReport report2)
         {
             return report1.Staffs.Where(x => report2.Staffs.All(y => x.Id != y.Id))
                 .Select(z =>
@@ -423,7 +424,7 @@ namespace Vodamep.Hkpv
                     });
         }
 
-        private DiffObject FindChangedActivity(HkpvReport report1, HkpvReport report2)
+        private DiffObject FindChangedActivity(MkkpReport report1, MkkpReport report2)
         {
 
             bool isChanged = false;

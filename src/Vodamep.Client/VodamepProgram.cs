@@ -184,7 +184,7 @@ namespace Vodamep.Client
 
             var difference = report1.Diff(report2);
 
-            var formatter = new HkpvDiffResultFormatter(args.HideUnchanged);
+            var formatter = new DiffResultFormatter(args.HideUnchanged);
             var message = formatter.Format(difference);
 
             Console.WriteLine(message);
@@ -201,7 +201,7 @@ namespace Vodamep.Client
 
             var difference = report1.DiffList(report2);
 
-            var formatter = new HkpvDiffResultFormatter(args.HideUnchanged);
+            var formatter = new DiffResultFormatter(args.HideUnchanged);
             //var message = formatter.Format(difference);
 
             //Console.WriteLine(message);

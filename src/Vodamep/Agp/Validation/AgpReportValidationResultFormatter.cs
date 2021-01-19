@@ -1,0 +1,196 @@
+﻿using System;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using FluentValidation.Results;
+using Vodamep.Agp.Model;
+using Vodamep.Hkpv.Validation;
+
+
+namespace Vodamep.Agp.Validation
+{
+    public abstract class AgpReportValidationResultFormatterBase 
+    {
+        protected readonly ResultFormatterTemplate _template;
+        protected readonly bool _ignoreWarnings;
+
+        public AgpReportValidationResultFormatterBase(ResultFormatterTemplate template, bool ignoreWarnings = false)
+        {
+            _template = template;
+            _ignoreWarnings = ignoreWarnings;
+
+            _strategies = new[]
+            {
+                new GetNameByPatternStrategy(GetIdPattern(nameof(AgpReport.Persons)), GetNameOfPerson),
+                new GetNameByPatternStrategy(GetIdPattern(nameof(AgpReport.Staffs)), GetNameOfStaff),
+                new GetNameByPatternStrategy(GetIdPattern(nameof(AgpReport.Activities)), GetNameOfActivity),
+
+                new GetNameByPatternStrategy($"^{nameof(AgpReport.To)}$",(a,b) => string.Empty),
+                new GetNameByPatternStrategy($"^{nameof(AgpReport.ToD)}$",(a,b) => string.Empty),
+                new GetNameByPatternStrategy($"^{nameof(AgpReport.From)}$",(a,b) => string.Empty),
+                new GetNameByPatternStrategy($"^{nameof(AgpReport.FromD)}$",(a,b) => string.Empty),
+            };
+
+        }
+
+        protected string GetSeverityName(FluentValidation.Severity severity)
+        {
+            switch (severity)
+            {
+                case FluentValidation.Severity.Error:
+                    return "Fehler";
+                case FluentValidation.Severity.Warning:
+                    return "Warnung";
+                case FluentValidation.Severity.Info:
+                    return "Information";
+                default:
+                    return severity.ToString();
+            }
+        }
+
+        protected string GetInfo(AgpReport report, string propertyName)
+        {
+            foreach (var strategy in _strategies)
+            {
+                var (Success, Info) = strategy.GetInfo(report, propertyName);
+
+                if (Success) return Info;
+            }
+
+            return propertyName;
+        }
+
+        private static string GetIdPattern(string propertyName) => $@"{propertyName}\[(?<id>\d+)\]";
+
+        private readonly GetNameByPatternStrategy[] _strategies;
+
+        private string GetNameOfPerson(AgpReport report, int index)
+        {
+            if (report.Persons.Count > index && index >= 0)
+            {
+                var e = report.Persons[index];
+                //return $"Person: {e.FamilyName} {e.GivenName}";
+            }
+
+            return string.Empty;
+        }
+        private string GetNameOfStaff(AgpReport report, int index)
+        {
+            if (report.Staffs.Count > index && index >= 0)
+            {
+                var e = report.Staffs[index];
+                return $"Mitarbeiter: {e.FamilyName} {e.GivenName}";
+            }
+
+            return string.Empty;
+        }
+
+        private string GetNameOfActivity(AgpReport report, int index)
+        {
+            if (report.Activities.Count > index && index >= 0)
+            {
+                var e = report.Activities[index];
+                return $"Aktivität {e.DateD.ToString("dd.MM.yyyy")}{_template.Linefeed}  {String.Join(",", e.Entries)}{_template.Linefeed}  {GetNameOfPersonById(report, e.PersonId)}{_template.Linefeed}  {GetNameOfStaffById(report, e.StaffId)}";
+            }
+
+            return string.Empty;
+        }
+
+        private string GetNameOfPersonById(AgpReport report, string id)
+        {
+            var e = report.Persons.Where(x => x.Id == id).FirstOrDefault();
+
+            if (e == null)
+                return string.Empty;
+
+            //return $"{e.FamilyName} {e.GivenName}";
+            return "";
+        }
+
+        private string GetNameOfStaffById(AgpReport report, string id)
+        {
+            var e = report.Staffs.Where(x => x.Id == id).FirstOrDefault();
+
+            if (e == null)
+                return string.Empty;
+
+            return $"{e.FamilyName} {e.GivenName}";
+        }
+
+        private class GetNameByPatternStrategy
+        {
+            private readonly Regex _pattern;
+            private readonly Func<AgpReport, int, string> _resolveInfo;
+
+            public GetNameByPatternStrategy(string pattern, Func<AgpReport, int, string> resolveInfo)
+            {
+                _pattern = new Regex(pattern);
+                _resolveInfo = resolveInfo;
+            }
+
+            public (bool Success, string Info) GetInfo(AgpReport report, string propertyName)
+            {
+                var m = this._pattern.Match(propertyName);
+
+                if (m.Success)
+                {
+                    int.TryParse(m.Groups["id"].Value, out int id);
+
+                    return (true, _resolveInfo(report, id));
+                }
+                return (false, string.Empty);
+            }
+
+
+        }
+    }
+
+    public class AgpReportValidationResultFormatter : AgpReportValidationResultFormatterBase
+    {
+        
+        public AgpReportValidationResultFormatter(ResultFormatterTemplate template, bool ignoreWarnings = false) : base(template, ignoreWarnings)
+        {
+        }
+
+        public string Format(AgpReport report, ValidationResult validationResult)
+        {
+
+
+            var result = new StringBuilder();
+
+            result.Append(_template.Header(report, validationResult));
+
+            var severities = validationResult.Errors
+                .Where(x => !_ignoreWarnings || x.Severity == FluentValidation.Severity.Error)
+                .OrderBy(x => x.Severity)
+                .GroupBy(x => x.Severity);
+
+            foreach (var severity in severities)
+            {
+                result.Append(_template.HeaderSeverity(GetSeverityName(severity.Key)));
+
+                var entries = severity.Select(x => new
+                {
+                    Info = this.GetInfo(report, x.PropertyName),
+                    Message = x.ErrorMessage,
+                    Value = x.AttemptedValue?.ToString()
+                }).ToArray();
+
+                foreach (var groupedInfos in entries.OrderBy(x => x.Info).GroupBy(x => x.Info))
+                {
+                    result.Append(_template.FirstLine((groupedInfos.Key, groupedInfos.First().Message, groupedInfos.First().Value)));
+
+                    foreach (var info in groupedInfos.Skip(1))
+                    {
+                        result.Append(_template.Line((info.Message, info.Value)));
+                    }
+                }
+
+                result.Append(_template.FooterSeverity(severity.ToString()));
+            }
+            return result.ToString();
+        }
+
+
+    }
+}
