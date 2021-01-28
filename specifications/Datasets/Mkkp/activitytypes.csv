@@ -3,9 +3,9 @@
 Body;Ganzheitliche Körperpflege
 MedicalCommon;Medizinische Pflege: allgemein
 MedicalDiet;Medizinische Pflege: Ernährung
-MedicalVital;Medizinische Pflege: Vitalzeichen / Monitoring
+MedicalVital;Medizinische Pflege: Vitalzeichen/Monitoring
 MedicalWound;Medizinische Pflege: Wundversorgung
-MedicalInjection;Medizinische Pflege: zentraler/peripherer Gefäßzugang bzw. Injektionen
-MedicalVentilationTubes;Medizinische Pflege: Beatmung, Kanülenwechsel, Tracheostomapflege
+MedicalInjection;Medizinische Pflege: zentraler/peripherer Gefäßzugang bzw. Injektion
+MedicalVentilationTubes;Medizinische Pflege: Beatmung Kanülen Wechsel Tracheostomapflege 
 AccompanyingWithContact;Begleitende Maßnahmen mit Patientenkontakt
-AccompanyingWithoutContact;Begleitende Maßnahmen ohne Patientenkontakt
+AccompanyingWithoutContact;Begleitende Maßnahmen
