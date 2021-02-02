@@ -53,27 +53,17 @@ namespace Vodamep.Mkkp.Validation
 
             this.Include(new SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator());
 
-            //todo wird das hier auch benötigt
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator4141617Without123(r.Persons, r.Staffs));
+            this.RuleForEach(report => report.TravelTimes).SetValidator(r => new TravelTimeValidator());
 
-            // Nur für neu gesendete Daten
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator23Without417(r.Persons, r.Staffs)).Unless(x => x.ToD < new DateTime(2019, 01, 01));
+            this.Include(new SumOfTravelTimesMustBeLowerThan5HoursValidator());
+
+            this.Include(new OnlyOneTravelTimesEntryPerStaffMemberAndDayValidator());
 
             this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator());
-
-            //this.Include(new ActivityMedicalByQualificationTraineeValidator());
-
-            //this.Include(new ActivityWarningIfMoreThan5Validator());
-
-            //this.Include(new ActivityWarningIfMoreThan350Validator());
 
             this.Include(new MkkpReportPersonIdValidator());
 
             this.Include(new MkkpReportStaffIdValidator());
-
-            //this.Include(new PersonSsnIsUniqueValidator());
-
-            //this.Include(new EmploymentActivityValidator());
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<MkkpReport> context, CancellationToken cancellation = default(CancellationToken))

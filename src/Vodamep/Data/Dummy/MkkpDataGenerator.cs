@@ -23,12 +23,10 @@ namespace Vodamep.Data.Dummy
             }
         }
 
-
         private MkkpDataGenerator()
         {
 
         }
-
 
         public MkkpReport CreateMkkpReport(int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
         {
@@ -45,6 +43,7 @@ namespace Vodamep.Data.Dummy
 
             report.AddDummyPersons(persons);
             report.AddDummyStaffs(staffs);
+            report.AddDummyTravelTime();
 
             if (addActivities)
                 report.AddDummyActivities();
@@ -172,6 +171,18 @@ namespace Vodamep.Data.Dummy
         {
             for (var i = 0; i < count; i++)
                 yield return CreateStaff(report);
+        }
+        public TravelTime CreateTravelTimes(MkkpReport report)
+        {
+            var travelTime = new TravelTime
+            {
+                Id = "0",
+                DateD = DateTime.Now,
+                Minutes = 125,
+                StaffId = report.Staffs.First().Id,
+            };
+
+            return travelTime;
         }
 
         private ActivityType[] CreateRandomActivities()

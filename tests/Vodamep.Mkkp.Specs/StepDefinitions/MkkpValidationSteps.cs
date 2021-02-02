@@ -35,10 +35,6 @@ namespace Vodamep.Specs.StepDefinitions
             this.Report = MkkpDataGenerator.Instance.CreateMkkpReport(date.Year, date.Month, 1, 1, false);
 
             this.AddDummyActivity(Report.Persons[0].Id, Report.Staffs[0].Id);
-
-            //var consultation = new Activity() { Date = this.Report.From, StaffId = Report.Staffs[0].Id };
-            //consultation.Entries.Add(ActivityType.MedicalInjection);
-            //this.Report.Activities.Add(consultation);
         }
 
         public MkkpReport Report { get; private set; }
@@ -98,6 +94,8 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Persons[0].SetValue(name, value);
             else if (type == nameof(Staff))
                 this.Report.Staffs[0].SetValue(name, value);
+            else if (type == nameof(TravelTime))
+                this.Report.TravelTimes[0].SetValue(name, value);
             else if (type == nameof(Activity))
                 foreach (var a in this.Report.Activities)
                     a.SetValue(name, value);
@@ -255,10 +253,16 @@ namespace Vodamep.Specs.StepDefinitions
         [Then(@"enthält das Validierungsergebnis den Fehler '(.*)'")]
         public void ThenTheResultContainsAnError(string message)
         {
+            var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
+        }
+
+        [Then(@"enthält das escapte Validierungsergebnis den Fehler '(.*)'")]
+        public void ThenTheResultContainsAnErrorRegex(string message)
+        {
             var pattern = new Regex(Regex.Escape(message), RegexOptions.IgnoreCase);
-
-            var isSame = Result.Errors.FirstOrDefault(x => x.ErrorMessage == message);
-
+            
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
 

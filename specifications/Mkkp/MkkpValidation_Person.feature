@@ -22,7 +22,7 @@ Szenario: PersonId ist nicht eindeutig.
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
     | Name                  | Bezeichnung                                   |
     | family_name           | Familienname                                  |
@@ -47,7 +47,7 @@ Beispiele:
 
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' weist ein ungültiges Format auf.'
+    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' weist ein ungültiges Format auf.'
 Beispiele: 
     | Name              | Bezeichnung                                   | Wert |
     | family_name       | Familienname                                  | t@st |
@@ -74,11 +74,6 @@ Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
 Beispiele:
     | Name     | Bezeichnung  |
     | birthday | Geburtsdatum |
-
-
-
-
-#todo: Referrer muss aus der Liste der referrers kommen
    
 Szenario: Der Zuweiser ist 'Anderer', dann muss 'Anderer Zuweiser' befüllt sein
     Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'OtherReferrer' gesetzt

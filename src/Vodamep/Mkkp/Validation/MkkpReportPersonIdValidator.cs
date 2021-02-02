@@ -31,17 +31,24 @@ namespace Vodamep.Mkkp.Validation
                     var activities = a.Item2;
 
                     var idPersons = persons.Select(x => x.Id).Distinct().ToArray();
-                    var idActivities = (
-                        activities.Select(x => x.PersonId)
-                    ).Distinct().ToArray();
+                    var idPersonActivities = activities.Select(x => x.PersonId).Distinct().ToArray();
 
-                    foreach (var id in idPersons.Except(idActivities))
+                    foreach (var id in idPersons.Except(idPersonActivities))
                     {
-                        var item = persons.Where(x => x.Id == id).First();
+                        var item = persons.FirstOrDefault(x => x.Id == id);
+                        if (item == null)
+                            continue;
+
                         var index = persons.IndexOf(item);
                         ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Persons)}[{index}]", Validationmessages.WithoutActivity));
-
                     }
+
+                    foreach (var activity in activities)
+                    {
+                        if (!idPersons.Contains(activity.PersonId))
+                            ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Activities)}[{activity.Id}]", Validationmessages.WithoutPerson));
+                    }
+
                 });
         }
     }
