@@ -80,10 +80,6 @@ Szenario: Der Zuweiser ist 'Anderer', dann muss 'Anderer Zuweiser' befüllt sein
     Und die Eigenschaft 'other_referrer' von 'Person' ist nicht gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Wenn der Zuweiser ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.'
 
-
-#todo: Alle Diagnosegruppen aus dem csv müssen als enum vorhanden sein (Normaler Test, ohne Specflow?)
-#todo: und umgekehrt
-
 Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
     Angenommen die Diagnose(n) ist auf 'GeneticDisease, GeneticDisease' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen vorhanden sein.'

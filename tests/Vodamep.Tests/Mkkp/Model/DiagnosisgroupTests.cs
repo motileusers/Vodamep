@@ -8,6 +8,7 @@ namespace Vodamep.Tests.Mkkp.Model
     public class DiagnosisgroupTests
     {
         //todo UndefinedDiagnosisGroup
+        //todo metabolicdisease is missing
 
         [Fact]
         public void DiagnosisGroups_ReturnspectedResult()
