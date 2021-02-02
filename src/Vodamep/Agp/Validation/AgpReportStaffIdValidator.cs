@@ -49,6 +49,12 @@ namespace Vodamep.Agp.Validation
                     {
                         ctx.AddFailure(new ValidationFailure(nameof(AgpReport.Staffs), Validationmessages.IdIsMissing(id)));
                     }
+
+                    foreach (var activity in activities)
+                    {
+                        if (!idStaffs.Contains(activity.StaffId))
+                            ctx.AddFailure(new ValidationFailure($"{nameof(AgpReport.Activities)}[{activity.Id}]", Validationmessages.WithoutStaff));
+                    }
                 });
 
         }

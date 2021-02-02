@@ -58,28 +58,11 @@ namespace Vodamep.Agp.Validation
             this.Include(new SumOfTravelTimesMustBeLowerThan5HoursValidator());
             this.Include(new OnlyOneTravelTimesEntryPerStaffMemberAndDayValidator());
 
-
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator4141617Without123(r.Persons, r.Staffs));
-
-            //// Nur für neu gesendete Daten
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator23Without417(r.Persons, r.Staffs)).Unless(x => x.ToD < new DateTime(2019, 01, 01));
-
-
             this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator());
-
-            //this.Include(new ActivityMedicalByQualificationTraineeValidator());
-
-            //this.Include(new ActivityWarningIfMoreThan5Validator());
-
-            //this.Include(new ActivityWarningIfMoreThan350Validator());
 
             this.Include(new AgpReportPersonIdValidator());
 
             this.Include(new AgpReportStaffIdValidator());
-
-            //this.Include(new PersonSsnIsUniqueValidator());
-
-            //this.Include(new EmploymentActivityValidator());
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<AgpReport> context, CancellationToken cancellation = default(CancellationToken))

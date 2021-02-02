@@ -92,26 +92,21 @@ Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
 
 #todo: PatientContact nur erlaubt, wenn nur ein Leistungstyp mit Accompanying (und nur dieser) vorhanden ist
 
-#todo: Alle folgenden Tests müssen für diesen Report angepasst werden
-#Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
-#    Angenommen die Meldung enthält am '2058-04-30'
-#    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss kleiner oder gleich (.*) sein'
+Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
+    Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2058-09-29' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss kleiner oder gleich (.*) sein'
+    
+Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
+    Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2008-04-30' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss grösser oder gleich (.*) sein.'
 
-#todo: Test anpassen Anpassen
-#Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
-#    Angenommen die Meldung enthält am '2008-04-30'
-#    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss grösser oder gleich (.*) sein.'
+Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons
+    Angenommen die Eigenschaft 'person_id' von 'Activity' ist auf '-1' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Keine Person.'
 
-#todo: Test anpassen Anpassen
-#Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons.
-#    Angenommen die Meldung enthält bei der Person 'unbekannteId'
-#    Dann enthält das Validierungsergebnis den Fehler 'Der Id 'unbekannteId' fehlt'
-
-#todo: Test anpassen Anpassen
-#Szenario: Eine Aktivität ohne entsprechenden Eintrag in Staffs.
-#    Angenommen die Meldung enthält von der Mitarbeiterin 'unbekannteId' die Aktivitäten '02,15'
-#    Dann enthält das Validierungsergebnis den Fehler 'Der Id 'unbekannteId' fehlt'
-
+Szenario: Eine Aktivität ohne entsprechenden Eintrag in Mitarbeiter
+    Angenommen die Eigenschaft 'staff_id' von 'Activity' ist auf '-1' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Kein Mitarbeiter.'
 Szenario: Eine Person ohne Aktivität.
     Angenommen zu einer Person sind keine Aktivitäten dokumentiert
     Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'

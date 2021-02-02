@@ -42,6 +42,12 @@ namespace Vodamep.Agp.Validation
                         ctx.AddFailure(new ValidationFailure($"{nameof(AgpReport.Persons)}[{index}]", Validationmessages.WithoutActivity));
 
                     }
+
+                    foreach (var activity in activities)
+                    {
+                        if (!idPersons.Contains(activity.PersonId))
+                            ctx.AddFailure(new ValidationFailure($"{nameof(AgpReport.Activities)}[{activity.Id}]", Validationmessages.WithoutPerson));
+                    }
                 });
         }
     }
