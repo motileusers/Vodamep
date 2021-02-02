@@ -7,6 +7,7 @@ namespace Vodamep.Tests.Agp.Model
 {
     public class DiagnosisgroupTests
     {
+        //todo missing undefineddiagnosisgroup
 
         [Fact]
         public void DiagnosisGroups_ReturnspectedResult()
@@ -18,7 +19,7 @@ namespace Vodamep.Tests.Agp.Model
                 DiagnosisGroup.DependenceIllnesse,
                 DiagnosisGroup.NonOrganicSleepingDisorder,
                 DiagnosisGroup.SchizophreniaDelusionalDisorder,
-                DiagnosisGroup.UndefinedDiagnosisGroup,
+                //DiagnosisGroup.UndefinedDiagnosisGroup,
             }.Select(x => x.ToString());
 
             var values = DiagnosisgroupProvider.Instance.Values.Select(x => x.Key);

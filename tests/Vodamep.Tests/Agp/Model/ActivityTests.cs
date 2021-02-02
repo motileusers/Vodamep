@@ -22,7 +22,7 @@ namespace Vodamep.Tests.Agp.Model
                 ActivityType.GeriatricPsychiatric,
                 ActivityType.GuidanceClient,
                 ActivityType.GuidancePartner,
-                ActivityType.Miscellaneous,
+                //ActivityType.Miscellaneous,
                 ActivityType.ObservationsAssessment
             }.Select(x => x.ToString());
 

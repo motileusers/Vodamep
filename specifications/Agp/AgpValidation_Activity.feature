@@ -65,15 +65,13 @@ Beispiele:
     | -1 |
 
 Szenario: Summe TravelTimes darf 5 Stunden nicht überschreiten
-    Angenommen die Eigenschaft 'minutes' von 'TravelTimes' ist auf '305' gesetzt
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Summe Reisezeiten darf 5 Stunden nicht überschreiten.'
+    Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '305' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Summe Reisezeiten darf 5 Stunden nicht überschreiten.'
 
 Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
     Angenommen es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeite pro Tag erlaubt.'
-
+    Dann enthält das Validierungsergebnis den Fehler 'Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeiten pro Tag erlaubt.'
+    
 Szenario: Mehrfache Leistungen pro Klient pro Tag
     Angenommen es werden zusätzliche Leistungen pro Klient an einem Tag eingetragen
     Dann enthält das Validierungsergebnis keine Fehler

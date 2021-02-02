@@ -85,8 +85,6 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Persons[0].SetValue(name, value);
             else if (type == nameof(Staff))
                 this.Report.Staffs[0].SetValue(name, value);
-            //else if (type == nameof(Employment))
-            //    this.Report.Staffs[0].Employments[0].SetValue(name, value);
             else if (type == nameof(TravelTime))
                 foreach (var a in this.Report.TravelTimes)
                     a.SetValue(name, value);
@@ -262,6 +260,8 @@ namespace Vodamep.Specs.StepDefinitions
         public void ThenTheResultContainsAnError(string message)
         {
             var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            var isSame = this.Result.Errors.FirstOrDefault(x => x.ErrorMessage == message);
 
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
