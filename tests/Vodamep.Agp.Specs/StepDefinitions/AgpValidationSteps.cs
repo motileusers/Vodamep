@@ -23,8 +23,6 @@ namespace Vodamep.Specs.StepDefinitions
         private AgpReportValidationResult _result;
         private Activity _dummyActivities;
 
-        // todo
-
         public AgpValidationSteps()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("de");

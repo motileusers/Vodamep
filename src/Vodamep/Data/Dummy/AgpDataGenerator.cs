@@ -63,8 +63,8 @@ namespace Vodamep.Data.Dummy
                 Insurance = "19",
 
                 CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
-                            .Where(x => x != CareAllowance.Any)
-                            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 1)),
+                            .Where(x => x != CareAllowance.Any && x != CareAllowance.UndefinedAllowance)
+                            .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 2)),
 
                 Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
 
