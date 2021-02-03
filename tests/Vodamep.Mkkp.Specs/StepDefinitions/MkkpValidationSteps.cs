@@ -276,11 +276,12 @@ namespace Vodamep.Specs.StepDefinitions
         {
             var random = new Random();
 
-            var placeOfActionValues = Enum.GetValues(typeof(PlaceOfAction));
-            var placeOfAction = (PlaceOfAction)placeOfActionValues.GetValue(random.Next(placeOfActionValues.Length));
+            var placeOfAction = ((PlaceOfAction[]) (Enum.GetValues(typeof(PlaceOfAction))))
+                .Where(x => x != PlaceOfAction.UndefinedPlace)
+                .ElementAt(random.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1));
 
             var minutes = random.Next(Math.Min(100, 3000)) * 5;
-            _dummyActivity = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction};
+            _dummyActivity = new Activity() { Id = "1", Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction};
             _dummyActivity.Entries.Add(new[] { ActivityType.Body, ActivityType.MedicalDiet, ActivityType.MedicalWound });
 
             this.Report.Activities.Add(_dummyActivity);
