@@ -9,3 +9,4 @@ MedicalInjection;Medizinische Pflege: zentraler/peripherer Gefäßzugang bzw. In
 MedicalVentilationTubes;Medizinische Pflege: Beatmung Kanülen Wechsel Tracheostomapflege 
 AccompanyingWithContact;Begleitende Maßnahmen mit Patientenkontakt
 AccompanyingWithoutContact;Begleitende Maßnahmen
+UndefinedActivity;undefiniert

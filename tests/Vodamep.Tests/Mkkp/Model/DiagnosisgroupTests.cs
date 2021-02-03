@@ -7,7 +7,6 @@ namespace Vodamep.Tests.Mkkp.Model
 {
     public class DiagnosisgroupTests
     {
-        //todo UndefinedDiagnosisGroup
         //todo metabolicdisease is missing
 
         [Fact]
@@ -24,7 +23,7 @@ namespace Vodamep.Tests.Mkkp.Model
                 DiagnosisGroup.PalliativeCare4,
                 DiagnosisGroup.Premature,
                 DiagnosisGroup.SurgicalCare,
-                //DiagnosisGroup.UndefinedDiagnosisGroup,
+                DiagnosisGroup.UndefinedDiagnosisGroup,
             }.Select(x => x.ToString());
 
             var values = DiagnosisgroupProvider.Instance.Values.Select(x => x.Key);

@@ -66,7 +66,8 @@ Beispiele:
     | Name     | Bezeichnung  |
     | birthday | Geburtsdatum |
     
-#todo: Referrer muss aus der Liste der referrers kommen
+#todo: Referrer muss aus der Liste der referrers kommen -> bei Agp auch
+#todo: UndefinedReferrer ist nicht erlaubt
 
 Szenario: Der Zuweiser ist 'Anderer', dann muss 'Anderer Zuweiser' befüllt sein
     Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'OtherReferrer' gesetzt

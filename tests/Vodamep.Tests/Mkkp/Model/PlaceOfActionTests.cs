@@ -7,8 +7,6 @@ namespace Vodamep.Tests.Mkkp.Model
 {
     public class PlaceOfActionTests
     {
-        //todo other place
-
         [Fact]
         public void AsSorted_ReturnspectedResult()
         {
@@ -19,7 +17,7 @@ namespace Vodamep.Tests.Mkkp.Model
                 PlaceOfAction.OutpatientHospitalPlace,
                 PlaceOfAction.ResidencePlace,
                 PlaceOfAction.SchoolPlace,
-                //PlaceOfAction.UndefinedPlace,
+                PlaceOfAction.UndefinedPlace,
               }.Select(x => x.ToString());
 
             var values = PlaceOfActionProvider.Instance.Values.Select(x => x.Key);

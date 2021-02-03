@@ -16,6 +16,7 @@ namespace Vodamep.Tests.Agp.Model
                 PlaceOfAction.MedicalOrinationPlace,
                 PlaceOfAction.OtherPlace,
                 PlaceOfAction.ResidencePlace,
+                PlaceOfAction.UndefinedPlace,
               }.Select(x => x.ToString());
 
             var values = PlaceOfActionProvider.Instance.Values.Select(x => x.Key);

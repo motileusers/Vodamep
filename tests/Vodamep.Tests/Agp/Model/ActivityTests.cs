@@ -12,8 +12,6 @@ namespace Vodamep.Tests.Agp.Model
         [Fact]
         public void AsSorted_ReturnspectedResult()
         {
-            //todo das Miscellaneous fehlt im CSV
-
             var list1 = new[] {
                 ActivityType.CareDocumentation,
                 ActivityType.Clearing,
@@ -22,7 +20,7 @@ namespace Vodamep.Tests.Agp.Model
                 ActivityType.GeriatricPsychiatric,
                 ActivityType.GuidanceClient,
                 ActivityType.GuidancePartner,
-                //ActivityType.Miscellaneous,
+                ActivityType.Miscellaneous,
                 ActivityType.ObservationsAssessment
             }.Select(x => x.ToString());
 

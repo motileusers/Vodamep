@@ -9,8 +9,6 @@ namespace Vodamep.Tests.Mkkp.Model
 {
     public class ActivityTests
     {
-        //todo undefined activity is missing
-
         [Fact]
         public void AsSorted_ReturnspectedResult()
         {
@@ -24,6 +22,7 @@ namespace Vodamep.Tests.Mkkp.Model
                 ActivityType.MedicalVentilationTubes,
                 ActivityType.MedicalVital,
                 ActivityType.MedicalWound,
+                ActivityType.UndefinedActivity,
             }.Select(x => x.ToString());
 
             var values = ActivityTypeProvider.Instance.Values.Select(x => x.Key);
