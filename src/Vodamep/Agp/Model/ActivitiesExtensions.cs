@@ -11,21 +11,23 @@ namespace Vodamep.Agp.Model
             // zuerst die Reihenfolge der Activity.Entries herstellen
             foreach (var a in activities)
             {
-                var e = new Activity() { Date = a.Date, PersonId = a.PersonId, StaffId = a.StaffId };
+                var e = new Activity()
+                {
+                    PlaceOfAction = a.PlaceOfAction,
+                    Minutes = a.Minutes,
+                    Id = a.Id,
+                    Date = a.Date, 
+                    PersonId = a.PersonId, 
+                    StaffId = a.StaffId
+                };
                 e.Entries.AddRange(a.Entries.OrderBy(x => x));
 
                 entries.Add(e);
             }
 
             // jetzt die Einträge selbst sortieren
-            return entries.OrderBy(x => x);
+            return entries.OrderBy(x => x.Id);
         }
-
-        //public static bool RequiresPersonId(this Activity activity) => activity.Entries.Where(x => x.RequiresPersonId()).Any();
-
-        //public static bool WithoutPersonId(this Activity activity) => activity.Entries.Where(x => x.WithoutPersonId()).Any();
-
-
 
     }
 }

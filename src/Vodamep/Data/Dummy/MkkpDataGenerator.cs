@@ -93,46 +93,6 @@ namespace Vodamep.Data.Dummy
 
         }
 
-        public Person CreatePerson(int index)
-        {
-            var person = new Person()
-            {
-                Id = index.ToString(),
-                FamilyName = _familynames[index],
-                GivenName = _names[index],
-                Insurance = "19",
-
-                CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
-                            .Where(x => x != CareAllowance.Any)
-                            .ElementAt(index),
-
-                Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
-
-                //Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
-                //            .Where(x => x != Referrer.OtherReferrer &&
-                //                        x != Referrer.UndefinedReferrer)
-                //            .ElementAt(index),
-
-                HospitalDoctor = $"Dr. {_familynames[_rand.Next(_familynames.Length)]}",
-                LocalDoctor = $"Dr. {_familynames[_rand.Next(_familynames.Length)]}",
-            };
-
-            person.Diagnoses.Add(DiagnosisGroup.Premature);
-
-
-            // die Anschrift
-            {
-                var address = _addresses[index].Split(';');
-
-                person.Postcode = address[6];
-                person.City = address[3];
-            }
-
-            person.BirthdayD = new DateTime(1920, 01, 01).AddDays(index);
-
-            return person;
-        }
-
         public IEnumerable<Person> CreatePersons(int count)
         {
             for (var i = 0; i < count; i++)
@@ -148,20 +108,6 @@ namespace Vodamep.Data.Dummy
                 Id = id,
                 FamilyName = _familynames[_rand.Next(_familynames.Length)],
                 GivenName = _names[_rand.Next(_names.Length)],
-            };
-
-            return staff;
-        }
-
-        public Staff CreateStaff(MkkpReport report, int index, int nrOfEmployments, float employment)
-        {
-            var id = index.ToString();
-
-            var staff = new Staff
-            {
-                Id = id,
-                FamilyName = _familynames[index],
-                GivenName = _names[index],
             };
 
             return staff;

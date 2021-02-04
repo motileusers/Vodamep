@@ -202,6 +202,8 @@ namespace Vodamep.Data.Dummy
                 DateD = date
             };
 
+            result.Minutes = _rand.Next(5, 100);
+
             var activities = CreateRandomActivities();
             result.Entries.AddRange(activities.OrderBy(x => x));
 

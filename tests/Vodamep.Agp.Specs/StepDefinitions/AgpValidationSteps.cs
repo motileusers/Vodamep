@@ -179,6 +179,8 @@ namespace Vodamep.Specs.StepDefinitions
         public void GivenAdditonalActivitiesPerClientAndDay()
         {
             var existingActivity = this.Report.Activities.First();
+            existingActivity.Minutes = 125;
+
             this.Report.Activities.Add(new Activity()
             {
                 Id = existingActivity.Id,

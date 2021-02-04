@@ -64,23 +64,6 @@ namespace Vodamep.Data.Dummy
             return tt;
         }
 
-        //public static Activity AddDummyConsultation(this MkkpReport report, string code, DateTime? date = null)
-        //{
-        //    if (!report.Staffs.Any())
-        //        report.AddDummyStaff();
-
-        //    var a = new Activity()
-        //    {
-        //        StaffId = report.Staffs[0].Id,
-        //        DateD = date ?? report.FromD
-        //    };
-
-        //    a.Entries.AddRange(code.Split(',').Select(x => (ActivityType)int.Parse(x)).OrderBy(x => x));
-
-
-        //    return a;
-        //}
-
         public static Activity[] AddDummyActivities(this MkkpReport report)
         {
             if (report.FromD == null)
