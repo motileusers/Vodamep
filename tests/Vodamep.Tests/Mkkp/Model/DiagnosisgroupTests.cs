@@ -7,14 +7,14 @@ namespace Vodamep.Tests.Mkkp.Model
 {
     public class DiagnosisgroupTests
     {
-        //todo metabolicdisease is missing
-
         [Fact]
         public void DiagnosisGroups_ReturnspectedResult()
         {
+
             var list1 = new[] {
                 DiagnosisGroup.GeneticDisease,
                 DiagnosisGroup.HeartDisease,
+                DiagnosisGroup.MetabolicDisease,
                 DiagnosisGroup.NeurologicalDisease,
                 DiagnosisGroup.OncologicalDisease,
                 DiagnosisGroup.PalliativeCare1,

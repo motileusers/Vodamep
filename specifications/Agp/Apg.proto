@@ -115,7 +115,8 @@ enum Referrer {
     HomeHealthCareReferrer = 5;
     CaseManagementReferrer = 6;
     MobileCareServiceReferrer = 7;
-    OtherReferrer = 8;
+    SelfReferrer = 8;
+    OtherReferrer = 9;
 }
 
 

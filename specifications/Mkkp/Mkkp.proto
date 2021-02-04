@@ -86,14 +86,15 @@ enum DiagnosisGroup {
     UndefinedDiagnosisGroup = 0;
     OncologicalDisease = 1;
     Premature = 2;
-    NeurologicalDisease = 3;
-    SurgicalCare = 4;
-    HeartDisease = 5;
-    GeneticDisease = 6;
-    PalliativeCare1 = 7;
-    PalliativeCare2 = 8;
-    PalliativeCare3 = 9;
-    PalliativeCare4 = 10;
+    MetabolicDisease = 3;
+    NeurologicalDisease = 4;
+    SurgicalCare = 5;
+    HeartDisease = 6;
+    GeneticDisease = 7;
+    PalliativeCare1 = 8;
+    PalliativeCare2 = 9;
+    PalliativeCare3 = 10;
+    PalliativeCare4 = 11;
 }
 
 // Einsatzorte

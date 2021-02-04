@@ -19,7 +19,7 @@ namespace Vodamep.Tests.Agp.Model
                 Referrer.MobileCareServiceReferrer,
                 Referrer.OtherReferrer,
                 Referrer.RelativesReferrer,
-                //Referrer.SelfReferrer is missing in enum,
+                Referrer.SelfReferrer,
                 Referrer.UndefinedReferrer,
             }.Select(x => x.ToString());
 
