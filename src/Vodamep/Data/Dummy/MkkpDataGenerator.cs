@@ -204,6 +204,7 @@ namespace Vodamep.Data.Dummy
                 StaffId = staffId,
                 PersonId = personId,
                 DateD = date,
+                Minutes = _rand.Next(10, 60),
                 PlaceOfAction = placeOfAction
 
             };
