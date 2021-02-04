@@ -87,6 +87,10 @@ Szenario: Mehrfache Leistungstypen pro Leistung
 Szenario: Doppelte Leistungen innerhalb einer Aktivität
     Angenommen die Leistungstypen 'MedicalDiet,MedicalDiet' sind für eine Aktivität gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.'
+    
+Szenario: Leistung darf nicht AccompanyingWithContact und AccompanyingWithoutContact enhalten
+    Angenommen  die Leistungstypen 'AccompanyingWithContact,AccompanyingWithoutContact' sind für eine Aktivität gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen nicht gleichzeitg die Leistungstypen 'AccompanyingWithContact' und 'AccompanyingWithoutContacts' vorhanden sein.'
 
 Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt

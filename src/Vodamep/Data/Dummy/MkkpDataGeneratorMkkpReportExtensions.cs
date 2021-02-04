@@ -35,28 +35,6 @@ namespace Vodamep.Data.Dummy
             return s;
         }
 
-        public static Activity AddDummyActivity(this MkkpReport report, string code, DateTime? date = null)
-        {
-            if (!report.Persons.Any())
-                report.AddDummyPerson();
-
-            if (!report.Staffs.Any())
-                report.AddDummyStaff();
-
-            var a = new Activity()
-            {
-                PersonId = report.Persons[0].Id,
-                StaffId = report.Staffs[0].Id,
-                DateD = date ?? report.FromD
-            };
-
-            a.Entries.AddRange(code.Split(',').Select(x => (ActivityType)int.Parse(x)).OrderBy(x => x));
-
-            report.Activities.Add(a);
-
-            return a;
-        }
-
         public static TravelTime AddDummyTravelTime(this MkkpReport report)
         {
             var tt = MkkpDataGenerator.Instance.CreateTravelTimes(report);

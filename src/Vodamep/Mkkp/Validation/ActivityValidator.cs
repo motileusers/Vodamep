@@ -30,13 +30,19 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.Entries).NotEmpty();
             this.RuleFor(x => x.Entries).Custom((entries, ctx) =>
             {
-                var query = entries.GroupBy(x => x)
+                var doubledQuery = entries.GroupBy(x => x)
                     .Where(x => x.Count() > 1)
                     .Select(group => group.Key);
 
-                if (query.Any())
+                if (doubledQuery.Any())
                 {
                     ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.WithinAnActivityThereAreNoDoubledActivityTypesAllowed));
+                }
+
+                if (entries.Any(x => x == ActivityType.AccompanyingWithContact &&
+                    x == ActivityType.AccompanyingWithoutContact))
+                {
+                    ctx.AddFailure(new ValidationFailure(nameof(Activity.Entries), Validationmessages.WithinAnActivityThereIsNotAccompanyingWithContactAndAccompanyingWithoutContactsAllowed));
                 }
 
             });
