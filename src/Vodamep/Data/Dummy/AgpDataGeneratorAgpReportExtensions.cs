@@ -43,45 +43,6 @@ namespace Vodamep.Data.Dummy
             return tt;
         }
 
-        //public static Activity AddDummyActivity(this HkpvReport report, string code, DateTime? date = null)
-        //{
-        //    if (!report.Persons.Any())
-        //        report.AddDummyPerson();
-
-        //    if (!report.Staffs.Any())
-        //        report.AddDummyStaff();
-
-        //    var a = new Activity()
-        //    {
-        //        PersonId = report.Persons[0].Id,
-        //        StaffId = report.Staffs[0].Id,
-        //        DateD = date ?? report.FromD
-        //    };
-
-        //    a.Entries.AddRange(code.Split(',').Select(x => (ActivityType)int.Parse(x)).OrderBy(x => x));
-
-        //    report.Activities.Add(a);
-
-        //    return a;
-        //}
-
-        //public static Activity AddDummyConsultation(this HkpvReport report, string code, DateTime? date = null)
-        //{
-        //    if (!report.Staffs.Any())
-        //        report.AddDummyStaff();
-
-        //    var a = new Activity()
-        //    {
-        //        StaffId = report.Staffs[0].Id,
-        //        DateD = date ?? report.FromD
-        //    };
-
-        //    a.Entries.AddRange(code.Split(',').Select(x => (ActivityType)int.Parse(x)).OrderBy(x => x));
-
-
-        //    return a;
-        //}
-
         public static Activity[] AddDummyActivities(this AgpReport report)
         {
             if (report.FromD == null)

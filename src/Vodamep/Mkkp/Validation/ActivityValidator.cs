@@ -39,8 +39,8 @@ namespace Vodamep.Mkkp.Validation
                     ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.WithinAnActivityThereAreNoDoubledActivityTypesAllowed));
                 }
 
-                if (entries.Any(x => x == ActivityType.AccompanyingWithContact &&
-                    x == ActivityType.AccompanyingWithoutContact))
+                if (entries.Any(x => x == ActivityType.AccompanyingWithContact) &&
+                    entries.Any(x => x == ActivityType.AccompanyingWithoutContact))
                 {
                     ctx.AddFailure(new ValidationFailure(nameof(Activity.Entries), Validationmessages.WithinAnActivityThereIsNotAccompanyingWithContactAndAccompanyingWithoutContactsAllowed));
                 }

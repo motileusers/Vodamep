@@ -41,6 +41,8 @@ namespace Vodamep.Agp.Validation
 
             });
 
+            this.RuleFor(x => x.PlaceOfAction).NotEmpty();
+
             this.RuleFor(x => x.Minutes).GreaterThan(0);
             this.RuleFor(x => x.Minutes)
                 .Custom((minute, ctx) =>

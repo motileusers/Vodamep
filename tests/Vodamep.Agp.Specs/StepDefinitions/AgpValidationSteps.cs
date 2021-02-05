@@ -261,8 +261,6 @@ namespace Vodamep.Specs.StepDefinitions
         {
             var pattern = new Regex(message, RegexOptions.IgnoreCase);
 
-            var isSame = this.Result.Errors.FirstOrDefault(x => x.ErrorMessage == message);
-
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
 
@@ -270,8 +268,9 @@ namespace Vodamep.Specs.StepDefinitions
         {
             var random = new Random();
 
-            var placeOfActionValues = Enum.GetValues(typeof(PlaceOfAction));
-            var placeOfAction = (PlaceOfAction)placeOfActionValues.GetValue(random.Next(placeOfActionValues.Length));
+            var placeOfAction = ((PlaceOfAction[]) (Enum.GetValues(typeof(PlaceOfAction))))
+                .Where(x => x != PlaceOfAction.UndefinedPlace)
+                .ElementAt(random.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1));
 
             var minutes = random.Next(Math.Min(100, 1200)) * 5;
             var activity = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };

@@ -80,6 +80,18 @@ Szenario: Der Zuweiser ist 'Anderer', dann muss 'Anderer Zuweiser' befüllt sein
     Und die Eigenschaft 'other_referrer' von 'Person' ist nicht gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Wenn der Zuweiser ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.'
 
+Szenario: Zuweiser ist undefiniert
+    Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'UndefinedReferrer' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Zuweiser' darf nicht leer sein.'
+
+Szenario: Geschlecht ist undefiniert
+    Angenommen die Eigenschaft 'gender' von 'Person' ist auf 'UndefinedGender' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Geschlecht' darf nicht leer sein.'
+
+Szenario: Pflegegeld ist undefiniert
+    Angenommen die Eigenschaft 'care_allowance' von 'Person' ist auf 'UndefinedAllowance' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' darf nicht leer sein.'
+
 Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
     Angenommen die Diagnose(n) ist auf 'GeneticDisease, GeneticDisease' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen vorhanden sein.'

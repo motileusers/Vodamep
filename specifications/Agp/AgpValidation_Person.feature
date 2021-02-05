@@ -40,7 +40,6 @@ Beispiele:
     | Name        | Bezeichnung         | Wert |
     | insurance   | Versicherung        | test |
 
-
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
@@ -49,7 +48,6 @@ Beispiele:
     | Name              | Bezeichnung                                   | Wert |
     | hospital_doctor   | Betreuender Arzt (Krankenhaus)                | t@st |
     | local_doctor      | Betreuender Arzt (Niedergelassener Bereich)   | t@st |
-
 	
 Szenariogrundriss: Der Name einer Person enthält ein spezielles, aber gültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
@@ -65,14 +63,23 @@ Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
 Beispiele:
     | Name     | Bezeichnung  |
     | birthday | Geburtsdatum |
-    
-#todo: Referrer muss aus der Liste der referrers kommen -> bei Agp auch
-#todo: UndefinedReferrer ist nicht erlaubt
 
 Szenario: Der Zuweiser ist 'Anderer', dann muss 'Anderer Zuweiser' befüllt sein
     Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'OtherReferrer' gesetzt
     Und die Eigenschaft 'other_referrer' von 'Person' ist nicht gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Wenn der Zuweiser ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.'
+    
+Szenario: Zuweiser ist undefiniert
+    Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'UndefinedReferrer' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Zuweiser' darf nicht leer sein.'
+
+Szenario: Geschlecht ist undefiniert
+    Angenommen die Eigenschaft 'gender' von 'Person' ist auf 'UndefinedGender' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Geschlecht' darf nicht leer sein.'
+
+Szenario: Pflegegeld ist undefiniert
+    Angenommen die Eigenschaft 'care_allowance' von 'Person' ist auf 'UndefinedAllowance' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' darf nicht leer sein.'
 
 Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
     Angenommen die Diagnose(n) ist auf 'AffectiveDisorder, AffectiveDisorder' gesetzt

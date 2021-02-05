@@ -119,3 +119,7 @@ Szenario: Eine Person ohne Aktivität.
 Szenario: Eine Mitarbeiterin ohne Aktivität.
     Angenommen zu einer Mitarbeiterin sind keine Aktivitäten dokumentiert
     Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
+
+Szenario: Einsatzort ist undefiniert
+    Angenommen die Eigenschaft 'place_of_Action' von 'Activity' ist auf 'UndefinedPlace' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Einsatzort' darf nicht leer sein.'

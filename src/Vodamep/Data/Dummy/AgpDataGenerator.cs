@@ -199,7 +199,10 @@ namespace Vodamep.Data.Dummy
             {
                 StaffId = staffId,
                 PersonId = personId,
-                DateD = date
+                DateD = date,
+                PlaceOfAction = ((PlaceOfAction[])(Enum.GetValues(typeof(PlaceOfAction))))
+                .Where(x => x != PlaceOfAction.UndefinedPlace )
+                .ElementAt(_rand.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1))
             };
 
             result.Minutes = _rand.Next(5, 100);

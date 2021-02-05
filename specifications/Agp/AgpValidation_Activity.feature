@@ -90,8 +90,6 @@ Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt
    Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' darf nicht leer sein.'
 
-#todo: PatientContact nur erlaubt, wenn nur ein Leistungstyp mit Accompanying (und nur dieser) vorhanden ist
-
 Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
     Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2058-09-29' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss kleiner oder gleich (.*) sein'
@@ -114,3 +112,7 @@ Szenario: Eine Person ohne Aktivität.
 Szenario: Eine Mitarbeiterin ohne Aktivität.
     Angenommen zu einer Mitarbeiterin sind keine Aktivitäten dokumentiert
     Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
+
+Szenario: Einsatzort ist undefiniert
+    Angenommen die Eigenschaft 'place_of_Action' von 'Activity' ist auf 'UndefinedPlace' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Einsatzort' darf nicht leer sein.'
