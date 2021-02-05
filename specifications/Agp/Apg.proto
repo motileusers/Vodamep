@@ -66,40 +66,40 @@ message TravelTime {
 // Leistungstypen
 // Beschreibung in activitytypes.csv
 enum ActivityType { 
-    UndefinedActivity = 0;
-    Clearing = 1;
-    ObservationsAssessment = 2;
-    GeriatricPsychiatric = 3;
-    GuidancePartner = 4;
-    GuidanceClient = 5;
-    CareDocumentation = 6;
-    ContactPartner = 7;
-    ExecutionTransport = 8;
-    Miscellaneous = 9;
+    undefined_activity = 0;
+    clearing = 1;
+    observations_assessment = 2;
+    geriatric_psychiatric = 3;
+    guidance_partner = 4;
+    guidance_client = 5;
+    care_documentation = 6;
+    contact_partner = 7;
+    execution_transport = 8;
+    miscellaneous = 9;
 }
 
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    UndefinedDiagnosisGroup = 0;
-    DementiaDisease = 1;
-    AffectiveDisorder = 2;
-    SchizophreniaDelusionalDisorder = 3;
-    AnxietyAdjustmentObsessiveDisorder = 4;
-    DependenceIllnesse = 5;
-    NonOrganicSleepingDisorder = 6;
+    undefined_diagnosisGroup = 0;
+    dementia_disease = 1;
+    affective_disorder = 2;
+    schizophrenia_delusional_disorder = 3;
+    anxiety_adjustment_obsessive_disorder = 4;
+    dependence_illnesse = 5;
+    non_organic_sleeping_disorder = 6;
 }
 
 
 // Einsatzorte
 // Beschreibung in places_of_action.csv
 enum PlaceOfAction { 
-    UndefinedPlace = 0;
-    ResidencePlace = 1;
-    LkhRankweilPlace = 2;
-    BasePlace = 3;
-    MedicalOrinationPlace = 4;
-    OtherPlace = 5;
+    undefined_place = 0;
+    residence_place = 1;
+    lkhRankweil_place = 2;
+    base_place = 3;
+    medical_orination_place = 4;
+    other_place = 5;
 }
 
 
@@ -107,16 +107,16 @@ enum PlaceOfAction {
 // Beschreibung in referrer.csv
 // Protobuf erwartet eindeutige EnumKeys, auch zwischen unterschiedlichen enums, drum der AnhhangRef
 enum Referrer { 
-    UndefinedReferrer = 0;
-    FamilyDoctorReferrer = 1;
-    MedicalSpecialistReferrer = 2;
-    RelativesReferrer = 3;
-    LkhRankweilReferrer = 4;
-    HomeHealthCareReferrer = 5;
-    CaseManagementReferrer = 6;
-    MobileCareServiceReferrer = 7;
-    SelfReferrer = 8;
-    OtherReferrer = 9;
+    undefined_referrer = 0;
+    family_doctor_referrer = 1;
+    medical_specialist_referrer = 2;
+    relatives_referrer = 3;
+    lkh_rankweil_referrer = 4;
+    home_health_care_referrer = 5;
+    case_management_referrer = 6;
+    mobile_care_service_referrer = 7;
+    self_referrer = 8;
+    other_referrer = 9;
 }
 
 

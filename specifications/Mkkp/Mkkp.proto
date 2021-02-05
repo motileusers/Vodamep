@@ -68,45 +68,45 @@ message TravelTime {
 // Leistungstypen
 // Beschreibung in activitytypes.csv
 enum ActivityType {  
-  UndefinedActivity = 0;
-  Body = 1;
-  MedicalCommon = 2;
-  MedicalDiet = 3;
-  MedicalVital = 4;
-  MedicalWound = 5;
-  MedicalInjection = 6;
-  MedicalVentilationTubes = 7;
-  AccompanyingWithContact = 8;
-  AccompanyingWithoutContact = 9;
+  undefined_activity = 0;
+  body = 1;
+  medical_common = 2;
+  medical_diet = 3;
+  medical_vital = 4;
+  medical_wound = 5;
+  medical_injection = 6;
+  medical_ventilation_tubes = 7;
+  accompanying_with_contact = 8;
+  accompanying_without_contact = 9;
 }
 
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    UndefinedDiagnosisGroup = 0;
-    OncologicalDisease = 1;
-    Premature = 2;
-    MetabolicDisease = 3;
-    NeurologicalDisease = 4;
-    SurgicalCare = 5;
-    HeartDisease = 6;
-    GeneticDisease = 7;
-    PalliativeCare1 = 8;
-    PalliativeCare2 = 9;
-    PalliativeCare3 = 10;
-    PalliativeCare4 = 11;
+    undefined_diagnosis_group = 0;
+    oncological_disease = 1;
+    premature = 2;
+    metabolic_disease = 3;
+    neurological_disease = 4;
+    surgical_care = 5;
+    heart_disease = 6;
+    genetic_disease = 7;
+    palliative_care1 = 8;
+    palliative_care2 = 9;
+    palliative_care3 = 10;
+    palliative_care4 = 11;
 }
 
 // Einsatzorte
 // Beschreibung in places_of_action.csv
 enum PlaceOfAction { 
-    UndefinedPlace = 0;
-    ResidencePlace = 1;
-    KindergartenPlace = 2;
-    SchoolPlace = 3;
-    OutpatientHospitalPlace = 4;
-    LocalDoctorPlace = 5;
-    OtherPlace = 6;
+    undefined_place = 0;
+    residence_place = 1;
+    kindergarten_place = 2;
+    school_place = 3;
+    outpatient_hospital_place = 4;
+    local_doctor_place = 5;
+    other_place = 6;
 }
 
 
@@ -116,12 +116,12 @@ enum PlaceOfAction {
 // Protobuf erwartet eindeutige EnumKeys, auch zwischen unterschiedlichen enums, drum der AnhhangRef
 // Place und Referrer können sich dabei überscheiden
 enum Referrer { 
-    UndefinedReferrer = 0;
-    LkhFeldkirchReferrer = 1;
-    KhDornbirnReferrer = 2;
-    LkhBregenzReferrer = 3;
-    PrivateSpecialistsReferrer = 4;
-    OtherReferrer = 5;
+    undefined_referrer = 0;
+    lkh_feldkirch_referrer = 1;
+    kh_dornbirn_referrer = 2;
+    lkh_bregenz_referrer = 3;
+    private_specialists_referrer = 4;
+    other_referrer = 5;
 }
 
 // Pflegegeld
