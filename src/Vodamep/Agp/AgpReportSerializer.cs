@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Linq;
 using Vodamep.Agp.Model;
 using Vodamep.Mkkp.Model;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Agp
 {
@@ -76,7 +77,7 @@ namespace Vodamep.Agp
 
         public string WriteToPath(AgpReport report, string path, bool asJson, bool compressed = true)
         {
-            var filename = Path.Combine(path, GetFileName(report, asJson, compressed));
+            var filename = Path.Combine(path, ReportFilenamehandler.GetFileName(report, asJson, compressed));
 
             WriteToFile(report, filename, asJson, compressed);
             return filename;
@@ -103,26 +104,13 @@ namespace Vodamep.Agp
 
             if (compressed)
             {
-                var filename = GetFileName(report, asJson, false);
+                var filename = ReportFilenamehandler.GetFileName(report, asJson, false);
                 result = ZipStream(ms, filename);
                 ms.Dispose();
             }
 
             result.Position = 0;
             return result;
-        }
-
-        public static string GetFileName(AgpReport report, bool asJson, bool compressed = true)
-        {
-
-            var filename = $"{report.Institution.Id}_{report.FromD.Year}_{report.FromD.Month.ToString("00")}";
-
-            if (compressed)
-                return $"{filename}.zip";
-            else if (asJson)
-                return $"{filename}.json";
-            else
-                return $"{filename}.hkpv";
         }
 
         private MemoryStream ZipStream(Stream data, string filename)

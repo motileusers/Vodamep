@@ -1,9 +1,9 @@
 ﻿using System;
-using Vodamep.Hkpv.Model;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Api.CmdQry
 {
-    public class HkpvReportInfo : IEquatable<HkpvReportInfo>
+    public class ReportInfo : IEquatable<ReportInfo>
     {
         public int Id { get; set; }
         public int Month { get; set; }
@@ -13,9 +13,9 @@ namespace Vodamep.Api.CmdQry
         public DateTime Created { get; set; }
 
 
-        public static HkpvReportInfo Create(HkpvReport report, int id, DateTime created)
+        public static ReportInfo Create(IReportBase report, int id, DateTime created)
         {
-            return new HkpvReportInfo
+            return new ReportInfo
             {
                 Id = id,
                 Created = created,
@@ -26,7 +26,7 @@ namespace Vodamep.Api.CmdQry
             };
         }
 
-        public bool Equals(HkpvReportInfo other)
+        public bool Equals(ReportInfo other)
         {
             if (ReferenceEquals(other, null))
             {

@@ -3,16 +3,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
-using NLog;
 using System;
 using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Connexia.Service.Client;
 using Vodamep.Api.CmdQry;
-using Vodamep.Hkpv;
-using Vodamep.Hkpv.Model;
-using Vodamep.Hkpv.Validation;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Api
 {
@@ -103,7 +100,13 @@ namespace Vodamep.Api
 
             int.TryParse((string)context.GetRouteValue("year"), out int year);
             int.TryParse((string)context.GetRouteValue("month"), out int month);
+            var reportType = (string) context.GetRouteValue("reportType");
 
+            //todo wird in zukunft entfernt
+            if (string.IsNullOrWhiteSpace(reportType))
+            {
+                reportType = "mkkp";
+            }
 
             if (year < 2000 || year > DateTime.Today.Year)
             {
@@ -117,16 +120,17 @@ namespace Vodamep.Api
                 return;
             }
 
-            HkpvReport report;
+            _logger?.LogInformation("Reading data.");
+
+            IReportBase report;
+
             try
             {
-                _logger?.LogInformation("Reading data.");
-
-                report = HkpvReport.Read(context.Request.Body);
+                report = new ReportBaseHandler().GetReport(reportType, context.Request.Body);
             }
-            catch (Exception e)
+            catch
             {
-                _logger?.LogError(e, "Deserialize failed.");
+                _logger?.LogError("Deserialize failed.");
                 report = null;
             }
 
@@ -154,18 +158,19 @@ namespace Vodamep.Api
                 return;
             }
 
-            var validationResult = await new HkpvReportValidator().ValidateAsync(report);
-
-            var msg = new HkpvReportValidationResultFormatter(ResultFormatterTemplate.Text, false).Format(report, validationResult);
-
-            if (!validationResult.IsValid)
+            var validationResult = await new VodamepValidator().Validate(report);
+            if (validationResult == null)
             {
-                await RespondError(context, msg);
+                await RespondError(context, "Validierung konnte nicht durchgeführt werden.");
+            }
+
+            if (!validationResult.Item1)
+            {
+                await RespondError(context, validationResult.Item2);
                 return;
             }
 
-            var saveCmd = new HkpvReportSaveCommand() { Report = report };
-
+            var saveCmd = new ReportSaveCommand() { Report = report };
             var engine = _engineFactory();
 
             if (_useAuthentication)
@@ -181,7 +186,7 @@ namespace Vodamep.Api
             }
             engine.Execute(saveCmd);
 
-            await RespondSuccess(context, msg);
+            await RespondSuccess(context, validationResult.Item2);
 
             _logger?.LogInformation("Hkpv report received.");
         }

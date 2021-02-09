@@ -1,14 +1,20 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
+using Google.Protobuf;
 using Vodamep.Data.Dummy;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Agp.Model
 {
-    public partial class AgpReport
+    public partial class AgpReport : IReportBase
     {
+        public string ReportType => "Agp";
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
         public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }
+
+        IInstitution IReportBase.Institution => this.Institution;
 
         public static AgpReport CreateDummyData()
         {
@@ -55,6 +61,18 @@ namespace Vodamep.Agp.Model
         public void WriteToFile(string filename, bool asJson = false, bool compressed = true) => new AgpReportSerializer().WriteToFile(this, filename, asJson, compressed);
 
         public MemoryStream WriteToStream(bool asJson = false, bool compressed = true) => new AgpReportSerializer().WriteToStream(this, asJson, compressed);
+
+        public string GetSHA256Hash()
+        {
+            using (var s = SHA256.Create())
+            {
+                var h = s.ComputeHash(this.ToByteArray());
+
+                var sha256 = System.Net.WebUtility.UrlEncode(Convert.ToBase64String(h));
+
+                return sha256;
+            }
+        }
 
         //public DiffResult Diff(AgpReport report) => new HkpAgvReportDiffer().Diff(this, report);
 

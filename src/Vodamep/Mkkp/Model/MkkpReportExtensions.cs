@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Vodamep.Data.Dummy;
 using Vodamep.Mkkp.Validation;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Mkkp.Model
 {
@@ -21,7 +22,7 @@ namespace Vodamep.Mkkp.Model
             return m;
         }
 
-        public static Task<SendResult> Send(this MkkpReport report, Uri address, string username, string password) => new MkkpReportSendClient(address).Send(report, username, password);
+        public static Task<SendResult> Send(this MkkpReport report, Uri address, string username, string password) => new ReportSendClient(address).Send(report, username, password);
 
         public static MkkpReportValidationResult Validate(this MkkpReport report) => (MkkpReportValidationResult)new MkkpReportValidator().Validate(report);
 
@@ -46,19 +47,5 @@ namespace Vodamep.Mkkp.Model
 
             return result;
         }
-
-        public static string GetSHA256Hash(this MkkpReport report)
-        {
-            using (var s = SHA256.Create())
-            {
-                var h = s.ComputeHash(report.ToByteArray());
-
-                var sha256 = System.Net.WebUtility.UrlEncode(Convert.ToBase64String(h));
-
-                return sha256;
-            }
-        }
-
-
     }
 }

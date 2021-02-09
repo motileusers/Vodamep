@@ -1,11 +1,9 @@
-﻿using Google.Protobuf;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Vodamep.Hkpv.Validation;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Hkpv.Model
 {
@@ -20,7 +18,7 @@ namespace Vodamep.Hkpv.Model
             return m;
         }
 
-        public static Task<SendResult> Send(this HkpvReport report, Uri address, string username, string password) => new HkpvReportSendClient(address).Send(report, username, password);
+        public static Task<SendResult> Send(this HkpvReport report, Uri address, string username, string password) => new ReportSendClient(address).Send(report, username, password);
 
         public static HkpvReportValidationResult Validate(this HkpvReport report) => (HkpvReportValidationResult)new HkpvReportValidator().Validate(report);
 
@@ -44,19 +42,6 @@ namespace Vodamep.Hkpv.Model
 
             return result;
         }
-
-        public static string GetSHA256Hash(this HkpvReport report)
-        {
-            using (var s = SHA256.Create())
-            {
-                var h = s.ComputeHash(report.ToByteArray());
-
-                var sha256 = System.Net.WebUtility.UrlEncode(Convert.ToBase64String(h));
-
-                return sha256;
-            }
-        }
-
 
     }
 }

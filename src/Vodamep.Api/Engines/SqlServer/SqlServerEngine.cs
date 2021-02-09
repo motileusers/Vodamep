@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Security.Principal;
 using Vodamep.Api.CmdQry;
 using Vodamep.Hkpv.Model;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Api.Engines.SqlServer
 {
@@ -33,7 +34,7 @@ namespace Vodamep.Api.Engines.SqlServer
 
             switch (cmd)
             {
-                case HkpvReportSaveCommand save:
+                case ReportSaveCommand save:
                     this.Save(save.Report);
                     return;
                 case TestCommand test:
@@ -62,7 +63,7 @@ namespace Vodamep.Api.Engines.SqlServer
             }
         }
 
-        private void Save(HkpvReport report)
+        private void Save(IReportBase report)
         {
             if (_authContext?.Principal == null)
             {
@@ -78,7 +79,7 @@ namespace Vodamep.Api.Engines.SqlServer
 
                 var lastInfo = GetLast(report.Institution.Id, institutionId, connection);
 
-                var info = HkpvReportInfo.Create(report, lastInfo?.Id ?? -1, lastInfo?.Created ?? DateTime.Now);
+                var info = ReportInfo.Create(report, lastInfo?.Id ?? -1, lastInfo?.Created ?? DateTime.Now);
 
                 string state = "";
 
@@ -91,7 +92,7 @@ namespace Vodamep.Api.Engines.SqlServer
             }
         }
 
-        private void SaveReport(SqlConnection connection, HkpvReport report, HkpvReportInfo info, int institutionId,
+        private void SaveReport(SqlConnection connection, IReportBase report, ReportInfo info, int institutionId,
             string state)
         {
             using (var ms = report.WriteToStream(asJson: false, compressed: true))
@@ -154,7 +155,7 @@ namespace Vodamep.Api.Engines.SqlServer
         }
 
 
-        private HkpvReportInfo GetLast(string institution, int institudionId, SqlConnection connection)
+        private ReportInfo GetLast(string institution, int institudionId, SqlConnection connection)
         {
             try
             {
@@ -168,7 +169,7 @@ namespace Vodamep.Api.Engines.SqlServer
                 {
                     if (reader.Read())
                     {
-                        var info = new HkpvReportInfo()
+                        var info = new ReportInfo()
                         {
                             //Id = reader.GetInt32(0),
                             Month = reader.GetInt16(1),

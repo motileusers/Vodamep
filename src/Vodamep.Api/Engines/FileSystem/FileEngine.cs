@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Vodamep.Api.CmdQry;
 using Vodamep.Hkpv;
 using Vodamep.Hkpv.Model;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Api.Engines.FileSystem
 {
@@ -33,7 +34,7 @@ namespace Vodamep.Api.Engines.FileSystem
         {
             switch (cmd)
             {
-                case HkpvReportSaveCommand save:
+                case ReportSaveCommand save:
                     this.Save(save.Report);
                     return;
                 case TestCommand test:
@@ -41,7 +42,7 @@ namespace Vodamep.Api.Engines.FileSystem
             }
         }
 
-        private void Save(HkpvReport report)
+        private void Save(IReportBase report)
         {
             var (info, lastFilename) = GetLastFile(report.Institution.Id);
 
@@ -65,9 +66,9 @@ namespace Vodamep.Api.Engines.FileSystem
 
         private static Regex _filenamePattern = new Regex(@"^(?<id>\d+)__(?<institution>.+?)_(?<year>\d+)_(?<month>\d+)_(?<hash>.+?)\.(zip|hkpv|json)$");
 
-        private string GetFilename(HkpvReport report, int id) => $"{id:00000000}__{HkpvReportSerializer.GetFileName(report, false, true)}";
+        private string GetFilename(IReportBase report, int id) => $"{id:00000000}__{ReportFilenamehandler.GetFileName(report, false, true)}";
 
-        private (HkpvReportInfo info, string filename) GetLastFile(string institution)
+        private (ReportInfo info, string filename) GetLastFile(string institution)
         {
             var currentId = Directory.GetFiles(_path).OrderByDescending(x => x)
                 .Select(x => Path.GetFileName(x))
@@ -78,7 +79,7 @@ namespace Vodamep.Api.Engines.FileSystem
 
             if (currentId != null)
             {
-                var info = new HkpvReportInfo()
+                var info = new ReportInfo()
                 {
                     Id = int.Parse(currentId.Match.Groups["id"].Value),
                     Institution = currentId.Match.Groups["institution"].Value,

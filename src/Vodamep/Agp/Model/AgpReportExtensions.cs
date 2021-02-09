@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Vodamep.Agp.Validation;
-
+using Vodamep.ReportBase;
 using ResultFormatterTemplate = Vodamep.Agp.Validation.ResultFormatterTemplate;
 
 namespace Vodamep.Agp.Model
@@ -21,7 +21,7 @@ namespace Vodamep.Agp.Model
             return m;
         }
 
-        public static Task<SendResult> Send(this AgpReport report, Uri address, string username, string password) => new AgpReportSendClient(address).Send(report, username, password);
+        public static Task<SendResult> Send(this AgpReport report, Uri address, string username, string password) => new ReportSendClient(address).Send(report, username, password);
 
         public static AgpReportValidationResult Validate(this AgpReport report) => (AgpReportValidationResult)new AgpReportValidator().Validate(report);
 
@@ -45,18 +45,6 @@ namespace Vodamep.Agp.Model
             result.TravelTimes.AddRange(report.TravelTimes.OrderBy(x => x.Id));
 
             return result;
-        }
-
-        public static string GetSHA256Hash(this AgpReport report)
-        {
-            using (var s = SHA256.Create())
-            {
-                var h = s.ComputeHash(report.ToByteArray());
-
-                var sha256 = System.Net.WebUtility.UrlEncode(Convert.ToBase64String(h));
-
-                return sha256;
-            }
         }
 
 

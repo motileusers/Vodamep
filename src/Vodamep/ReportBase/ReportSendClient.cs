@@ -1,26 +1,25 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Vodamep.Hkpv.Model;
+using Newtonsoft.Json;
 
-namespace Vodamep.Hkpv
+namespace Vodamep.ReportBase
 {
-    internal class HkpvReportSendClient
+    internal class ReportSendClient
     {
         private readonly Uri _address;
 
-        public HkpvReportSendClient(Uri address)
+        public ReportSendClient(Uri address)
         {
             _address = address;
         }
-        public async Task<SendResult> Send(HkpvReport report, string username, string password)
+        public async Task<SendResult> Send(IReportBase report, string username, string password)
         {
             using (var client = new HttpClient())
             using (var data = report.WriteToStream())
             {
-                var url = new Uri(_address, $"{report.FromD.Year}/{report.FromD.Month}");
+                var url = new Uri(_address, $"{report.ReportType}/{report.FromD.Year}/{report.FromD.Month}");
                 var content = new ByteArrayContent(data.ToArray());
 
                 if (!string.IsNullOrEmpty(username))
