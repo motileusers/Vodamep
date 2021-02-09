@@ -48,4 +48,13 @@ Actions
                    CountryCodes
                    Postcode_City
 
+
+  Diff <File> <File> <File>  - Vergleiche 2 Dateien.
+
+    Option         Description
+    Source* (-S)
+                   Insurances
+                   CountryCodes
+                   Postcode_City
+
 ```
