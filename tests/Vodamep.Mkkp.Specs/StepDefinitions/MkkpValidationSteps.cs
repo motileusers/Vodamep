@@ -235,8 +235,6 @@ namespace Vodamep.Specs.StepDefinitions
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
         {
-            var blub = this.Report.Validate();
-
             Assert.True(this.Result.IsValid);
             Assert.Empty(this.Result.Errors.Where(x => x.Severity == Severity.Error));
         }
@@ -250,8 +248,6 @@ namespace Vodamep.Specs.StepDefinitions
         [Then(@"*enthält (das Validierungsergebnis )?genau einen Fehler")]
         public void ThenTheResultContainsOneError(object test)
         {
-            var blub = this.Report.Validate();
-
             Assert.False(this.Result.IsValid);
             Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Error).Select(x => x.ErrorMessage).Distinct());
         }
@@ -286,7 +282,7 @@ namespace Vodamep.Specs.StepDefinitions
                 .Where(x => x != PlaceOfAction.UndefinedPlace)
                 .ElementAt(random.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1));
 
-            var minutes = random.Next(Math.Min(100, 1200)) * 5;
+            var minutes = random.Next(1,100) * 5;
             _dummyActivity = new Activity() { Id = "1", Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction};
             _dummyActivity.Entries.Add(new[] { ActivityType.Body, ActivityType.MedicalDiet, ActivityType.MedicalWound });
 

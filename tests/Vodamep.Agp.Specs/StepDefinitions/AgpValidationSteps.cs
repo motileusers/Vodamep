@@ -21,7 +21,6 @@ namespace Vodamep.Specs.StepDefinitions
     {
 
         private AgpReportValidationResult _result;
-        private Activity _dummyActivities;
 
         public AgpValidationSteps()
         {
@@ -272,7 +271,8 @@ namespace Vodamep.Specs.StepDefinitions
                 .Where(x => x != PlaceOfAction.UndefinedPlace)
                 .ElementAt(random.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1));
 
-            var minutes = random.Next(Math.Min(100, 1200)) * 5;
+            var minutes = random.Next(1,100) * 5;
+          
             var activity = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };
             activity.Entries.Add(new[] { ActivityType.Clearing, ActivityType.ContactPartner, ActivityType.GuidancePartner });
 

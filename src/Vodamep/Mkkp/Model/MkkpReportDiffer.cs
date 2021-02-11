@@ -263,7 +263,7 @@ namespace Vodamep.Mkkp
 
         private DiffObject DiffEmployments(MkkpReport report1, MkkpReport report2)
         {
-            double standardHoursPerWeek = 40;
+            //double standardHoursPerWeek = 40;
 
             var result = new DiffObject();
             var sum1 = 0.0;
