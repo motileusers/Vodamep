@@ -100,7 +100,7 @@ namespace Vodamep.Api
 
             int.TryParse((string)context.GetRouteValue("year"), out int year);
             int.TryParse((string)context.GetRouteValue("month"), out int month);
-            var reportType = (string) context.GetRouteValue("reportType");
+            var reportType = (string) context.GetRouteValue("report");
 
             _logger?.LogInformation($"Report type from route: {reportType}");
 
