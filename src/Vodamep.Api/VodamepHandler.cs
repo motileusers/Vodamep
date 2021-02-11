@@ -74,7 +74,7 @@ namespace Vodamep.Api
 
         public async Task HandlePut(HttpContext context)
         {
-            _logger?.LogInformation("Handle Default");
+            _logger?.LogInformation("Handle Put");
 
             if (context.Request.Method != HttpMethods.Put && context.Request.Method != HttpMethods.Post)
             {
@@ -101,6 +101,8 @@ namespace Vodamep.Api
             int.TryParse((string)context.GetRouteValue("year"), out int year);
             int.TryParse((string)context.GetRouteValue("month"), out int month);
             var reportType = (string) context.GetRouteValue("reportType");
+
+            _logger?.LogInformation($"Report type from route: {reportType}");
 
             //todo wird in zukunft entfernt
             if (string.IsNullOrWhiteSpace(reportType))
@@ -188,7 +190,7 @@ namespace Vodamep.Api
 
             await RespondSuccess(context, validationResult.Item2);
 
-            _logger?.LogInformation("Hkpv report received.");
+            _logger?.LogInformation("Report received.");
         }
 
         private bool IsAuthenticated(HttpContext context) => context.User != null && !string.IsNullOrEmpty(context.User.Identity?.Name);

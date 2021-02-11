@@ -63,7 +63,7 @@ namespace Vodamep.Api
                 app.UseAuthentication();
             }
 
-            app.UseVodamep();
+            app.UseVodamep(this._logger);
         }
 
         private void ConfigureValidationClient(IServiceCollection services)
