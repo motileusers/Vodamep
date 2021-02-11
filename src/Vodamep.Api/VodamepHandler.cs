@@ -107,7 +107,7 @@ namespace Vodamep.Api
             //todo wird in zukunft entfernt
             if (string.IsNullOrWhiteSpace(reportType))
             {
-                reportType = "mkkp";
+                reportType = "hkpv";
             }
 
             if (year < 2000 || year > DateTime.Today.Year)
