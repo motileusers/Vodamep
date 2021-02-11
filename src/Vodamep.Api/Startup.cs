@@ -25,7 +25,6 @@ namespace Vodamep.Api
 
         public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddNLog();
             this._configuration = configuration;
             this._loggerFactory = loggerFactory;
             this._logger = loggerFactory.CreateLogger<Startup>();
