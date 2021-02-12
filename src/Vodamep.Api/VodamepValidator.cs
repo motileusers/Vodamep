@@ -14,6 +14,7 @@ namespace Vodamep.Api
     {
         public async Task<Tuple<bool, string>> Validate(IReportBase report)
         {
+            //#extend 
             if (report is AgpReport agpReport)
             {
                 var validationResult = await new AgpReportValidator().ValidateAsync(agpReport);

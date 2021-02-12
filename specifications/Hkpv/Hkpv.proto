@@ -65,7 +65,7 @@ message Activity {
 // LV=Leistungsvereinbarung, LP=Leistungspunkt
 // 1 LP = ca. 5 min
 enum ActivityType {  
-  undefined_activity = 0;
+  UNDEFINED_ACTIVITY = 0;
   LV01 = 1;             // Beratungsstunde                                              (1 LP)
   LV02 = 2;             // Hausbesuch                                                   (2 LP)
   LV03 = 3;             // Hausbesuch mit besonderer Wegzeit                            (4 LP)
@@ -90,7 +90,7 @@ enum ActivityType {
 // Pflegegeld
 // Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
 enum CareAllowance {
-  undefined_allowance = 0;
+  UNDEFINED_ALLOWANCE = 0;
   L1 = 1;
   L2 = 2;
   L3 = 3;
@@ -98,15 +98,15 @@ enum CareAllowance {
   L5 = 5;
   L6 = 6;
   L7 = 7;	
-  any = 9;              // Pflegegeld ja, Stufe unbekannt
-  unknown = 88;         // unbekannt ob ja oder nein
-  none = 99;            // Keine Pflegegeld
+  ANY = 9;              // Pflegegeld ja, Stufe unbekannt
+  UNKNOWN = 88;         // unbekannt ob ja oder nein
+  NONE = 99;            // Keine Pflegegeld
 }
 
 enum Gender {
-  undefined_gender = 0;
-  male = 1;
-  female = 2;
+  UNDEFINED_GENDER = 0;
+  MALE = 1;
+  FEMALE = 2;
 }
 
 

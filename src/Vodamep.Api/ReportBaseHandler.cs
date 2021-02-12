@@ -15,6 +15,7 @@ namespace Vodamep.Api
 
             IReportBase report = null;
 
+            //#extend 
             switch (reportType?.ToLower())
             {
                 case "agp":

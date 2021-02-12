@@ -66,40 +66,40 @@ message TravelTime {
 // Leistungstypen
 // Beschreibung in activitytypes.csv
 enum ActivityType { 
-    undefined_activity = 0;
-    clearing = 1;
-    observations_assessment = 2;
-    geriatric_psychiatric = 3;
-    guidance_partner = 4;
-    guidance_client = 5;
-    care_documentation = 6;
-    contact_partner = 7;
-    execution_transport = 8;
-    miscellaneous = 9;
+    UNDEFINED_ACTIVITY = 0;
+    CLEARING = 1;
+    OBSERVATIONS_ASSESSMENT = 2;
+    GERIATRIC_PSYCHIATRIC = 3;
+    GUIDANCE_PARTNER = 4;
+    GUIDANCE_CLIENT = 5;
+    CARE_DOCUMENTATION = 6;
+    CONTACT_PARTNER = 7;
+    EXECUTION_TRANSPORT = 8;
+    MISCELLANEOUS = 9;
 }
 
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    undefined_diagnosisGroup = 0;
-    dementia_disease = 1;
-    affective_disorder = 2;
-    schizophrenia_delusional_disorder = 3;
-    anxiety_adjustment_obsessive_disorder = 4;
-    dependence_illnesse = 5;
-    non_organic_sleeping_disorder = 6;
+    UNDEFINED_DIAGNOSIS_GROUP = 0;
+    DEMENTIA_DISEASE = 1;
+    AFFECTIVE_DISORDER = 2;
+    SCHIZOPHRENIA_DELUSIONAL_DISORDER = 3;
+    ANXIETY_ADJUSTMENT_OBSESSIVE_DISORDER = 4;
+    DEPENDENCE_ILLNESSE = 5;
+    NON_ORGANIC_SLEEPING_DISORDER = 6;
 }
 
 
 // Einsatzorte
 // Beschreibung in places_of_action.csv
 enum PlaceOfAction { 
-    undefined_place = 0;
-    residence_place = 1;
-    lkhRankweil_place = 2;
-    base_place = 3;
-    medical_orination_place = 4;
-    other_place = 5;
+    UNDEFINED_PLACE = 0;
+    RESIDENCE_PLACE = 1;
+    LKH_RANKWEIL_PLACE = 2;
+    BASE_PLACE = 3;
+    MEDICAL_ORINATION_PLACE = 4;
+    OTHER_PLACE = 5;
 }
 
 
@@ -107,23 +107,23 @@ enum PlaceOfAction {
 // Beschreibung in referrer.csv
 // Protobuf erwartet eindeutige EnumKeys, auch zwischen unterschiedlichen enums, drum der AnhhangRef
 enum Referrer { 
-    undefined_referrer = 0;
-    family_doctor_referrer = 1;
-    medical_specialist_referrer = 2;
-    relatives_referrer = 3;
-    lkh_rankweil_referrer = 4;
-    home_health_care_referrer = 5;
-    case_management_referrer = 6;
-    mobile_care_service_referrer = 7;
-    self_referrer = 8;
-    other_referrer = 9;
+    UNDEFINED_REFERRER = 0;
+    FAMILY_DOCTOR_REFERRER = 1;
+    MEDICAL_SPECIALIST_REFERRER = 2;
+    RELATIVES_REFERRER = 3;
+    LKH_RANKWEIL_REFERRER = 4;
+    HOME_HEALTH_CARE_REFERRER = 5;
+    CASE_MANAGEMENT_REFERRER = 6;
+    MOBILE_CARE_SERVICE_REFERRER = 7;
+    SELF_REFERRER = 8;
+    OTHER_REFERRER = 9;
 }
 
 
 // Pflegegeld
 // Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
 enum CareAllowance {
-  undefined_allowance = 0;
+  UNDEFINED_ALLOWANCE = 0;
   L1 = 1;
   L2 = 2;
   L3 = 3;
@@ -131,15 +131,15 @@ enum CareAllowance {
   L5 = 5;
   L6 = 6;
   L7 = 7;	
-  any = 9;              // Pflegegeld ja, Stufe unbekannt
-  unknown = 88;         // unbekannt ob ja oder nein
-  none = 99;            // Keine Pflegegeld
+  ANY = 9;              // Pflegegeld ja, Stufe unbekannt
+  UNKNOWN = 88;         // unbekannt ob ja oder nein
+  NONE = 99;            // Keine Pflegegeld
 }
 
 enum Gender {
-  undefined_gender = 0;
-  male = 1;
-  female = 2;
+  UNDEFINED_GENDER = 0;
+  MALE = 1;
+  FEMALE = 2;
 }
 
 
