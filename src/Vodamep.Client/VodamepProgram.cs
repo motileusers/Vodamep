@@ -14,24 +14,21 @@ namespace Vodamep.Client
         [ArgActionMethod, ArgDescription("Absenden der Meldung.")]
         public void Send(SendArgs args)
         {
-            var type = this.CheckType(args.File);
-            HandlerBase handler = this.handlerFactory.CreateFromType(type);
+            HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
             handler.Send(args);
         }
 
         [ArgActionMethod, ArgDescription("Prüfung der Meldung.")]
         public void Validate(ValidateArgs args)
         {
-            var type = this.CheckType(args.File);
-            HandlerBase handler = this.handlerFactory.CreateFromType(type);
+            HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
             handler.Validate(args);
         }
 
         [ArgActionMethod, ArgDescription("Meldung neu verpacken.")]
         public void PackFile(PackFileArgs args)
         {
-            var type = this.CheckType(args.File);
-            HandlerBase handler = this.handlerFactory.CreateFromType(type);
+            HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
             handler.PackFile(args);
         }
 
@@ -87,6 +84,7 @@ namespace Vodamep.Client
         private Type CheckType(string typeName)
         {
             Type type;
+
 
             switch (typeName.ToLower())
             {

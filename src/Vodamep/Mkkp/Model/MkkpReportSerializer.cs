@@ -74,7 +74,7 @@ namespace Vodamep.Mkkp.Model
 
         public string WriteToPath(MkkpReport report, string path, bool asJson, bool compressed = true)
         {
-            var filename = Path.Combine(path, GetFileName(report, asJson, compressed));
+            var filename = Path.Combine(path, new MkkpReportFilenameHandler().GetFileName(report, asJson, compressed));
 
             WriteToFile(report, filename, asJson, compressed);
             return filename;
@@ -101,26 +101,13 @@ namespace Vodamep.Mkkp.Model
 
             if (compressed)
             {
-                var filename = GetFileName(report, asJson, false);
+                var filename = new MkkpReportFilenameHandler().GetFileName(report, asJson, false);
                 result = ZipStream(ms, filename);
                 ms.Dispose();
             }
 
             result.Position = 0;
             return result;
-        }
-
-        public static string GetFileName(MkkpReport report, bool asJson, bool compressed = true)
-        {
-
-            var filename = $"{report.Institution.Id}_{report.FromD.Year}_{report.FromD.Month.ToString("00")}";
-
-            if (compressed)
-                return $"{filename}.zip";
-            else if (asJson)
-                return $"{filename}.json";
-            else
-                return $"{filename}.hkpv";
         }
 
         private MemoryStream ZipStream(Stream data, string filename)

@@ -34,7 +34,7 @@ namespace Vodamep.Data.Dummy
         {
             var report = new AgpReport()
             {
-                Institution = new Institution() { Id = "mkkp_test", Name = "Testverein" }
+                Institution = new Institution() { Id = "agp_test", Name = "Testverein" }
             };
 
             var from = year.HasValue || month.HasValue ? new DateTime(year ?? DateTime.Today.Year, month ?? DateTime.Today.Month, 1) : DateTime.Today.FirstDateInMonth().AddMonths(-1);

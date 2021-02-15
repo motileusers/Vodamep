@@ -23,7 +23,13 @@ namespace Vodamep.Client
                 throw new ArgumentException();
             }
 
-            var r = AgpDataGenerator.Instance.CreateAgpReport();
+            int? year = args.Year;
+            if (year < 2000 || year > DateTime.Today.Year) year = null;
+
+            int? month = args.Month;
+            if (month < 1 || month > 12) month = null;
+
+            var r = AgpDataGenerator.Instance.CreateAgpReport(year, month, args.Persons, args.Staffs, args.AddActivities);
 
             var file = r.WriteToPath("", asJson: args.Json, compressed: !args.NoCompression);
 
