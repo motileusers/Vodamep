@@ -1,8 +1,8 @@
 ﻿namespace Vodamep.ReportBase
 {
-    public class ReportFilenamehandler
+    public abstract class ReportFilenameHandler
     {
-        public static string GetFileName(IReportBase report, bool asJson, bool compressed = true)
+        public virtual string GetFileName(IReportBase report, bool asJson, bool compressed = true)
         {
 
             var filename = $"{report.Institution.Id}_{report.FromD.Year}_{report.FromD.Month.ToString("00")}";
@@ -12,7 +12,7 @@
             else if (asJson)
                 return $"{filename}.json";
             else
-                return $"{filename}.hkpv";
+                return filename;
         }
     }
 }

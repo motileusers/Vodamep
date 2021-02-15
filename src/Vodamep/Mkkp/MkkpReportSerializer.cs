@@ -3,7 +3,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using Vodamep.Mkkp.Model;
-using Vodamep.ReportBase;
 
 namespace Vodamep.Mkkp
 {
@@ -76,7 +75,7 @@ namespace Vodamep.Mkkp
 
         public string WriteToPath(MkkpReport report, string path, bool asJson, bool compressed = true)
         {
-            var filename = Path.Combine(path, ReportFilenamehandler.GetFileName(report, asJson, compressed));
+            var filename = Path.Combine(path, new MkkpReportFilenameHandler().GetFileName(report, asJson, compressed));
 
             WriteToFile(report, filename, asJson, compressed);
             return filename;
@@ -103,7 +102,7 @@ namespace Vodamep.Mkkp
 
             if (compressed)
             {
-                var filename = ReportFilenamehandler.GetFileName(report, asJson, false);
+                var filename = new MkkpReportFilenameHandler().GetFileName(report, asJson, false);
                 result = ZipStream(ms, filename);
                 ms.Dispose();
             }

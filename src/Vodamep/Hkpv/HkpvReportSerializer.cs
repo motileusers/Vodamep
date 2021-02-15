@@ -76,7 +76,7 @@ namespace Vodamep.Hkpv
 
         public string WriteToPath(HkpvReport report, string path, bool asJson, bool compressed = true)
         {
-            var filename = Path.Combine(path, ReportFilenamehandler.GetFileName(report, asJson, compressed));
+            var filename = Path.Combine(path, new HkpvReportFilenameHandler().GetFileName(report, asJson, compressed));
 
             WriteToFile(report, filename, asJson, compressed);
             return filename;
@@ -103,7 +103,7 @@ namespace Vodamep.Hkpv
 
             if (compressed)
             {
-                var filename = ReportFilenamehandler.GetFileName(report, asJson, false);
+                var filename = new HkpvReportFilenameHandler().GetFileName(report, asJson, false);
                 result = ZipStream(ms, filename);
                 ms.Dispose();
             }
