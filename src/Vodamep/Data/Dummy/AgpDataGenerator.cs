@@ -190,10 +190,10 @@ namespace Vodamep.Data.Dummy
 
             if (string.IsNullOrEmpty(a)) return new ActivityType[0];
 
-            return a.Split(',').Select(x => (ActivityType)int.Parse(x)).ToArray();
+            return a.Split(',').Select(x => (ActivityType)int.Parse(x)).Distinct().ToArray();
         }
 
-        private Activity CreateRandomActivity(string personId, string staffId, DateTime date)
+        private Activity CreateRandomActivity(string personId, string staffId, DateTime date, int minuten)
         {
             var result = new Activity()
             {
@@ -205,7 +205,7 @@ namespace Vodamep.Data.Dummy
                 .ElementAt(_rand.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1))
             };
 
-            result.Minutes = _rand.Next(5, 100);
+            result.Minutes = minuten;
 
             var activities = CreateRandomActivities();
             result.Entries.AddRange(activities.OrderBy(x => x));
@@ -222,9 +222,9 @@ namespace Vodamep.Data.Dummy
                 // die zu betreuenden Personen zufällig zuordnen
                 var persons = report.Persons.Count == 1 || report.Staffs.Count == 1 ? report.Persons.ToArray() : report.Persons.Where(x => _rand.Next(report.Staffs.Count) == 0).ToArray();
 
-                // ein Mitarbeiter soll pro Monat max. 6000 Minuten arbeiten. 
-                // wenn nur wenige Personen betreut werden: max 500 Minuten pro Person
-                var minuten = _rand.Next(Math.Min(persons.Count() * 500, 6000));
+                // ein Mitarbeiter soll pro Tag max 10h arbeiten und das nur in 5 Minuten Schritten
+                // hier wurde die hälfte gewählt, damit für den nächsten Schritt noch genug puffer ist
+                var minuten = _rand.Next(Math.Min(persons.Count() * 1, 100 / 5)) * 5;
 
                 while (minuten > 0)
                 {
@@ -235,7 +235,7 @@ namespace Vodamep.Data.Dummy
                     // Pro Tag, Person und Mitarbeiter nur ein Eintrag erlaubt:
                     if (!result.Where(x => x.PersonId == personId && x.StaffId == staff.Id && x.DateD.Equals(date)).Any())
                     {
-                        var a = CreateRandomActivity(personId, staff.Id, date);
+                        var a = CreateRandomActivity(personId, staff.Id, date, minuten);
 
                         minuten -= a.Minutes;
 
@@ -249,7 +249,7 @@ namespace Vodamep.Data.Dummy
             {
                 var date = report.FromD.AddDays(_rand.Next(report.ToD.Day - report.FromD.Day + 1));
 
-                result.Add(CreateRandomActivity(p.Id, report.Staffs[_rand.Next(report.Staffs.Count)].Id, date));
+                result.Add(CreateRandomActivity(p.Id, report.Staffs[_rand.Next(report.Staffs.Count)].Id, date, 5));
             }
 
 
