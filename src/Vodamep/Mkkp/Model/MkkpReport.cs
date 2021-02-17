@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Security;
-using System.Reflection;
 using System.Security.Cryptography;
 using Google.Protobuf;
-using Google.Protobuf.Collections;
-using Google.Protobuf.Reflection;
-using Vodamep.Data.Dummy;
-using Vodamep.Hkpv;
 using Vodamep.ReportBase;
 
 namespace Vodamep.Mkkp.Model
@@ -60,7 +52,7 @@ namespace Vodamep.Mkkp.Model
             }
         }
 
-        public DiffResult Diff(MkkpReport report) => new MkkpReportDiffer().Diff(this, report);
+        //public DiffResult Diff(MkkpReport report) => new MkkpReportDiffer().Diff(this, report);
 
         public List<DiffObject> DiffList(MkkpReport report) => new MkkpReportDiffer().DiffList(this, report);
 

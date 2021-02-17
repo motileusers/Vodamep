@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using Google.Protobuf;
@@ -76,7 +77,7 @@ namespace Vodamep.Agp.Model
 
         //public DiffResult Diff(AgpReport report) => new HkpAgvReportDiffer().Diff(this, report);
 
-        //public List<DiffObject> DiffList(HkpvReport report) => new HkpvReportDiffer().DiffList(this, report);
+        public List<DiffObject> DiffList(AgpReport report) => new AgpReportDiffer().DiffList(this, report);
 
 
     }

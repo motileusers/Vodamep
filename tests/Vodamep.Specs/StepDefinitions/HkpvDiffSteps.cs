@@ -1,21 +1,13 @@
 ﻿using FluentValidation;
-using Google.Protobuf;
-using Google.Protobuf.WellKnownTypes;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 using System.Threading;
 using TechTalk.SpecFlow;
-using Vodamep.Data;
 using Vodamep.Data.Dummy;
-using Vodamep.Hkpv;
 using Vodamep.Hkpv.Model;
 using Vodamep.Hkpv.Validation;
+using Vodamep.ReportBase;
 using Xunit;
-using Enum = Google.Protobuf.WellKnownTypes.Enum;
 
 namespace Vodamep.Specs.StepDefinitions
 {
