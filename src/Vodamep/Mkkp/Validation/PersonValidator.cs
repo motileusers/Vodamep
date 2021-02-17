@@ -45,6 +45,8 @@ namespace Vodamep.Mkkp.Validation
          
             this.RuleFor(x => x.Diagnoses).NotEmpty().WithMessage(Validationmessages.AtLeastOneDiagnosisGroup);
             this.Include(new DiagnosisGroupIsUniqueValidator());
+            this.Include(new DiagnosisGroupMustNotContainUndefinedValueeValidator());
+            this.Include(new DiagnosisGroupOnlyOnePalliativCareValidator());
         }
 
     }

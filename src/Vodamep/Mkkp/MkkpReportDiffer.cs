@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using Vodamep.Agp.Model;
+using Vodamep.Mkkp.Model;
 using Vodamep.ReportBase;
 
-namespace Vodamep.Agp
+namespace Vodamep.Mkkp
 {
-    internal class AgpReportDiffer
+    internal class MkkpReportDiffer
     {
-        public List<DiffObject> DiffList(AgpReport report1, AgpReport report2)
+        public List<DiffObject> DiffList(MkkpReport report1, MkkpReport report2)
         {
             var result = new List<DiffObject>();
 

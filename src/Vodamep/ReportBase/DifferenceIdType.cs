@@ -1,4 +1,4 @@
-﻿namespace Vodamep.Hkpv
+﻿namespace Vodamep.ReportBase
 {
     public enum DifferenceIdType
     {

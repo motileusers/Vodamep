@@ -1,6 +1,7 @@
 ﻿using System;
+using Vodamep.Hkpv;
 
-namespace Vodamep.Hkpv
+namespace Vodamep.ReportBase
 {
     public class DiffObject
     {
