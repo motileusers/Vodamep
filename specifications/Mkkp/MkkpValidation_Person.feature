@@ -99,3 +99,29 @@ Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
 Szenario: Es muss mindestens eine Diagnosegruppe vorhanden sein
     Angenommen die Diagnose(n) ist auf '' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe vorhanden sein.'
+
+Szenario: Es muss mindestens eine Diagnosegruppe vorhanden sein 2
+    Angenommen die Diagnose(n) ist auf 'UndefinedDiagnosisGroup' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe vorhanden sein.'
+
+Szenariogrundriss: Es darf nur eine Pallativ Diagnosegruppe vorhanden sein
+    Angenommen die Diagnose(n) ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Es darf nur eine Palliativ Diagnose Gruppe vorhanden sein.'
+Beispiele: 
+    | Wert                              |
+    | PalliativeCare1, PalliativeCare2  |
+    | PalliativeCare1, PalliativeCare3  |
+    | PalliativeCare1, PalliativeCare4  |
+    | PalliativeCare2, PalliativeCare3  |
+    | PalliativeCare2, PalliativeCare4  |
+    | PalliativeCare3, PalliativeCare4  |  
+    
+Szenariogrundriss: Es dürfen mehrere Diagnosegruppen kombiniert sein
+    Angenommen die Diagnose(n) ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+ Beispiele: 
+    | Wert                              |
+    | OncologicalDisease, Premature, MetabolicDisease, NeurologicalDisease, SurgicalCare, HeartDisease, GeneticDisease, PalliativeCare1  |
+    | OncologicalDisease, Premature, MetabolicDisease, NeurologicalDisease, SurgicalCare, HeartDisease, GeneticDisease, PalliativeCare2  |
+    | OncologicalDisease, Premature, MetabolicDisease, NeurologicalDisease, SurgicalCare, HeartDisease, GeneticDisease, PalliativeCare3  |
+    | OncologicalDisease, Premature, MetabolicDisease, NeurologicalDisease, SurgicalCare, HeartDisease, GeneticDisease, PalliativeCare4  |
