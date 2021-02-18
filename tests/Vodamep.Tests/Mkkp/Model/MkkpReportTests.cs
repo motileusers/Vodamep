@@ -21,7 +21,7 @@ namespace Vodamep.Mkkp.Model.Tests
         [Fact]
         public void WriteThenRead_ReportsAreEqual()
         {
-            MkkpReport report = MkkpDataGenerator.Instance.CreateMkkpReport(2021, 1, 1, 1, true);
+            MkkpReport report = MkkpDataGenerator.Instance.CreateMkkpReport(null, 2021, 1, 1, 1, true);
 
             using (var s = report.WriteToStream())
             {
