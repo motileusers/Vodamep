@@ -32,24 +32,10 @@ namespace Vodamep.Client
             handler.PackFile(args);
         }
 
-        [ArgActionMethod, ArgDescription("Agp Meldung mit Testdaten erzeugen.")]
-        public void PackRandomAgp(PackRandomAgpArgs args)
+        [ArgActionMethod, ArgDescription("Meldung mit Testdaten erzeugen.")]
+        public void PackRandom(PackRandomArgs args)
         {
-            var handler = this.handlerFactory.CreateFromType(Type.Agp);
-            handler.PackRandom(args);
-        }
-
-        [ArgActionMethod, ArgDescription("Hkpv Meldung mit Testdaten erzeugen.")]
-        public void PackRandomHkpv(PackRandomHkpvArgs args)
-        {
-            var handler = this.handlerFactory.CreateFromType(Type.Hkpv);
-            handler.PackRandom(args);
-        }
-
-        [ArgActionMethod, ArgDescription("Mkkp Meldung mit Testdaten erzeugen.")]
-        public void PackRandomMkkp(PackRandomMkkpArgs args)
-        {
-            var handler = this.handlerFactory.CreateFromType(Type.Mkkp);
+            var handler = this.handlerFactory.CreateFromType(args.Type);
             handler.PackRandom(args);
         }
 

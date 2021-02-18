@@ -37,11 +37,11 @@ namespace Vodamep.Data.Dummy
         }
 
 
-        public HkpvReport CreateHkpvReport(int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
+        public HkpvReport CreateHkpvReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
         {
             var report = new HkpvReport()
             {
-                Institution = new Institution() { Id = "kpv_test", Name = "Testverein" }
+                Institution = new Institution() { Id  = string.IsNullOrWhiteSpace(institutionId) ? "kpv_test" : institutionId, Name = "Testverein" }
             };
 
             var from = year.HasValue || month.HasValue ? new DateTime(year ?? DateTime.Today.Year, month ?? DateTime.Today.Month, 1) : DateTime.Today.FirstDateInMonth().AddMonths(-1);
