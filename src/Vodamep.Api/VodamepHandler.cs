@@ -104,7 +104,7 @@ namespace Vodamep.Api
 
             _logger?.LogInformation($"Report type from route: {reportType}");
 
-            //todo wird in zukunft entfernt
+            //todo legacy code
             if (string.IsNullOrWhiteSpace(reportType))
             {
                 reportType = "hkpv";

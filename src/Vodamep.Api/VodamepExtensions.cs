@@ -25,6 +25,11 @@ namespace Vodamep.Api
 
                 return app.UseRouter(r =>
                 {
+                    //todo legacy code
+                    r.MapPut("{year:int}/{month:int}", vodamepHandler);
+                    r.MapPost("{year:int}/{month:int}", vodamepHandler); // auch Post akzeptieren
+                    //end legacy code
+
                     r.MapPut("{report}/{year:int}/{month:int}", vodamepHandler);
                     r.MapPost("{report}/{year:int}/{month:int}", vodamepHandler); // auch Post akzeptieren
 
