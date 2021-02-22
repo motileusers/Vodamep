@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using TechTalk.SpecFlow;
 using Vodamep.Data.Dummy;
@@ -105,11 +106,9 @@ namespace Vodamep.Specs.StepDefinitions
             Assert.Equal(nrOfResults, diffResult.Count);
         }
 
-        [Then(@"das '(.*?)'. Element besitzt den Status '(.*?)' mit der Id '(.*?)', dem Wert1 '(.*?)' und dem Wert2 '(.*?)'")]
-        public void ThenTheResultDoesNotContainsEntry(int index, Difference difference, DifferenceIdType differenceId, string value1, string value2)
+        [Then(@"ein Element besitzt den Status '(.*?)' mit der Id '(.*?)', dem Wert1 '(.*?)' und dem Wert2 '(.*?)'")]
+        public void ThenTheResultDoesNotContainsEntry(Difference difference, DifferenceIdType differenceId, string value1, string value2)
         {
-            index = index - 1;
-
             if (string.IsNullOrWhiteSpace(value1))
                 value1 = null;
 
@@ -118,26 +117,50 @@ namespace Vodamep.Specs.StepDefinitions
 
             var diffResults = this.Report1.DiffList(this.Report2);
 
-            Assert.True(index < diffResults.Count);
+            var filteredDiffResults = diffResults.Where(x => x.Difference == difference &&
+                                                             x.DifferenceId == differenceId);
 
-            var diffResult = diffResults[index];
+            DiffObject diffResult = null;
 
-            var value1AString = "";
-            if (diffResult.Value1 is double doubleValue1)
-                value1AString = doubleValue1.ToString(CultureInfo.InvariantCulture);
-            else
-                value1AString = diffResult.Value1?.ToString();
+            foreach (var dr in filteredDiffResults)
+            {
+                var value1AString = dr.Value1 is double doubleValue1
+                    ? doubleValue1.ToString(CultureInfo.InvariantCulture)
+                    : dr.Value1?.ToString();
 
-            var value2AString = "";
-            if (diffResult.Value2 is double doubleValue2)
-                value2AString = doubleValue2.ToString(CultureInfo.InvariantCulture);
-            else
-                value2AString = diffResult.Value2?.ToString();
+                var value2AString = dr.Value2 is double doubleValue2
+                    ? doubleValue2.ToString(CultureInfo.InvariantCulture)
+                    : dr.Value2?.ToString();
 
-            Assert.Equal(difference, diffResult.Difference);
-            Assert.Equal(differenceId, diffResult.DifferenceId);
-            Assert.Equal(value1, value1AString);
-            Assert.Equal(value2, value2AString);
+                if (value1 == value1AString && value2 == value2AString)
+                {
+                    diffResult = dr;
+                    break;
+                }
+            }
+
+            Assert.NotNull(diffResult);
+
+            //var value1AString = "";
+            //if (diffResult.Value1 is double doubleValue1)
+            //    value1AString = doubleValue1.ToString(CultureInfo.InvariantCulture);
+            //else
+            //    value1AString = diffResult.Value1?.ToString();
+
+            //var value1AString = diffResult.Value1 is double doubleValue1
+            //    ? doubleValue1.ToString(CultureInfo.InvariantCulture)
+            //    : diffResult.Value1?.ToString();
+
+            //var value2AString = "";
+            //if (diffResult.Value2 is double doubleValue2)
+            //    value2AString = doubleValue2.ToString(CultureInfo.InvariantCulture);
+            //else
+            //    value2AString = diffResult.Value2?.ToString();
+
+            //Assert.Equal(difference, diffResult.Difference);
+            //Assert.Equal(differenceId, diffResult.DifferenceId);
+            //Assert.Equal(value1, value1AString);
+            //Assert.Equal(value2, value2AString);
         }
 
         private void GivenReportAddPersons(HkpvReport report, string values)
