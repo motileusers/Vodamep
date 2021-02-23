@@ -140,6 +140,9 @@ enum Gender {
   UNDEFINED_GENDER = 0;
   MALE = 1;
   FEMALE = 2;
+  DIVERS = 3;
+  INTER = 4;
+  OPEN = 5;
 }
 
 
