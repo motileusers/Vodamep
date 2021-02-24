@@ -24,7 +24,7 @@
     <None Update="Hkpv\HkpvValidation_Employment.feature">
       <Generator></Generator>
     </None>
-    <None Update="Hkpv\HkpvDiff_Report.feature">
+    <None Update="Base\Diff_Report.feature">
       <Generator></Generator>
     </None>
     <None Update="Mkkp\MkkpValidation_Activity.feature">

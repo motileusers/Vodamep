@@ -14,6 +14,8 @@ namespace Vodamep.Agp
             this.DiffFunctions.Add(typeof(RepeatedField<Person>), this.DiffPersons);
             this.DiffFunctions.Add(typeof(RepeatedField<Staff>), this.DiffStaffs);
             this.DiffFunctions.Add(typeof(RepeatedField<Activity>), this.DiffActivities);
+            this.DiffFunctions.Add(typeof(RepeatedField<TravelTime>), this.DiffTravelTimes);
+
         }
 
         private IEnumerable<DiffObject> DiffStaffs(object obj1, object obj2)
@@ -47,6 +49,13 @@ namespace Vodamep.Agp
             };
 
             return list;
+        }
+        private IEnumerable<DiffObject> DiffTravelTimes(object obj1, object obj2)
+        {
+            var travelTimes1 = (obj1 as RepeatedField<TravelTime>);
+            var travelTimes2 = (obj2 as RepeatedField<TravelTime>);
+
+            return DiffItems(travelTimes1, travelTimes2, DifferenceIdType.Person);
         }
     }
 }

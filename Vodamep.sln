@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vodamep.Mkkp.Specs", "tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vodamep.Agp.Specs", "tests\Vodamep.Agp.Specs\Vodamep.Agp.Specs.csproj", "{DFA4802A-2821-46ED-AE57-513D6B2DF0A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vodamep.Hkpv.Specs", "tests\Vodamep.Hkpv.Specs\Vodamep.Hkpv.Specs.csproj", "{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,18 @@ Global
 		{DFA4802A-2821-46ED-AE57-513D6B2DF0A4}.Release|x64.Build.0 = Release|Any CPU
 		{DFA4802A-2821-46ED-AE57-513D6B2DF0A4}.Release|x86.ActiveCfg = Release|Any CPU
 		{DFA4802A-2821-46ED-AE57-513D6B2DF0A4}.Release|x86.Build.0 = Release|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Debug|x64.Build.0 = Debug|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Debug|x86.Build.0 = Debug|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Release|x64.ActiveCfg = Release|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Release|x64.Build.0 = Release|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Release|x86.ActiveCfg = Release|Any CPU
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,6 +182,7 @@ Global
 		{C6C12307-D079-4376-856E-55A2F333DF60} = {59A6C111-CE2D-4F76-911B-E7033F4B9EF4}
 		{E5ABF09C-5E5F-4C2B-BF80-227701E27CC2} = {59A6C111-CE2D-4F76-911B-E7033F4B9EF4}
 		{DFA4802A-2821-46ED-AE57-513D6B2DF0A4} = {59A6C111-CE2D-4F76-911B-E7033F4B9EF4}
+		{419BB8D5-7890-4F7F-A22C-B9918C5A30CA} = {59A6C111-CE2D-4F76-911B-E7033F4B9EF4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D823BE72-7933-4FAA-90C3-F57FADDE48C8}
