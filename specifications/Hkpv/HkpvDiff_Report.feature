@@ -75,8 +75,9 @@ Szenario: Fehlendes Anstellungsverhältnis Mitarbeiter
 	Und die Meldung2 enthält den Mitarbeiter '1' mit '1' Mitarbeiterleistungen und mit '2' Anstellungen mit '20' Stunden pro Woche
 	Und die Meldung2 enthält den Mitarbeiter '2' mit '1' Mitarbeiterleistungen und mit '1' Anstellungen mit '20' Stunden pro Woche
 	Und die Meldung2 enthält den Mitarbeiter '3' mit '1' Mitarbeiterleistungen und mit '2' Anstellungen mit '20' Stunden pro Woche
-	Dann enthält das Ergebnis '1' Objekte(e)
+	Dann enthält das Ergebnis '2' Objekte(e)
 	Und ein Element besitzt den Status 'Difference' mit der Id 'Employment', dem Wert1 '3' und dem Wert2 '2.5'
+	Und ein Element besitzt den Status 'Difference' mit der Id 'Staff', dem Wert1 '2' und dem Wert2 ''
 	
 Szenario: Unterschiedliches Anstellungsverhältnis Mitarbeiter
 	Angenommen die Meldung1 enthält den Mitarbeiter '1' mit '1' Mitarbeiterleistungen und mit '1' Anstellungen mit '40' Stunden pro Woche
@@ -85,6 +86,7 @@ Szenario: Unterschiedliches Anstellungsverhältnis Mitarbeiter
 	Und die Meldung2 enthält den Mitarbeiter '1' mit '1' Mitarbeiterleistungen und mit '1' Anstellungen mit '20' Stunden pro Woche
 	Und die Meldung2 enthält den Mitarbeiter '2' mit '1' Mitarbeiterleistungen und mit '1' Anstellungen mit '40' Stunden pro Woche
 	Und die Meldung2 enthält den Mitarbeiter '3' mit '1' Mitarbeiterleistungen und mit '1' Anstellungen mit '40' Stunden pro Woche
-	Dann enthält das Ergebnis '1' Objekte(e)
+	Dann enthält das Ergebnis '2' Objekte(e)
 	Und ein Element besitzt den Status 'Difference' mit der Id 'Employment', dem Wert1 '3' und dem Wert2 '2.5'
+	Und ein Element besitzt den Status 'Difference' mit der Id 'Staff', dem Wert1 '1' und dem Wert2 ''
 	

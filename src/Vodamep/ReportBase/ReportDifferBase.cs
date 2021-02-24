@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Google.Protobuf;
+using Google.Protobuf.Reflection;
 
 namespace Vodamep.ReportBase
 {
@@ -48,7 +51,7 @@ namespace Vodamep.ReportBase
                     continue;
                 }
 
-                var diff = this.Diff(person, otherPerson, 0);
+                var diff = this.Diff(person, otherPerson);
 
                 if (diff.Status == Status.Changed)
                 {
@@ -105,7 +108,7 @@ namespace Vodamep.ReportBase
             return result;
         }
 
-        public DiffResult Diff(object obj1, object obj2, int level = 0)
+        public DiffResult Diff(object obj1, object obj2, int level = 0, bool ignoreChildLevels = false)
         {
             if (obj1 == null || obj2 == null)
                 return null;
@@ -123,6 +126,110 @@ namespace Vodamep.ReportBase
             }
 
             result.Type = obj1.GetType();
+
+            if (!ignoreChildLevels)
+            {
+                if (IsValueType(obj1.GetType()) && IsValueType(obj2.GetType()))
+                {
+                    result.Children.Add(Diff(obj1, obj2, "", level));
+                }
+
+                var objectProperties = obj1.GetType().GetProperties().Where(a => !IsValueType(a) && !a.PropertyType.IsGenericType).ToArray();
+                foreach (var propertyInfo in objectProperties)
+                {
+                    if (propertyInfo.PropertyType == typeof(MessageParser) || propertyInfo.PropertyType == typeof(MessageDescriptor) || propertyInfo.PropertyType == typeof(Google.Protobuf.WellKnownTypes.Timestamp))
+                    {
+                        continue;
+                    }
+
+                    var subProperty1 = propertyInfo.GetValue(obj1);
+                    var subProperty2 = propertyInfo.GetValue(obj2);
+
+                    result.Children.Add(Diff(subProperty1, subProperty2, level + 1));
+                }
+
+                var collections = obj1.GetType().GetProperties().Where(a => a.PropertyType.IsGenericType);
+                foreach (var propertyInfoCollection in collections)
+                {
+                    if (propertyInfoCollection.PropertyType.BaseType == typeof(MessageParser) || propertyInfoCollection.PropertyType == typeof(MessageDescriptor))
+                    {
+                        continue;
+                    }
+
+                    var list1 = propertyInfoCollection.GetValue(obj1) as IList;
+                    var list2 = propertyInfoCollection.GetValue(obj2) as IList;
+
+                    if (list1 == null)
+                    {
+                        //todo
+                        continue;
+                    }
+
+                    if (list2 == null)
+                    {
+                        //todo
+                        continue;
+                    }
+
+                    //check added elements
+                    for (var i = 0; i < list2.Count; i++)
+                    {
+                        var addElement = this.FindNonExistingElements(list2[i], list1, Status.Added);
+
+                        if (addElement == null)
+                        {
+                            if (list1.Count != list2.Count)
+                            {
+                                addElement = new DiffResult();
+                                addElement.Status = Status.Added;
+                                addElement.Value1 = list2[i];
+                                addElement.Value2 = list2[i];
+
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                        result.Children.Add(addElement);
+                    }
+
+                    //check deleted elements
+                    for (var i = 0; i < list1.Count; i++)
+                    {
+                        var removedElement = this.FindNonExistingElements(list1[i], list2, Status.Removed);
+
+                        if (removedElement == null)
+                        {
+                            if (list1.Count != list2.Count)
+                            {
+                                removedElement = new DiffResult();
+                                removedElement.Status = Status.Removed;
+                                removedElement.Value1 = list1[i];
+                                removedElement.Value2 = list1[i];
+
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                        result.Children.Add(removedElement);
+                    }
+
+                    //compare existing elements
+                    for (var i = 0; i < list1.Count && i < list2.Count; i++)
+                    {
+                        if (!IsValueType(list1[i].GetType()))
+                        {
+                            result.Children.Add(Diff(list1[i], list2[i], level + 1));
+                        }
+                    }
+                }
+            }
+
 
             if (result.Status == Status.Unchanged)
             {
@@ -156,6 +263,68 @@ namespace Vodamep.ReportBase
             return result;
         }
 
+        private DiffResult FindNonExistingElements(object item, IList others, Status status)
+        {
+            var othersFirstItem = others != null && others.Count > 0 ? others[0] : null;
+
+            var type = item.GetType();
+
+            if (othersFirstItem == null)
+            {
+                return null;
+            }
+
+            if (item == null || item.GetType() != othersFirstItem.GetType())
+            {
+                return null;
+            }
+
+            var itemProperties = item.GetType().GetProperties().ToArray();
+
+            if (IsValueType(item.GetType()))
+            {
+                var result = new DiffResult();
+
+                result.Value1 = item;
+                result.Type = item.GetType();
+                result.Status = others.Contains(item) ? Status.Unchanged : status;
+
+                return result;
+            }
+
+            var propertyDefinitions = new[] { "Id", "DateD", "From" };
+
+            foreach (var propertyDefinition in propertyDefinitions)
+            {
+                var propertyInfo = itemProperties.FirstOrDefault(x => x.Name == propertyDefinition);
+
+                if (propertyInfo != null)
+                {
+                    var id = propertyInfo.GetValue(item);
+
+                    foreach (var othersItem in others)
+                    {
+                        var othersId = propertyInfo.GetValue(othersItem);
+                        if (othersId.ToString() == id.ToString())
+                        {
+                            return null;
+                        }
+                    }
+
+                    var result = new DiffResult();
+                    result.PropertyName = id.ToString();
+                    return result;
+                }
+            }
+
+            var foundResult = new DiffResult();
+            foundResult.Status = Status.Unchanged;
+            foundResult.Value1 = item;
+            foundResult.Value2 = item;
+
+            return foundResult;
+        }
+
         private bool IsValueType(PropertyInfo propertyInfo)
         {
             return propertyInfo.PropertyType.IsPrimitive ||
@@ -163,6 +332,15 @@ namespace Vodamep.ReportBase
                    propertyInfo.PropertyType.IsValueType ||
                    propertyInfo.PropertyType == typeof(decimal) ||
                    propertyInfo.PropertyType == typeof(DateTime);
+        }
+
+        private bool IsValueType(Type type)
+        {
+            return type.IsPrimitive ||
+                   type == typeof(string) ||
+                   type.IsValueType ||
+                   type == typeof(decimal) ||
+                   type == typeof(DateTime);
         }
 
     }
