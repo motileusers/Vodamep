@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
-using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using TechTalk.SpecFlow;
+using Vodamep.Agp.Model;
+using Vodamep.Agp.Validation;
 using Vodamep.Data.Dummy;
-using Vodamep.Hkpv.Model;
-using Vodamep.Hkpv.Validation;
 using Vodamep.ReportBase;
 using Xunit;
 
@@ -14,26 +13,26 @@ namespace Vodamep.Specs.StepDefinitions
 {
 
     [Binding]
-    public class HkpvDiffSteps
+    public class AgpDiffSteps
     {
 
-        public HkpvDiffSteps()
+        public AgpDiffSteps()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
 
-            var loc = new DisplayNameResolver();
+            var loc = new AgpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
         }
 
-        public HkpvReport Report1 { get; private set; }
+        public AgpReport Report1 { get; private set; }
 
-        public HkpvReport Report2 { get; private set; }
+        public AgpReport Report2 { get; private set; }
 
         [BeforeScenario()]
         public void BeforeScenario()
         {
-            this.Report1 = HkpvDataGenerator.Instance.CreateHkpvReport(string.Empty, null, null, 1, 1, true);
+            this.Report1 = AgpDataGenerator.Instance.CreateAgpReport(string.Empty, null, null, 1, 1, true);
 
             this.Report1.Persons.First().Id = "1";
             this.Report1.Staffs.First().Id = "2";
@@ -47,10 +46,11 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"alle Properties des 2. Reports haben sich verändert")]
         public void GivenAllPropertiesOfTheSecondReportHaveChanged()
         {
-            this.Report1.Persons.First().FamilyName = "Test";
+            this.Report1.Persons.First().HospitalDoctor = "Test";
             this.Report1.Staffs.First().FamilyName = "Test";
             //this.Report1.Activities.First().Entries.Clear();
             //this.Report1.Activities.First().Entries.Add(ActivityType.Lv05);
+            this.Report1.TravelTimes.First().Minutes += 10;
         }
 
         [Then(@"enthält das Ergebnis '(.*)' Objekte\(e\)")]
@@ -62,7 +62,7 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
         [Then(@"ein Element besitzt den Status '(.*?)' mit der Id '(.*?)', dem Wert1 '(.*?)' und dem Wert2 '(.*?)'")]
-        public void ThenTheResultDoesNotContainsEntry(Difference difference, DifferenceIdType differenceId, string value1, string value2)
+        public void ThenTheResultContainsEntry(Difference difference, DifferenceIdType differenceId, string value1, string value2)
         {
             if (string.IsNullOrWhiteSpace(value1))
                 value1 = null;

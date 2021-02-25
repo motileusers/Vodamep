@@ -9,6 +9,9 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Update="Agp\AgpDiff_Report.feature">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     <None Update="Agp\AgpValidation_Report.feature">
       <Generator></Generator>
     </None>
@@ -26,6 +29,9 @@
     </None>
     <None Update="Base\Diff_Report.feature">
       <Generator></Generator>
+    </None>
+    <None Update="Mkkp\MkkpDiff_Report.feature">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Mkkp\MkkpValidation_Activity.feature">
       <Generator></Generator>

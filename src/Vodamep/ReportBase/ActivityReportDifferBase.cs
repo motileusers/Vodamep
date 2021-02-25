@@ -76,7 +76,9 @@ namespace Vodamep.ReportBase
             {
                 sum1 += activity.EntriesT.Count();
 
+                var otherActivitys = activities2.Where(x => activityFindCriteria(x, activity));
                 var otherActivity = activities2.FirstOrDefault(x => activityFindCriteria(x, activity));
+               
                 if (otherActivity != null)
                 {
                     isEntryTypeChanged |= this.AreChanged(activity.EntriesT, otherActivity.EntriesT);

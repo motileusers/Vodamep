@@ -7,6 +7,7 @@
         PersonActivity,
         Employment,
         Person,
-        Staff
+        Staff,
+        TravelTime,
     }
 }

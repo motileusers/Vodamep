@@ -46,10 +46,15 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFlow.xUnitAdapter.Config.cs" />
+    <Compile Include="StepDefinitions\MkkpDiffSteps.cs" />
     <Compile Include="StepDefinitions\MkkpValidationSteps.cs" />
     <Compile Include="StepDefinitions\MessageExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\specifications\Mkkp\MkkpDiff_Report.feature">
+      <Link>Features\MkkpDiff_Report.feature</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\..\specifications\Mkkp\MkkpValidation_Activity.feature">
       <Link>Features\MkkpValidation_Activity.feature</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

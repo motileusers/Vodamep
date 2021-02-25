@@ -55,7 +55,7 @@ namespace Vodamep.Agp
             var travelTimes1 = (obj1 as RepeatedField<TravelTime>);
             var travelTimes2 = (obj2 as RepeatedField<TravelTime>);
 
-            return DiffItems(travelTimes1, travelTimes2, DifferenceIdType.Person);
+            return DiffItems(travelTimes1, travelTimes2, DifferenceIdType.TravelTime);
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
-using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using TechTalk.SpecFlow;
 using Vodamep.Data.Dummy;
-using Vodamep.Hkpv.Model;
-using Vodamep.Hkpv.Validation;
+using Vodamep.Mkkp.Model;
+using Vodamep.Mkkp.Validation;
 using Vodamep.ReportBase;
 using Xunit;
 
@@ -14,26 +13,26 @@ namespace Vodamep.Specs.StepDefinitions
 {
 
     [Binding]
-    public class HkpvDiffSteps
+    public class MkkpDiffSteps
     {
 
-        public HkpvDiffSteps()
+        public MkkpDiffSteps()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
 
-            var loc = new DisplayNameResolver();
+            var loc = new MkkpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
         }
 
-        public HkpvReport Report1 { get; private set; }
+        public MkkpReport Report1 { get; private set; }
 
-        public HkpvReport Report2 { get; private set; }
+        public MkkpReport Report2 { get; private set; }
 
         [BeforeScenario()]
         public void BeforeScenario()
         {
-            this.Report1 = HkpvDataGenerator.Instance.CreateHkpvReport(string.Empty, null, null, 1, 1, true);
+            this.Report1 = MkkpDataGenerator.Instance.CreateMkkpReport(string.Empty, null, null, 1, 1, true);
 
             this.Report1.Persons.First().Id = "1";
             this.Report1.Staffs.First().Id = "2";
@@ -43,14 +42,14 @@ namespace Vodamep.Specs.StepDefinitions
             this.Report2 = this.Report1.Clone();
         }
 
-
         [Given(@"alle Properties des 2. Reports haben sich verändert")]
         public void GivenAllPropertiesOfTheSecondReportHaveChanged()
         {
-            this.Report1.Persons.First().FamilyName = "Test";
+            this.Report1.Persons.First().HospitalDoctor = "Test";
             this.Report1.Staffs.First().FamilyName = "Test";
             //this.Report1.Activities.First().Entries.Clear();
             //this.Report1.Activities.First().Entries.Add(ActivityType.Lv05);
+            this.Report1.TravelTimes.First().Minutes += 10;
         }
 
         [Then(@"enthält das Ergebnis '(.*)' Objekte\(e\)")]
