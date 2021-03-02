@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Vodamep.Hkpv.Model;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.Hkpv.Validation
 {

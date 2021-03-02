@@ -1,0 +1,156 @@
+syntax = "proto3";
+package Vodamep.Mkkp;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Vodamep.Mkkp.Model";
+
+message MkkpReport {   
+    Institution institution = 1;   
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    repeated Staff staffs = 4; 
+    repeated Person persons = 5;         
+    repeated Activity activities = 6;     
+    repeated TravelTime travel_times = 7;     
+}
+
+// Einrichtung - immer Connexia
+message Institution {
+    string id = 1;
+    string name = 2;    
+}
+
+// Mitarbeiter, die im Zeitraum eine Leistung erbracht haben
+message Staff {
+    string id = 1;    
+    string family_name = 3;
+    string given_name = 4;    
+}
+
+// Personen, die im Zeitraum eine Leistung bezogen haben
+message Person {
+    string id = 1;
+    string family_name = 2;
+    string given_name = 3;    
+    google.protobuf.Timestamp birthday = 4;
+	Gender gender = 5;
+    string postcode = 6;				// postcode und city müssen zusammen einem Wert aus der Liste der Orte entsprechen
+    string city = 7;
+	CareAllowance care_allowance = 8;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
+	string insurance = 9;               // Ein Wert aus der Liste der Sozialversicherungen
+    Referrer referrer = 10;
+    string other_referrer = 11;
+    string hospital_doctor = 12;
+    string local_doctor = 13;
+    repeated DiagnosisGroup diagnoses = 14;
+}
+
+// Leistungen
+message Activity {
+    string id = 1;
+    google.protobuf.Timestamp date = 2;
+    string person_id = 3;
+    string staff_id = 4;
+    PlaceOfAction place_of_Action = 5;          // Ein Wert aus der Liste places_of_action.csv
+    repeated ActivityType entries = 6; 
+    int32 minutes = 7;
+}
+
+// Wegzeiten
+message TravelTime {
+    string id = 1;
+    google.protobuf.Timestamp date = 2;
+    string staff_id = 3;
+    int32 minutes = 4;
+}
+
+// Leistungstypen
+// Beschreibung in activitytypes.csv
+enum ActivityType {  
+  UNDEFINED_ACTIVITY = 0;
+  BODY = 1;
+  MEDICAL_COMMON = 2;
+  MEDICAL_DIET = 3;
+  MEDICAL_VITAL = 4;
+  MEDICAL_WOUND = 5;
+  MEDICAL_INJECTION = 6;
+  MEDICAL_VENTILATION_TUBES = 7;
+  ACCOMPANYING_WITH_CONTACT = 8;
+  ACCOMPANYING_WITHOUT_CONTACT = 9;
+}
+
+// Diagnosegruppen
+// Beschreibung in diagnosisgroups.csv
+enum DiagnosisGroup { 
+	UNDEFINED_DIAGNOSIS_GROUP = 0;
+    ONCOLOGICAL_DISEASE = 1;
+    PREMATURE = 2;
+    METABOLIC_DISEASE = 3;
+    NEUROLOGICAL_DISEASE = 4;
+    SURGICAL_CARE = 5;
+    HEART_DISEASE = 6;
+    GENETIC_DISEASE = 7;
+    PALLIATIVE_CARE1 = 8;
+	PALLIATIVE_CARE2 = 9;
+	PALLIATIVE_CARE3 = 10;
+	PALLIATIVE_CARE4 = 11;
+}
+
+// Einsatzorte
+// Beschreibung in places_of_action.csv
+enum PlaceOfAction { 
+	UNDEFINED_PLACE = 0;
+    RESIDENCE_PLACE = 1;
+    KINDERGARTEN_PLACE = 2;
+    SCHOOL_place = 3;
+    OUTPATIENT_HOSPITAL_PLACE = 4;
+    LOCAL_DOCTOR_PLACE = 5;
+    OTHER_PLACE = 6;
+}
+
+
+
+// Zuweiser
+// Beschreibung in referrer.csv
+// Protobuf erwartet eindeutige EnumKeys, auch zwischen unterschiedlichen enums, drum der AnhhangRef
+// Place und Referrer können sich dabei überscheiden
+enum Referrer { 
+	UNDEFINED_REFERRER = 0;
+    LKH_FELDKIRCH_REFERRER = 1;
+    KH_DORNBIRN_REFERRER = 2;
+    LKH_BREGENZ_REFERRER = 3;
+    PRIVATE_SPECIALISTs_REFERRER = 4;
+    OTHER_REFERRER = 5;
+}
+
+// Pflegegeld
+// Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
+enum CareAllowance {
+  UNDEFINED_ALLOWANCE = 0;
+  L1 = 1;
+  L2 = 2;
+  L3 = 3;
+  L4 = 4;
+  L5 = 5;
+  L6 = 6;
+  L7 = 7;	
+  ANY = 9;              // Pflegegeld ja, Stufe unbekannt
+  UNKNOWN = 88;         // unbekannt ob ja oder nein
+  NONE = 99;            // Keine Pflegegeld
+}
+
+enum Gender {
+  UNDEFINED_GENDER = 0;
+  MALE = 1;
+  FEMALE = 2;
+  DIVERS = 3;
+  INTER = 4;
+  OPEN = 5;
+}
+
+
+/*
+Dokumentation zu Protobuf: https://developers.google.com/protocol-buffers/
+Online generator z.B. :https://protogen.marcgravell.com/
+*/ 

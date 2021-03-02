@@ -2103,7 +2103,7 @@ Riha
 Löw
 Kloibhofer
 Kindermann
-Gendarmerie:
+Gendarmerie
 Frischmann
 Daxböck
 Brauneis

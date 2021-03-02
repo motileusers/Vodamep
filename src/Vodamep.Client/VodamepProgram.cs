@@ -1,13 +1,7 @@
 ﻿using PowerArgs;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
 using Vodamep.Data;
-using Vodamep.Data.Dummy;
-using Vodamep.Hkpv.Model;
-using Vodamep.Hkpv.Validation;
 
 namespace Vodamep.Client
 {
@@ -15,133 +9,34 @@ namespace Vodamep.Client
     [ArgDescription("(dmc) Daten-Meldungs-Client:")]
     public class VodamepProgram
     {
-
-        private void HandleFailure(string message = null)
-        {
-            throw new Exception(message);
-        }
+        private HandlerFactory handlerFactory = new HandlerFactory();
 
         [ArgActionMethod, ArgDescription("Absenden der Meldung.")]
         public void Send(SendArgs args)
         {
-            var wildcard = args.File.IndexOf("*");
-
-            string[] files;
-
-            if (wildcard >= 0)
-            {
-                if (wildcard == 0)
-                {
-                    files = Directory.GetFiles(Directory.GetCurrentDirectory(), args.File);
-                }
-                else
-                {
-                    var dirIndex = args.File.Substring(0, wildcard).LastIndexOf(@"\");
-                    var dir = args.File.Substring(0, dirIndex);
-                    var pattern = args.File.Substring(dirIndex + 1);
-                    files = Directory.GetFiles(dir, pattern);
-                }
-            }
-            else
-            {
-                files = new[] { args.File };
-            }
-
-            foreach (var file in files)
-            {
-                var report = ReadReport(file);
-
-                var address = args.Address.Trim();
-
-                address = address.EndsWith(@"\") ? address : $"{address}/";
-
-                var sendResult = report.Send(new Uri(address), args.User, args.Password).Result;
-
-                if (!string.IsNullOrEmpty(sendResult?.Message))
-                {
-                    Console.WriteLine(sendResult.Message);
-                }
-
-                if (!string.IsNullOrEmpty(sendResult?.ErrorMessage))
-                {
-                    Console.WriteLine(sendResult.ErrorMessage);
-                }
-
-                if (!(sendResult?.IsValid ?? false))
-                {
-                    HandleFailure("Fehlgeschlagen. " + sendResult.Message);
-                }
-                else
-                {
-                    Console.WriteLine("Erfolgreich");
-                }
-            }
+            HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
+            handler.Send(args);
         }
 
         [ArgActionMethod, ArgDescription("Prüfung der Meldung.")]
         public void Validate(ValidateArgs args)
         {
-            var wildcard = args.File.IndexOf("*");
-
-            string[] files;
-
-            if (wildcard >= 0)
-            {
-                if (wildcard == 0)
-                {
-                    files = Directory.GetFiles(Directory.GetCurrentDirectory(), args.File);
-                }
-                else
-                {
-                    var dirIndex = args.File.Substring(0, wildcard).LastIndexOf(@"\");
-                    var dir = args.File.Substring(0, dirIndex);
-                    var pattern = args.File.Substring(dirIndex + 1);
-                    files = Directory.GetFiles(dir, pattern);
-                }
-            }
-            else
-            {
-                files = new[] { args.File };
-            }
-            
-
-            foreach (var file in files)
-            {
-                var report = ReadReport(file);
-
-                var result = report.Validate();
-
-                var formatter = new HkpvReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
-                var message = formatter.Format(report, result);
-
-                Console.WriteLine(message);
-            }
+            HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
+            handler.Validate(args);
         }
 
         [ArgActionMethod, ArgDescription("Meldung neu verpacken.")]
         public void PackFile(PackFileArgs args)
         {
-            var report = ReadReport(args.File);
-
-            var file = report.WriteToPath("", asJson: args.Json, compressed: !args.NoCompression);
-
-            Console.WriteLine($"{file} wurde erzeugt.");
+            HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
+            handler.PackFile(args);
         }
 
         [ArgActionMethod, ArgDescription("Meldung mit Testdaten erzeugen.")]
         public void PackRandom(PackRandomArgs args)
         {
-            int? year = args.Year;
-            if (year < 2000 || year > DateTime.Today.Year) year = null;
-
-            int? month = args.Month;
-            if (month < 1 || month > 12) month = null;
-
-            var r = DataGenerator.Instance.CreateHkpvReport(year, month, args.Persons, args.Staffs, args.AddActivities);
-
-            var file = r.WriteToPath("", asJson: args.Json, compressed: !args.NoCompression);
-
-            Console.WriteLine($"{file} wurde erzeugt.");
+            var handler = this.handlerFactory.CreateFromType(args.Type);
+            handler.PackRandom(args);
         }
 
         [ArgActionMethod, ArgDescription("Listet erlaubte Werte.")]
@@ -170,66 +65,41 @@ namespace Vodamep.Client
 
             foreach (var line in provider?.GetCSV())
                 Console.WriteLine(line);
-
         }
 
-        [ArgActionMethod, ArgDescription("Diff von zwei Dateien erzeugen.")]
-        public void Diff(DiffArgs args)
+        private Type CheckType(string typeName)
         {
-            var fileName1 = args.File1;
-            var fileName2 = args.File2;
+            Type type;
 
-            var report1 = HkpvReport.ReadFile(fileName1);
-            var report2 = HkpvReport.ReadFile(fileName2);
 
-            var difference = report1.Diff(report2);
-
-            var formatter = new HkpvDiffResultFormatter(args.HideUnchanged);
-            var message = formatter.Format(difference);
-
-            Console.WriteLine(message);
-        }
-
-        [ArgActionMethod, ArgDescription("Diff von zwei Dateien erzeugen.")]
-        public void DiffList(DiffArgs args)
-        {
-            var fileName1 = args.File1;
-            var fileName2 = args.File2;
-
-            var report1 = HkpvReport.ReadFile(fileName1);
-            var report2 = HkpvReport.ReadFile(fileName2);
-
-            var difference = report1.DiffList(report2);
-
-            var formatter = new HkpvDiffResultFormatter(args.HideUnchanged);
-            //var message = formatter.Format(difference);
-
-            //Console.WriteLine(message);
-        }
-
-        private string CreateLine(int length)
-        {
-            var result = string.Empty;
-            for (int i = 0; i < length; i++)
+            switch (typeName.ToLower())
             {
-                result += "-";
-            }
-            return result;
-        }
+                case "agp":
+                    type = Type.Agp;
+                    break;
 
-        private HkpvReport ReadReport(string file)
-        {
-            try
-            {
-                return HkpvReport.ReadFile(file);
-            }
-            catch (Exception ex)
-            {
-                HandleFailure("Daten konnten nicht gelesen werden: " + ex.Message);
+                case "hkpv":
+                    type = Type.Hkpv;
+                    break;
+
+                case "mkkp":
+                    type = Type.Mkkp;
+                    break;
+
+                default:
+                    type = Type.Hkpv;
+                    break;
             }
 
-            return null;
+
+            return type;
         }
+
+        protected void HandleFailure(string message = null)
+        {
+            throw new Exception(message);
+        }
+
     }
 
 }

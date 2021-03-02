@@ -25,7 +25,6 @@ namespace Vodamep.Api
 
         public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddNLog();
             this._configuration = configuration;
             this._loggerFactory = loggerFactory;
             this._logger = loggerFactory.CreateLogger<Startup>();
@@ -63,7 +62,7 @@ namespace Vodamep.Api
                 app.UseAuthentication();
             }
 
-            app.UseVodamep();
+            app.UseVodamep(this._logger);
         }
 
         private void ConfigureValidationClient(IServiceCollection services)

@@ -4,8 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RuntimeIdentifiers>win10-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
     <PackageId>Vodamep</PackageId>    
-    <Authors>Team connexia</Authors>
-    <Company>connexia GmbH</Company>
+    <Authors>connexia</Authors>
+    <Company>connexia – Gesellschaft für Gesundheit und Pflege</Company>
+    <Description>Komponente zum Validieren, Speichern und Senden von Datenmeldungen an connexia.</Description>
+    <Copyright>connexia</Copyright>
+    <PackageProjectUrl>https://bitbucket.org/team_connexia/vodamep/src/master/</PackageProjectUrl>
+    <PackageIcon></PackageIcon>
+    <RepositoryUrl>https://bitbucket.org/team_connexia/vodamep.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Version>1.6.6-alpha</Version>
+    <Product>Vorarlberger Datenmeldung Pflege</Product>
+    <PackageReleaseNotes>Send MKKP + AGPs</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,18 +36,36 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Compile Include="..\..\specifications\Agp\Apg.g.cs" Link="Agp\Model\Apg.g.cs" />
     <Compile Include="..\..\specifications\Hkpv\Hkpv.g.cs" Link="Hkpv\Model\Hkpv.g.cs" />
+    <Compile Include="..\..\specifications\Mkkp\Mkkp.g.cs" Link="Mkkp\Model\Mkkp.g.cs" />
     <EmbeddedResource Include="..\..\specifications\Datasets\postcode_cities.csv" Link="Data\postcode_cities.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\german-iso-3166.csv" Link="Data\german-iso-3166.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\insurances.csv" Link="Data\insurances.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\qualifications.csv" Link="Data\qualifications.csv" />
+    <None Include="..\..\specifications\Agp\Apg.proto" Link="Agp\Model\Apg.proto" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Agp\activitytypes.csv" Link="Data\Agp\activitytypes.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Agp\diagnosisgroups.csv" Link="Data\Agp\diagnosisgroups.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Mkkp\activitytypes.csv" Link="Data\Mkkp\activitytypes.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Mkkp\diagnosisgroups.csv" Link="Data\Mkkp\diagnosisgroups.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Mkkp\referrer.csv" Link="Data\Mkkp\referrer.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Agp\referrer.csv" Link="Data\Agp\referrer.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Agp\places_of_action.csv" Link="Data\Agp\places_of_action.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Mkkp\places_of_action.csv" Link="Data\Mkkp\places_of_action.csv" />
     <None Include="..\..\specifications\Hkpv\Hkpv.proto" Link="Hkpv\Model\Hkpv.proto" />
+    <None Include="..\..\specifications\Mkkp\Mkkp.proto" Link="Mkkp\Model\Mkkp.proto" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.1" />
     <PackageReference Include="Google.Protobuf" Version="3.11.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Mohi\Model\" />
+    <Folder Include="Mohi\Validation\" />
+    <Folder Include="ValidationBase\" />
   </ItemGroup>
 
 </Project>

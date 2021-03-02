@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Vodamep.ReportBase;
 
 namespace Vodamep.Hkpv.Model
 {
-    public partial class Activity : IComparable<Activity>
+    public partial class Activity : IComparable<Activity>, IActivity<ActivityType>
     {
         public DateTime DateD { get => this.Date.AsDate(); set => this.Date = value.AsTimestamp(); }
+        public IEnumerable<ActivityType> EntriesT => this.entries_;
 
         public int CompareTo(Activity other)
         {

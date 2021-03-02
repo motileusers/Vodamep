@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: Validierung der gemeldeten Personen einer Datenmeldung
+Funktionalität: Hkpv - Validierung der gemeldeten Personen einer Datenmeldung
 
 Szenario: Es wurde ein ungültiger Ort angegeben.
     Angenommen die Eigenschaft 'postcode' von 'Person' ist auf '6900' gesetzt
@@ -87,7 +87,7 @@ Beispiele:
     | family_name | Familienname  | t@st |
     | given_name  | Vorname       | t@st |
 
-	
+
 Szenariogrundriss: Der Name einer Person enthält ein spezielles, aber gültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis keine Fehler

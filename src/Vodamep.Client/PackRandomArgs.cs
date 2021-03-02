@@ -2,8 +2,14 @@
 
 namespace Vodamep.Client
 {
-    public class PackRandomArgs
+    public class PackRandomArgs : ArgsBase
     {
+        [ArgDescription("Save as JSON.")]
+        public bool Json { get; set; } = false;
+
+        [DefaultValue(false)]
+        public bool NoCompression { get; set; }
+
         [ArgRange(1, 12)]
         public int Month { get; set; }
 
@@ -18,11 +24,8 @@ namespace Vodamep.Client
         [DefaultValue(true)]
         public bool AddActivities { get; set; } = true;
 
-        [ArgDescription("Save as JSON.")]
-        public bool Json { get; set; } = false;
+        [DefaultValue("")]
+        public string InstitutionId { get; set; } = string.Empty;
 
-        [DefaultValue(false)]
-        public bool NoCompression { get; set; }
     }
-
 }

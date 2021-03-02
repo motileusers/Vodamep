@@ -1,0 +1,14 @@
+﻿// Zuweiser AGP
+
+SelfReferrer;Selbst
+FamilyDoctorReferrer;Hausärztin/Hausarzt
+MedicalSpecialistReferrer;Fachärztin/Facharzt 
+RelativesReferrer;Angehörige
+LkhRankweilReferrer;LKH Rankweil
+HomeHealthCareReferrer;Hauskrankenpflege
+CaseManagementReferrer;Case Management
+MobileCareServiceReferrer;Mobiler Hilfsdienst
+OtherReferrer;Sonstiger
+UndefinedReferrer;undefiniert
+
+

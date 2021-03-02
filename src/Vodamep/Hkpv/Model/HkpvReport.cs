@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Security;
-using System.Reflection;
+using System.Security.Cryptography;
 using Google.Protobuf;
-using Google.Protobuf.Collections;
-using Google.Protobuf.Reflection;
 using Vodamep.Data.Dummy;
+using Vodamep.ReportBase;
+
 namespace Vodamep.Hkpv.Model
 {
-    public partial class HkpvReport
+    public partial class HkpvReport : IReportBase
     {
+        public string ReportType => "Hkpv";
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
         public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }
 
+        IInstitution IReportBase.Institution => this.Institution;
 
         public static HkpvReport CreateDummyData()
         {
@@ -64,7 +63,18 @@ namespace Vodamep.Hkpv.Model
 
         public MemoryStream WriteToStream(bool asJson = false, bool compressed = true) => new HkpvReportSerializer().WriteToStream(this, asJson, compressed);
 
-        public  HkpReportDiffResult Diff(HkpvReport report) => new HkpvReportDiffer().Diff(this, report);
+        public string GetSHA256Hash()
+        {
+            using (var s = SHA256.Create())
+            {
+                var h = s.ComputeHash(this.ToByteArray());
+
+                var sha256 = System.Net.WebUtility.UrlEncode(Convert.ToBase64String(h));
+
+                return sha256;
+            }
+        }
+        public DiffResult Diff(HkpvReport report) => new HkpvReportDiffer().Diff(this, report);
 
         public List<DiffObject> DiffList(HkpvReport report) => new HkpvReportDiffer().DiffList(this, report);
 

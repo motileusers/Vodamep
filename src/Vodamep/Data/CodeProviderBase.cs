@@ -23,6 +23,7 @@ namespace Vodamep.Data
         private void Init()
         {
             var assembly = this.GetType().Assembly;
+
             var resourceStream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{this.ResourceName}");
 
             using (var reader = new StreamReader(resourceStream))

@@ -9,11 +9,46 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Update="Agp\AgpDiff_Report.feature">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Agp\AgpValidation_Report.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Agp\AgpValidation_Staff.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Agp\AgpValidation_Person.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Agp\AgpValidation_Activity.feature">
+      <Generator></Generator>
+    </None>
     <None Update="Hkpv\HkpvValidation_Employment.feature">
       <Generator></Generator>
     </None>
-    <None Update="Hkpv\HkpvDiff_Report.feature">
+    <None Update="Base\Diff_Report.feature">
       <Generator></Generator>
     </None>
+    <None Update="Mkkp\MkkpDiff_Report.feature">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Mkkp\MkkpValidation_Activity.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mkkp\MkkpValidation_Person.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mkkp\MkkpValidation_Staff.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mkkp\MkkpValidation_Report.feature">
+      <Generator></Generator>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Datasets\Agp\" />
+    <Folder Include="Datasets\Mkkp\" />
   </ItemGroup>
 </Project>

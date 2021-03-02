@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: Validierung der gemeldeten Beschäftigungen
+Funktionalität: Hkpv - Validierung der gemeldeten Beschäftigungen
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Employment' ist nicht gesetzt

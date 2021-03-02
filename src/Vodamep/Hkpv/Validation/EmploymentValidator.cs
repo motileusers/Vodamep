@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Vodamep.Data;
 using Vodamep.Hkpv.Model;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.Hkpv.Validation
 {

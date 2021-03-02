@@ -1,0 +1,9 @@
+﻿// Diagnosegruppen AGP
+
+DementiaDisease;Demenzielle Erkrankungen
+AffectiveDisorder;Affektive Störungen
+SchizophreniaDelusionalDisorder;Schizophrene Psychosen und wahnhafte Störungen
+AnxietyAdjustmentObsessiveDisorder;Angst, Zwang und Anpassungsstörungen
+DependenceIllnesse;Abhängigkeitserkrankungen
+NonOrganicSleepingDisorder;Nichtorganische Schlafstörungen im Alter
+UndefinedDiagnosisGroup;undefiniert

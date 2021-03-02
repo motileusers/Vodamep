@@ -9,21 +9,21 @@ namespace Vodamep.Data.Dummy
     {
         public static Person AddDummyPerson(this HkpvReport report)
         {
-            var p = DataGenerator.Instance.CreatePerson();
+            var p = HkpvDataGenerator.Instance.CreatePerson();
             report.AddPerson(p);
             return p;
         }
 
         public static Person[] AddDummyPersons(this HkpvReport report, int count)
         {
-            var p = DataGenerator.Instance.CreatePersons(count).ToArray();
+            var p = HkpvDataGenerator.Instance.CreatePersons(count).ToArray();
             report.AddPersons(p);
             return p;
         }
 
         public static Staff AddDummyStaff(this HkpvReport report)
         {
-            var s = DataGenerator.Instance.CreateStaff(report);
+            var s = HkpvDataGenerator.Instance.CreateStaff(report);
 
             report.Staffs.Add(s);
             return s;
@@ -31,7 +31,7 @@ namespace Vodamep.Data.Dummy
 
         public static Staff[] AddDummyStaffs(this HkpvReport report, int count)
         {
-            var s = DataGenerator.Instance.CreateStaffs(report, count).ToArray();
+            var s = HkpvDataGenerator.Instance.CreateStaffs(report, count).ToArray();
             report.Staffs.AddRange(s);
             return s;
         }
@@ -89,7 +89,7 @@ namespace Vodamep.Data.Dummy
             if (report.Persons.Count == 0)
                 report.AddDummyPerson();
 
-            var a = DataGenerator.Instance.CreateActivities(report);
+            var a = HkpvDataGenerator.Instance.CreateActivities(report);
             report.Activities.AddRange(a);
             return a;
         }
