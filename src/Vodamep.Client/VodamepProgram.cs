@@ -67,34 +67,6 @@ namespace Vodamep.Client
                 Console.WriteLine(line);
         }
 
-        private Type CheckType(string typeName)
-        {
-            Type type;
-
-
-            switch (typeName.ToLower())
-            {
-                case "agp":
-                    type = Type.Agp;
-                    break;
-
-                case "hkpv":
-                    type = Type.Hkpv;
-                    break;
-
-                case "mkkp":
-                    type = Type.Mkkp;
-                    break;
-
-                default:
-                    type = Type.Hkpv;
-                    break;
-            }
-
-
-            return type;
-        }
-
         protected void HandleFailure(string message = null)
         {
             throw new Exception(message);

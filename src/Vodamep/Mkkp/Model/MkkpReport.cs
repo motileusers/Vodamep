@@ -9,7 +9,7 @@ namespace Vodamep.Mkkp.Model
 {
     public partial class MkkpReport : IReportBase
     {
-        public string ReportType => "Mkkp";
+        public ReportType ReportType => ReportType.Mkkp;
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
         public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }

@@ -6,7 +6,7 @@ namespace Vodamep.ReportBase
 {
     public interface IReportBase
     {
-        string ReportType { get; }
+        ReportType ReportType { get; }
         DateTime FromD { get; }
         Timestamp From { get; }
         IInstitution Institution { get; }

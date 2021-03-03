@@ -1,0 +1,30 @@
+syntax = "proto3";
+package Vodamep.Tb;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Vodamep.Tb.Model";
+
+message TbReport {   
+    Institution institution = 1;   
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    repeated Person persons = 5;         
+ }
+
+// Einrichtung
+message Institution {
+    string id = 1;
+    string name = 2;    
+}
+
+
+// Personen, die im Zeitraum eine Leistung bezogen haben
+message Person {
+    string id = 1;        
+}
+
+/*
+Dokumentation zu Protobuf: https://developers.google.com/protocol-buffers/
+Online generator z.B. :https://protogen.marcgravell.com/
+*/ 
