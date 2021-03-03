@@ -24,7 +24,7 @@ namespace Vodamep.Client
             int? month = args.Month;
             if (month < 1 || month > 12) month = null;
 
-            var r = AgpDataGenerator.Instance.CreateAgpReport(args.InstitutionId, year, month, args.Persons, args.Staffs, args.AddActivities);
+            var r = MohiDataGenerator.Instance.CreateMohiReport(args.InstitutionId, year, month, args.Persons, args.Staffs, args.AddActivities);
 
             var file = r.WriteToPath("", asJson: args.Json, compressed: !args.NoCompression);
 
