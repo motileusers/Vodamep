@@ -45,10 +45,49 @@
     <None Update="Mkkp\MkkpValidation_Report.feature">
       <Generator></Generator>
     </None>
+    <None Update="StatLp\StatLpValidation_Admission.feature">
+      <LastGenOutput>StatLpValidation_Admission.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Stay.feature">
+      <LastGenOutput>StatLpValidation_Admission.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Person.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StatLpValidation_Person.feature.cs</LastGenOutput>
+    </None>
+    <None Update="StatLp\StatLpValidation_Report.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StatLpValidation_Report.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   
   <ItemGroup>
     <Folder Include="Datasets\Agp\" />
     <Folder Include="Datasets\Mkkp\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="StatLp\StatLpValidation_Person.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StatLpValidation_Person.feature</DependentUpon>
+    </Compile>
+    <Compile Update="StatLp\StatLpValidation_Stay - Copy.feature.cs">
+      <DependentUpon>StatLpValidation_Stay.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="StatLp\StatLpValidation_Admission.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StatLpValidation_Admission.feature</DependentUpon>
+    </Compile>
+    <Compile Update="StatLp\StatLpValidation_Report.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StatLpValidation_Report.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
