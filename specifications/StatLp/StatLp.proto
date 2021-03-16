@@ -105,7 +105,6 @@ enum AttributeType {
   CAREALLOWANCE = 2;                        // 05 Bezieht Pflegegeld, 06 Einstufung nach Pflegegeld Gesetz
   CAREALLOWANCEARGE = 3;                    // 42 Pflegeeinstufung nach Arge
   FINANCE = 4;                              // 43 Finanzierung Selbstzahler/Sozialhilfe
-  FINANCE_PERSONAL_CONTRIBUTIONS = 5;       // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
 }
 
 // 33 Wohnraumsituations- und Ausstattungsgründe
