@@ -281,13 +281,3 @@ enum AdmissionType {
   GERIATRIC_REMOBILIZATION = 7;      // Geriatrische Remobilisation
   CARE_TRANSITION = 8;               // Überleitungspflege
 }
-
-
-Daueraufnahme
-Urlaub von der Pflege
-Probewohnen
-Übergangspflege
-COVID-19 Entlastungspflege
-Krisenintervention
-Geriatrische Remobilisation
-Überleitungspflege
