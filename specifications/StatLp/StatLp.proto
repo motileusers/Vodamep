@@ -22,7 +22,7 @@ message Institution {
     string name = 2;    
 }
 
-// Personen, die im Zeitraum eine Leistung bezogen haben
+// Personen, für die eine Betreuung im Meldungszeitraum durchgeführt wurde
 message Person {
     string id = 1;
     string family_name = 2;
@@ -34,55 +34,68 @@ message Person {
 
 // Aufenthalt in der Einrichtung
 message Stay {
-    google.protobuf.Timestamp from = 1;
-    google.protobuf.Timestamp to = 2;
+
+    string person_id = 1;
+
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
 }
 
 // Aufnahme Daten
 message Admission {
-    AdmissionLocation housing_type_before_admission = 1;        // 11 Wohnsituation vor der Aufnahme
-    string other_housing_type = 2;                              // Sonstige Lebens-/Betreuungssituation
 
-    bool hospital_emergency = 3;                                // 12 Krankenhaus (Akut, vor der Aufnahme)
-    bool aftercare_institution = 4;                             // 13 Nachsorgeeinrichtung (vor der Aufnahme)
-    bool rehab_transitional_care = 5;                           // 14 Geriatrische Remobilisation (vor der Aufnahme)
+    string person_id = 1;
 
-    MainAttendanceRelation main_attendance_relation = 6;        // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
-    MainAttendanceCloseness main_attendance_closeness = 7;      // 22 Räumliche Nähe Hauptbetreuungsperson
+    google.protobuf.Timestamp valid = 2;                        // Gültigkeitsdatum der Aufnahme
 
-    repeated Service services = 8;                              // 24 Inanspruchnahme anderer Dienste
+    AdmissionLocation housing_type_before_admission = 3;        // 11 Wohnsituation vor der Aufnahme
+    string other_housing_type = 4;                              // Sonstige Lebens-/Betreuungssituation
 
-    repeated PersonalChange personal_changes = 9;               // 31 Veränderungen persönliche Situation
-    string personal_change_other = 10;                          // Anderer
+    bool hospital_emergency = 5;                                // 12 Krankenhaus (Akut, vor der Aufnahme)
+    bool aftercare_institution = 6;                             // 13 Nachsorgeeinrichtung (vor der Aufnahme)
+    bool rehab_transitional_care = 7;                           // 14 Geriatrische Remobilisation (vor der Aufnahme)
 
-    repeated SocialChange social_changes = 11;                  // 32 Veränderungen nicht bewältigt, weil
-    string social_change_other = 12;                            // Anderer
+    MainAttendanceRelation main_attendance_relation = 8;        // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
+    MainAttendanceCloseness main_attendance_closeness = 9;      // 22 Räumliche Nähe Hauptbetreuungsperson
 
-    repeated HousingReason housing_reasons = 13;                // 32 Veränderungen nicht bewältigt, weil
-    string housing_reason_other = 14;                           // Anderer
+    repeated Service services = 10;                             // 24 Inanspruchnahme anderer Dienste
 
-    bool finance_personal_contributions = 15;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
+    repeated PersonalChange personal_changes = 11;               // 31 Veränderungen persönliche Situation
+    string personal_change_other = 12;                          // Anderer
 
-    DiagnosisGroup diagnosis_group = 16;                        // Diagnosegruppen (Neu)
+    repeated SocialChange social_changes = 13;                  // 32 Veränderungen nicht bewältigt, weil
+    string social_change_other = 14;                            // Anderer
+
+    repeated HousingReason housing_reasons = 15;                // 32 Veränderungen nicht bewältigt, weil
+    string housing_reason_other = 16;                           // Anderer
+
+    bool finance_personal_contributions = 17;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
+
+    DiagnosisGroup diagnosis_group = 18;                        // Diagnosegruppen (Neu)
 }
 
 // Aufnahme Daten
 message Leaving {
 
-    LeavingReason leaving_reason = 1;                      // Abgang
-    DeathLocation death_location = 2;                      // Sterbefall
-    DischargeLocation discharge_location = 3;              // Entlassung Wohin
-    string discharge_location_other = 4;                   // Sonstige Lebens-/Betreuungsituation
-    DischargeReason discharge_reason = 5;                  // Entlassung Grund
-    string discharge_reason_other = 6;                     // Anderer Grund
+    string person_id = 1;
+
+    LeavingReason leaving_reason = 2;                      // Abgang
+    DeathLocation death_location = 3;                      // Sterbefall
+    DischargeLocation discharge_location = 4;              // Entlassung Wohin
+    string discharge_location_other = 5;                   // Sonstige Lebens-/Betreuungsituation
+    DischargeReason discharge_reason = 6;                  // Entlassung Grund
+    string discharge_reason_other = 7;                     // Anderer Grund
 }
 
 // Merkmale mit Von-Datum, ab wann sie gültig sind
 // Diese Merkmale können sich innerhalb der Meldung ändern
 message Attribute {
-    google.protobuf.Timestamp from = 1;
-    AttributeType attribute_type = 2;
-    string value = 3;                       // Gültiger Wert ist abhängig vom attribute_type
+
+    string person_id = 1;
+
+    google.protobuf.Timestamp from = 2;
+    AttributeType attribute_type = 3;
+    string value = 4;                       // Gültiger Wert ist abhängig vom attribute_type
 }
 
 // Merkmal Typen
