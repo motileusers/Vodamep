@@ -51,13 +51,13 @@ message Admission {
     MainAttendanceRelation main_attendance_relation = 6;   // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
     MainAttendanceCloseness main_attendance_closeness = 7; // 22 Räumliche Nähe Hauptbetreuungsperson
 
-    repeated OtherService services = 10;                   // 24 Inanspruchnahme anderer Dienste
+    repeated Service services = 8;                   // 24 Inanspruchnahme anderer Dienste
 
-    repeated PersonalChange personal_changes = 11;         // 31 Veränderungen persönliche Situation
-    string personal_change_other = 12;                     // Anderer
+    repeated PersonalChange personal_changes = 9;         // 31 Veränderungen persönliche Situation
+    string personal_change_other = 10;                     // Anderer
 
-    repeated SocialChange social_changes = 13;             // 32 Veränderungen nicht bewältigt, weil
-    string social_change_other = 14;                       // Anderer
+    repeated SocialChange social_changes = 11;             // 32 Veränderungen nicht bewältigt, weil
+    string social_change_other = 12;                       // Anderer
 
     repeated HousingReason housing_reasons = 13;           // 32 Veränderungen nicht bewältigt, weil
     string housing_reason_other = 14;                      // Anderer
@@ -65,7 +65,7 @@ message Admission {
     bool finance_personal_contributions = 15;              // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
 
 
-    DiagnosisGroup diagnosis_group = 9;                    // Diagnosegruppen (Neu)
+    DiagnosisGroup diagnosis_group = 16;                    // Diagnosegruppen (Neu)
 }
 
 // Aufnahme Daten
@@ -83,17 +83,18 @@ message Leaving {
 // Diese Merkmale können sich innerhalb der Meldung ändern
 message Attribute {
     google.protobuf.Timestamp from = 1;
-    AttributeType attribute_type = 1;
-    string value = 1;                       // Gültiger Wert ist abhängig vom attribute_type
+    AttributeType attribute_type = 2;
+    string value = 3;                       // Gültiger Wert ist abhängig vom attribute_type
 }
 
 // Merkmal Typen
 enum AttributeType {
   UNDEFINED_ATTRIBUTE = 0;
-  CAREALLOWANCE = 1;
-  CAREALLOWANCEARGE = 2;
-  FINANCE = 3;
-  FINANCE_PERSONAL_CONTRIBUTIONS = 4;
+  ADMISSION_TYPE = 1;                       // 41 Aufnahmeart
+  CAREALLOWANCE = 2;                        // 05 Bezieht Pflegegeld, 06 Einstufung nach Pflegegeld Gesetz
+  CAREALLOWANCEARGE = 3;                    // 42 Pflegeeinstufung nach Arge
+  FINANCE = 4;                              // 43 Finanzierung Selbstzahler/Sozialhilfe
+  FINANCE_PERSONAL_CONTRIBUTIONS = 5;       // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
 }
 
 // 33 Wohnraumsituations- und Ausstattungsgründe
@@ -119,8 +120,7 @@ enum SocialChange {
 // 31 Veränderungen persönliche Situation
 enum PersonalChange {
   UNDEFINED_PERSONALCHANGE = 0;
-  OWN_DESIRE = 1;                            // Eigener Wunsch
-  OWN_DESIRE = 1;                            // Eigener Wunsch
+  OWN_DESIRE_PC = 1;                         // Eigener Wunsch
   LOSS_MAIN_ATTENDANCE = 2;                  // Ausfall der Hauptbetreuungsperson
   INCREASED_ASSITANCE_NEED = 3;              // Erhöhter Betreuungsbedarf
   NURSING_NEED_PHYSICAL = 4;                 // Gestiegener Pflegebedarf körperlich
@@ -130,6 +130,7 @@ enum PersonalChange {
 
 // 24 Inanspruchnahme anderer Dienste
 enum Service {
+  UNDEFINED_SERVICE = 0;
   HOME_CARE = 1;                             // Hauskrankenpflege
   MOBILE_CARE_SERVICE = 2;                   // Mobiler Hilfsdienst
   HOME_MEAL_SERVICE = 3;                     // Mahlzeitendienst
@@ -144,8 +145,8 @@ enum DischargeReason {
   END_SHORT_TERM_CARE = 1;                   // Ende der Kurzzeitpflege
   INCREASED_NEED_FOR_CARE = 2;               // erhöhte Betreuungs/Pflegebedürftigkeit
   LOWER_NEED_FOR_CARE = 3;                   // geringere Betreuungs/Pflegebedürftigkeit
-  OWN DESIRE = 4;                            // eigener Wunsch
-  OTHER = 5;                                 // sonstige
+  OWN_DESIRE = 4;                            // eigener Wunsch
+  OTHER_DR = 5;                              // sonstige
 }
 
 // 53 Entlassung wohin
@@ -231,7 +232,7 @@ enum Gender {
 
 // Finanzierung
 enum Finance {
-  UNDEFINED_GENDER = 0;
+  UNDEFINED_FINANCE = 0;
   SELF = 1;                       // Selbst/Angehörige 100 %
   SOCIAL_ASSISTANCE = 2;          // Mindestsicherung
   SOCIAL_ASSISTANCE_CLAIM = 3;    // Mindestsicherungsantrag in Bearbeitung
@@ -258,15 +259,14 @@ enum CareAllowance {
 // Pflegestufe ARGE
 // Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
 enum CareAllowanceArge {
-  UNDEFINED_ALLOWANCE = 0;
-  L1 = 1;
-  L1 = 2;
-  L2 = 3;
-  L3 = 4;
-  L4 = 5;
-  L5 = 6;
-  L6 = 7;
-  L7 = 8;	
+  UNDEFINED_ALLOWANCE_AR = 0;
+  L1_AR = 1;
+  L2_AR = 2;
+  L3_AR = 3;
+  L4_AR = 4;
+  L5_AR = 5;
+  L6_AR = 6;
+  L7_AR = 7;	
 }
 
 
