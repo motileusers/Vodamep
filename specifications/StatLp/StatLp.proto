@@ -36,7 +36,6 @@ message Person {
 message Stay {
     google.protobuf.Timestamp from = 1;
     google.protobuf.Timestamp to = 2;
-    AdmissionType admission_type = 3;                      // 41 Aufnahmeart
 }
 
 // Aufnahme Daten
@@ -273,11 +272,22 @@ enum CareAllowanceArge {
 // 41 Aufnahmeart
 enum AdmissionType {
   UNDEFINED_ADMISSIONTYPE = 0;
-  CONTINUOUS = 1;                    // Urlaub von der Pflege
-  HOLIDAY = 2;                       // Probewohnen
-  SURVEY = 3;                        // Übergangspflege
-  COVID19_RESPITE = 4;               // COVID-19 Entlastungspflege
-  CRISIS_INTERVENTION = 5;           // Krisenintervention
-  GERIATRIC_REMOBILIZATION = 6;      // Geriatrische Remobilisation
-  CARE_TRANSITION = 7;               // Überleitungspflege
+  CONTINUOUS = 1;                    // Daueraufnahme
+  HOLIDAY = 2;                       // Urlaub von der Pflege
+  SURVEY = 3;                        // Probewohnen
+  TRANSITIONAL = 4;                  // Übergangspflege
+  COVID19_RESPITE = 5;               // COVID-19 Entlastungspflege
+  CRISIS_INTERVENTION = 6;           // Krisenintervention
+  GERIATRIC_REMOBILIZATION = 7;      // Geriatrische Remobilisation
+  CARE_TRANSITION = 8;               // Überleitungspflege
 }
+
+
+Daueraufnahme
+Urlaub von der Pflege
+Probewohnen
+Übergangspflege
+COVID-19 Entlastungspflege
+Krisenintervention
+Geriatrische Remobilisation
+Überleitungspflege
