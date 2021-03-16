@@ -41,30 +41,29 @@ message Stay {
 // Aufnahme Daten
 message Admission {
     AdmissionLocation housing_type_before_admission = 1;        // 11 Wohnsituation vor der Aufnahme
-    string other_housing_type = 2;                         // Sonstige Lebens-/Betreuungssituation
+    string other_housing_type = 2;                              // Sonstige Lebens-/Betreuungssituation
 
-    bool hospital_emergency = 3;                           // 12 Krankenhaus (Akut, vor der Aufnahme)
-    bool aftercare_institution = 4;                        // 13 Nachsorgeeinrichtung (vor der Aufnahme)
-    bool rehab_transitional_care = 5;                      // 14 Geriatrische Remobilisation (vor der Aufnahme)
+    bool hospital_emergency = 3;                                // 12 Krankenhaus (Akut, vor der Aufnahme)
+    bool aftercare_institution = 4;                             // 13 Nachsorgeeinrichtung (vor der Aufnahme)
+    bool rehab_transitional_care = 5;                           // 14 Geriatrische Remobilisation (vor der Aufnahme)
 
-    MainAttendanceRelation main_attendance_relation = 6;   // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
-    MainAttendanceCloseness main_attendance_closeness = 7; // 22 Räumliche Nähe Hauptbetreuungsperson
+    MainAttendanceRelation main_attendance_relation = 6;        // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
+    MainAttendanceCloseness main_attendance_closeness = 7;      // 22 Räumliche Nähe Hauptbetreuungsperson
 
-    repeated Service services = 8;                   // 24 Inanspruchnahme anderer Dienste
+    repeated Service services = 8;                              // 24 Inanspruchnahme anderer Dienste
 
-    repeated PersonalChange personal_changes = 9;         // 31 Veränderungen persönliche Situation
-    string personal_change_other = 10;                     // Anderer
+    repeated PersonalChange personal_changes = 9;               // 31 Veränderungen persönliche Situation
+    string personal_change_other = 10;                          // Anderer
 
-    repeated SocialChange social_changes = 11;             // 32 Veränderungen nicht bewältigt, weil
-    string social_change_other = 12;                       // Anderer
+    repeated SocialChange social_changes = 11;                  // 32 Veränderungen nicht bewältigt, weil
+    string social_change_other = 12;                            // Anderer
 
-    repeated HousingReason housing_reasons = 13;           // 32 Veränderungen nicht bewältigt, weil
-    string housing_reason_other = 14;                      // Anderer
+    repeated HousingReason housing_reasons = 13;                // 32 Veränderungen nicht bewältigt, weil
+    string housing_reason_other = 14;                           // Anderer
 
-    bool finance_personal_contributions = 15;              // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
+    bool finance_personal_contributions = 15;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
 
-
-    DiagnosisGroup diagnosis_group = 16;                    // Diagnosegruppen (Neu)
+    DiagnosisGroup diagnosis_group = 16;                        // Diagnosegruppen (Neu)
 }
 
 // Aufnahme Daten
