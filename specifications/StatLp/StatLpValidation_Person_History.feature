@@ -124,6 +124,30 @@ Szenario: Fehlende Finanzierung vor der Aufnahme
     Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
     Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Finanzierung gesendet'
 
+Szenario: Falsches Gültigkeitsdatum einer Aufnahme
+    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.1999
+    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
+    Dann enthält das Validierungsergebnis den Fehler 'Das Gültigkeitsdatum der Aufnahme von Klient xx muss im Meldungszeitraum liegen'
+
+
+# Entlassung
+
+Szenario: Falsches Gültigkeitsdatum einer Entlassung
+    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
+    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
+    Angenommen Gesendete Meldung 1 enthält eine Entlassung von Person 1 am 31.12.1999
+    Dann enthält das Validierungsergebnis den Fehler 'Das Gültigkeitsdatum der Entlassung von Klient xx muss im Meldungszeitraum liegen'
+
+
 
 # Gleiche Attribute
 

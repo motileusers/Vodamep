@@ -41,6 +41,14 @@ Beispiele:
     | to       | Bis         |
 
 
+Szenariogrundriss: Das Datum einer Entlassung in einer Meldung muss im Gültigkeitsbereich der Meldungen liegen
+    Angenommen die Datums-Eigenschaft '<Name>' von 'StatLpReport' hat eine Uhrzeit gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
+Beispiele:
+    | Name     | Bezeichnung |
+    | from     | Von         |
+    | to       | Bis         |
+
 
 #todo
 #persons ohne einträge ist erlaubt --> leermeldung

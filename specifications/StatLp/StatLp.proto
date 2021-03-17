@@ -29,7 +29,7 @@ message Person {
     string given_name = 3;
     google.protobuf.Timestamp birthday = 4;
     Gender gender = 5;
-    string country = 6;
+    string country = 6;                                        // Land aus german-iso-3166.csv
 }
 
 // Aufenthalt in der Einrichtung
@@ -46,32 +46,35 @@ message Admission {
 
     string person_id = 1;
 
-    google.protobuf.Timestamp valid = 2;                        // Gültigkeitsdatum der Aufnahme
+    string last_postcode = 2;				                    // postcode und city müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
+    string last_city = 3;
 
-    AdmissionLocation housing_type_before_admission = 3;        // 11 Wohnsituation vor der Aufnahme
-    string other_housing_type = 4;                              // Sonstige Lebens-/Betreuungssituation
+    google.protobuf.Timestamp valid = 4;                        // Gültigkeitsdatum der Aufnahme
 
-    bool hospital_emergency = 5;                                // 12 Krankenhaus (Akut, vor der Aufnahme)
-    bool aftercare_institution = 6;                             // 13 Nachsorgeeinrichtung (vor der Aufnahme)
-    bool rehab_transitional_care = 7;                           // 14 Geriatrische Remobilisation (vor der Aufnahme)
+    AdmissionLocation housing_type_before_admission = 5;        // 11 Wohnsituation vor der Aufnahme
+    string other_housing_type = 6;                              // Sonstige Lebens-/Betreuungssituation
 
-    MainAttendanceRelation main_attendance_relation = 8;        // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
-    MainAttendanceCloseness main_attendance_closeness = 9;      // 22 Räumliche Nähe Hauptbetreuungsperson
+    bool hospital_emergency = 7;                                // 12 Krankenhaus (Akut, vor der Aufnahme)
+    bool aftercare_institution = 8;                             // 13 Nachsorgeeinrichtung (vor der Aufnahme)
+    bool rehab_transitional_care = 9;                           // 14 Geriatrische Remobilisation (vor der Aufnahme)
 
-    repeated Service services = 10;                             // 24 Inanspruchnahme anderer Dienste
+    MainAttendanceRelation main_attendance_relation = 10;       // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
+    MainAttendanceCloseness main_attendance_closeness = 11;     // 22 Räumliche Nähe Hauptbetreuungsperson
 
-    repeated PersonalChange personal_changes = 11;               // 31 Veränderungen persönliche Situation
-    string personal_change_other = 12;                          // Anderer
+    repeated Service services = 12;                             // 24 Inanspruchnahme anderer Dienste
 
-    repeated SocialChange social_changes = 13;                  // 32 Veränderungen nicht bewältigt, weil
-    string social_change_other = 14;                            // Anderer
+    repeated PersonalChange personal_changes = 13;              // 31 Veränderungen persönliche Situation
+    string personal_change_other = 14;                          // Anderer
 
-    repeated HousingReason housing_reasons = 15;                // 32 Veränderungen nicht bewältigt, weil
-    string housing_reason_other = 16;                           // Anderer
+    repeated SocialChange social_changes = 15;                  // 32 Veränderungen nicht bewältigt, weil
+    string social_change_other = 16;                            // Anderer
 
-    bool finance_personal_contributions = 17;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
+    repeated HousingReason housing_reasons = 17;                // 33 Wohnraumsituations- und Ausstattungsgründe
+    string housing_reason_other = 18;                           // Anderer
 
-    DiagnosisGroup diagnosis_group = 18;                        // Diagnosegruppen (Neu)
+    bool finance_personal_contributions = 19;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
+
+    DiagnosisGroup diagnosis_group = 20;                        // Diagnosegruppen (Neu)
 }
 
 // Aufnahme Daten
@@ -82,7 +85,7 @@ message Leaving {
     LeavingReason leaving_reason = 2;                      // Abgang
     DeathLocation death_location = 3;                      // Sterbefall
     DischargeLocation discharge_location = 4;              // Entlassung Wohin
-    string discharge_location_other = 5;                   // Sonstige Lebens-/Betreuungsituation
+    string discharge_location_other = 5;                   // Sonstige Lebens-/Betreuungssituation
     DischargeReason discharge_reason = 6;                  // Entlassung Grund
     string discharge_reason_other = 7;                     // Anderer Grund
 }
@@ -217,10 +220,9 @@ enum AdmissionLocation {
   AD_AMBULATORY_SUPERVISED_FLAT = 3;             // ambulant betreute (Senioren/Wohnung)
   AD_SUPERVISED_FLAT = 4;                        // betreute Wohngemeinschaften
   AD_NURSING_HOME = 5;                           // Pflegeheim nach Pflegeheimgesetz
-  AD_LKH_RANKWEIL = 6;                           // LKH Rankweil (Langzeitpflege)
-  AD_OTHER_ATTENDED_HOUSING = 7;                 // Sonstige betreute Wohnform
-  AD_OTHER = 8;                                  // Sonstige
-  AD_NO_DISCHARGELOCATION = 9;                   // keine Angabe
+  AD_OTHER_ATTENDED_HOUSING = 6;                 // Sonstige betreute Wohnform
+  AD_OTHER = 7;                                  // Sonstige
+  AD_NO_DISCHARGELOCATION = 8;                   // keine Angabe
 }
 
 // Diagnosegruppen
@@ -285,10 +287,8 @@ enum AdmissionType {
   UNDEFINED_ADMISSIONTYPE = 0;
   CONTINUOUS = 1;                    // Daueraufnahme
   HOLIDAY = 2;                       // Urlaub von der Pflege
-  SURVEY = 3;                        // Probewohnen
-  TRANSITIONAL = 4;                  // Übergangspflege
-  COVID19_RESPITE = 5;               // COVID-19 Entlastungspflege
-  CRISIS_INTERVENTION = 6;           // Krisenintervention
-  GERIATRIC_REMOBILIZATION = 7;      // Geriatrische Remobilisation
-  CARE_TRANSITION = 8;               // Überleitungspflege
+  TRANSITIONAL = 3;                  // Übergangspflege
+  COVID19_RESPITE = 4;               // COVID-19 Entlastungspflege
+  GERIATRIC_REMOBILIZATION = 5;      // Geriatrische Remobilisation
+  CARE_TRANSITION = 6;               // Überleitungspflege
 }
