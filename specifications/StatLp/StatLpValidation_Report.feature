@@ -41,6 +41,7 @@ Beispiele:
     | to       | Bis         |
 
 
+
 Szenariogrundriss: Das Datum einer Entlassung in einer Meldung muss im Gültigkeitsbereich der Meldungen liegen
     Angenommen die Datums-Eigenschaft '<Name>' von 'StatLpReport' hat eine Uhrzeit gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
@@ -50,9 +51,17 @@ Beispiele:
     | to       | Bis         |
 
 
-#todo
-#persons ohne einträge ist erlaubt --> leermeldung
-#stays ohne einträge ist erlaubt --> leermeldung
-#admissions ohne einträge ist erlaubt --> leermeldung oder aufnahme in ein vormeldung
-#leavings ohne einträge ist erlaubt --> leermeldung oder keine entlassung für die person
+
+Szenariogrundriss: Listen sind leer
+    Angenommen die Liste von '<Name>' ist leer 
+    Dann enthält das Validierungsergebnis keine Fehler
+    Und enthält das Validierungsergebnis keine Warnungen
+Beispiele:
+    | Name          | 
+    | Admission     |
+    | Leaving       |  
+    | Person        |  
+    | Stay          |  
+
+#todo was ist attributes - ohne einträge ist as aucher erlaubt??
     

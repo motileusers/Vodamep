@@ -50,8 +50,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Admission.feature">
-      <LastGenOutput>StatLpValidation_Admission.feature.cs</LastGenOutput>
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Attributes.feature">
       <LastGenOutput>StatLpValidation_Attributes.feature.cs</LastGenOutput>
@@ -66,16 +65,14 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Stay.feature">
-      <LastGenOutput>StatLpValidation_Admission.feature.cs</LastGenOutput>
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Person.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>StatLpValidation_Person.feature.cs</LastGenOutput>
     </None>
     <None Update="StatLp\StatLpValidation_Report.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>StatLpValidation_Report.feature.cs</LastGenOutput>
+      <Generator></Generator>
     </None>
   </ItemGroup>
   

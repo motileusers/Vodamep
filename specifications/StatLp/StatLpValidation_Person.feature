@@ -1,18 +1,31 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Personen einer Datenmeldung
 
-Szenario: Das Geburtsdatum darf nicht in der Zukunft liegen.
-    Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '2058-04-30' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Geburtsdatum' darf nicht in der Zukunft liegen.'
+#Szenario: Das Geburtsdatum darf nicht in der Zukunft liegen.
+#    Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '2058-04-30' gesetzt
+#    Dann enthält das Validierungsergebnis den Fehler ''Geburtsdatum' darf nicht in der Zukunft liegen.'
+#
+##todo: >30 Jahre <heute
+#Szenario: Das Geburtsdatum darf nicht vor 1900 liegen.
+#    Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '1899-12-31' gesetzt
+#    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Geburtsdatum' muss grösser oder gleich .*'
+#
+#Szenario: PersonId ist nicht eindeutig.
+#    Angenommen der Id einer Person ist nicht eindeutig
+#    Dann enthält das Validierungsergebnis den Fehler 'Der Id ist nicht eindeutig.'
+#
+#Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
+#    Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
+#    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
+#Beispiele:
+#    | Name                  | Bezeichnung                                   |
+#    | family_name           | Familienname                                  |
+#    | given_name            | Vorname                                       |
+#    | birthday              | Geburtsdatum                                  |
+#    | gender                | Geschlecht                                    |    
+#    | country               | Land                                          |
 
-#todo: >30 Jahre <heute
-Szenario: Das Geburtsdatum darf nicht vor 1900 liegen.
-    Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '1899-12-31' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Geburtsdatum' muss grösser oder gleich .*'
 
-Szenario: PersonId ist nicht eindeutig.
-    Angenommen der Id einer Person ist nicht eindeutig
-    Dann enthält das Validierungsergebnis den Fehler 'Der Id ist nicht eindeutig.'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt

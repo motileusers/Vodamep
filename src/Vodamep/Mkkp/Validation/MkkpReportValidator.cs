@@ -45,7 +45,7 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.FromD)
                 .Must(x => x.Day == 1)
                 .Unless(x => x.From == null)
-                .WithMessage(Validationmessages.FirstDateInMOnth);
+                .WithMessage(Validationmessages.FirstDateInMonth);
 
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
 
