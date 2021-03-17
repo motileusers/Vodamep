@@ -40,11 +40,16 @@ Beispiele:
     | from     | Von         |
     | to       | Bis         |
 
+Szenariogrundriss: Listen sind leer
+    Angenommen die Liste von '<Name>' ist leer 
+    Dann enthält das Validierungsergebnis keine Fehler
+    Und enthält das Validierungsergebnis keine Warnungen
+Beispiele:
+    | Name          | 
+    | Admission     |
+    | Leaving       |  
+    | Person        |  
+    | Stay          |  
 
-
-#todo
-#persons ohne einträge ist erlaubt --> leermeldung
-#stays ohne einträge ist erlaubt --> leermeldung
-#admissions ohne einträge ist erlaubt --> leermeldung oder aufnahme in ein vormeldung
-#leavings ohne einträge ist erlaubt --> leermeldung oder keine entlassung für die person
+#todo was ist attributes - ohne einträge ist as aucher erlaubt??
     

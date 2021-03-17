@@ -32,7 +32,7 @@ namespace Vodamep.ValidationBase
         public static string DateMustnotHaveTime => "'{PropertyName}' darf keine Uhrzeit beinhalten.";
         public static string OneMonth => "Die Meldung muss genau einen Monat beinhalten.";
         public static string LastDateInMonth => "'{PropertyName}' muss der letzte Tag des Monats sein.";
-        public static string FirstDateInMOnth => "'{PropertyName}' muss der erste Tag des Monats sein.";
+        public static string FirstDateInMonth => "'{PropertyName}' muss der erste Tag des Monats sein.";
         public static string InvalidCode => "Für '{PropertyName}' ist '{PropertyValue}' kein gültiger Code.";
         public static string InvalidPostCode_City => "'{PropertyValue}' ist kein gültiger Ort.";
         public static string ReferrerIsOtherRefererreThenOtherReferrerMustBeSet => "Wenn der Zuweiser ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.";
