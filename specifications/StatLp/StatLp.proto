@@ -166,89 +166,88 @@ enum DischargeReason {
 // 53 Entlassung wohin
 enum DischargeLocation {
   UNDEFINED_DISCHARGELOCATION = 0;
-  HOME_LIVING_ALONE = 1;                      // nach Hause lebend alleine
-  HOME_LIVING_NOT_ALONE = 2;                  // nach Hause lebend nicht alleine
-  AMBULATORY_SUPERVISED_FLAT = 3;             // ambulant betreute (Senioren/Wohnung)
-  SUPERVISED_FLAT = 4;                        // betreute Wohngemeinschaften
-  NURSING_HOME = 5;                           // Pflegeheim nach Pflegeheimgesetz
-  LKH_RANKWEIL = 6;                           // LKH Rankweil (Langzeitpflege)
-  OTHER_ATTENDED_HOUSING = 7;                 // Sonstige betreute Wohnform
-  OTHER = 8;                                  // Sonstige
-  NO_DISCHARGELOCATION = 9;                   // keine Angabe
+  HOME_LIVING_ALONE = 1;                       // nach Hause lebend alleine
+  HOME_LIVING_NOT_ALONE = 2;                   // nach Hause lebend nicht alleine
+  AMBULATORY_SUPERVISED_FLAT = 3;              // ambulant betreute (Senioren/Wohnung)
+  SUPERVISED_FLAT = 4;                         // betreute Wohngemeinschaften
+  NURSING_HOME = 5;                            // Pflegeheim nach Pflegeheimgesetz
+  OTHER_ATTENDED_HOUSING = 6;                  // Sonstige betreute Wohnform
+  OTHER_DL = 7;                                // Sonstige
+  NO_DISCHARGELOCATION = 8;                    // keine Angabe
 }
 
 // 51 Abgang Art
 enum LeavingReason {
-  UNDEFINED_LEAVINGREASON = 0;
-  DECEASED = 1;                               // verstorben
-  DISCHARGE = 2;                              // Entlassung
+  UNDEFINED_LR = 0;
+  DECEASED_LR = 1;                             // verstorben
+  DISCHARGE_LR = 2;                            // Entlassung
 }
 
 // 52 Sterbefall
 enum DeathLocation {
-  UNDEFINED_DEATHLOCATION = 0;
-  DEATH_NURSING_HOME = 1;                     // Pflegeheim
-  DEATH_HOSPITAL = 2;                         // Krankenhaus
+  UNDEFINED_DL = 0;
+  DEATH_NURSING_HOME_DL = 1;                   // Pflegeheim
+  DEATH_HOSPITAL_DL = 2;                       // Krankenhaus
 }
 
 // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
 enum MainAttendanceRelation {
-  UNDEFINED_MAINATTENDANCERELATION = 0;
-  CHILD = 1;                                // Kind/Schwiegerkind          
-  RELATED_PERSON = 2;                       // andere verwandte Person     
-  UNRELATED_PERSON = 3;                     // nicht verwandte Person      
-  NO_MAIN_CARER = 4;                        // keine Hauptbetreuungsperson 
-  NO_MAINATTENDANCERELATION = 5;            // keine Angabe
+  UNDEFINED_MR = 0;
+  CHILD_MR = 1;                                // Kind/Schwiegerkind          
+  RELATED_PERSON_MR = 2;                       // andere verwandte Person     
+  UNRELATED_PERSON_MR = 3;                     // nicht verwandte Person      
+  NO_MAIN_CARER_MR = 4;                        // keine Hauptbetreuungsperson 
+  NO_MAINATTENDANCERELATION_MR = 5;            // keine Angabe
 }
 
 // 22 Räumliche Nähe Hauptbetreuungsperson
 enum MainAttendanceCloseness {
-  UNDEFINED_MAINATTENDANCECLOSENESS = 0;
-  SAME_FLAT = 1;                          // in der gleichen Wohnung
-  SAME_HOUSE_OTHER_FLAT = 2;              // im gleichen Haus aber in einer anderen Wohnung
-  UP_TO_30_MIN = 3;                       // bis zu 30 Minuten
-  OVER_TO_30_MIN = 4;                     // über 30 Minuten
-  NO_MAINATTENDANCE = 5;                  // keine Hauptbetreuungsperson
-  NO_MAINATTENDANCECLOSENESS = 6;         // keine Angabe
+  UNDEFINED_MC = 0;
+  SAME_FLAT_MC = 1;                            // in der gleichen Wohnung
+  SAME_HOUSE_OTHER_FLAT_MC = 2;                // im gleichen Haus aber in einer anderen Wohnung
+  UP_TO_30_MIN_MC = 3;                         // bis zu 30 Minuten
+  OVER_TO_30_MIN_MC = 4;                       // über 30 Minuten
+  NO_MAINATTENDANCE_MC = 5;                    // keine Hauptbetreuungsperson
+  NO_MAINATTENDANCECLOSENESS_MC = 6;           // keine Angabe
 }
 
 
 // Wohnform vor der Aufnahme
 enum AdmissionLocation {
-  UNDEFINED_ADMISSIONLOCATION = 0;
-  AD_HOME_LIVING_ALONE = 1;                      // zu Hause lebend alleine
-  AD_HOME_LIVING_NOT_ALONE = 2;                  // zu Hause lebend nicht alleine
-  AD_AMBULATORY_SUPERVISED_FLAT = 3;             // ambulant betreute (Senioren/Wohnung)
-  AD_SUPERVISED_FLAT = 4;                        // betreute Wohngemeinschaften
-  AD_NURSING_HOME = 5;                           // Pflegeheim nach Pflegeheimgesetz
-  AD_OTHER_ATTENDED_HOUSING = 6;                 // Sonstige betreute Wohnform
-  AD_OTHER = 7;                                  // Sonstige
-  AD_NO_DISCHARGELOCATION = 8;                   // keine Angabe
+  UNDEFINED_AL = 0;
+  HOME_LIVING_ALONE_AL = 1;                    // zu Hause lebend alleine
+  HOME_LIVING_NOT_ALONE_AL = 2;                // zu Hause lebend nicht alleine
+  AMBULATORY_SUPERVISED_FLAT_AL = 3;           // ambulant betreute (Senioren/Wohnung)
+  SUPERVISED_FLAT_AL = 4;                      // betreute Wohngemeinschaften
+  NURSING_HOME_AL = 5;                         // Pflegeheim nach Pflegeheimgesetz
+  OTHER_ATTENDED_HOUSING_AL = 6;               // Sonstige betreute Wohnform
+  OTHER_AL = 7;                                // Sonstige
+  NO_DISCHARGELOCATION_AL = 8;                 // keine Angabe
 }
 
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv
 enum DiagnosisGroup { 
-    UNDEFINED_DIAGNOSIS_GROUP = 0;
+    UNDEFINED_DG = 0;
 }
 
 // Geschlecht, nach neuer Definition
 enum Gender {
-  UNDEFINED_GENDER = 0;
-  MALE = 1;
-  FEMALE = 2;
-  DIVERS = 3;
-  INTER = 4;
-  OPEN = 5;
+  UNDEFINED_GE = 0;
+  MALE_GE = 1;
+  FEMALE_GE = 2;
+  DIVERS_GE = 3;
+  INTER_GE = 4;
+  OPEN_GE = 5;
 }
 
 
 // Finanzierung
 enum Finance {
-  UNDEFINED_FINANCE = 0;
-  SELF = 1;                       // Selbst/Angehörige 100 %
-  SOCIAL_ASSISTANCE = 2;          // Mindestsicherung
-  SOCIAL_ASSISTANCE_CLAIM = 3;    // Mindestsicherungsantrag in Bearbeitung
+  UNDEFINED_FI = 0;
+  SELF_FI = 1;                       // Selbst/Angehörige 100 %
+  SOCIAL_ASSISTANCE_FI = 2;          // Mindestsicherung
+  SOCIAL_ASSISTANCE_CLAIM_FI = 3;    // Mindestsicherungsantrag in Bearbeitung
 }
 
 
@@ -286,11 +285,11 @@ enum CareAllowanceArge {
 
 // 41 Aufnahmeart
 enum AdmissionType {
-  UNDEFINED_ADMISSIONTYPE = 0;
-  CONTINUOUS = 1;                    // Daueraufnahme
-  HOLIDAY = 2;                       // Urlaub von der Pflege
-  TRANSITIONAL = 3;                  // Übergangspflege
-  COVID19_RESPITE = 4;               // COVID-19 Entlastungspflege
-  GERIATRIC_REMOBILIZATION = 5;      // Geriatrische Remobilisation
-  CARE_TRANSITION = 6;               // Überleitungspflege
+  UNDEFINED_AT = 0;
+  CONTINUOUS_AT = 1;                    // Daueraufnahme
+  HOLIDAY_AT = 2;                       // Urlaub von der Pflege
+  TRANSITIONAL_AT = 3;                  // Übergangspflege
+  COVID19_RESPITE_AT = 4;               // COVID-19 Entlastungspflege
+  GERIATRIC_REMOBILIZATION_AT = 5;      // Geriatrische Remobilisation
+  CARE_TRANSITION_AT = 6;               // Überleitungspflege
 }

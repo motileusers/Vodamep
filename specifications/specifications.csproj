@@ -46,19 +46,16 @@
       <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Leaving.feature">
-      <LastGenOutput>StatLpValidation_Admission.feature.cs</LastGenOutput>
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Admission.feature">
       <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Attributes.feature">
-      <LastGenOutput>StatLpValidation_Attributes.feature.cs</LastGenOutput>
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Person_History.feature">
-      <LastGenOutput>StatLpValidation_Person_History.feature.cs</LastGenOutput>
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Institution.feature">
       <LastGenOutput>StatLpValidation_Report.feature.cs</LastGenOutput>
@@ -68,8 +65,7 @@
       <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Person.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>StatLpValidation_Person.feature.cs</LastGenOutput>
+      <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Report.feature">
       <Generator></Generator>
@@ -82,25 +78,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Update="StatLp\StatLpValidation_Attributes.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StatLpValidation_Attributes.feature</DependentUpon>
-    </Compile>
-    <Compile Update="StatLp\StatLpValidation_Person.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StatLpValidation_Person.feature</DependentUpon>
-    </Compile>
     <Compile Update="StatLp\StatLpValidation_Admission.feature.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>StatLpValidation_Admission.feature</DependentUpon>
-    </Compile>
-    <Compile Update="StatLp\StatLpValidation_Person_History.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StatLpValidation_Person_History.feature</DependentUpon>
     </Compile>
     <Compile Update="StatLp\StatLpValidation_Report.feature.cs">
       <DesignTime>True</DesignTime>

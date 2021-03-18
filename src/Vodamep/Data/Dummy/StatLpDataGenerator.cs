@@ -62,7 +62,7 @@ namespace Vodamep.Data.Dummy
                 FamilyName = _familynames[_rand.Next(_familynames.Length)],
                 GivenName = _names[_rand.Next(_names.Length)],
                 Country = CountryCodeProvider.Instance.Values.Values.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
-                Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
+                Gender = _rand.Next(2) == 1 ? Gender.FemaleGe : Gender.MaleGe,
             };
 
             person.BirthdayD  = new DateTime(1920, 01, 01).AddDays(_rand.Next(20000));
@@ -77,7 +77,7 @@ namespace Vodamep.Data.Dummy
             {
                 Id = index.ToString(),
               
-                Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
+                Gender = _rand.Next(2) == 1 ? Gender.FemaleGe : Gender.MaleGe,
 
 
             };
