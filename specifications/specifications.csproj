@@ -57,7 +57,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Person_History.feature">
-      <LastGenOutput>StatLpValidation_Person.feature.cs</LastGenOutput>
+      <LastGenOutput>StatLpValidation_Person_History.feature.cs</LastGenOutput>
       <Generator>SpecFlowSingleFileGenerator</Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Institution.feature">
@@ -96,6 +96,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>StatLpValidation_Admission.feature</DependentUpon>
+    </Compile>
+    <Compile Update="StatLp\StatLpValidation_Person_History.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StatLpValidation_Person_History.feature</DependentUpon>
     </Compile>
     <Compile Update="StatLp\StatLpValidation_Report.feature.cs">
       <DesignTime>True</DesignTime>
