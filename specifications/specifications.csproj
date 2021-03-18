@@ -82,25 +82,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Update="StatLp\StatLpValidation_Attributes.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StatLpValidation_Attributes.feature</DependentUpon>
-    </Compile>
-    <Compile Update="StatLp\StatLpValidation_Person.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StatLpValidation_Person.feature</DependentUpon>
-    </Compile>
     <Compile Update="StatLp\StatLpValidation_Admission.feature.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>StatLpValidation_Admission.feature</DependentUpon>
-    </Compile>
-    <Compile Update="StatLp\StatLpValidation_Person_History.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StatLpValidation_Person_History.feature</DependentUpon>
     </Compile>
     <Compile Update="StatLp\StatLpValidation_Report.feature.cs">
       <DesignTime>True</DesignTime>
