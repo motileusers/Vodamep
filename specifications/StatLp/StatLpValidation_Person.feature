@@ -5,9 +5,9 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen einer Datenmeldung
 #    Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '2058-04-30' gesetzt
 #    Dann enthält das Validierungsergebnis den Fehler ''Geburtsdatum' darf nicht in der Zukunft liegen.'
 #
-##todo: >30 Jahre <heute
-#Szenario: Das Geburtsdatum darf nicht vor 1900 liegen.
-#    Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '1899-12-31' gesetzt
+##todo: > 1890, 1, 1 <heute
+#Szenario: Das Geburtsdatum darf nicht vor 1890 liegen.
+#    Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '1889-12-31' gesetzt
 #    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Geburtsdatum' muss grösser oder gleich .*'
 #
 #Szenario: PersonId ist nicht eindeutig.

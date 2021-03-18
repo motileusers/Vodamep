@@ -69,7 +69,7 @@ message Admission {
     repeated SocialChange social_changes = 15;                  // 32 Veränderungen nicht bewältigt, weil
     string social_change_other = 16;                            // Anderer
 
-    repeated HousingReason housing_reasons = 17;                // 33 Wohnraumsituations- und Ausstattungsgründe
+    HousingReason housing_reason = 17;                          // 33 Wohnraumsituations- und Ausstattungsgründe
     string housing_reason_other = 18;                           // Anderer
 
     bool finance_personal_contributions = 19;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
@@ -118,6 +118,7 @@ enum HousingReason {
   BARRIERS_HABITATION = 3;                  // Barrieren, Hindernisse Wohnung
   BATHROOM_NOT_HANDICAPPED_ACCESSIBLE = 4;  // Bad WC nicht behindertengerecht
   HEATING_HABITATION = 5;                   // Beheizung der Wohnung
+  OTHER_HR = 6;                             // Anderer
 }
 
 // 32 Veränderungen nicht bewältigt, weil
@@ -272,13 +273,14 @@ enum CareAllowance {
 // Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
 enum CareAllowanceArge {
   UNDEFINED_ALLOWANCE_AR = 0;
-  L1_AR = 1;
-  L2_AR = 2;
-  L3_AR = 3;
-  L4_AR = 4;
-  L5_AR = 5;
-  L6_AR = 6;
-  L7_AR = 7;	
+  L0_AR = 1;
+  L1_AR = 2;
+  L2_AR = 3;
+  L3_AR = 4;
+  L4_AR = 5;
+  L5_AR = 6;
+  L6_AR = 7;
+  L7_AR = 8;	
 }
 
 

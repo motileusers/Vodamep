@@ -11,7 +11,8 @@ Beispiele:
     | Name                          | Bezeichnung                                    |
     | housing_type_before_admission | Wohnsituation vor der Aufnahme                 |
     | main_attendance_relation      | Verwandtschaftsverhältnis Hauptbetreuungspers. |
-    | main_attendance_closeness     | Räumliche Nähe Hauptbetreuungsperson           | 
+    | main_attendance_closeness     | Räumliche Nähe Hauptbetreuungsperson           |
+    | housing_reason                | Wohnraumsituations- und Ausstattungsgründe     | 
 
 
 # Textfelder: falsche Zeichen
@@ -136,7 +137,7 @@ Beispiele:
 
 
 
-# Abhängigkeit Auswahlfeld + Textfeld
+# Abhängigkeit Listen + Textfeld
 Szenariogrundriss: Auswahlfelder enthalten Werte, die einen Texteintrag erfordern
     Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>' und das Feld '<Textfeldname>' enthält den Wert '<Textfeldwert>'
     Dann enthält das Validierungsergebnis den Fehler 'Bei '<Bezeichnung>' im Textfeld bitte einen Wert angegeben.
@@ -161,6 +162,14 @@ Beispiele:
     | Name                          | Bezeichnung                    | Wert                 | Textfeldname       | Textfeldwert |
     | housing_type_before_admission | Wohnsituation vor der Aufnahme | AD_HOME_LIVING_ALONE | other_housing_type | asdf         | 
 
+
+# Abhängigkeit Auswahlfeld + Textfeld
+Szenariogrundriss: Auswahlfeld enthält einen Wert, der einen Texteintrag erfordern
+    Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>' und das Feld '<Textfeldname>' enthält den Wert '<Textfeldwert>'
+    Dann enthält das Validierungsergebnis den Fehler 'Bei '<Bezeichnung>' im Textfeld bitte einen Wert angegeben.
+Beispiele:
+    | Name           | Bezeichnung                                | Wert     | Textfeldname         | Textfeldwert |
+    | housing_reason | Wohnraumsituations- und Ausstattungsgründe | OTHER_DR | housing_reason_other |              |
 
 
 

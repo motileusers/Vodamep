@@ -9,6 +9,15 @@ Funktionalität: StatLp - Validierung der gemeldeten Aufenthalte einer Datenmeld
 
 
 
+
+# Todo
+# Attribute CAREALLOWANCEARGE darf nur L0_AR sein, wenn es sich um Altersheim handelt
+# Klären: Wie kommen wir zur Gruppe ABAH?
+# - innerhalb von Vodamep lokal
+# - innerhalb vom Vodamep Server
+# - innerhalb der Connexia Logik
+
+
 Szenario: Geschlecht ist undefiniert
     Angenommen die Eigenschaft 'gender' von 'Person' ist auf 'UndefinedGender' gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''Geschlecht' darf nicht leer sein.'

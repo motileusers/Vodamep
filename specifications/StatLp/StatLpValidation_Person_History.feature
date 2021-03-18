@@ -171,12 +171,13 @@ Szenario: Falsches Gültigkeitsdatum einer Entlassung
 #    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
 #    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
+#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 2' mit Datum '01.01.2020'
 #    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2020'
 #    Dann enthält das Validierungsergebnis den Fehler 'Die Änderung der Aufnahmeart von Klient xx auf Daueraufnahme wurde bereits mit der Meldung am 01.12.2020 gesendet'
 #
 #Szenario: Gleiche Pflegestufe
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
+#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Übergangspflege' mit Datum '01.12.2020'
 #    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
 #    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
 #    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
@@ -184,6 +185,7 @@ Szenario: Falsches Gültigkeitsdatum einer Entlassung
 #    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
 #    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
+#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2020'
 #    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.01.2020'
 #    Dann enthält das Validierungsergebnis den Fehler 'Die Änderung der Pflegestufe von Klient xx auf Pflegestufe 1 wurde bereits mit der Meldung am 01.12.2020 gesendet'
 #
@@ -197,10 +199,11 @@ Szenario: Falsches Gültigkeitsdatum einer Entlassung
 #    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
 #    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
+#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 2' mit Datum '01.12.2020'
 #    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.01.2020'
 #    Dann enthält das Validierungsergebnis den Fehler 'Die Änderung der Pflegestufe Arge von Klient xx auf Pflegestufe 1 wurde bereits mit der Meldung am 01.12.2020 gesendet'
 #
-#Szenario: Gleiche Pflegestufe Arge
+#Szenario: Gleiche Finanzierung
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
 #    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
@@ -210,8 +213,9 @@ Szenario: Falsches Gültigkeitsdatum einer Entlassung
 #    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
 #    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.01.2020'
-#    Dann enthält das Validierungsergebnis den Fehler 'Die Änderung der Pflegestufe Arge von Klient xx auf Pflegestufe 1 wurde bereits mit der Meldung am 01.12.2020 gesendet'
+#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 2' mit Datum '01.01.2020'
+#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+#    Dann enthält das Validierungsergebnis den Fehler 'Die Änderung der Finanzierung von Klient xx auf Selbst/Angehörige 100 % wurde bereits mit der Meldung am 01.12.2020 gesendet'
 
 
 # Änderung Aufnahmeart
@@ -227,19 +231,6 @@ Szenario: Falsches Gültigkeitsdatum einer Entlassung
 #    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
 #    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
 #    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.01.2020'
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei Klient xx ist kein Wechsel von einer Daueraufname auf xx möglich'
-#
-#Szenario: Keine Änderung von Daueraufnahme auf Probewohnen
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Probewohnen' mit Datum '01.01.2020'
 #    Dann enthält das Validierungsergebnis den Fehler 'Bei Klient xx ist kein Wechsel von einer Daueraufname auf xx möglich'
 #
 #Szenario: Keine Änderung von Daueraufnahme auf Übergangspflege
@@ -280,6 +271,5 @@ Szenario: Falsches Gültigkeitsdatum einer Entlassung
 # Todo
 # Zeitlich limitierte Pflege
 # Urlaub von der Pflege = 42 Tage
-# Probewohnen = 182 Tage
 # Übergangspflege = 365 Tage
 # Krisenintervention = 31 Tage
