@@ -91,6 +91,8 @@ namespace Vodamep.Specs.StepDefinitions
             IMessage m;
             if (type == nameof(StatLpReport))
                 this.Report.SetValue(name, value);
+            else if (type == nameof(Institution))
+                this.Report.Institution.SetValue(name, value);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetValue(name, value);
             else

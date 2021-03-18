@@ -45,6 +45,7 @@ namespace Vodamep.ValidationBase
         public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeiten pro Tag erlaubt.";
         public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed => "Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.";
         public static string WithinAnActivityThereIsNotAccompanyingWithContactAndAccompanyingWithoutContactsAllowed => "Innerhalb einer Aktivität dürfen nicht gleichzeitg die Leistungstypen 'AccompanyingWithContact' und 'AccompanyingWithoutContacts' vorhanden sein.";
+        public static string InvalidInstitutionNumber => "Ungültige Einrichtungsnummer.";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

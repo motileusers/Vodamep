@@ -10,7 +10,7 @@
   
   <ItemGroup>
     <None Update="Agp\AgpDiff_Report.feature">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  <Generator></Generator>
     </None>
     <None Update="Agp\AgpValidation_Report.feature">
       <Generator></Generator>
@@ -31,7 +31,7 @@
       <Generator></Generator>
     </None>
     <None Update="Mkkp\MkkpDiff_Report.feature">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+       <Generator></Generator>
     </None>
     <None Update="Mkkp\MkkpValidation_Activity.feature">
       <Generator></Generator>
@@ -45,52 +45,31 @@
     <None Update="Mkkp\MkkpValidation_Report.feature">
       <Generator></Generator>
     </None>
-    <None Update="StatLp\StatLpValidation_Leaving.feature">
-      <LastGenOutput>StatLpValidation_Admission.feature.cs</LastGenOutput>
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-    </None>
     <None Update="StatLp\StatLpValidation_Admission.feature">
       <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Attributes.feature">
-      <LastGenOutput>StatLpValidation_Attributes.feature.cs</LastGenOutput>
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-    </None>
-    <None Update="StatLp\StatLpValidation_Person_History.feature">
-      <LastGenOutput>StatLpValidation_Person_History.feature.cs</LastGenOutput>
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Institution.feature">
-      <LastGenOutput>StatLpValidation_Report.feature.cs</LastGenOutput>
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+       <Generator></Generator>
     </None>
-    <None Update="StatLp\StatLpValidation_Stay.feature">
+    <None Update="StatLp\StatLpValidation_Leaving.feature">
       <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Person.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>StatLpValidation_Person.feature.cs</LastGenOutput>
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Person_History.feature">
+      <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Report.feature">
       <Generator></Generator>
     </None>
+    <None Update="StatLp\StatLpValidation_Stay.feature">
+      <Generator></Generator>
+    </None>
   </ItemGroup>
   
-  <ItemGroup>
-    <Folder Include="Datasets\Agp\" />
-    <Folder Include="Datasets\Mkkp\" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Update="StatLp\StatLpValidation_Admission.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StatLpValidation_Admission.feature</DependentUpon>
-    </Compile>
-    <Compile Update="StatLp\StatLpValidation_Report.feature.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StatLpValidation_Report.feature</DependentUpon>
-    </Compile>
-  </ItemGroup>
+
 </Project>

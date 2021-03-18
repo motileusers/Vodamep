@@ -59,11 +59,11 @@
       <Link>Features\StatLpValidation_Attributes.feature</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-	<None Include="..\..\specifications\StatLp\StatLpValidation_Institution.feature">
+    <None Include="..\..\specifications\StatLp\StatLpValidation_Institution.feature">
       <Link>Features\StatLpValidation_Institution.feature</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-	<None Include="..\..\specifications\StatLp\StatLpValidation_Leaving.feature">
+    <None Include="..\..\specifications\StatLp\StatLpValidation_Leaving.feature">
       <Link>Features\StatLpValidation_Leaving.feature</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
