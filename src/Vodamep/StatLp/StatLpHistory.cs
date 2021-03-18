@@ -6,20 +6,29 @@ using Vodamep.StatLp.Model;
 namespace Vodamep.StatLp
 {
 
+
+    // Auflistung alle Personen einer Einrichtung mit den Daten aller Meldungen
+    // Geplant für Export und Speicherung in der SQL Server DB bei connexia
     public class History
     {
+
+        // Liste mit betreuten Personen einer Einrichtung
         public List<HistoryPerson> Persons { get; set; }
     }
 
 
     public class HistoryPerson
     {
+        // Referenz auf die Person selbst
         public Person Person { get; set; }
 
+        // Liste mit allen Aufenthalten, die die Person hatte
         public List<HistoryStay> Stays { get; set; }
     }
 
 
+    // Der konkrete Aufenthalt selbst, mit einigen Properties, die eine Navigation zwischen den Vorgängern und Nachfolgern erlauben
+    // Und die aktuell gültigen Attribute für diesen Aufenthalt
     public class HistoryStay
     {
         public Stay Stay { get; set; }
