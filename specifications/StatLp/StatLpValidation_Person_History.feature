@@ -398,9 +398,3 @@ Szenario: Falsches Gültigkeitsdatum einer Entlassung
 #    Angenommen In gesendeter Meldung 2 wird das Geburtsdatum von Person 1 auf '01.01.1934' geändert
 #    Dann enthält das Validierungsergebnis den Fehler 'Unterschied bei Geburtsdatum von Klient xx bei Meldung vom xx'
 
-
-# Todo
-# Zeitlich limitierte Pflege
-# Urlaub von der Pflege = 42 Tage
-# Übergangspflege = 365 Tage
-# Krisenintervention = 31 Tage
