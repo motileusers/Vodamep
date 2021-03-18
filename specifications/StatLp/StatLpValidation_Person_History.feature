@@ -85,6 +85,14 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen einer Datenmeldung
 #    Angenommen Gesendete Meldung 3 enthält eine Aufenthalt von Person 1 vom 01.02.2020 bis 16.02.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Zur Aufenthaltsende von Klient xx am xx wurden keine Entlassungsdaten gesendet'
 #
+#Szenario: Fehlende Entlassung, weil Person im nächsten Monat nicht mehr aufscheint, sie hätte entlassen werden müssen
+#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
+#    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
+#    Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
+#    Angenommen Existierende Meldung 2 ist eine Standard Aufenthaltsmeldung Meldung von Person 1
+#    Angenommen Gesendete Meldung 3 gilt vom 01.02.2021 bis 28.02.2021
+#    Dann enthält das Validierungsergebnis den Fehler 'Zur Aufenthaltsende von Klient xx am xx wurden keine Entlassungsdaten gesendet'
+#
 #Szenario: Erneute Aufnahme mit fehlender Entlassung
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
