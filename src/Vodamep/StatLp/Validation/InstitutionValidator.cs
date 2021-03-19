@@ -13,7 +13,7 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.Name).NotEmpty();
 
             //Einrichtungsnummer: Numerisch, genau 4 Zeichen, nicht 0000
-            var r = new Regex(@"^ (?<!\d)(?!0000)\d{4}(?!\d)");
+            var r = new Regex(@"^(?<!\d)(?!0000)\d{4}(?!\d)");
             this.RuleFor(x => x.Id).Matches(r).Unless(x => string.IsNullOrEmpty(x.Id)).WithMessage(Validationmessages.InvalidInstitutionNumber);
         }
     }

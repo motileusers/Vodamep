@@ -77,7 +77,7 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen einer Datenmeldung
 #    | country | Land        | ZZ   |
 #    | country | Land        | A    |
 #	
-#Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
+#Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert
 #    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
 #    Dann enthält das Validierungsergebnis keinen Fehler
 #Beispiele: 

@@ -45,10 +45,16 @@
     <None Update="Mkkp\MkkpValidation_Report.feature">
       <Generator></Generator>
     </None>
+    <None Update="StatLp\StatLpValidation_Leaving.feature">
+      <Generator></Generator>
+    </None>
     <None Update="StatLp\StatLpValidation_Admission.feature">
       <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Attributes.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Person_History.feature">
       <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Institution.feature">

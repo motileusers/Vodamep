@@ -85,6 +85,14 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen einer Datenmeldung
 #    Angenommen Gesendete Meldung 3 enthält eine Aufenthalt von Person 1 vom 01.02.2020 bis 16.02.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Zur Aufenthaltsende von Klient xx am xx wurden keine Entlassungsdaten gesendet'
 #
+#Szenario: Fehlende Entlassung, weil Person im nächsten Monat nicht mehr aufscheint, sie hätte entlassen werden müssen
+#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
+#    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
+#    Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
+#    Angenommen Existierende Meldung 2 ist eine Standard Aufenthaltsmeldung Meldung von Person 1
+#    Angenommen Gesendete Meldung 3 gilt vom 01.02.2021 bis 28.02.2021
+#    Dann enthält das Validierungsergebnis den Fehler 'Zur Aufenthaltsende von Klient xx am xx wurden keine Entlassungsdaten gesendet'
+#
 #Szenario: Erneute Aufnahme mit fehlender Entlassung
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
@@ -273,32 +281,6 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen einer Datenmeldung
 
 
 # Zeitlich limitierte Aufnahmearten
-
-
-#Szenario: Krisenintervention maximal 31 Tage
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Urlaub von der Pflege' mit Datum '02.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '02.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '02.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '02.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 02.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 02.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 01.01.2021
-#    Dann enthält das Validierungsergebnis keinen Fehler
-
-
-#Szenario: Krisenintervention maximal 31 Tage
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '02.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 01.01.2021
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei Klient xx wurde der Zeitraum für die Aufnahmeart {0} überschritten (mehr als 31 Tage).'
 
 
 #Szenario: Urlaub von der Pflege maximal 42 Tage
