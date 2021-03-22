@@ -1,0 +1,12 @@
+﻿// Entlassung wohin
+
+UNDEFINED_DC;;
+HOME_LIVING_ALONE_DC;nach Hause lebend alleine;           
+HOME_LIVING_NOT_ALONE_DC;nach Hause lebend nicht alleine;       
+AMBULATORY_SUPERVISED_FLAT_DC;ambulant betreute (Senioren/Wohnung);  
+SUPERVISED_FLAT_DC;betreute Wohngemeinschaften;             
+NURSING_HOME_DC;Pflegeheim nach Pflegeheimgesetz;                
+OTHER_ATTENDED_HOUSING_DC;Sonstige betreute Wohnform;      
+OTHER_DC;Sonstige;                       
+NO_DC;keine Angabe;                          
+           

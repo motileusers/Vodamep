@@ -1,0 +1,10 @@
+﻿// Aufnahmeart
+
+UNDEFINED_AT;;
+CONTINUOUS_AT;Daueraufnahme;                
+HOLIDAY_AT;Urlaub von der Pflege;                   
+TRANSITIONAL_AT;Übergangspflege;              
+COVID19_RESPITE_AT;COVID-19 Entlastungspflege;           
+GERIATRIC_REMOBILIZATION_AT;Geriatrische Remobilisation;  
+CARE_TRANSITION_AT;Überleitungspflege;           
+           

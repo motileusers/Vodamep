@@ -1,0 +1,11 @@
+﻿// Wohnraumsituations- und Ausstattungsgründe
+
+UNDEFINED_HR;;
+NOT_SPECIFIED_HR;Keine Angabe;                       
+BARRIERS_ENTRANCE_HR;Barrieren, Hindernisse Zugang;                   
+BARRIERS_HABITATION_HR;Barrieren, Hindernisse Wohnung;                 
+BATHROOM_NOT_HANDICAPPED_ACCESSIBLE_HR;Bad WC nicht behindertengerecht; 
+HEATING_HABITATION_HR;Beheizung der Wohnung;                  
+OTHER_HR;Anderer;                               
+            
+           
