@@ -2,6 +2,7 @@
 using FluentValidation.Validators;
 using System.Text.RegularExpressions;
 using Vodamep.Data;
+using Vodamep.Data.Hkpv;
 using Vodamep.Hkpv.Model;
 using Vodamep.ValidationBase;
 
@@ -33,7 +34,7 @@ namespace Vodamep.Hkpv.Validation
             this.RuleFor(x => x.Postcode).NotEmpty();
             this.RuleFor(x => x.City).NotEmpty();
             this.RuleFor(x => $"{x.Postcode} {x.City}")
-                .SetValidator(new CodeValidator<Postcode_CityProvider>())
+                .SetValidator(new CodeValidator<Data.Hkpv.Postcode_CityProvider>())
                 .Unless(x => string.IsNullOrEmpty(x.City) || string.IsNullOrEmpty(x.Postcode))
                 .WithMessage(Validationmessages.InvalidPostCode_City);
 

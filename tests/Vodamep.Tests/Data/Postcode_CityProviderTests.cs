@@ -10,9 +10,21 @@ namespace Vodamep.Tests.Data
         [InlineData("Bregenz", false)]
         [InlineData(null, false)]
         [InlineData("", false)]
-        public void IsValid(string code, bool expected)
+        public void IsValidRecord(string code, bool expected)
         {
-            var p = Postcode_CityProvider.Instance;
+            var p = Vodamep.Data.Postcode_CityProvider.Instance;
+
+            Assert.Equal(expected, p.IsValid(code));
+        }
+
+        [Theory]
+        [InlineData("6900 Bregenz", true)]
+        [InlineData("Bregenz", false)]
+        [InlineData(null, false)]
+        [InlineData("", false)]
+        public void IsValidRecordHkpv(string code, bool expected)
+        {
+            var p = Vodamep.Data.Hkpv.Postcode_CityProvider.Instance;
 
             Assert.Equal(expected, p.IsValid(code));
         }

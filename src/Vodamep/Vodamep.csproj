@@ -43,7 +43,6 @@
     <Compile Include="..\..\specifications\Mohi\Mohi.g.cs" Link="Mohi\Model\Mohi.g.cs" />
     <Compile Include="..\..\specifications\StatLp\StatLp.g.cs" Link="StatLp\Model\StatLp.g.cs" />
     <Compile Include="..\..\specifications\Tb\Tb.g.cs" Link="Tb\Model\Tb.g.cs" />
-    <EmbeddedResource Include="..\..\specifications\Datasets\postcode_cities.csv" Link="Data\postcode_cities.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\german-iso-3166.csv" Link="Data\german-iso-3166.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\insurances.csv" Link="Data\insurances.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\qualifications.csv" Link="Data\qualifications.csv" />
@@ -57,6 +56,8 @@
     <EmbeddedResource Include="..\..\specifications\Datasets\Mkkp\places_of_action.csv" Link="Data\Mkkp\places_of_action.csv" />
     <None Include="..\..\specifications\Agp\Apg.proto" Link="Agp\Model\Apg.proto" />
     <None Include="..\..\specifications\Cm\Cm.proto" Link="Cm\Model\Cm.proto" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Hkpv\postcode_cities.csv" Link="Data\Hkpv\postcode_cities.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\postcode_cities.csv" Link="Data\postcode_cities.csv" />
     <None Include="..\..\specifications\Hkpv\Hkpv.proto" Link="Hkpv\Model\Hkpv.proto" />
     <None Include="..\..\specifications\Mkkp\Mkkp.proto" Link="Mkkp\Model\Mkkp.proto" />
     <None Include="..\..\specifications\Mohi\Mohi.proto" Link="Mohi\Model\Mohi.proto" />
