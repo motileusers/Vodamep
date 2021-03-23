@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Vodamep.Hkpv.Model;
 using Vodamep.Hkpv.Validation;
+using Vodamep.StatLp.Model;
+using Person = Vodamep.Hkpv.Model.Person;
 
 namespace Vodamep.ValidationBase
 {
     internal class Validationmessages
     {
-        public static string ActivityIsNotUnique => $"Die Einträge sind nicht kumuliert.";
         public static string ActivityMoreThenFive => $"Es wurden mehr als 5 gemeldet.";
         public static string ActivityMoreThen350(Person p, int x) => $"Für '{p?.FamilyName} {p?.GivenName}' wurden mehr als 350 LP in einem Monat erfasst. ({x})";
         public static string TraineeMustNotContain06To10(Staff staff) => $"'{staff?.FamilyName} {staff?.GivenName} ({staff?.Id})' darf als Auszubildende/r keine medizinischen Leistungen (6-10) dokumentieren.";
         public static string IdIsNotUnique => "Der Id ist nicht eindeutig.";
         public static string IdIsMissing(string id) => $"Der Id '{id}' fehlt.";
-        public static string PersonWithoutPersonalDate => "Kein Personenbezug vorhanden";
-        public static string PersonWithoutData => "Keine Stammdaten vorhanden";
         public static string WithoutEntry(string e, string person, string staff, string date) => $"Kein Eintrag '{e}': bei '{person}', von '{staff}', am '{date}'.";
         public static string WithoutActivity => $"Keine Aktivitäten.";
         public static string WithoutPerson => $"Keine Person.";
@@ -46,6 +45,10 @@ namespace Vodamep.ValidationBase
         public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed => "Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.";
         public static string WithinAnActivityThereIsNotAccompanyingWithContactAndAccompanyingWithoutContactsAllowed => "Innerhalb einer Aktivität dürfen nicht gleichzeitg die Leistungstypen 'AccompanyingWithContact' und 'AccompanyingWithoutContacts' vorhanden sein.";
         public static string InvalidInstitutionNumber => "Ungültige Einrichtungsnummer.";
+        public static string InvalidValueAdmission(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";
+        public static string TextTooLongAdmission(string date, string personId) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";
+        public static string WrongPostCodeAdmission(string date, string personId) => $"Ungültige Kombination Ort/Plz bei Aufnahme vom {date} von Klient {personId}.";
+        public static string NoDoubledValuesAreAllowed => "Doppelte Angaben bei '{PropertyName}'";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

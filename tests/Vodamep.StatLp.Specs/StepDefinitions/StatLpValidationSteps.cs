@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Google.Protobuf;
+using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using TechTalk.SpecFlow;
 using Vodamep.Data.Dummy;
@@ -62,6 +63,8 @@ namespace Vodamep.Specs.StepDefinitions
         {
             if (type == nameof(StatLpReport))
                 this.Report.SetDefault(name);
+            else if (type == nameof(Admission))
+                this.Report.Admissions[0].SetDefault(name);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetDefault(name);
             else
@@ -93,10 +96,84 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.SetValue(name, value);
             else if (type == nameof(Institution))
                 this.Report.Institution.SetValue(name, value);
+            else if (type == nameof(Admission))
+                this.Report.Admissions[0].SetValue(name, value);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetValue(name, value);
             else
                 throw new NotImplementedException();
+        }
+
+        [Given(@"die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '(\w*)' ist auf '(.*)' gesetzt")]
+        public void GivenTheEnumLIstPropertyFromAdmissionIsSetTo(string type, string value)
+        {
+            //todo geht bestimmt eleeganter
+            switch (type)
+            {
+                case "PersonalChanges":
+                    this.SetPersonalChanges(value);
+                    break;
+
+                case "SocialChanges":
+                    this.SetSocialChanges(value);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private void SetPersonalChanges(string value)
+        {
+            this.Report.Admissions.First().PersonalChanges.Clear();
+
+            if (value.Contains(','))
+            {
+                var personalChange = value.Split(',').Select(x => (PersonalChange)Enum.Parse(typeof(PersonalChange), x));
+                this.Report.Admissions[0].PersonalChanges.AddRange(personalChange);
+            }
+            else if (Enum.TryParse(value, out PersonalChange activityType))
+            {
+                this.Report.Admissions[0].PersonalChanges.Add(activityType);
+            }
+            else if (value == "")
+            {
+                //nothing do do, already emptied yet
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private void SetSocialChanges(string value)
+        {
+            this.Report.Admissions.First().SocialChanges.Clear();
+
+            if (value.Contains(','))
+            {
+                var activityTypes = value.Split(',').Select(x => (SocialChange)Enum.Parse(typeof(SocialChange), x));
+                this.Report.Admissions[0].SocialChanges.AddRange(activityTypes);
+            }
+            else if (Enum.TryParse(value, out SocialChange socialChange))
+            {
+                this.Report.Admissions[0].SocialChanges.Add(socialChange);
+            }
+            else if (value == "")
+            {
+                //nothing do do, already emptied yet
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        [Given(@"die PLZ und der Ort von Admission sind auf auf '(.*)' und '(.*)' gesetzt")]
+        public void GivenThePostCodeCityPropertyIsSetTo(string postCode, string city)
+        {
+            this.Report.Admissions[0].LastPostcode = postCode;
+            this.Report.Admissions[0].LastCity = city;
         }
 
         [Given(@"die Datums-Eigenschaft '(\w*)' von '(\w*)' hat eine Uhrzeit gesetzt")]
@@ -117,7 +194,7 @@ namespace Vodamep.Specs.StepDefinitions
             field.Accessor.SetValue(m, ts);
         }
 
-  
+
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
         {
@@ -152,6 +229,13 @@ namespace Vodamep.Specs.StepDefinitions
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
 
-      
+        [Then(@"enthält das escapte Validierungsergebnis den Fehler '(.*)'")]
+        public void ThenTheResultContainsAnErrorRegex(string message)
+        {
+            var pattern = new Regex(Regex.Escape(message), RegexOptions.IgnoreCase);
+
+            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
+        }
+
     }
 }

@@ -1,87 +1,68 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Aufenthalte einer Datenmeldung
 
+Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
+    Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
+Beispiele:
+    | Name                          | Bezeichnung                                    |
+    | housing_type_before_admission | Wohnsituation vor der Aufnahme                 |
+    | main_attendance_relation      | Verwandtschaftsverhältnis Hauptbetreuungspers. |
+    | main_attendance_closeness     | Räumliche Nähe Hauptbetreuungsperson           |
+    | housing_reason                | Wohnraumsituations- und Ausstattungsgründe     | 
 
+Szenariogrundriss: Die Textfelder enthalten ungültige Werte
+    Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von Klient 1.'
+Beispiele:
+    | Name                  | Bezeichnung                                | Wert |
+    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | =    |
+    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | 0    |
+    | personal_change_other | Veränderungen persönliche Situation        | =    |
+    | personal_change_other | Veränderungen persönliche Situation        | 0    |
+    | social_change_other   | Veränderungen nicht bewältigt, weil        | =    |
+    | social_change_other   | Veränderungen nicht bewältigt, weil        | 0    |
+    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | =    |
+    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | 0    |
 
-# Pflichtfelder
-#Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
-#    Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
-#    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
-#Beispiele:
-#    | Name                          | Bezeichnung                                    |
-#    | housing_type_before_admission | Wohnsituation vor der Aufnahme                 |
-#    | main_attendance_relation      | Verwandtschaftsverhältnis Hauptbetreuungspers. |
-#    | main_attendance_closeness     | Räumliche Nähe Hauptbetreuungsperson           |
-#    | housing_reason                | Wohnraumsituations- und Ausstattungsgründe     | 
-#
+Szenariogrundriss: Die Textfelder enthalten zu lange Werte
+    Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von Klient 1.'
+Beispiele:
+    | Name                  | Bezeichnung                                | Wert                               |
+    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | abcdefghij abcdefghij abcdefghij x |
+    | personal_change_other | Veränderungen persönliche Situation        | abcdefghij abcdefghij abcdefghij x |
+    | social_change_other   | Veränderungen nicht bewältigt, weil        | abcdefghij abcdefghij abcdefghij x |
+    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | abcdefghij abcdefghij abcdefghij x | 
 
-# Textfelder: falsche Zeichen
-# RegEx @"^[-,.a-zA-ZäöüÄÖÜß\(\) ][-,.a-zA-ZäöüÄÖÜß\(\) ]*[-,.a-zA-ZäöüÄÖÜß\(\) ]$"
-#Szenariogrundriss: Die Textfelder enthalten ungültige Werte
-#    Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>'
-#    Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert' für '<Bezeichnung>' bei Aufnamhe vom xx von Klient xxx
-#Beispiele:
-#    | Name                  | Bezeichnung                                | Wert |
-#    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | =    |
-#    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | 0    |
-#    | personal_change_other | Veränderungen persönliche Situation        | =    |
-#    | personal_change_other | Veränderungen persönliche Situation        | 0    |
-#    | social_change_other   | Veränderungen nicht bewältigt, weil        | =    |
-#    | social_change_other   | Veränderungen nicht bewältigt, weil        | 0    |
-#    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | =    |
-#    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | 0    |
-#
+Szenariogrundriss: Die Textfelder enthalten gültige Werte
+    Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+Beispiele:
+    | Name                  | Bezeichnung                                | Wert                           |
+    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | abcdefghij abcdefghij abcdefgh |
+    | personal_change_other | Veränderungen persönliche Situation        | abcdefghij abcdefghij abcdefgh |
+    | social_change_other   | Veränderungen nicht bewältigt, weil        | abcdefghij abcdefghij abcdefgh |
+    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | abcdefghij abcdefghij abcdefgh | 
 
-# Textfelder: zu viele Zeichen
-# 0 bis 30 Zeichen
-#Szenariogrundriss: Die Textfelder enthalten zu lange Werte
-#    Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>'
-#    Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text' für '<Bezeichnung>' bei Aufnamhe vom xx von Klient xxx
-#Beispiele:
-#    | Name                  | Bezeichnung                                | Wert                               |
-#    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | abcdefghij abcdefghij abcdefghij x |
-#    | personal_change_other | Veränderungen persönliche Situation        | abcdefghij abcdefghij abcdefghij x |
-#    | social_change_other   | Veränderungen nicht bewältigt, weil        | abcdefghij abcdefghij abcdefghij x |
-#    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | abcdefghij abcdefghij abcdefghij x | 
-#
+Szenariogrundriss: Ungültiger Ort / Plz
+    Angenommen die PLZ und der Ort von Admission sind auf auf '<Value1>' und '<Value2>' gesetzt
+    Dann enthält das escapte Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnahme vom 01.02.2021 von Klient 1.'
+Beispiele:
+    | Field1        | Field2    | Value1 | Value2     |
+    | last_postcode | last_city | 0349   | Feldkirch  |
+    | last_postcode | last_city | 0349   |            |
+    | last_postcode | last_city |        | Feldkirch  |
+    | last_postcode | last_city |        | Feldkirch  |
+    | last_postcode | last_city |        |            |
 
-# Textfelder: alles gut
-#Szenariogrundriss: Die Textfelder enthalten gültige Werte
-#    Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>'
-#    Dann enthält das Validierungsergebnis keinen Fehler
-#Beispiele:
-#    | Name                  | Bezeichnung                                | Wert                             |
-#    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | abcdefghij abcdefghij abcdefghij |
-#    | personal_change_other | Veränderungen persönliche Situation        | abcdefghij abcdefghij abcdefghij |
-#    | social_change_other   | Veränderungen nicht bewältigt, weil        | abcdefghij abcdefghij abcdefghij |
-#    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | abcdefghij abcdefghij abcdefghij | 
-#
-
-
-# PLZ Ort
-#Szenariogrundriss: Ungültiger Ort / Plz
-#    Angenommen die Eigenschaft '<Field1>' und <Field2> von 'Admission' sind auf die Werte '<Value1>' und '<Value2>' gesetzt
-#    Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnamhe vom xx von Klient xxx
-#Beispiele:
-#    | Field1        | Field2    | Value1 | Value2     |
-#    | last_postcode | last_city | 0349   | Feldkirch  |
-#    | last_postcode | last_city | 0349   |            |
-#    | last_postcode | last_city |        | Feldkirch  |
-#    | last_postcode | last_city |        | Feldkirch  |
-#    | last_postcode | last_city | 6751   | Ausserbraz |
-#    | last_postcode | last_city |        |            |
-	
-#Szenariogrundriss: Gültiger Ort / Plz
-#    Angenommen die Eigenschaft '<Field1>' und <Field2> von 'Admission' sind auf die Werte '<Value1>' und '<Value2>' gesetzt
-#    Dann enthält das Validierungsergebnis keinen Fehler
-#Beispiele:
-#    | Field1        | Field2    | Value1 | Value2    |
-#    | last_postcode | last_city | 6800   | Feldkirch |
-#    | last_postcode | last_city | 0000   | Anderer   |
-#
-
-
-
+Szenariogrundriss: Gültiger Ort / Plz
+    Angenommen die PLZ und der Ort von Admission sind auf auf '<Value1>' und '<Value2>' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+Beispiele:
+    | Field1        | Field2    | Value1 | Value2    |
+    | last_postcode | last_city | 6800   | Feldkirch |
+    | last_postcode | last_city | 0000   | Anderer   |
 
 
 # Textfelder und Auflistungen prüfen
@@ -105,18 +86,21 @@ Funktionalität: StatLp - Validierung der gemeldeten Aufenthalte einer Datenmeld
 #    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, UNDEFINED_HOUSING_REASON | abcdefghij | 
 #
 
-#Szenariogrundriss: Die Auflistung enthalten doppelte Werte
-#    Angenommen die Auflistung '<Name>' von 'Admission' enhält die Werte '<Werte>' und der Wert des Textfeldes '<Freitextfeld>' ist '<Freitextwert>'
-#    Dann enthält das Validierungsergebnis den Fehler 'Doppelte Angaben bei '<Bezeichnung>' 
-#Beispiele:
-#    | Name             | Bezeichnung                                | Wert                                                      | Wert |
-#    | personal_changes | Veränderungen persönliche Situation        | OWN_DESIRE_PC, OWN_DESIRE_PC                              |      |
-#    | personal_changes | Veränderungen persönliche Situation        | OWN_DESIRE_PC, OWN_DESIRE_PC, INCREASED_ASSITANCE_NEED    |      |
-#    | social_changes   | Veränderungen nicht bewältigt, weil        | NO_RELATIVE_CARER, NO_RELATIVE_CARER                      |      |
-#    | social_changes   | Veränderungen nicht bewältigt, weil        | NO_RELATIVE_CARER, NO_RELATIVE_CARER, MISSING_MEALS       |      |
-#    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_ENTRANCE                      |      |
-#    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_ENTRANCE, BARRIERS_HABITATION |      |
-
+Szenariogrundriss: Die Auflistung enthalten doppelte Werte
+    Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Doppelte Angaben bei '<Bezeichnung>' 
+Beispiele:
+    | Name             | Bezeichnung                                | Wert                                                      |
+    | PersonalChanges | Veränderungen persönliche Situation        | OwnDesirePc, OwnDesirePc                                  |
+    | PersonalChanges | Veränderungen persönliche Situation        | OwnDesirePc, OwnDesirePc, IncreasedAssitanceNeed          |
+    | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarer, NoRelativeCarer                          |
+    | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarer, NoRelativeCarer, MissingMeals            |
+  
+  # ist keine liste
+  #| housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_ENTRANCE                      |
+   # | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_ENTRANCE, BARRIERS_HABITATION |
+    
+    # Angenommen die Auflistung '<Name>' von 'Admission' enhält die Werte '<Wert>'
 
 #Szenariogrundriss: Die Auflistung enthalten gültige Werte
 #    Angenommen die Auflistung '<Name>' von 'Admission' enhält die Werte '<Werte>' und der Wert des Textfeldes '<Freitextfeld>' ist '<Freitextwert>'
