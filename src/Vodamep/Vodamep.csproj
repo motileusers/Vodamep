@@ -73,6 +73,7 @@
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\personal_change.csv" Link="Data\StatLp\personal_change.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\service.csv" Link="Data\StatLp\service.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\social_change.csv" Link="Data\StatLp\social_change.csv" />
+    <None Include="..\..\specifications\Datasets\gender.csv" Link="Data\gender.csv" />
     <None Include="..\..\specifications\Hkpv\Hkpv.proto" Link="Hkpv\Model\Hkpv.proto" />
     <None Include="..\..\specifications\Mkkp\Mkkp.proto" Link="Mkkp\Model\Mkkp.proto" />
     <None Include="..\..\specifications\Mohi\Mohi.proto" Link="Mohi\Model\Mohi.proto" />

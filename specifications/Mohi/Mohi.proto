@@ -10,7 +10,8 @@ message MohiReport {
     google.protobuf.Timestamp from = 2;
     google.protobuf.Timestamp to = 3;
     repeated Person persons = 5;         
- }
+    repeated Activity activities = 6;     
+}
 
 // Einrichtung
 message Institution {
@@ -28,22 +29,27 @@ message Person {
     google.protobuf.Timestamp birthday = 4;
     Gender gender = 5;
 
-    string last_postcode = 6;				                    // postcode und city müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
-    string last_city = 7;                                       
+    string postcode = 6;				                        // postcode und city müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
+    string city = 7;                                       
                                                                 
     string country = 8;                                         // Land aus german-iso-3166.csv
                                                                 
-    CareAllowance care_allowance = 9;                           // 05 Bezieht Pflegegeld
-    CareAllowance care_allowance_arge = 10;                     // 06 Einstufung nach Pflegegeld Gesetz
+    CareAllowance care_allowance = 9;                           // Bezieht Pflegegeld
 
-    MainAttendanceCloseness main_attendance_closeness = 11;     // 06 Einstufung nach Pflegegeld Gesetz
+    MainAttendanceCloseness main_attendance_closeness = 10;     // Räumliche Nähe Hauptbetreuungsperson
 
-    repeated Service services = 12;                             // Inanspruchnahme anderer Dienste
+    repeated Service services = 11;                             // Inanspruchnahme anderer Dienste
 }
 
 
-// 05 Bezieht Pflegegeld
-// Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
+// Leistungen pro Klient pro Monat in Stunden
+message Activity {
+    string person_id = 1;        
+    float hours_per_month  = 2;
+}
+
+
+// Bezieht Pflegegeld
 enum CareAllowance {
   UNDEFINED_ALLOWANCE = 0;
   L1 = 1;
@@ -56,21 +62,6 @@ enum CareAllowance {
   ANY = 9;              // Pflegegeld ja, Stufe unbekannt
   UNKNOWN = 88;         // unbekannt ob ja oder nein
   NONE = 99;            // Keine Pflegegeld
-}
-
-// 06 Einstufung nach Pflegegeld Gesetz
-// Pflegestufe ARGE
-// Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
-enum CareAllowanceArge {
-  UNDEFINED_AR = 0;
-  L0_AR = 1;
-  L1_AR = 2;
-  L2_AR = 3;
-  L3_AR = 4;
-  L4_AR = 5;
-  L5_AR = 6;
-  L6_AR = 7;
-  L7_AR = 8;	
 }
 
 // Geschlecht, nach neuer Definition

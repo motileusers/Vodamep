@@ -1,0 +1,8 @@
+﻿// Geschlechter
+
+UNDEFINED_GE;;
+MALE_GE;männlich;
+FEMALE_GE;weiblich;
+DIVERS_GE;divers;
+INTER_GE;inter;
+OPEN_GE;offen;
