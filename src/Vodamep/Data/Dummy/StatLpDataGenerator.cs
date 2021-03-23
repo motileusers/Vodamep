@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Google.Protobuf.Collections;
 using Vodamep.StatLp.Model;
 
 namespace Vodamep.Data.Dummy
@@ -107,6 +108,9 @@ namespace Vodamep.Data.Dummy
                     .Where(x => x != HousingReason.UndefinedHr)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(HousingReason)).Length - 1)),
 
+                PersonalChanges = { PersonalChange.IncreasedAssitanceNeedPc },
+
+                SocialChanges = { SocialChange.MissingMealsSc }
             };
 
             return admission;

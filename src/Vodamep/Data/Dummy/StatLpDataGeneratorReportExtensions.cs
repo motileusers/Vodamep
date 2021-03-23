@@ -4,7 +4,7 @@ using Vodamep.StatLp.Model;
 
 namespace Vodamep.Data.Dummy
 {
-    internal static class StatLpDataGeneratorMkkpReportExtensions
+    internal static class StatLpDataGeneratorReportExtensions
     {
         public static Person AddDummyPerson(this StatLpReport report)
         {

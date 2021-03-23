@@ -36,13 +36,32 @@ namespace Vodamep.StatLp.Validation
             
             this.RuleFor(x => new { x.LastPostcode, x.LastCity }).Must(x => Postcode_CityProvider.Instance.IsValid($"{x.LastPostcode} {x.LastCity}")).WithMessage(x => Validationmessages.WrongPostCodeAdmission(_parentReport.FromD.ToShortDateString(), x.PersonId));
 
+            this.RuleFor(x => x.PersonalChanges).NotEmpty().Unless(x => !string.IsNullOrEmpty(x.PersonalChangeOther)).WithMessage(Validationmessages.ItemNotValid);
+
+            this.RuleFor(x => x.PersonalChanges)
+                .Must((admission, ctx) => !admission.PersonalChanges.Any(x => x == PersonalChange.UndefinedPc))
+                .WithMessage(Validationmessages.ItemNotValid);
+
             this.RuleFor(x => x.PersonalChanges)
                 .Must((admission, ctx) => ContainsDoubledValues(admission.PersonalChanges))
                 .WithMessage(Validationmessages.NoDoubledValuesAreAllowed);
 
+            this.RuleFor(x => x.SocialChanges).NotEmpty().Unless(x => !string.IsNullOrEmpty(x.SocialChangeOther)).WithMessage(Validationmessages.ItemNotValid);
+
+            this.RuleFor(x => x.SocialChanges)
+                .Must((admission, ctx) => !admission.SocialChanges.Any(x => x == SocialChange.UndefinedSc))
+                .WithMessage(Validationmessages.ItemNotValid);
+
             this.RuleFor(x => x.SocialChanges)
                 .Must((admission, ctx) => ContainsDoubledValues(admission.SocialChanges))
                 .WithMessage(Validationmessages.NoDoubledValuesAreAllowed);
+
+            this.RuleFor(x => x.HousingTypeBeforeAdmission)
+                .Must((admission, ctx) => !(admission.HousingTypeBeforeAdmission == AdmissionLocation.OtherAl &&
+                                            string.IsNullOrEmpty(admission.OtherHousingType)))
+                .WithMessage(Validationmessages.TextAreaEnterAValue);
+
+
         }
 
         private bool ContainsDoubledValues<T>(IEnumerable<T> values)

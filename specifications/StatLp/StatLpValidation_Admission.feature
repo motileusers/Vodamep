@@ -64,32 +64,31 @@ Beispiele:
     | last_postcode | last_city | 6800   | Feldkirch |
     | last_postcode | last_city | 0000   | Anderer   |
 
-
-# Textfelder und Auflistungen prüfen
-
-#Szenariogrundriss: Die Auflistung enthalten ungültige Werte
-#    Angenommen die Auflistung '<Name>' von 'Admission' enhält die Werte '<Werte>' und der Wert des Textfeldes '<Freitextfeld>' ist '<Freitextwert>'
-#    Dann enthält das Validierungsergebnis den Fehler 'Keine gültige Angabe bei '<Bezeichnung>' 
-#Beispiele:
-#    | Name             | Bezeichnung                                | Wert                                        | Wert       |
-#    | personal_changes | Veränderungen persönliche Situation        |                                             |            |
-#    | personal_changes | Veränderungen persönliche Situation        | UNDEFINED_PERSONALCHANGE                    |            |
-#    | personal_changes | Veränderungen persönliche Situation        | UNDEFINED_PERSONALCHANGE                    | abcdefghij |
-#    | personal_changes | Veränderungen persönliche Situation        | OWN_DESIRE_PC, UNDEFINED_PERSONALCHANGE     | abcdefghij |
-#    | social_changes   | Veränderungen nicht bewältigt, weil        |                                             |            |
-#    | social_changes   | Veränderungen nicht bewältigt, weil        | UNDEFINED_SOCIAL_CHANGE                     |            |
-#    | social_changes   | Veränderungen nicht bewältigt, weil        | UNDEFINED_SOCIAL_CHANGE                     | abcdefghij |
-#    | social_changes   | Veränderungen nicht bewältigt, weil        | NO_RELATIVE_CARER, UNDEFINED_SOCIAL_CHANGE  | abcdefghij |
-#    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe |                                             |            |
-#    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | UNDEFINED_HOUSING_REASON                    |            |
-#    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | UNDEFINED_HOUSING_REASON                    | abcdefghij |
-#    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, UNDEFINED_HOUSING_REASON | abcdefghij | 
+Szenariogrundriss: Die Auflistung enthalten ungültige Werte
+   Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert1>' gesetzt
+   Und die Eigenschaft '<Name2>' von 'Admission' ist auf '<Wert2>' gesetzt
+   Dann enthält das Validierungsergebnis den Fehler 'Keine gültige Angabe bei '<Bezeichnung>' 
+Beispiele:
+    | Name            | Bezeichnung                                | Wert1                          | Name2                   | Wert2      |
+    | PersonalChanges | Veränderungen persönliche Situation        |                                | personal_change_other   |            |
+    | PersonalChanges | Veränderungen persönliche Situation        | UndefinedPc                    | personal_change_other   |            |
+    | PersonalChanges | Veränderungen persönliche Situation        | UndefinedPc                    | personal_change_other   | abcdefghij |
+    | PersonalChanges | Veränderungen persönliche Situation        | OwnDesirePc, UndefinedPc       | personal_change_other   | abcdefghij |
+    | SocialChanges   | Veränderungen nicht bewältigt, weil        |                                | social_change_other     |            |
+    | SocialChanges   | Veränderungen nicht bewältigt, weil        | UndefinedSc                    | social_change_other     |            |
+    | SocialChanges   | Veränderungen nicht bewältigt, weil        | UndefinedSc                    | social_change_other     | abcdefghij |
+    | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc, UndefinedSc | social_change_other     | abcdefghij |
+  
+#| housing_reasons  | Wohnraumsituations- und Ausstattungsgründe |                                             |            |
+# | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | UNDEFINED_HOUSING_REASON                    |            |
+# | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | UNDEFINED_HOUSING_REASON                    | abcdefghij |
+#| housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, UNDEFINED_HOUSING_REASON | abcdefghij | 
 
 Szenariogrundriss: Die Auflistung enthalten doppelte Werte
     Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Doppelte Angaben bei '<Bezeichnung>' 
 Beispiele:
-    | Name             | Bezeichnung                                | Wert                                                     |
+    | Name             | Bezeichnung                               | Wert                                                      |
     | PersonalChanges | Veränderungen persönliche Situation        | OwnDesirePc, OwnDesirePc                                  |
     | PersonalChanges | Veränderungen persönliche Situation        | OwnDesirePc, OwnDesirePc, IncreasedAssitanceNeedPc        |
     | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc, NoRelativeCarerSc                      |
@@ -98,55 +97,36 @@ Beispiele:
 # ist keine liste
 #| housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_ENTRANCE                      |
 # | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_ENTRANCE, BARRIERS_HABITATION |
-#    
-#    
-#Szenariogrundriss: Die Auflistung enthalten gültige Werte
-#Angenommen die Auflistung '<Name>' von 'Admission' enhält die Werte '<Werte>' und der Wert des Textfeldes '<Freitextfeld>' ist '<Freitextwert>'
-#Dann enthält das Validierungsergebnis keinen Fehler
 
-#Szenariogrundriss: Die Auflistung enthalten gültige Werte
-#   Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert>' gesetzt
-#   und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
-#   Dann enthält das Validierungsergebnis keine Fehler
-#Beispiele:
-#    | Name            | Bezeichnung                                | Wert1                                   | Wert       |
-#    | PersonalChanges | Veränderungen persönliche Situation        | OwnDesirePc, LossMainAttendancePc      | abcdefghij |
-#    | PersonalChanges | Veränderungen persönliche Situation        | OwnDesirePc                            |            |
-#    | PersonalChanges | Veränderungen persönliche Situation        |                                        | abcdefghij |
-#    | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc, MissingMealsSc      | abcdefghij |
-#    | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc                      |            |
-#    | SocialChanges   | Veränderungen nicht bewältigt, weil        |                                        | abcdefghij |
+Szenariogrundriss: Die Auflistung enthalten gültige Werte
+   Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert1>' gesetzt
+   Und die Eigenschaft '<Name2>' von 'Admission' ist auf '<Wert2>' gesetzt
+   Dann enthält das Validierungsergebnis keine Fehler
+Beispiele:
+    | Name            | Bezeichnung                                | Wert1                                  | Name2                 | Wert2      |
+    | PersonalChanges | Veränderungen persönliche Situation        | OwnDesirePc, LossMainAttendancePc      | personal_change_other | abcdefghij |
+    | PersonalChanges | Veränderungen persönliche Situation        | OwnDesirePc                            | personal_change_other |            |
+    | PersonalChanges | Veränderungen persönliche Situation        |                                        | personal_change_other | abcdefghij |
+    | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc, MissingMealsSc      | social_change_other   | abcdefghij |
+    | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc                      | social_change_other   |            |
+    | SocialChanges   | Veränderungen nicht bewältigt, weil        |                                        | social_change_other   | abcdefghij |
 
 # ist keine liste
 #    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_HABITATION | abcdefghij |
 #    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE                      |            |
 #    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe |                                        | abcdefghij | 
 #
-#Szenariogrundriss: Auswahlfelder enthalten Werte, die einen Texteintrag erfordern
-#    Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
-#    und die Eigenschaft '<Textfeldname>' von 'Admission' ist auf '<Textfeldwert>' gesetzt
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei '<Bezeichnung>' im Textfeld bitte einen Wert angegeben.'
-#Beispiele:
-#    | Name                          | Bezeichnung                    | Wert     | Textfeldname       | Textfeldwert |
-#    | housing_type_before_admission | Wohnsituation vor der Aufnahme | AD_OTHER | other_housing_type |              | 
 
-#Szenariogrundriss: Auswahlfelder enthalten Werte, die einen Texteintrag erfordern
-#    Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>' und das Feld '<Textfeldname>' enthält den Wert '<Textfeldwert>'
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei '<Bezeichnung>' im Textfeld bitte einen Wert angegeben.
-#Beispiele:
-#    | Name                          | Bezeichnung                    | Wert     | Textfeldname       | Textfeldwert |
-#    | housing_type_before_admission | Wohnsituation vor der Aufnahme | AD_OTHER | other_housing_type |              | 
-#
+Szenario: Auswahlfelder enthalten Werte, die einen Texteintrag erfordern
+    Angenommen die Eigenschaft 'housing_type_before_admission' von 'Admission' ist auf 'OtherAl' gesetzt
+    Und die Eigenschaft 'other_housing_type' von 'Admission' ist auf '' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Bei 'Wohnsituation vor der Aufnahme' im Textfeld bitte einen Wert angegeben.'
 
-#Szenariogrundriss: Auswahlfelder enthalten Werte, Texteintrag vorhanden
-#    Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>' und das Feld '<Textfeldname>' enthält den Wert '<Textfeldwert>'
-#    Dann enthält das Validierungsergebnis keinen Fehler.
-#Beispiele:
-#    | Name                          | Bezeichnung                    | Wert     | Textfeldname       | Textfeldwert |
-#    | housing_type_before_admission | Wohnsituation vor der Aufnahme | AD_OTHER | other_housing_type | asdf         | 
-#
-#
-#
+Szenario: Auswahlfelder enthalten Werte, Texteintrag vorhanden
+    Angenommen die Eigenschaft 'housing_type_before_admission' von 'Admission' ist auf 'OtherAl' gesetzt
+    Und die Eigenschaft 'other_housing_type' von 'Admission' ist auf 'asdf' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+
 #Szenariogrundriss: Auswahlfelder enthalten Werte, bei dem kein Texteintrag zugelassen wird
 #    Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>' und das Feld '<Textfeldname>' enthält den Wert '<Textfeldwert>'
 #    Dann enthält das Validierungsergebnis den Fehler 'Bei '<Bezeichnung>' im Textfeld bitte keinen Wert angegeben.
