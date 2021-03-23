@@ -92,24 +92,11 @@ namespace Vodamep.Data.Dummy
                 LastPostcode = "6800",
                 LastCity = "Feldkirch",
 
-                HousingTypeBeforeAdmission = ((AdmissionLocation[])Enum.GetValues(typeof(AdmissionLocation)))
-                    .Where(x => x != AdmissionLocation.UndefinedAl)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(AdmissionLocation)).Length - 1)),
-
-                MainAttendanceRelation = ((MainAttendanceRelation[])Enum.GetValues(typeof(MainAttendanceRelation)))
-                    .Where(x => x != MainAttendanceRelation.UndefinedMr)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(MainAttendanceRelation)).Length - 1)),
-
-                MainAttendanceCloseness = ((MainAttendanceCloseness[])Enum.GetValues(typeof(MainAttendanceCloseness)))
-                    .Where(x => x != MainAttendanceCloseness.UndefinedMc)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(MainAttendanceCloseness)).Length - 1)),
-
-                HousingReason = ((HousingReason[])Enum.GetValues(typeof(HousingReason)))
-                    .Where(x => x != HousingReason.UndefinedHr)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(HousingReason)).Length - 1)),
-
+                HousingTypeBeforeAdmission = AdmissionLocation.AmbulatorySupervisedFlatAl,
+                MainAttendanceRelation = MainAttendanceRelation.ChildMr,
+                MainAttendanceCloseness = MainAttendanceCloseness.NoMainattendanceMc,
+                HousingReason = HousingReason.BarriersEntranceHr,
                 PersonalChanges = { PersonalChange.IncreasedAssitanceNeedPc },
-
                 SocialChanges = { SocialChange.MissingMealsSc }
             };
 

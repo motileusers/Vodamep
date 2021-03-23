@@ -78,11 +78,6 @@ Beispiele:
     | SocialChanges   | Veränderungen nicht bewältigt, weil        | UndefinedSc                    | social_change_other     |            |
     | SocialChanges   | Veränderungen nicht bewältigt, weil        | UndefinedSc                    | social_change_other     | abcdefghij |
     | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc, UndefinedSc | social_change_other     | abcdefghij |
-  
-#| housing_reasons  | Wohnraumsituations- und Ausstattungsgründe |                                             |            |
-# | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | UNDEFINED_HOUSING_REASON                    |            |
-# | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | UNDEFINED_HOUSING_REASON                    | abcdefghij |
-#| housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, UNDEFINED_HOUSING_REASON | abcdefghij | 
 
 Szenariogrundriss: Die Auflistung enthalten doppelte Werte
     Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert>' gesetzt
@@ -94,10 +89,6 @@ Beispiele:
     | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc, NoRelativeCarerSc                      |
     | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc, NoRelativeCarerSc, MissingMealsSc      |
   
-# ist keine liste
-#| housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_ENTRANCE                      |
-# | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_ENTRANCE, BARRIERS_HABITATION |
-
 Szenariogrundriss: Die Auflistung enthalten gültige Werte
    Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert1>' gesetzt
    Und die Eigenschaft '<Name2>' von 'Admission' ist auf '<Wert2>' gesetzt
@@ -111,12 +102,6 @@ Beispiele:
     | SocialChanges   | Veränderungen nicht bewältigt, weil        | NoRelativeCarerSc                      | social_change_other   |            |
     | SocialChanges   | Veränderungen nicht bewältigt, weil        |                                        | social_change_other   | abcdefghij |
 
-# ist keine liste
-#    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE, BARRIERS_HABITATION | abcdefghij |
-#    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe | BARRIERS_ENTRANCE                      |            |
-#    | housing_reasons  | Wohnraumsituations- und Ausstattungsgründe |                                        | abcdefghij | 
-#
-
 Szenario: Auswahlfelder enthalten Werte, die einen Texteintrag erfordern
     Angenommen die Eigenschaft 'housing_type_before_admission' von 'Admission' ist auf 'OtherAl' gesetzt
     Und die Eigenschaft 'other_housing_type' von 'Admission' ist auf '' gesetzt
@@ -127,28 +112,26 @@ Szenario: Auswahlfelder enthalten Werte, Texteintrag vorhanden
     Und die Eigenschaft 'other_housing_type' von 'Admission' ist auf 'asdf' gesetzt
     Dann enthält das Validierungsergebnis keine Fehler
 
-#Szenariogrundriss: Auswahlfelder enthalten Werte, bei dem kein Texteintrag zugelassen wird
-#    Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>' und das Feld '<Textfeldname>' enthält den Wert '<Textfeldwert>'
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei '<Bezeichnung>' im Textfeld bitte keinen Wert angegeben.
-#Beispiele:
-#    | Name                          | Bezeichnung                    | Wert                 | Textfeldname       | Textfeldwert |
-#    | housing_type_before_admission | Wohnsituation vor der Aufnahme | AD_HOME_LIVING_ALONE | other_housing_type | asdf         | 
+Szenario: Housing Reasons: Auswahlfelder enthalten Werte, die einen Texteintrag erfordern
+    Angenommen die Eigenschaft 'housing_reason' von 'Admission' ist auf 'OtherHr' gesetzt
+    Und die Eigenschaft 'housing_reason_other' von 'Admission' ist auf '' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Bei 'Wohnraumsituations- und Ausstattungsgründe' im Textfeld bitte einen Wert angegeben.'
 
+Szenario: Housing Reasons: Auswahlfelder enthalten Werte, Texteintrag vorhanden
+    Angenommen die Eigenschaft 'housing_reason' von 'Admission' ist auf 'OtherHr' gesetzt
+    Und die Eigenschaft 'housing_reason_other' von 'Admission' ist auf 'asdf' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
 
-# Abhängigkeit Auswahlfeld + Textfeld
-#Szenariogrundriss: Auswahlfeld enthält einen Wert, der einen Texteintrag erfordern
-#    Angenommen die Eigenschaft '<Name>' von 'Admission' enhält den Wert '<Wert>' und das Feld '<Textfeldname>' enthält den Wert '<Textfeldwert>'
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei '<Bezeichnung>' im Textfeld bitte einen Wert angegeben.
-#Beispiele:
-#    | Name           | Bezeichnung                                | Wert     | Textfeldname         | Textfeldwert |
-#    | housing_reason | Wohnraumsituations- und Ausstattungsgründe | OTHER_DR | housing_reason_other |              |
+Szenario: Eine Admission enthält eine Person, die nicht in der Personenliste ist
+    Angenommen die Eigenschaft 'person_id' von 'Admission' ist auf '2' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Person '2' ist nicht in der Personenliste vorhanden.'
 
-
-
-
-# Eine Admission enthält eine Person, die nicht in der Personenliste ist -> Fehler
-
-# Ein Admission (valid) muss im akutellen Monat liegen
+# Ein Admission (valid) muss im akutellen Monat liegen => was heißt aktuller monat? der monat des fromD Datums?
 # Ein Admission (valid) muss zum Start eines Stays vorhanden sein
 # Valid darf keine Zeit beinhalten
  
+ Szenario: Valid darf keine Zeit beinhalten
+    Angenommen die Datums-Eigenschaft 'valid' von 'Admission' hat eine Uhrzeit gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Valid' darf keine Uhrzeit beinhalten.'
+
+    
