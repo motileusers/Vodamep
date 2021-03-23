@@ -4,7 +4,7 @@ using Vodamep.StatLp.Model;
 
 namespace Vodamep.Data.Dummy
 {
-    internal static class StatLpDataGeneratorMkkpReportExtensions
+    internal static class StatLpDataGeneratorReportExtensions
     {
         public static Person AddDummyPerson(this StatLpReport report)
         {
@@ -19,5 +19,15 @@ namespace Vodamep.Data.Dummy
             report.AddPersons(p);
             return p;
         }
+
+        public static Admission[] AddDummyAdmissions(this StatLpReport report)
+        {
+            var p = StatLpDataGenerator.Instance.CreateAdmissions(report.Persons).OrderBy(x => x.PersonId).ToArray();
+            report.AddAdmissions(p);
+            return p;
+        }
+
+
+        
     }
 }

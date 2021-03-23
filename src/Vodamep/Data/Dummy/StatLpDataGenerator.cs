@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Google.Protobuf.Collections;
 using Vodamep.StatLp.Model;
 
 namespace Vodamep.Data.Dummy
@@ -43,7 +44,7 @@ namespace Vodamep.Data.Dummy
 
 
             report.AddDummyPersons(persons);
-            //report.AddDummyStaffs(staffs);
+            report.AddDummyAdmissions();
             //report.AddDummyTravelTime();
 
             //if (addActivities)
@@ -54,39 +55,24 @@ namespace Vodamep.Data.Dummy
 
         public Person CreatePerson()
         {
-            var id = (_id++).ToString();
-
-            var person = new Person()
-            {
-                Id = id,
-                FamilyName = _familynames[_rand.Next(_familynames.Length)],
-                GivenName = _names[_rand.Next(_names.Length)],
-                Country = CountryCodeProvider.Instance.Values.Values.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
-                Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
-                            .Where(x => x != Gender.UndefinedGe)
-                            .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
-
-            };
-
-            person.BirthdayD  = new DateTime(1920, 01, 01).AddDays(_rand.Next(20000));
-
-            return person;
-
+            return this.CreatePerson(_id++);
         }
 
-        public Person CreatePerson(int index)
+        public Person CreatePerson(long index)
         {
             var person = new Person()
             {
                 Id = index.ToString(),
-
+                FamilyName = _familynames[_rand.Next(_familynames.Length)],
+                GivenName = _names[_rand.Next(_names.Length)],
+                Country = CountryCodeProvider.Instance.Values.Values.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
                 Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
-                            .Where(x => x != Gender.UndefinedGe)
-                            .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
-
+                    .Where(x => x != Gender.UndefinedGe)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
 
             };
 
+            person.BirthdayD = new DateTime(1920, 01, 01).AddDays(_rand.Next(20000));
 
             return person;
         }
@@ -94,7 +80,50 @@ namespace Vodamep.Data.Dummy
         public IEnumerable<Person> CreatePersons(int count)
         {
             for (var i = 0; i < count; i++)
-                yield return CreatePerson();
+                yield return CreatePerson(i + 1);
+        }
+
+        public Admission CreateAdmission(string personId)
+        {
+            var admission = new Admission()
+            {
+                PersonId = personId,
+
+                LastPostcode = "6800",
+                LastCity = "Feldkirch",
+
+                HousingTypeBeforeAdmission = ((AdmissionLocation[])Enum.GetValues(typeof(AdmissionLocation)))
+                    .Where(x => x != AdmissionLocation.UndefinedAl)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(AdmissionLocation)).Length - 1)),
+
+                MainAttendanceRelation = ((MainAttendanceRelation[])Enum.GetValues(typeof(MainAttendanceRelation)))
+                    .Where(x => x != MainAttendanceRelation.UndefinedMr)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(MainAttendanceRelation)).Length - 1)),
+
+                MainAttendanceCloseness = ((MainAttendanceCloseness[])Enum.GetValues(typeof(MainAttendanceCloseness)))
+                    .Where(x => x != MainAttendanceCloseness.UndefinedMc)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(MainAttendanceCloseness)).Length - 1)),
+
+                HousingReason = ((HousingReason[])Enum.GetValues(typeof(HousingReason)))
+                    .Where(x => x != HousingReason.UndefinedHr)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(HousingReason)).Length - 1)),
+
+                PersonalChanges = { PersonalChange.IncreasedAssitanceNeedPc },
+
+                SocialChanges = { SocialChange.MissingMealsSc }
+            };
+
+            return admission;
+
+        }
+
+        public IEnumerable<Admission> CreateAdmissions(IEnumerable<Person> persons)
+        {
+            foreach (var person in persons)
+            {
+                yield return CreateAdmission(person.Id);
+            }
+
         }
 
     }
