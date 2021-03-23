@@ -24,6 +24,12 @@
     <None Update="Agp\AgpValidation_Activity.feature">
       <Generator></Generator>
     </None>
+    <None Update="Cm\CmValidation_Report.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Cm\CmValidation_Person.feature">
+      <Generator></Generator>
+    </None>
     <None Update="Hkpv\HkpvValidation_Employment.feature">
       <Generator></Generator>
     </None>
@@ -43,6 +49,12 @@
       <Generator></Generator>
     </None>
     <None Update="Mkkp\MkkpValidation_Report.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mohi\MohiValidation_Report.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mohi\MohiValidation_Person.feature">
       <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Leaving.feature">
@@ -73,6 +85,12 @@
       <Generator></Generator>
     </None>
     <None Update="StatLp\StatLpValidation_Stay.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Tb\TbValidation_Person.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Tb\TbValidation_Report.feature">
       <Generator></Generator>
     </None>
   </ItemGroup>
