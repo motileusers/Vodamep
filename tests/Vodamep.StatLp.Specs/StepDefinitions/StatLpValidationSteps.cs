@@ -149,7 +149,7 @@ namespace Vodamep.Specs.StepDefinitions
         private void SetSocialChanges(string value)
         {
             this.Report.Admissions.First().SocialChanges.Clear();
-
+            
             if (value.Contains(','))
             {
                 var activityTypes = value.Split(',').Select(x => (SocialChange)Enum.Parse(typeof(SocialChange), x));

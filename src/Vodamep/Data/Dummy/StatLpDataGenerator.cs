@@ -104,7 +104,7 @@ namespace Vodamep.Data.Dummy
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(MainAttendanceCloseness)).Length - 1)),
 
                 HousingReason = ((HousingReason[])Enum.GetValues(typeof(HousingReason)))
-                    .Where(x => x != HousingReason.UndefinedHousingReason)
+                    .Where(x => x != HousingReason.UndefinedHr)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(HousingReason)).Length - 1)),
 
             };
