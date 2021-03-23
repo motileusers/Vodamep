@@ -73,8 +73,6 @@ message Admission {
     string housing_reason_other = 18;                           // Anderer
 
     bool finance_personal_contributions = 19;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
-
-    DiagnosisGroup diagnosis_group = 20;                        // Diagnosegruppen (Neu)
 }
 
 // Aufnahme Daten
@@ -112,68 +110,68 @@ enum AttributeType {
 
 // 33 Wohnraumsituations- und Ausstattungsgründe
 enum HousingReason {
-  UNDEFINED_HOUSING_REASON = 0;
-  NOT_SPECIFIED = 1;                        // Keine Angabe
-  BARRIERS_ENTRANCE = 2;                    // Barrieren, Hindernisse Zugang
-  BARRIERS_HABITATION = 3;                  // Barrieren, Hindernisse Wohnung
-  BATHROOM_NOT_HANDICAPPED_ACCESSIBLE = 4;  // Bad WC nicht behindertengerecht
-  HEATING_HABITATION = 5;                   // Beheizung der Wohnung
-  OTHER_HR = 6;                             // Anderer
+  UNDEFINED_HR = 0;
+  NOT_SPECIFIED_HR = 1;                        // Keine Angabe
+  BARRIERS_ENTRANCE_HR = 2;                    // Barrieren, Hindernisse Zugang
+  BARRIERS_HABITATION_HR = 3;                  // Barrieren, Hindernisse Wohnung
+  BATHROOM_NOT_HANDICAPPED_ACCESSIBLE_HR = 4;  // Bad WC nicht behindertengerecht
+  HEATING_HABITATION_HR = 5;                   // Beheizung der Wohnung
+  OTHER_HR = 6;                                // Anderer
 }
 
 // 32 Veränderungen nicht bewältigt, weil
 enum SocialChange {
-  UNDEFINED_SOCIAL_CHANGE = 0;
-  NO_RELATIVE_CARER = 1;                    // Keine angehörige Pflegeperson
-  MISSING_MEALS = 2;                        // Fehlende Mahlzeiten
-  NO_ADEQUATE_OVERSIGHT = 3;                // Keine ausreichende Beaufsichtigung
-  NO_ADEQUATE_CARE_SERVICES = 4;            // Keine ausreichenden Betreuungsdienste
-  NO_HOME_CARE = 5;                         // Keine ausreichende Hauskrankenpflege
+  UNDEFINED_SC = 0;
+  NO_RELATIVE_CARER_SC = 1;                 // Keine angehörige Pflegeperson
+  MISSING_MEALS_SC = 2;                     // Fehlende Mahlzeiten
+  NO_ADEQUATE_OVERSIGHT_SC = 3;             // Keine ausreichende Beaufsichtigung
+  NO_ADEQUATE_CARE_SERVICES_SC = 4;         // Keine ausreichenden Betreuungsdienste
+  NO_HOME_CARE_SC = 5;                      // Keine ausreichende Hauskrankenpflege
 }
 
 // 31 Veränderungen persönliche Situation
 enum PersonalChange {
-  UNDEFINED_PERSONALCHANGE = 0;
+  UNDEFINED_PC = 0;
   OWN_DESIRE_PC = 1;                         // Eigener Wunsch
-  LOSS_MAIN_ATTENDANCE = 2;                  // Ausfall der Hauptbetreuungsperson
-  INCREASED_ASSITANCE_NEED = 3;              // Erhöhter Betreuungsbedarf
-  NURSING_NEED_PHYSICAL = 4;                 // Gestiegener Pflegebedarf körperlich
-  NURSING_NEED_MENTAL = 5;                   // Gestiegener Pflegebedarf psychisch
-  NEGLECT_RISK = 6;                          // Verstärkte Verwahrlosungsgefahr
+  LOSS_MAIN_ATTENDANCE_PC = 2;               // Ausfall der Hauptbetreuungsperson
+  INCREASED_ASSITANCE_NEED_PC = 3;           // Erhöhter Betreuungsbedarf
+  NURSING_NEED_PHYSICAL_PC = 4;              // Gestiegener Pflegebedarf körperlich
+  NURSING_NEED_MENTAL_PC = 5;                // Gestiegener Pflegebedarf psychisch
+  NEGLECT_RISK_PC = 6;                       // Verstärkte Verwahrlosungsgefahr
 }
 
 // 24 Inanspruchnahme anderer Dienste
 enum Service {
-  UNDEFINED_SERVICE = 0;
-  HOME_CARE = 1;                             // Hauskrankenpflege
-  MOBILE_CARE_SERVICE = 2;                   // Mobiler Hilfsdienst
-  HOME_MEAL_SERVICE = 3;                     // Mahlzeitendienst
-  MEDICAL_THERAPEUTIC_SERVICE = 4;           // Medizinisch-therapeutische Dienste
-  PRIVATE_CARE_24_HOUR = 5;                  // Private bezahlte Pflege (24 Stunden Betreuung)
-  PRIVATE_CARE_HOURLY = 6;                   // Private bezahlte Pflege (stundenweise)
+  UNDEFINED_SV = 0;
+  HOME_CARE_SV = 1;                          // Hauskrankenpflege
+  MOBILE_CARE_SV = 2;                        // Mobiler Hilfsdienst
+  HOME_MEAL_SV = 3;                          // Mahlzeitendienst
+  MEDICAL_THERAPEUTIC_SV = 4;                // Medizinisch-therapeutische Dienste
+  PRIVATE_CARE_24_HOUR_SV = 5;               // Private bezahlte Pflege (24 Stunden Betreuung)
+  PRIVATE_CARE_HOURLY_SV = 6;                // Private bezahlte Pflege (stundenweise)
 }
 
 // 54 Entlassung
 enum DischargeReason {
-  UNDEFINED_DISCHARGEREASON = 0;
-  END_SHORT_TERM_CARE = 1;                   // Ende der Kurzzeitpflege
-  INCREASED_NEED_FOR_CARE = 2;               // erhöhte Betreuungs/Pflegebedürftigkeit
-  LOWER_NEED_FOR_CARE = 3;                   // geringere Betreuungs/Pflegebedürftigkeit
-  OWN_DESIRE = 4;                            // eigener Wunsch
+  UNDEFINED_DR = 0;
+  END_SHORT_TERM_CARE_DR = 1;                // Ende der Kurzzeitpflege
+  INCREASED_NEED_FOR_CARE_DR = 2;            // erhöhte Betreuungs/Pflegebedürftigkeit
+  LOWER_NEED_FOR_CARE_DR = 3;                // geringere Betreuungs/Pflegebedürftigkeit
+  OWN_DESIRE_DR = 4;                         // eigener Wunsch
   OTHER_DR = 5;                              // sonstige
 }
 
 // 53 Entlassung wohin
 enum DischargeLocation {
-  UNDEFINED_DISCHARGELOCATION = 0;
-  HOME_LIVING_ALONE = 1;                       // nach Hause lebend alleine
-  HOME_LIVING_NOT_ALONE = 2;                   // nach Hause lebend nicht alleine
-  AMBULATORY_SUPERVISED_FLAT = 3;              // ambulant betreute (Senioren/Wohnung)
-  SUPERVISED_FLAT = 4;                         // betreute Wohngemeinschaften
-  NURSING_HOME = 5;                            // Pflegeheim nach Pflegeheimgesetz
-  OTHER_ATTENDED_HOUSING = 6;                  // Sonstige betreute Wohnform
-  OTHER_DL = 7;                                // Sonstige
-  NO_DISCHARGELOCATION = 8;                    // keine Angabe
+  UNDEFINED_DC = 0;
+  HOME_LIVING_ALONE_DC = 1;                  // nach Hause lebend alleine
+  HOME_LIVING_NOT_ALONE_DC = 2;              // nach Hause lebend nicht alleine
+  AMBULATORY_SUPERVISED_FLAT_DC = 3;         // ambulant betreute (Senioren/Wohnung)
+  SUPERVISED_FLAT_DC = 4;                    // betreute Wohngemeinschaften
+  NURSING_HOME_DC = 5;                       // Pflegeheim nach Pflegeheimgesetz
+  OTHER_ATTENDED_HOUSING_DC = 6;             // Sonstige betreute Wohnform
+  OTHER_DC = 7;                              // Sonstige
+  NO_DC = 8;                                 // keine Angabe
 }
 
 // 51 Abgang Art
@@ -225,11 +223,6 @@ enum AdmissionLocation {
   NO_DISCHARGELOCATION_AL = 8;                 // keine Angabe
 }
 
-// Diagnosegruppen
-// Beschreibung in diagnosisgroups.csv
-enum DiagnosisGroup { 
-    UNDEFINED_DG = 0;
-}
 
 // Geschlecht, nach neuer Definition
 enum Gender {
@@ -271,7 +264,7 @@ enum CareAllowance {
 // Pflegestufe ARGE
 // Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
 enum CareAllowanceArge {
-  UNDEFINED_ALLOWANCE_AR = 0;
+  UNDEFINED_AR = 0;
   L0_AR = 1;
   L1_AR = 2;
   L2_AR = 3;

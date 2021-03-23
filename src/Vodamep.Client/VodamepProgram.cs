@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using Vodamep.Data;
+using Vodamep.Data.Hkpv;
 
 namespace Vodamep.Client
 {
@@ -53,7 +54,8 @@ namespace Vodamep.Client
                     provider = CountryCodeProvider.Instance;
                     break;
                 case ListSources.Postcode_City:
-                    provider = Postcode_CityProvider.Instance;
+                    // todo
+                    provider = Vodamep.Data.Postcode_CityProvider.Instance;
                     break;
                 case ListSources.Qualifications:
                     provider = QualificationCodeProvider.Instance;

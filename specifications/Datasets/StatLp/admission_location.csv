@@ -1,0 +1,11 @@
+﻿// Wohnform vor der Aufnahme
+
+UNDEFINED_AL;;
+HOME_LIVING_ALONE_AL;zu Hause lebend alleine;                   
+HOME_LIVING_NOT_ALONE_AL;zu Hause lebend nicht alleine;               
+AMBULATORY_SUPERVISED_FLAT_AL;ambulant betreute (Senioren/Wohnung);          
+SUPERVISED_FLAT_AL;betreute Wohngemeinschaften;                     
+NURSING_HOME_AL;Pflegeheim nach Pflegeheimgesetz;                        
+OTHER_ATTENDED_HOUSING_AL;Sonstige betreute Wohnform;              
+OTHER_AL;Sonstige;                               
+NO_DISCHARGELOCATION_AL;keine Angabe;                

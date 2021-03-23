@@ -1,4 +1,4 @@
-﻿// Postleitzahlen / Orte für Standard Schnitttellen (außer HKPV)
+﻿// Postleitzahlen / Orte für HKPV
 
 0000 Anderer;
 6700 Bludenz;
@@ -18,9 +18,14 @@
 6731 Sonntag;
 6733 Fontanella;
 6741 Raggal;
+6751 Ausserbraz;
 6751 Innerbraz;
+6752 Dalaas;
 6752 Wald am Arlberg;
 6754 Klösterle;
+6754 Langen am Arlberg;
+6762 Stuben;
+6763 Zürs;
 6764 Lech;
 6767 Warth;
 6771 St. Anton im Montafon;
@@ -29,9 +34,17 @@
 6780 Schruns;
 6781 Bartholomäberg;
 6782 Silbertal;
+6787 Gargellen;
 6791 St. Gallenkirch;
+6791 Gortipohl;
 6793 Gaschurn;
+6794 Partenen;
 6800 Feldkirch;
+6802 Feldkirch-Nofels;
+6804 Feldkirch-Altenstadt;
+6805 Feldkirch-Gisingen;
+6806 Feldkirch-Tosters;
+6807 Feldkirch-Tisis;
 6811 Göfis;
 6812 Meiningen;
 6820 Frastanz;
@@ -74,6 +87,7 @@
 6888 Schröcken;
 6890 Lustenau;
 6900 Bregenz;
+6900 Fluh;
 6900 Möggers;
 6911 Eichenberg;
 6911 Lochau;
@@ -96,4 +110,6 @@
 6972 Fußach;
 6973 Höchst;
 6974 Gaißau;
+6991 Riezlern;
+6992 Hirschegg;
 6993 Mittelberg;
