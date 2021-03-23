@@ -181,6 +181,8 @@ namespace Vodamep.Specs.StepDefinitions
             IMessage m;
             if (type == nameof(StatLpReport))
                 m = this.Report;
+            else if (type == nameof(Admission))
+                m = this.Report.Admissions[0];
             else if (type == nameof(Person))
                 m = this.Report.Persons[0];
             else

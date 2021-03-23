@@ -59,9 +59,7 @@ Szenariogrundriss: Listen sind leer
 Beispiele:
     | Name          | 
     | Admission     |
+    | Attribute     |
     | Leaving       |  
     | Person        |  
     | Stay          |  
-
-#todo was ist attributes - ohne einträge ist as aucher erlaubt??
-    

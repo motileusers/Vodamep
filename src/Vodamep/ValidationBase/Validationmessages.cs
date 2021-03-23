@@ -51,6 +51,7 @@ namespace Vodamep.ValidationBase
         public static string NoDoubledValuesAreAllowed => "Doppelte Angaben bei '{PropertyName}'";
         public static string ItemNotValid => "Keine gültige Angabe bei '{PropertyName}'";
         public static string TextAreaEnterAValue => "Bei '{PropertyName}' im Textfeld bitte einen Wert angegeben.";
+        public static string PersonIstNotAvailable => "Person '{PropertyValue}' ist nicht in der Personenliste vorhanden..";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {
