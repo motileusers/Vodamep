@@ -60,7 +60,6 @@
     <EmbeddedResource Include="..\..\specifications\Datasets\postcode_cities.csv" Link="Data\postcode_cities.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\care_allowance.csv" Link="Data\care_allowance.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\care_allowance_arge.csv" Link="Data\care_allowance_arge.csv" />
-    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\admission_location.csv" Link="Data\StatLp\admission_location.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\admission_type.csv" Link="Data\StatLp\admission_type.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\death_location.csv" Link="Data\StatLp\death_location.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\discharge_location.csv" Link="Data\StatLp\discharge_location.csv" />
@@ -68,11 +67,18 @@
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\finance.csv" Link="Data\StatLp\finance.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\housing_reason.csv" Link="Data\StatLp\housing_reason.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\leaving_reason.csv" Link="Data\StatLp\leaving_reason.csv" />
-    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\main_attendance_closeness.csv" Link="Data\StatLp\main_attendance_closeness.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\main_attendance_relation.csv" Link="Data\StatLp\main_attendance_relation.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\personal_change.csv" Link="Data\StatLp\personal_change.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\service.csv" Link="Data\StatLp\service.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\social_change.csv" Link="Data\StatLp\social_change.csv" />
+    <None Include="..\..\specifications\Datasets\admission_location.csv" Link="Data\admission_location.csv" />
+    <None Include="..\..\specifications\Datasets\Cm\activity_type.csv" Link="Data\Cm\activity_type.csv" />
+    <None Include="..\..\specifications\Datasets\Cm\client_activity_type.csv" Link="Data\Cm\client_activity_type.csv" />
+    <None Include="..\..\specifications\Datasets\gender.csv" Link="Data\gender.csv" />
+    <None Include="..\..\specifications\Datasets\main_attendance_closeness.csv" Link="Data\main_attendance_closeness.csv" />
+    <None Include="..\..\specifications\Datasets\Mohi\admission_type.csv" Link="Data\Mohi\admission_type.csv" />
+    <None Include="..\..\specifications\Datasets\Mohi\service.csv" Link="Data\Mohi\service.csv" />
+    <None Include="..\..\specifications\Datasets\Tb\service.csv" Link="Data\Tb\service.csv" />
     <None Include="..\..\specifications\Hkpv\Hkpv.proto" Link="Hkpv\Model\Hkpv.proto" />
     <None Include="..\..\specifications\Mkkp\Mkkp.proto" Link="Mkkp\Model\Mkkp.proto" />
     <None Include="..\..\specifications\Mohi\Mohi.proto" Link="Mohi\Model\Mohi.proto" />
@@ -87,6 +93,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Cm\" />
+    <Folder Include="Data\Mohi\" />
+    <Folder Include="Data\Tb\" />
     <Folder Include="Data\StatLp\" />
     <Folder Include="ValidationBase\" />
   </ItemGroup>
