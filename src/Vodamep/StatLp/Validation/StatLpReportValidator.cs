@@ -48,30 +48,7 @@ namespace Vodamep.StatLp.Validation
                 .WithMessage(Validationmessages.FirstDateInMonth);
 
             this.RuleForEach(report => report.Admissions).SetValidator(report =>  new AdmissionValidator(report));
-
-
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r.FromD, r.ToD));
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator4141617Without123(r.Persons, r.Staffs));
-
-            //// Nur für neu gesendete Daten
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator23Without417(r.Persons, r.Staffs)).Unless(x => x.ToD < new DateTime(2019, 01, 01));
-
-
-            //this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator(r.FromD, r.ToD));
-
-            //this.Include(new ActivityMedicalByQualificationTraineeValidator());
-
-            //this.Include(new ActivityWarningIfMoreThan5Validator());
-
-            //this.Include(new ActivityWarningIfMoreThan350Validator());            
-
-            //this.Include(new HkpvReportPersonIdValidator());
-
-            //this.Include(new HkpvReportStaffIdValidator());
-
-            //this.Include(new PersonSsnIsUniqueValidator());
-
-            //this.Include(new EmploymentActivityValidator());
+            this.RuleForEach(report => report.Attributes).SetValidator(report =>  new AttributeValidator(report));
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<StatLpReport> context, CancellationToken cancellation = default(CancellationToken))

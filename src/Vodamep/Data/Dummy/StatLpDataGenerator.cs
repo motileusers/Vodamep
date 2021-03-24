@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Google.Protobuf.Collections;
 using Vodamep.StatLp.Model;
+using Attribute = Vodamep.StatLp.Model.Attribute;
 
 namespace Vodamep.Data.Dummy
 {
@@ -22,12 +23,10 @@ namespace Vodamep.Data.Dummy
             }
         }
 
-
         private StatLpDataGenerator()
         {
 
         }
-
 
         public StatLpReport CreateStatLpReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
         {
@@ -42,10 +41,9 @@ namespace Vodamep.Data.Dummy
             report.FromD = from;
             report.ToD = report.FromD.LastDateInMonth();
 
-
             report.AddDummyPersons(persons);
             report.AddDummyAdmissions();
-            //report.AddDummyTravelTime();
+            report.AddDummyAttributes();
 
             //if (addActivities)
             //    report.AddDummyActivities();
@@ -110,6 +108,26 @@ namespace Vodamep.Data.Dummy
             {
                 yield return CreateAdmission(person.Id);
             }
+        }
+
+        public IEnumerable<Attribute> CreateAttributes(IEnumerable<Person> persons)
+        {
+            foreach (var person in persons)
+            {
+                yield return CreateAttribute(person.Id);
+            }
+        }
+
+        public Attribute CreateAttribute(string personId)
+        {
+            var attribute = new Attribute()
+            {
+                PersonId = personId,
+
+              
+            };
+
+            return attribute;
 
         }
 

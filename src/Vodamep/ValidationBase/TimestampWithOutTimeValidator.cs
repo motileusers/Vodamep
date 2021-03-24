@@ -1,6 +1,5 @@
 ﻿using FluentValidation.Validators;
 using Google.Protobuf.WellKnownTypes;
-using Vodamep.Hkpv.Validation;
 
 namespace Vodamep.ValidationBase
 {
