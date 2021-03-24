@@ -5,11 +5,12 @@ using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Validation
 {
-    internal class AttributeValidator : AbstractValidator<Attribute>
+    internal class StayValidator : AbstractValidator<Stay>
     {
-        public AttributeValidator(StatLpReport parentReport)
+        public StayValidator(StatLpReport parentReport)
         {
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
+            this.RuleFor(x => x.To).SetValidator(new TimestampWithOutTimeValidator());
             
             this.RuleFor(x => x.PersonId)
                 .Must((admission, personId) =>

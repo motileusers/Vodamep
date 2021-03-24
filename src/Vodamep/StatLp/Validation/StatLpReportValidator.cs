@@ -51,8 +51,11 @@ namespace Vodamep.StatLp.Validation
                 .Unless(x => x.From == null)
                 .WithMessage(Validationmessages.FirstDateInMonth);
 
-            this.RuleForEach(report => report.Admissions).SetValidator(report =>  new AdmissionValidator(report));
-            this.RuleForEach(report => report.Attributes).SetValidator(report =>  new AttributeValidator(report));
+            this.RuleForEach(report => report.Admissions).SetValidator(report => new AdmissionValidator(report));
+
+            this.RuleForEach(report => report.Attributes).SetValidator(report => new AttributeValidator(report));
+
+            this.RuleForEach(report => report.Stays).SetValidator(report => new StayValidator(report));
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<StatLpReport> context, CancellationToken cancellation = default(CancellationToken))

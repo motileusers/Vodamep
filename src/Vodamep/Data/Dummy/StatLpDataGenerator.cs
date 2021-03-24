@@ -44,7 +44,8 @@ namespace Vodamep.Data.Dummy
             report.AddDummyPersons(persons);
             report.AddDummyAdmissions();
             report.AddDummyAttributes();
-
+            report.AddDummyStays(from);
+          
             return report;
         }
 
@@ -120,12 +121,30 @@ namespace Vodamep.Data.Dummy
             var attribute = new Attribute()
             {
                 PersonId = personId,
-
-              
             };
 
             return attribute;
 
+        }
+
+        public IEnumerable<Stay> CreateStays(IEnumerable<Person> persons, DateTime from)
+        {
+            foreach (var person in persons)
+            {
+                yield return CreateStay(person.Id, from);
+            }
+        }
+
+        public Stay CreateStay(string personId, DateTime from)
+        {
+            var stay = new Stay()
+            {
+                PersonId = personId,
+                From = from.AsTimestamp(),
+                To = from.AddDays(10).AsTimestamp(),
+            };
+
+            return stay;
         }
 
     }

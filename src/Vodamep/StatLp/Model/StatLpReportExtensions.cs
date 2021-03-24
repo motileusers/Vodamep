@@ -13,6 +13,7 @@ namespace Vodamep.StatLp.Model
         public static StatLpReport AddPersons(this StatLpReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
         public static StatLpReport AddAdmissions(this StatLpReport report, IEnumerable<Admission> admissions) => report.InvokeAndReturn(m => m.Admissions.AddRange(admissions));
         public static StatLpReport AddAttributes(this StatLpReport report, IEnumerable<Attribute> attributes) => report.InvokeAndReturn(m => m.Attributes.AddRange(attributes));
+        public static StatLpReport AddStays(this StatLpReport report, IEnumerable<Stay> attributes) => report.InvokeAndReturn(m => m.Stays.AddRange(attributes));
 
         private static StatLpReport InvokeAndReturn(this StatLpReport m, Action<StatLpReport> action)
         {

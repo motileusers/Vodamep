@@ -11,10 +11,6 @@ Szenario: Ein Attribut enthält eine Person, die nicht in der Personenliste ist
     Angenommen die Datums-Eigenschaft 'from' von 'Attribute' hat eine Uhrzeit gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''Von' darf keine Uhrzeit beinhalten.'
 
-       | care_allowance        | Pflegegeld         |                      |
-    | care_allowance        | Pflegegeld         | UndefinedAllowance   |                           |
-
-
 # Todo
 # Attribute CAREALLOWANCEARGE darf nur L0_AR sein, wenn es sich um Altersheim handelt
 # Klären: Wie kommen wir zur Gruppe ABAH?

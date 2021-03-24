@@ -84,8 +84,10 @@ namespace Vodamep.Specs.StepDefinitions
                 //es müssen auch admissions und attributes gelöscht werden,
                 //weil sonst die personen in den jeweiligen listen fehlen
                 this.Report.Persons.Clear();
+
                 this.Report.Admissions.Clear();
                 this.Report.Attributes.Clear();
+                this.Report.Stays.Clear();
             }
             else if (type == nameof(Stay))
                 this.Report.Stays.Clear();
@@ -106,6 +108,8 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Attributes[0].SetValue(name, value);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetValue(name, value);
+            else if (type == nameof(Stay))
+                this.Report.Stays[0].SetValue(name, value);
             else
                 throw new NotImplementedException();
         }
@@ -194,6 +198,8 @@ namespace Vodamep.Specs.StepDefinitions
                 m = this.Report.Attributes[0];
             else if (type == nameof(Person))
                 m = this.Report.Persons[0];
+            else if (type == nameof(Stay))
+                m = this.Report.Stays[0];
             else
                 throw new NotImplementedException();
 

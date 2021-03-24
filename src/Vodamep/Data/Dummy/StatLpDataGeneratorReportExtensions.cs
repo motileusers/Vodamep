@@ -34,5 +34,12 @@ namespace Vodamep.Data.Dummy
             report.AddAttributes(p);
             return p;
         }
+
+        public static Stay[] AddDummyStays(this StatLpReport report, DateTime from)
+        {
+            var p = StatLpDataGenerator.Instance.CreateStays(report.Persons, from).OrderBy(x => x.PersonId).ToArray();
+            report.AddStays(p);
+            return p;
+        }
     }
 }

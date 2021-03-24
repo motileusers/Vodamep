@@ -19,7 +19,7 @@ namespace Vodamep.StatLp.Validation
                 {
                     return parentReport.Persons.Any(y => y.Id == personId);
                 })
-                .WithMessage(Validationmessages.PersonIstNotAvailable);
+                .WithMessage(Validationmessages.PersonIsNotAvailable);
 
             this.RuleFor(x => x.HousingTypeBeforeAdmission).NotEmpty();
             this.RuleFor(x => x.MainAttendanceRelation).NotEmpty();
