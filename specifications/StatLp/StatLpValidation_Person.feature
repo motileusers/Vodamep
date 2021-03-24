@@ -24,33 +24,29 @@ Beispiele:
     | gender       | Geschlecht     |    
     | country      | Land           |
  
-# Regex "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$"
-#Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
-#    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' weist ein ungültiges Format auf.'
-#Beispiele: 
-#    | Name              | Bezeichnung    | Wert |
-#    | family_name       | Familienname   | t@st |
-#    | given_name        | Vorname        | t@st |
+Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
+    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' weist ein ungültiges Format auf.'
+Beispiele: 
+    | Name              | Bezeichnung    | Wert |
+    | family_name       | Familienname   | t@st |
+    | given_name        | Vorname        | t@st |
 
-# Länge 2 - 50 Zeichen
-#Szenariogrundriss: Der Familienname einer Person ist zu kurz / lang
-#    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient xx besitzt eine ungültige Länge'
-#Beispiele: 
-#    | Name              | Bezeichnung    | Wert                                                     |
-#    | family_name       | Familienname   | abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij x |
-#    | family_name       | Familienname   | x                                                        |
+Szenariogrundriss: Der Familienname einer Person ist zu kurz / lang (Länge 2-50 Zeichen)
+    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' besitzt eine ungültige Länge'
+Beispiele: 
+    | Name              | Bezeichnung    | Wert                                                     |
+    | family_name       | Familienname   | abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij x |
+    | family_name       | Familienname   | x                                                        |
 
-
-# Länge 2 - 30 Zeichen
-#Szenariogrundriss: Der Vorname einer Person ist zu kurz / lang
-#    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient xx besitzt eine ungültige Länge'
-#Beispiele: 
-#    | Name             | Bezeichnung    | Wert                                |
-#    | given_name       | Vorname        | abcdefghij abcdefghij abcdefghij x  |
-#    | given_name       | Vorname        | x                                   |
+Szenariogrundriss: Der Vorname einer Person ist zu kurz / lang ( Länge 2 - 30 Zeichen)
+    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' besitzt eine ungültige Länge'
+Beispiele: 
+    | Name             | Bezeichnung    | Wert                                |
+    | given_name       | Vorname        | abcdefghij abcdefghij abcdefghij x  |
+    | given_name       | Vorname        | x                                   |
 
 
 # Land

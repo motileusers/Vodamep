@@ -45,9 +45,6 @@ namespace Vodamep.Data.Dummy
             report.AddDummyAdmissions();
             report.AddDummyAttributes();
 
-            //if (addActivities)
-            //    report.AddDummyActivities();
-
             return report;
         }
 

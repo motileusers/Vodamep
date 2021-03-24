@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using System.Text.RegularExpressions;
 using Vodamep.StatLp.Model;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Validation
 {
@@ -11,11 +12,16 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.FamilyName).NotEmpty();
             this.RuleFor(x => x.GivenName).NotEmpty();
 
-            // Änderung 5.11.2018, LH
-            var r = new Regex(@"^[\p{L}][-\p{L}. ]*[\p{L}.]$");
+            this.RuleFor(x => x.FamilyName).MinimumLength(2).WithMessage(x => Validationmessages.PersonInvalidLength(x.Id));
+            this.RuleFor(x => x.GivenName).MinimumLength(2).WithMessage(x => Validationmessages.PersonInvalidLength(x.Id));
+
+            this.RuleFor(x => x.FamilyName).MaximumLength(50).WithMessage(x => Validationmessages.PersonInvalidLength(x.Id));
+            this.RuleFor(x => x.GivenName).MaximumLength(30).WithMessage(x => Validationmessages.PersonInvalidLength(x.Id));
+
+            var r = new Regex(@"^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$");
             this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
             this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
-            
+
             this.Include(new PersonBirthdayValidator());
        
             this.RuleFor(x => x.Gender).NotEmpty();
