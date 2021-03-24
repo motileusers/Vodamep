@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Google.Protobuf.Collections;
 using Vodamep.StatLp.Model;
+using Attribute = Vodamep.StatLp.Model.Attribute;
 
 namespace Vodamep.Data.Dummy
 {
@@ -22,12 +23,10 @@ namespace Vodamep.Data.Dummy
             }
         }
 
-
         private StatLpDataGenerator()
         {
 
         }
-
 
         public StatLpReport CreateStatLpReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
         {
@@ -42,13 +41,9 @@ namespace Vodamep.Data.Dummy
             report.FromD = from;
             report.ToD = report.FromD.LastDateInMonth();
 
-
             report.AddDummyPersons(persons);
             report.AddDummyAdmissions();
-            //report.AddDummyTravelTime();
-
-            //if (addActivities)
-            //    report.AddDummyActivities();
+            report.AddDummyAttributes();
 
             return report;
         }
@@ -65,7 +60,7 @@ namespace Vodamep.Data.Dummy
                 Id = index.ToString(),
                 FamilyName = _familynames[_rand.Next(_familynames.Length)],
                 GivenName = _names[_rand.Next(_names.Length)],
-                Country = CountryCodeProvider.Instance.Values.Values.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
+                Country = CountryCodeProvider.Instance.Values.Keys.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
                 Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
                     .Where(x => x != Gender.UndefinedGe)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
@@ -110,6 +105,26 @@ namespace Vodamep.Data.Dummy
             {
                 yield return CreateAdmission(person.Id);
             }
+        }
+
+        public IEnumerable<Attribute> CreateAttributes(IEnumerable<Person> persons)
+        {
+            foreach (var person in persons)
+            {
+                yield return CreateAttribute(person.Id);
+            }
+        }
+
+        public Attribute CreateAttribute(string personId)
+        {
+            var attribute = new Attribute()
+            {
+                PersonId = personId,
+
+              
+            };
+
+            return attribute;
 
         }
 

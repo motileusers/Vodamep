@@ -1,13 +1,18 @@
 ﻿#language: de-DE
-Funktionalität: StatLp - Validierung der gemeldeten Aufenthalte einer Datenmeldung
+Funktionalität: StatLp - Validierung der gemeldeten Attribute einer Datenmeldung
 
-
-# Ein Attribute enthält eine Person, die nicht in der Personenliste ist -> Fehler
+Szenario: Ein Attribut enthält eine Person, die nicht in der Personenliste ist
+    Angenommen die Eigenschaft 'person_id' von 'Attribute' ist auf '2' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Person '2' ist nicht in der Personenliste vorhanden.'
 
 # Ein Attribute (From) muss im akutellen Monat liegen
-# From darf keine Zeit beinhalten
 
+ Szenario: Von darf keine Zeit beinhalten
+    Angenommen die Datums-Eigenschaft 'from' von 'Attribute' hat eine Uhrzeit gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Von' darf keine Uhrzeit beinhalten.'
 
+       | care_allowance        | Pflegegeld         |                      |
+    | care_allowance        | Pflegegeld         | UndefinedAllowance   |                           |
 
 
 # Todo
@@ -18,10 +23,6 @@ Funktionalität: StatLp - Validierung der gemeldeten Aufenthalte einer Datenmeld
 # - innerhalb der Connexia Logik
 
 
-#Szenario: Geschlecht ist undefiniert
-#    Angenommen die Eigenschaft 'gender' von 'Person' ist auf 'UndefinedGender' gesetzt
-#    Dann enthält das Validierungsergebnis den Fehler ''Geschlecht' darf nicht leer sein.'
-#
 #Szenario: Pflegegeld ist undefiniert
 #    Angenommen die Eigenschaft 'care_allowance' von 'Person' ist auf 'UndefinedAllowance' gesetzt
 #    Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' darf nicht leer sein.'

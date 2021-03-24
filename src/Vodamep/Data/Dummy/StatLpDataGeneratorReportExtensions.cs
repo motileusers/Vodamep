@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Vodamep.StatLp.Model;
+using Attribute = System.Attribute;
 
 namespace Vodamep.Data.Dummy
 {
@@ -27,7 +28,11 @@ namespace Vodamep.Data.Dummy
             return p;
         }
 
-
-        
+        public static Vodamep.StatLp.Model.Attribute[] AddDummyAttributes(this StatLpReport report)
+        {
+            var p = StatLpDataGenerator.Instance.CreateAttributes(report.Persons).OrderBy(x => x.PersonId).ToArray();
+            report.AddAttributes(p);
+            return p;
+        }
     }
 }

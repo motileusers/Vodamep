@@ -128,8 +128,7 @@ Szenario: Eine Admission enthält eine Person, die nicht in der Personenliste is
 
 # Ein Admission (valid) muss im akutellen Monat liegen => was heißt aktuller monat? der monat des fromD Datums?
 # Ein Admission (valid) muss zum Start eines Stays vorhanden sein
-# Valid darf keine Zeit beinhalten
- 
+
  Szenario: Valid darf keine Zeit beinhalten
     Angenommen die Datums-Eigenschaft 'valid' von 'Admission' hat eine Uhrzeit gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''Valid' darf keine Uhrzeit beinhalten.'

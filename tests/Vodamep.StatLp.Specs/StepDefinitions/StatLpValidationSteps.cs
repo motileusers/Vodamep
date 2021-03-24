@@ -78,9 +78,15 @@ namespace Vodamep.Specs.StepDefinitions
             else if (type == nameof(Attribute))
                 this.Report.Attributes.Clear();
             else if (type == nameof(Leaving))
-                this.Report.Attributes.Clear();
+                this.Report.Leavings.Clear();
             else if (type == nameof(Person))
+            {
+                //es müssen auch admissions und attributes gelöscht werden,
+                //weil sonst die personen in den jeweiligen listen fehlen
                 this.Report.Persons.Clear();
+                this.Report.Admissions.Clear();
+                this.Report.Attributes.Clear();
+            }
             else if (type == nameof(Stay))
                 this.Report.Stays.Clear();
             else
@@ -90,13 +96,14 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist auf '(.*)' gesetzt")]
         public void GivenThePropertyIsSetTo(string name, string type, string value)
         {
-            IMessage m;
             if (type == nameof(StatLpReport))
                 this.Report.SetValue(name, value);
             else if (type == nameof(Institution))
                 this.Report.Institution.SetValue(name, value);
             else if (type == nameof(Admission))
                 this.Report.Admissions[0].SetValue(name, value);
+            else if (type == nameof(Attribute))
+                this.Report.Attributes[0].SetValue(name, value);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetValue(name, value);
             else
@@ -183,6 +190,8 @@ namespace Vodamep.Specs.StepDefinitions
                 m = this.Report;
             else if (type == nameof(Admission))
                 m = this.Report.Admissions[0];
+            else if (type == nameof(Attribute))
+                m = this.Report.Attributes[0];
             else if (type == nameof(Person))
                 m = this.Report.Persons[0];
             else
@@ -195,6 +204,16 @@ namespace Vodamep.Specs.StepDefinitions
             field.Accessor.SetValue(m, ts);
         }
 
+        [Given(@"der Id einer Person ist nicht eindeutig")]
+        public void GivenPersonIdNotUnique()
+        {
+            var p0 = this.Report.Persons[0];
+
+            var p = this.Report.AddDummyPerson();
+
+            p.Id = p0.Id;
+            p.Id = p0.Id;
+        }
 
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
