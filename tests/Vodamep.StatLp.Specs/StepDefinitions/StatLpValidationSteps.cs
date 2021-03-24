@@ -179,13 +179,6 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
-        [Given(@"die PLZ und der Ort von Admission sind auf auf '(.*)' und '(.*)' gesetzt")]
-        public void GivenThePostCodeCityPropertyIsSetTo(string postCode, string city)
-        {
-            this.Report.Admissions[0].LastPostcode = postCode;
-            this.Report.Admissions[0].LastCity = city;
-        }
-
         [Given(@"die Datums-Eigenschaft '(\w*)' von '(\w*)' hat eine Uhrzeit gesetzt")]
         public void GivenThePropertyHasATime(string name, string type)
         {
