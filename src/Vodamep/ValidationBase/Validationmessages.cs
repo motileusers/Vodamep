@@ -54,6 +54,7 @@ namespace Vodamep.ValidationBase
         public static string PersonIsNotAvailable => "Person '{PropertyValue}' ist nicht in der Personenliste vorhanden.";
         public static string PersonInvalidLength (string id) => $"'{{PropertyName}}' von Klient '{id}' besitzt eine ungültige Länge'";
         public static string InvalidValue (string id) => $"'{{PropertyName}}' von Klient '{id}' hat einen ungülitgen Wert'";
+        public static string FromMustBeBeforeTo => $"'Von' muss vor 'Bis' liegen.";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

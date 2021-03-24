@@ -214,6 +214,14 @@ namespace Vodamep.Specs.StepDefinitions
             p.Id = p0.Id;
         }
 
+        [Given(@"Bis ist vor Von bei einem Stay")]
+        public void GivenToIsBeforeFromAtFirstStay()
+        {
+            var stay = this.Report.Stays[0];
+
+            stay.From = stay.To.AsDate().AddDays(2).AsTimestamp();
+        }
+
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
         {
