@@ -60,7 +60,7 @@ namespace Vodamep.Data.Dummy
                 Id = index.ToString(),
                 FamilyName = _familynames[_rand.Next(_familynames.Length)],
                 GivenName = _names[_rand.Next(_names.Length)],
-                Country = CountryCodeProvider.Instance.Values.Values.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
+                Country = CountryCodeProvider.Instance.Values.Keys.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
                 Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
                     .Where(x => x != Gender.UndefinedGe)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),

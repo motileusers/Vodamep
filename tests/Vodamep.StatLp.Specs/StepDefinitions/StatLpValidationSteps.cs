@@ -96,7 +96,6 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist auf '(.*)' gesetzt")]
         public void GivenThePropertyIsSetTo(string name, string type, string value)
         {
-            IMessage m;
             if (type == nameof(StatLpReport))
                 this.Report.SetValue(name, value);
             else if (type == nameof(Institution))

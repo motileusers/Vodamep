@@ -48,35 +48,21 @@ Beispiele:
     | given_name       | Vorname        | abcdefghij abcdefghij abcdefghij x  |
     | given_name       | Vorname        | x                                   |
 
+Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
+    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' hat einen ungülitgen Wert'
+Beispiele: 
+    | Name    | Bezeichnung | Wert |
+    | country | Land        | B    |
+    | country | Land        | A    |
 
-# Land
-#Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
-#    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient xx hat einen ungülitgen Wert'
-#Beispiele: 
-#    | Name    | Bezeichnung | Wert |
-#    | country | Land        | ZZ   |
-#    | country | Land        | A    |
-#	
-#Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert
-#    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#    Dann enthält das Validierungsergebnis keinen Fehler
-#Beispiele: 
-#    | Name    | Bezeichnung | Wert |
-#    | country | Land        | AD   |
-#    | country | Land        | AT   |
-#
-#
-#
-#    
-#
-#Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
-#    Angenommen die Datums-Eigenschaft '<Name>' von 'Person' hat eine Uhrzeit gesetzt
-#    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
-#Beispiele:
-#    | Name     | Bezeichnung  |
-#    | birthday | Geburtsdatum |
-
+Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert
+    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+Beispiele: 
+    | Name    | Bezeichnung | Wert |
+    | country | Land        | AD   |
+    | country | Land        | AT   |
 
 
 # die Liste enthält eine Person, die nicht in mindestens einem stay ist --> fehler

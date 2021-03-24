@@ -1,5 +1,7 @@
-﻿using FluentValidation;
+﻿using System.Linq;
+using FluentValidation;
 using System.Text.RegularExpressions;
+using Vodamep.Data;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
 
@@ -23,11 +25,15 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
 
             this.Include(new PersonBirthdayValidator());
-       
+
             this.RuleFor(x => x.Gender).NotEmpty();
+
             this.RuleFor(x => x.Country).NotEmpty();
 
-
+            this.RuleFor(x => x.Country)
+                .Must((person, country) => CountryCodeProvider.Instance.IsValid(country))
+                .Unless(x => string.IsNullOrEmpty(x.Country))
+                .WithMessage(x => Validationmessages.InvalidValue(x.Id));
         }
     }
 }

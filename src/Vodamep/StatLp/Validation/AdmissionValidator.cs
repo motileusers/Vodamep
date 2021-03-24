@@ -21,7 +21,6 @@ namespace Vodamep.StatLp.Validation
                 })
                 .WithMessage(Validationmessages.PersonIstNotAvailable);
 
-
             this.RuleFor(x => x.HousingTypeBeforeAdmission).NotEmpty();
             this.RuleFor(x => x.MainAttendanceRelation).NotEmpty();
             this.RuleFor(x => x.MainAttendanceCloseness).NotEmpty();
