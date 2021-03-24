@@ -17,6 +17,7 @@ namespace Vodamep.StatLp.Validation
                     return parentReport.Persons.Any(y => y.Id == personId);
                 })
                 .WithMessage(Validationmessages.PersonIstNotAvailable);
+
         }
     }
 }

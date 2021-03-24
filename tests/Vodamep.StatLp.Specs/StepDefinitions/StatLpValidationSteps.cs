@@ -205,6 +205,16 @@ namespace Vodamep.Specs.StepDefinitions
             field.Accessor.SetValue(m, ts);
         }
 
+        [Given(@"der Id einer Person ist nicht eindeutig")]
+        public void GivenPersonIdNotUnique()
+        {
+            var p0 = this.Report.Persons[0];
+
+            var p = this.Report.AddDummyPerson();
+
+            p.Id = p0.Id;
+            p.Id = p0.Id;
+        }
 
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)

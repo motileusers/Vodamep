@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.StatLp.Model;
@@ -30,6 +31,9 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.To).SetValidator(new TimestampWithOutTimeValidator());
             this.RuleFor(x => x.ToD).LessThanOrEqualTo(x => DateTime.Today);
             this.RuleFor(x => x.ToD).GreaterThan(x => x.FromD).Unless(x => x.From == null || x.To == null);
+
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
+            this.RuleFor(x => x).SetValidator(new PersonIdUniqueValidator());
 
             //corert kann derzeit nicht mit AnonymousType umgehen. Vielleicht später: this.RuleFor(x => new { x.From, x.To })
             this.RuleFor(x => new Tuple<DateTime, DateTime>(x.FromD, x.ToD))

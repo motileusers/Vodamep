@@ -11,6 +11,8 @@ Szenario: Ein Attribut enthält eine Person, die nicht in der Personenliste ist
     Angenommen die Datums-Eigenschaft 'from' von 'Attribute' hat eine Uhrzeit gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''Von' darf keine Uhrzeit beinhalten.'
 
+       | care_allowance        | Pflegegeld         |                      |
+    | care_allowance        | Pflegegeld         | UndefinedAllowance   |                           |
 
 
 # Todo
@@ -21,10 +23,6 @@ Szenario: Ein Attribut enthält eine Person, die nicht in der Personenliste ist
 # - innerhalb der Connexia Logik
 
 
-#Szenario: Geschlecht ist undefiniert
-#    Angenommen die Eigenschaft 'gender' von 'Person' ist auf 'UndefinedGender' gesetzt
-#    Dann enthält das Validierungsergebnis den Fehler ''Geschlecht' darf nicht leer sein.'
-#
 #Szenario: Pflegegeld ist undefiniert
 #    Angenommen die Eigenschaft 'care_allowance' von 'Person' ist auf 'UndefinedAllowance' gesetzt
 #    Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' darf nicht leer sein.'
