@@ -64,6 +64,8 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.SetDefault(name);
             else if (type == nameof(Admission))
                 this.Report.Admissions[0].SetDefault(name);
+            else if (type == nameof(Leaving))
+                this.Report.Leavings[0].SetDefault(name);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetDefault(name);
             else
@@ -106,6 +108,8 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Admissions[0].SetValue(name, value);
             else if (type == nameof(Attribute))
                 this.Report.Attributes[0].SetValue(name, value);
+            else if (type == nameof(Leaving))
+                this.Report.Leavings[0].SetValue(name, value);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetValue(name, value);
             else if (type == nameof(Stay))

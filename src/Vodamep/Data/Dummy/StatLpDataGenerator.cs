@@ -45,6 +45,7 @@ namespace Vodamep.Data.Dummy
             report.AddDummyAdmissions();
             report.AddDummyAttributes();
             report.AddDummyStays(from);
+            report.AddDummyLeavings();
           
             return report;
         }
@@ -142,6 +143,28 @@ namespace Vodamep.Data.Dummy
                 PersonId = personId,
                 From = from.AsTimestamp(),
                 To = from.AddDays(10).AsTimestamp(),
+            };
+
+            return stay;
+        }
+
+        public IEnumerable<Leaving> CreateLeavings(IEnumerable<Person> persons)
+        {
+            foreach (var person in persons)
+            {
+                yield return CreateLeaving(person.Id);
+            }
+        }
+
+        public Leaving CreateLeaving(string personId)
+        {
+            var stay = new Leaving()
+            {
+                PersonId = personId,
+                LeavingReason = ((LeavingReason[])(Enum.GetValues(typeof(LeavingReason))))
+                    .Where(x => x != LeavingReason.UndefinedLr)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(LeavingReason)).Length - 1)),
+
             };
 
             return stay;

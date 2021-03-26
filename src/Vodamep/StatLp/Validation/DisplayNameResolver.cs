@@ -40,6 +40,8 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(Admission.SocialChanges), "Veränderungen nicht bewältigt, weil");
             _dict.Add(nameof(Admission.SocialChangeOther), "Veränderungen nicht bewältigt, weil");
             _dict.Add(nameof(Admission.HousingReasonOther), "Wohnraumsituations- und Ausstattungsgründe");
+         
+            _dict.Add(nameof(Leaving.LeavingReason), "Abgangart");
         }
 
         public string GetDisplayName(string name)
