@@ -37,58 +37,17 @@ namespace Vodamep.StatLp.Validation
 
             }).WithMessage(x => Validationmessages.DeadClientMustNotContainDischargeLocation(x.PersonId));
 
-            this.RuleFor(x => x).Must(x =>
-                {
-                    if (x.DischargeReason != DischargeReason.OtherDr &&
-                         !string.IsNullOrWhiteSpace(x.DischargeReasonOther))
-                    {
-                        return false;
-                    }
+            this.RuleFor(x => x.DischargeReasonOther).Empty()
+                .Unless(x => x.DischargeReason == DischargeReason.OtherDr)
+                .WithMessage(x => Validationmessages.LeavingOtherFilledNeedsOther(x.PersonId));
 
-                    return true;
+            this.RuleFor(x => x.DischargeLocationOther).Empty()
+                 .Unless(x => x.DischargeLocation == DischargeLocation.OtherDc)
+                 .WithMessage(x => Validationmessages.LeavingOtherFilledNeedsOther(x.PersonId));
 
-                }).WithMessage(x => Validationmessages.LeavingOtherFilledNeedsOther(x.PersonId)); ;
-
-             this.RuleFor(x => x).Must(x =>
-                {
-                    if (x.DischargeLocation != DischargeLocation.OtherDc &&
-                        !string.IsNullOrWhiteSpace(x.DischargeLocationOther))
-                    {
-                        return false;
-                    }
-
-                    return true;
-
-                }).WithMessage(x => Validationmessages.LeavingOtherFilledNeedsOther(x.PersonId)); ;
-
-
-            this.RuleFor(x => x).Must(x =>
-            {
-                if (x.LeavingReason == LeavingReason.DischargeLr)
-                {
-                    if (x.DischargeLocation == DischargeLocation.UndefinedDc)
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-
-            }).WithMessage(x => Validationmessages.LeavingClientNeedsLeavingLocation(x.PersonId));
-
-            this.RuleFor(x => x).Must(x =>
-            {
-                if (x.LeavingReason == LeavingReason.DischargeLr)
-                {
-                    if (x.DeathLocation != DeathLocation.UndefinedDl)
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-
-            }).WithMessage(x => Validationmessages.LeavingClientDeathMustNotBeFilled(x.PersonId));
+             this.RuleFor(x => x.DischargeLocation).NotEmpty()
+                .When(x => x.LeavingReason == LeavingReason.DischargeLr)
+                .WithMessage(x => Validationmessages.LeavingClientNeedsLeavingLocation(x.PersonId));
 
             this.RuleFor(x => x.DeathLocation).Empty()
                 .When(x => x.LeavingReason != LeavingReason.DeceasedLr)
