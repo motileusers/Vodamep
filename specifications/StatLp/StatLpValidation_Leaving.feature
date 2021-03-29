@@ -1,8 +1,7 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Entlassungen einer Datenmeldung
 
-# Pflichtfelder
-Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
+Szenariogrundriss: Pflichtfelder
     Angenommen die Eigenschaft '<Name>' von 'Leaving' ist nicht gesetzt
     Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
@@ -18,40 +17,45 @@ Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung
 	Angenommen die Eigenschaft 'discharge_reason_other' von 'Leaving' ist auf '<discharge_reason_other>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 Beispiele:
-		| leaving_reason | death_location        | discharge_location | discharge_location_other | discharge_reason    | discharge_reason_other |
-		| DeceasedLr	 | DeathNursingHomeDl    | UndefinedDc        |                          | UndefinedDr         |                        |
-		| DischargeLr    | UndefinedDl           | HomeLivingAloneDc  |                          | EndShortTermCareDr  |                        |
-		| DischargeLr    | UndefinedDl           | OtherDc            | asd                      | EndShortTermCareDr  |                        |
-		| DischargeLr    | UndefinedDl           | HomeLivingAloneDc  |                          | UndefinedDr         | asdf                   |
-		| DischargeLr    | UndefinedDl           | OtherDc            | asd                      | OtherDr             | asd                    |
+		| leaving_reason | death_location       | discharge_location	| discharge_location_other | discharge_reason		| discharge_reason_other |
+		| DeceasedLr	 | DeathNursingHomeDl	|						|                          |						|                        |
+		| DischargeLr    |					    | HomeLivingAloneDc		|                          | EndShortTermCareDr		|                        |
+		| DischargeLr    |						| OtherDc				| asd                      | EndShortTermCareDr		|                        |
+		| DischargeLr    |						| OtherDc				| asd                      | OtherDr				| asd                    |
+#Fehler weil Other gefüllt ist
+#		| DischargeLr    |						| HomeLivingAloneDc		|                          |						| asdf                   |
 
-#Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
-#	Angenommen die Eigenschaft '<leaving_reason>' von 'Leaving' ist auf '<leaving_reason_wert>' gesetzt
-#	Angenommen die Eigenschaft '<death_location>' von 'Leaving' ist auf '<death_location_wert>' gesetzt
-#	Angenommen die Eigenschaft '<discharge_location>' von 'Leaving' ist auf '<discharge_location_wert>' gesetzt
-#	Angenommen die Eigenschaft '<discharge_location_other>' von 'Leaving' ist auf '<discharge_location_other_wert>' gesetzt
-#	Angenommen die Eigenschaft '<discharge_reason>' von 'Leaving' ist auf '<discharge_reason_wert>' gesetzt
-#	Angenommen die Eigenschaft '<discharge_reason_other>' von 'Leaving' ist auf '<discharge_reason_other_wert>' gesetzt
-#	Dann enthält das das Validierungsergebnis den Fehler '<fehler>'
-#
-#	Beispiele:
-#		| leaving_reason | death_location        | discharge_location | discharge_location_other | discharge_reason    | discharge_reason_other | fehler                                                                                                    |
+Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
+	Angenommen die Eigenschaft 'leaving_reason' von 'Leaving' ist auf '<leaving_reason>' gesetzt
+	Angenommen die Eigenschaft 'death_location' von 'Leaving' ist auf '<death_location>' gesetzt
+	Angenommen die Eigenschaft 'discharge_location' von 'Leaving' ist auf '<discharge_location>' gesetzt
+	Angenommen die Eigenschaft 'discharge_location_other' von 'Leaving' ist auf '<discharge_location_other>' gesetzt
+	Angenommen die Eigenschaft 'discharge_reason' von 'Leaving' ist auf '<discharge_reason>' gesetzt
+	Angenommen die Eigenschaft 'discharge_reason_other' von 'Leaving' ist auf '<discharge_reason_other>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler '<fehler>'
+	Beispiele:
+		| leaving_reason | death_location        | discharge_location | discharge_location_other | discharge_reason    | discharge_reason_other | fehler                                                                                                    |
+		| DeceasedLr	 |                       |                    |                          |                     |                        | Wenn der Klient '1' gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.                         |
+		| DeceasedLr     | DeathNursingHomeDl  	 | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.                       |
+		| DeceasedLr     | DeathNursingHomeDl	 |                    | abc                      |                     |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.                      |
+		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          | EndShortTermCareDr  |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.                       |
+		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          |                     | asdf                   | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.                       |
+		| DischargeLr    |                       | NursingHomeDc      | asd                      | EndShortTermCareDr  |                        | Wenn bei der Entlassung von Klient '1' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden. |
+		| DischargeLr    |                       | NursingHomeDc      |                          | EndShortTermCareDr  | asdfasd                | Wenn bei der Entlassung von Klient '1' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden. |
+		| DischargeLr    |                       |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.         |
+		| DischargeLr    | DeathNursingHomeDl	 |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.                |
+# verstehe den test nicht
+#		| DischargeLr    |                       | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.         |
+# leaving reason darf nicht leer sein
 #		|                |                       |                    |                          |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
-#		|                | DEATH_NURSING_HOME_DL |                    |                          |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
-#		|                |                       | HOME_LIVING_ALONE  |                          |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
-#		|                |                       |                    |                          | END_SHORT_TERM_CARE |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
+#		|                | DeathNursingHomeDl	 |                    |                          |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
+#		|                |                       | HomeLivingAloneDc  |                          |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
+#		|                |                       |                    |                          | EndShortTermCareDr  |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
 #		|                |                       |                    | abc                      |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
 #		|                |                       |                    |                          |                     | abc                    | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
-#		| DECEASED_LR    |                       |                    |                          |                     |                        | Wenn der Klient xx gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.'                         |
-#		| DECEASED_LR    | DEATH_NURSING_HOME_DL | HOME_LIVING_ALONE  |                          |                     |                        | Wenn der Klient xx gestorben ist, darf keine Angabe zur Entlassung gemacht werden.'                       |
-#		| DECEASED_LR    | DEATH_NURSING_HOME_DL |                    | abc                      |                     |                        | Wenn der Klient xx gestorben ist, darf keine Angabe zur Entlassung gemacht werden.'                       |
-#		| DECEASED_LR    | DEATH_NURSING_HOME_DL |                    |                          | END_SHORT_TERM_CARE |                        | Wenn der Klient xx gestorben ist, darf keine Angabe zur Entlassung gemacht werden.'                       |
-#		| DECEASED_LR    | DEATH_NURSING_HOME_DL |                    |                          |                     | asdf                   | Wenn der Klient xx gestorben ist, darf keine Angabe zur Entlassung gemacht werden.'                       |
-#		| DISCHARGE_LR   |                       | NURSING_HOME       | asd                      | END_SHORT_TERM_CARE |                        | Wenn bei der Entlassung von Klient xx sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden. |
-#		| DISCHARGE_LR   |                       | NURSING_HOME       |                          | END_SHORT_TERM_CARE | asdfasd                | Wenn bei der Entlassung von Klient xx sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden. |
-#		| DISCHARGE_LR   |                       |                    |                          |                     |                        | Wenn der Klient xx entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.         |
-#		| DISCHARGE_LR   |                       | HOME_LIVING_ALONE  |                          |                     |                        | Wenn der Klient xx entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.         |
-#		| DISCHARGE_LR   | DEATH_NURSING_HOME_DL |                    |                          |                     |                        | Wenn der Klient xx entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.'                |
+		
+
+
 
 # Textfelder: falsche Zeichen
 # RegEx @"^[-,.a-zA-ZäöüÄÖÜß\(\) ][-,.a-zA-ZäöüÄÖÜß\(\) ]*[-,.a-zA-ZäöüÄÖÜß\(\) ]$"

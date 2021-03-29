@@ -55,6 +55,12 @@ namespace Vodamep.ValidationBase
         public static string PersonInvalidLength (string id) => $"'{{PropertyName}}' von Klient '{id}' besitzt eine ungültige Länge'";
         public static string InvalidValue (string id) => $"'{{PropertyName}}' von Klient '{id}' hat einen ungülitgen Wert'";
         public static string FromMustBeBeforeTo => $"'Von' muss vor 'Bis' liegen.";
+        public static string DeadClientNeedsDeadthLocation (string personId) => $"Wenn der Klient '{personId}' gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.";
+        public static string DeadClientMustNotContainDischargeLocation(string personId) => $"Wenn der Klient '{personId}' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.";
+        public static string LeavingOtherFilledNeedsOther (string personId) => $"Wenn bei der Entlassung von Klient '{personId}' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.";
+        public static string LeavingClientNeedsLeavingLocation (string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
+        public static string LeavingClientDeathMustNotBeFilled (string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.";
+        public static string DischargedClientNeedsDischargeLocation (string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

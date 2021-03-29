@@ -100,22 +100,29 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist auf '(.*)' gesetzt")]
         public void GivenThePropertyIsSetTo(string name, string type, string value)
         {
+            IMessage message;
+
             if (type == nameof(StatLpReport))
-                this.Report.SetValue(name, value);
+                message = this.Report;
             else if (type == nameof(Institution))
-                this.Report.Institution.SetValue(name, value);
+                message = this.Report.Institution;
             else if (type == nameof(Admission))
-                this.Report.Admissions[0].SetValue(name, value);
+                message = this.Report.Admissions[0];
             else if (type == nameof(Attribute))
-                this.Report.Attributes[0].SetValue(name, value);
+                message = this.Report.Attributes[0];
             else if (type == nameof(Leaving))
-                this.Report.Leavings[0].SetValue(name, value);
+                message = this.Report.Leavings[0];
             else if (type == nameof(Person))
-                this.Report.Persons[0].SetValue(name, value);
+                message = this.Report.Persons[0];
             else if (type == nameof(Stay))
-                this.Report.Stays[0].SetValue(name, value);
+                message = this.Report.Stays[0];
             else
                 throw new NotImplementedException();
+
+            if (!string.IsNullOrEmpty(value))
+                message.SetValue(name, value);
+            else
+                message.SetDefault(name);
         }
 
         [Given(@"die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '(\w*)' ist auf '(.*)' gesetzt")]

@@ -46,7 +46,7 @@ namespace Vodamep.Data.Dummy
             report.AddDummyAttributes();
             report.AddDummyStays(from);
             report.AddDummyLeavings();
-          
+
             return report;
         }
 
@@ -161,10 +161,8 @@ namespace Vodamep.Data.Dummy
             var stay = new Leaving()
             {
                 PersonId = personId,
-                LeavingReason = ((LeavingReason[])(Enum.GetValues(typeof(LeavingReason))))
-                    .Where(x => x != LeavingReason.UndefinedLr)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(LeavingReason)).Length - 1)),
-
+                LeavingReason = LeavingReason.DischargeLr,
+                DischargeLocation = DischargeLocation.HomeLivingAloneDc,
             };
 
             return stay;
