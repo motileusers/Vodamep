@@ -34,16 +34,16 @@ Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
 	Angenommen die Eigenschaft 'discharge_reason_other' von 'Leaving' ist auf '<discharge_reason_other>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler '<fehler>'
 	Beispiele:
-		| leaving_reason | death_location        | discharge_location | discharge_location_other | discharge_reason    | discharge_reason_other | fehler                                                                                                    |
-		| DeceasedLr	 |                       |                    |                          |                     |                        | Wenn der Klient '1' gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.                         |
-		| DeceasedLr     | DeathNursingHomeDl  	 | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.                       |
-		| DeceasedLr     | DeathNursingHomeDl	 |                    | abc                      |                     |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.                      |
-		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          | EndShortTermCareDr  |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.                       |
-		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          |                     | asdf                   | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.                       |
-		| DischargeLr    |                       | NursingHomeDc      | asd                      | EndShortTermCareDr  |                        | Wenn bei der Entlassung von Klient '1' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden. |
-		| DischargeLr    |                       | NursingHomeDc      |                          | EndShortTermCareDr  | asdfasd                | Wenn bei der Entlassung von Klient '1' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden. |
-		| DischargeLr    |                       |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.         |
-		| DischargeLr    | DeathNursingHomeDl	 |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.                |
+		| leaving_reason | death_location        | discharge_location | discharge_location_other | discharge_reason    | discharge_reason_other | fehler																										|
+		| DeceasedLr	 |                       |                    |                          |                     |                        | Wenn der Klient '1' gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.								|
+		| DeceasedLr     | DeathNursingHomeDl  	 | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
+		| DeceasedLr     | DeathNursingHomeDl	 |                    | abc                      |                     |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
+		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          | EndShortTermCareDr  |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
+		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          |                     | asdf                   | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
+		| DischargeLr    |                       | NursingHomeDc      | asd                      | EndShortTermCareDr  |                        | Wenn bei der Entlassung von Klient '1' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.	|
+		| DischargeLr    |                       | NursingHomeDc      |                          | EndShortTermCareDr  | asdfasd                | Wenn bei der Entlassung von Klient '1' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.	|
+		| DischargeLr    |                       |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.			|
+		| DischargeLr    | DeathNursingHomeDl	 |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.					|
 # verstehe den test nicht
 #		| DischargeLr    |                       | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.         |
 # leaving reason darf nicht leer sein
@@ -54,41 +54,42 @@ Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
 #		|                |                       |                    | abc                      |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
 #		|                |                       |                    |                          |                     | abc                    | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
 		
+Szenariogrundriss: Die Textfelder enthalten ungültige Werte
+    Angenommen die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom '01.02.2021' von Klient '1'.'
+Beispiele:
+		| Name                     | Bezeichnung							| Wert |
+		| discharge_location_other | Sonstige Lebens-/Betreuungssituation	| =    |
+		| discharge_location_other | Sonstige Lebens-/Betreuungssituation	| 0    |
+		| discharge_reason_other   | Entlassung Grund						| =    |
+		| discharge_reason_other   | Entlassung Grund						| 0    |		
 
+Szenariogrundriss: Die Textfelder enthalten zu lange Werte
+	Angenommen die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
+   Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom '01.02.2021' von Klient '1'.'
+Beispiele:
+    | Name                     | Bezeichnung                          | Wert                               |
+    | discharge_location_other | Sonstige Lebens-/Betreuungssituation | abcdefghij abcdefghij abcdefghij x |
+    | discharge_location_other | Sonstige Lebens-/Betreuungssituation | abcdefghij abcdefghij abcdefghij x |
+    | discharge_reason_other   | Entlassung Grund                     | abcdefghij abcdefghij abcdefghij x |
+    | discharge_reason_other   | Entlassung Grund                     | abcdefghij abcdefghij abcdefghij x |
 
-
-# Textfelder: falsche Zeichen
-# RegEx @"^[-,.a-zA-ZäöüÄÖÜß\(\) ][-,.a-zA-ZäöüÄÖÜß\(\) ]*[-,.a-zA-ZäöüÄÖÜß\(\) ]$"
-#Szenariogrundriss: Die Textfelder enthalten ungültige Werte
-#    Angenommen die Eigenschaft '<Name>' von 'Leaving' enhält den Wert '<Wert>'
-#    Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert' für '<Bezeichnung>' bei Aufnamhe vom xx von Klient xxx
-#Beispiele:
-#    | Name                     | Bezeichnung                                | Wert |
-#		| Name                     | Bezeichnung                          | Wert |
-#		| discharge_location_other | Sonstige Lebens-/Betreuungssituation | =    |
-#		| discharge_location_other | Sonstige Lebens-/Betreuungssituation | 0    |
-#		| discharge_reason_other   | Entlassung Grund                     | =    |
-#		| discharge_reason_other   | Entlassung Grund                     | 0    |
-
-# Textfelder: zu viele Zeichen
-# 0 bis 30 Zeichen
-#Szenariogrundriss: Die Textfelder enthalten zu lange Werte
-#	Angenommen die Eigenschaft '<Name>' von 'Leaving' enhält den Wert '<Wert>'
-#    Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text' für '<Bezeichnung>' bei Aufnamhe vom xx von Klient xxx
-#Beispiele:
-#    | Name                     | Bezeichnung                          | Wert                               |
-#    | discharge_location_other | Sonstige Lebens-/Betreuungssituation | abcdefghij abcdefghij abcdefghij x |
-#    | discharge_location_other | Sonstige Lebens-/Betreuungssituation | abcdefghij abcdefghij abcdefghij x |
-#    | discharge_reason_other   | Entlassung Grund                     | abcdefghij abcdefghij abcdefghij x |
-#    | discharge_reason_other   | Entlassung Grund                     | abcdefghij abcdefghij abcdefghij x |
-#
-## Textfelder: alles gut
+Szenariogrundriss: Die Textfelder enthalten gültige Werte
+    Angenommen die Eigenschaft '<Name1>' von 'Leaving' ist auf '<Wert1>' gesetzt
+    Und die Eigenschaft '<Name2>' von 'Leaving' ist auf '<Wert2>' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+Beispiele:
+    | Name1						| Wert1                  | Name2				| Wert2   |
+    | discharge_location_other	| abcdefghij abcdefghij  | discharge_location	| OtherDc |
+    | discharge_reason_other	| abcdefghij abcdefghij  | discharge_reason		| OtherDr |
+   
+# war nicht beabsichtigt?	
 #Szenariogrundriss: Die Textfelder enthalten gültige Werte
-#    Angenommen die Eigenschaft '<Name>' von 'Leaving' enhält den Wert '<Wert>'
-#    Dann enthält das Validierungsergebnis keinen Fehler
+#    Angenommen die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
+#    Dann enthält das Validierungsergebnis keine Fehler
 #Beispiele:
 #    | Name                  | Bezeichnung                                | Wert                             |
 #    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | abcdefghij abcdefghij abcdefghij |
 #    | personal_change_other | Veränderungen persönliche Situation        | abcdefghij abcdefghij abcdefghij |
 #    | social_change_other   | Veränderungen nicht bewältigt, weil        | abcdefghij abcdefghij abcdefghij |
-#    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | abcdefghij abcdefghij abcdefghij | 
+#    | housing_reas

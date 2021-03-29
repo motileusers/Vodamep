@@ -31,7 +31,7 @@ namespace Vodamep.Specs.StepDefinitions
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
-            var date = DateTime.Today.AddMonths(-1);
+            var date = new DateTime(2021, 02, 01);
             this.Report = StatLpDataGenerator.Instance.CreateStatLpReport("", date.Year, date.Month, 1, 1, false);
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 using FluentValidation;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
@@ -7,7 +8,7 @@ namespace Vodamep.StatLp.Validation
 {
     internal class LeavingValidator : AbstractValidator<Leaving>
     {
-        public LeavingValidator()
+        public LeavingValidator(StatLpReport parentReport)
         {
             this.RuleFor(x => x.LeavingReason).NotEmpty();
            
@@ -56,6 +57,25 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.DischargeLocation).NotEmpty()
                 .When(x => x.LeavingReason == LeavingReason.DischargeLr)
                 .WithMessage(x => Validationmessages.DischargedClientNeedsDischargeLocation(x.PersonId));
+
+            var r = new Regex(@"^[-,.a-zA-ZäöüÄÖÜß\(\) ][-,.a-zA-ZäöüÄÖÜß\(\) ]*[-,.a-zA-ZäöüÄÖÜß\(\) ]$");
+
+            this.RuleFor(x => x.DischargeLocationOther)
+                .Matches(r).Unless(x => string.IsNullOrEmpty(x.DischargeLocationOther))
+                .WithMessage(x => Validationmessages.InvalidValue(parentReport.FromD.ToShortDateString(), x.PersonId));
+
+            this.RuleFor(x => x.DischargeLocationOther)
+                .MaximumLength(30).Unless(x => string.IsNullOrEmpty(x.DischargeLocationOther))
+                .WithMessage(x => Validationmessages.TextTooLong(parentReport.FromD.ToShortDateString(), x.PersonId));
+
+            this.RuleFor(x => x.DischargeReasonOther)
+                .Matches(r).Unless(x => string.IsNullOrEmpty(x.DischargeReasonOther))
+                .WithMessage(x => Validationmessages.InvalidValue(parentReport.FromD.ToShortDateString(), x.PersonId));
+
+            this.RuleFor(x => x.DischargeReasonOther)
+                .MaximumLength(30).Unless(x => string.IsNullOrEmpty(x.DischargeReasonOther))
+                .WithMessage(x => Validationmessages.TextTooLong(parentReport.FromD.ToShortDateString(), x.PersonId));
+
         }
     }
 }

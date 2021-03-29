@@ -42,6 +42,8 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(Admission.HousingReasonOther), "Wohnraumsituations- und Ausstattungsgründe");
          
             _dict.Add(nameof(Leaving.LeavingReason), "Abgangart");
+            _dict.Add(nameof(Leaving.DischargeLocationOther), "Sonstige Lebens-/Betreuungssituation");
+            _dict.Add(nameof(Leaving.DischargeReasonOther), "Entlassung Grund");
         }
 
         public string GetDisplayName(string name)

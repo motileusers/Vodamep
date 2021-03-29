@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Google.Protobuf.Collections;
 using Vodamep.StatLp.Model;
 using Attribute = Vodamep.StatLp.Model.Attribute;
 
