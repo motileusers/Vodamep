@@ -9,5 +9,4 @@ namespace Vodamep.ReportBase
         DateTime BirthdayD { get; set; }
         Timestamp Birthday { get; set; }
     }
-    
 }

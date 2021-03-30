@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Vodamep.Cm.Model;
 
 namespace Vodamep.Data.Dummy
@@ -58,8 +59,14 @@ namespace Vodamep.Data.Dummy
                 Id = index.ToString(),
                 FamilyName = _familynames[index],
                 GivenName = _names[index],
-                CareAllowance = CareAllowance.L4,
-                Gender = index % 2 == 1 ? Gender.InterGe : Gender.MaleGe,
+                CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
+                    .Where(x => x != CareAllowance.UndefinedAllowance)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(CareAllowance)).Length - 1)),
+                Country = CountryCodeProvider.Instance.Values.Keys.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
+                Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
+                    .Where(x => x != Gender.UndefinedGe)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
+
             };
 
             // die Anschrift

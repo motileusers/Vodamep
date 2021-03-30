@@ -11,7 +11,7 @@ namespace Vodamep.ReportBase.Validation
         {
             this.CascadeMode = CascadeMode.StopOnFirstFailure;
 
-            this.RuleFor(x => x.BirthdayD).NotEmpty();
+            this.RuleFor(x => x.BirthdayD).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.Id));
 
             this.RuleFor(x => x.Birthday).SetValidator(new TimestampWithOutTimeValidator());
 
@@ -23,7 +23,7 @@ namespace Vodamep.ReportBase.Validation
             RuleFor(x => x.BirthdayD)
                 .GreaterThanOrEqualTo(earliestBirthday)
                 .Unless(x => x.Birthday == null)
-                .WithMessage(x => Validationmessages.ReportBaseBirthdayNotInF2uture(x.Id, earliestBirthday));
+                .WithMessage(x => Validationmessages.ReportBaseBirthdayMustNotBeBefore(x.Id));
 
         }
 

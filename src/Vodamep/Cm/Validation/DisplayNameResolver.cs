@@ -15,18 +15,16 @@ namespace Vodamep.Cm.Validation
         private void Init()
         {
 
-            //_dict.Add(nameof(Person.GivenName), "Vorname");
-            //_dict.Add(nameof(Person.FamilyName), "Familienname");            
-            //_dict.Add(nameof(Person.Ssn), "Versicherungsnummer");
+            _dict.Add(nameof(Person.GivenName), "Vorname");
+            _dict.Add(nameof(Person.FamilyName), "Familienname");            
             _dict.Add(nameof(Person.Birthday), "Geburtsdatum");
             _dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
 
-            //_dict.Add(nameof(Person.Insurance), "Versicherung");
-            //_dict.Add(nameof(Person.Nationality), "Staatsangehörigkeit");
-            //_dict.Add(nameof(Person.CareAllowance), "Pflegegeld");
-            //_dict.Add(nameof(Person.Postcode), "Plz");
-            //_dict.Add(nameof(Person.City), "Ort");
-            //_dict.Add(nameof(Person.Gender), "Geschlecht");
+            _dict.Add(nameof(Person.CareAllowance), "Pflegegeld");
+            _dict.Add(nameof(Person.Postcode), "PLZ");
+            _dict.Add(nameof(Person.City), "Ort");
+            _dict.Add(nameof(Person.Gender), "Geschlecht");
+            _dict.Add(nameof(Person.Country), "Land");
 
             //_dict.Add(nameof(Staff.Qualification), "Qualifikation");
 

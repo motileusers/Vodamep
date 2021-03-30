@@ -14,20 +14,20 @@ Szenario: PersonId ist nicht eindeutig.
 	Angenommen der Id einer Person ist nicht eindeutig
 	Dann enthält das Validierungsergebnis den Fehler 'Der Id ist nicht eindeutig.'
 
-#Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
-#	Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
-#	Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient x darf nicht leer sein.'
-#
-#	Beispiele:
-#		| Name           | Bezeichnung  |
-#		| family_name    | Familienname |
-#		| given_name     | Vorname      |
-#		| birthday       | Geburtsdatum |
-#		| gender         | Geschlecht   |
-#		| country        | Land         |
-#		| postcode       | PLZ          |
-#		| city           | Land         |
-#		| care_allowance | Pflegegeld   |
+Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
+	Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' darf nicht leer sein.'
+
+	Beispiele:
+		| Name           | Bezeichnung  |
+		| family_name    | Familienname |
+		| given_name     | Vorname      |
+		| birthday       | Geburtsdatum |
+		| gender         | Geschlecht   |
+		| country        | Land         |
+		| postcode       | PLZ          |
+		| city           | Ort          |
+		| care_allowance | Pflegegeld   |
 #
 ## Regex "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$"
 #Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen

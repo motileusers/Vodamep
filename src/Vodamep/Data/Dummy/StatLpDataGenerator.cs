@@ -65,7 +65,6 @@ namespace Vodamep.Data.Dummy
                 Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
                     .Where(x => x != Gender.UndefinedGe)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
-
             };
 
             person.BirthdayD = new DateTime(1920, 01, 01).AddDays(_rand.Next(20000));
