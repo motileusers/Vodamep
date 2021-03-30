@@ -1,8 +1,8 @@
-﻿using FluentValidation;
-using System;
-using Vodamep.ValidationBase;
+﻿using System;
+using FluentValidation;
+using Vodamep.ReportBase;
 
-namespace Vodamep.ReportBase.Validation
+namespace Vodamep.ValidationBase
 {
 
     internal class PersonBirthdayValidator : AbstractValidator<IPerson>
@@ -13,7 +13,8 @@ namespace Vodamep.ReportBase.Validation
 
             this.RuleFor(x => x.BirthdayD).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.Id));
 
-            this.RuleFor(x => x.Birthday).SetValidator(new TimestampWithOutTimeValidator());
+            this.RuleFor(x => x.Birthday)
+                .SetValidator(new TimestampWithOutTimeValidator()).WithMessage(x => Validationmessages.ReportBaseDateMustnotHaveTime(x.Id));
 
             RuleFor(x => x.BirthdayD)
                 .LessThan(DateTime.Today)

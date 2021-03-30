@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
-using Vodamep.ValidationBase;
+using Vodamep.ReportBase;
 
-namespace Vodamep.ReportBase.Validation
+namespace Vodamep.ValidationBase
 {
     internal class UniqePersonValidator : AbstractValidator<IReportBase>
     {

@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Cm.Model;
-using Vodamep.ReportBase.Validation;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Cm.Validation
@@ -53,7 +52,7 @@ namespace Vodamep.Cm.Validation
             var earliestBirthday = new DateTime(1890, 01, 01);
             var nameRegex = "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$";
             this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(earliestBirthday));
-            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex, 2, 30, 2, 50));
             this.RuleForEach(report => report.Persons).SetValidator(new CmPersonValidator());
 
 
