@@ -34,13 +34,13 @@ namespace Vodamep.Cm.Validation
             //_dict.Add(nameof(Activity.Entries), "Einträge");
 
 
-            //_dict.Add(nameof(HkpvReport.To), "Bis");
-            //_dict.Add(nameof(HkpvReport.ToD), "Bis");
+            _dict.Add(nameof(CmReport.To), "Bis");
+            _dict.Add(nameof(CmReport.ToD), "Bis");
 
-            //_dict.Add(nameof(HkpvReport.From), "Von");
-            //_dict.Add(nameof(HkpvReport.FromD), "Von");
+            _dict.Add(nameof(CmReport.From), "Von");
+            _dict.Add(nameof(CmReport.FromD), "Von");
 
-            //_dict.Add(nameof(HkpvReport.Institution), "Einrichtung");
+            _dict.Add(nameof(CmReport.Institution), "Einrichtung");
 
         }
 
