@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.StatLp.Model;
@@ -9,7 +8,6 @@ using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Validation
 {
-
     internal class StatLpReportValidator : AbstractValidator<StatLpReport>
     {
         static StatLpReportValidator()
