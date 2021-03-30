@@ -67,6 +67,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseBirthdayNotInFuture(string clientId) => $"'Geburtsdatum' von Klient '{clientId}' darf nicht in der Zukunft liegen.";
         public static string ReportBaseBirthdayMustNotBeBefore(string clientId) => $"Der Wert von 'Geburtsdatum' von Klient '{clientId}' muss grösser oder gleich .*.";
         public static string ReportBaseValueMustNotBeEmpty(string clientId) => $"'{{PropertyName}}' von Klient '{clientId}' darf nicht leer sein.";
+        public static string ReportBasePropertInvalidFormat(string clientId) => $"'{{PropertyName}}' von Klient '{clientId}' weist ein ungültiges Format auf.";
 
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
