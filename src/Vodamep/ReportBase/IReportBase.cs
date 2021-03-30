@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Google.Protobuf.WellKnownTypes;
 
@@ -13,5 +14,7 @@ namespace Vodamep.ReportBase
         MemoryStream WriteToStream(bool asJson = false, bool compressed = true);
         void WriteToFile(string filename, bool asJson = false, bool compressed = true);
         string GetSHA256Hash();
+
+        IList<IPerson> Persons { get; }
     }
 }

@@ -1,0 +1,43 @@
+﻿using System;
+using FluentValidation;
+using Vodamep.ReportBase;
+using Vodamep.ReportBase.Validation;
+
+namespace Vodamep.ValidationBase
+{
+    internal class PersonValidator : AbstractValidator<IPerson>
+    {
+        public PersonValidator(DateTime earliestBirthday)
+        {
+            //this.RuleFor(x => x.FamilyName).NotEmpty();
+            //this.RuleFor(x => x.GivenName).NotEmpty();
+
+            //// Änderung 5.11.2018, LH
+            //var r = new Regex(@"^[\p{L}][-\p{L}. ]*[\p{L}.]$");
+            //this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
+            //this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
+            
+            this.Include(new PersonBirthdayValidator(earliestBirthday));
+            //this.Include(new PersonSsnValidator());
+
+            //this.RuleFor(x => x.Insurance).NotEmpty();
+            //this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<InsuranceCodeProvider>());
+            
+            //this.RuleFor(x => x.Nationality).NotEmpty();
+            //this.RuleFor(x => x.Nationality).SetValidator(new CodeValidator<CountryCodeProvider>());
+
+            //this.RuleFor(x => x.CareAllowance).NotEmpty();
+
+            //this.RuleFor(x => x.Postcode).NotEmpty();
+            //this.RuleFor(x => x.City).NotEmpty();
+            //this.RuleFor(x => $"{x.Postcode} {x.City}")
+            //    .SetValidator(new CodeValidator<Data.Hkpv.Postcode_CityProvider>())
+            //    .Unless(x => string.IsNullOrEmpty(x.City) || string.IsNullOrEmpty(x.Postcode))
+            //    .WithMessage(Validationmessages.InvalidPostCode_City);
+
+            //this.RuleFor(x => x.Gender).NotEmpty();
+
+
+        }
+    }
+}

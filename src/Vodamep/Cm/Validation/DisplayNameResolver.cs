@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Vodamep.Cm.Model;
 
 namespace Vodamep.Cm.Validation
 {
@@ -17,9 +18,9 @@ namespace Vodamep.Cm.Validation
             //_dict.Add(nameof(Person.GivenName), "Vorname");
             //_dict.Add(nameof(Person.FamilyName), "Familienname");            
             //_dict.Add(nameof(Person.Ssn), "Versicherungsnummer");
-            //_dict.Add(nameof(Person.Birthday), "Geburtsdatum");
-            //_dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
-            
+            _dict.Add(nameof(Person.Birthday), "Geburtsdatum");
+            _dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
+
             //_dict.Add(nameof(Person.Insurance), "Versicherung");
             //_dict.Add(nameof(Person.Nationality), "Staatsangehörigkeit");
             //_dict.Add(nameof(Person.CareAllowance), "Pflegegeld");

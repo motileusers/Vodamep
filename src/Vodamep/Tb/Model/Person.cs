@@ -1,7 +1,7 @@
 ﻿using System;
 using Vodamep.ReportBase;
 
-namespace Vodamep.Agp.Model
+namespace Vodamep.Tb.Model
 {
     public partial class Person : IPerson
     {

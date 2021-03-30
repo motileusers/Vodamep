@@ -55,6 +55,17 @@ namespace Vodamep.Specs.StepDefinitions
             // nichts zu tun
         }
 
+        [Given(@"der Id einer Person ist nicht eindeutig")]
+        public void GivenPersonIdNotUnique()
+        {
+            var p0 = this.Report.Persons[0];
+
+            var p = this.Report.AddDummyPerson();
+
+            p.Id = p0.Id;
+            p.Id = p0.Id;
+        }
+
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist nicht gesetzt")]
         public void GivenThePropertyIsDefault(string name, string type)
         {

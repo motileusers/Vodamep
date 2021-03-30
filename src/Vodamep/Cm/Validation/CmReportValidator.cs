@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Cm.Model;
 using Vodamep.Hkpv.Model;
+using Vodamep.ReportBase.Validation;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Cm.Validation
@@ -48,7 +49,8 @@ namespace Vodamep.Cm.Validation
             //    .Unless(x => x.From == null)
             //    .WithMessage(Validationmessages.FirstDateInMonth);
 
-            //this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
+            this.RuleFor(x => x).SetValidator(new UniqePersonValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator(new DateTime(1890, 01, 01)));
 
 
             //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r.FromD, r.ToD));
