@@ -93,25 +93,15 @@ namespace Vodamep.Cm.Validation
 
         private string GetNameOfPerson(CmReport report, int index)
         {
-            //if (report.Persons.Count > index && index >= 0)
-            //{
-            //    var e = report.Persons[index];
-            //    return $"Person: {e.FamilyName} {e.GivenName}";
-            //}
+            if (report.Persons.Count > index && index >= 0)
+            {
+                var e = report.Persons[index];
+                return $"Person: {e.FamilyName} {e.GivenName}";
+            }
 
             return string.Empty;
         }
-        private string GetNameOfStaff(CmReport report, int index)
-        {
-            //if (report.Staffs.Count > index && index >= 0)
-            //{
-            //    var e = report.Staffs[index];
-            //    return $"Mitarbeiter: {e.FamilyName} {e.GivenName}";
-            //}
-
-            return string.Empty;
-        }
-
+      
         private string GetNameOfActivity(CmReport report, int index)
         {
             //if (report.Activities.Count > index && index >= 0)

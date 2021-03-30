@@ -92,9 +92,12 @@ Task("Build")
 		MSBuild("./src/Vodamep.Legacy/Vodamep.Legacy.csproj",msBuildSettings);
 		MSBuild("./tests/Vodamep.Specs/Vodamep.Specs.csproj",msBuildSettings);
 		MSBuild("./tests/Vodamep.Agp.Specs/Vodamep.Agp.Specs.csproj",msBuildSettings);
+		MSBuild("./tests/Vodamep.Cm.Specs/Vodamep.Cm.Specs.csproj",msBuildSettings);
 		MSBuild("./tests/Vodamep.Hkpv.Specs/Vodamep.Hkpv.Specs.csproj",msBuildSettings);
 		MSBuild("./tests/Vodamep.Mkkp.Specs/Vodamep.Mkkp.Specs.csproj",msBuildSettings);
+		MSBuild("./tests/Vodamep.Mohi.Specs/Vodamep.Mohi.Specs.csproj",msBuildSettings);
 		MSBuild("./tests/Vodamep.StatLp.Specs/Vodamep.StatLp.Specs.csproj",msBuildSettings);
+		MSBuild("./tests/Vodamep.Tb.Specs/Vodamep.Tb.Specs.csproj",msBuildSettings);
 		
     });
 

@@ -8,20 +8,20 @@ using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using TechTalk.SpecFlow;
 using Vodamep.Data.Dummy;
-using Vodamep.Cm.Model;
-using Vodamep.Cm.Validation;
+using Vodamep.Mohi.Model;
+using Vodamep.Mohi.Validation;
 using Xunit;
 
 namespace Vodamep.Specs.StepDefinitions
 {
 
     [Binding]
-    public class CmValidationSteps
+    public class MohiValidationSteps
     {
 
-        private CmReportValidationResult _result;
+        private MohiReportValidationResult _result;
 
-        public CmValidationSteps()
+        public MohiValidationSteps()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
@@ -30,18 +30,18 @@ namespace Vodamep.Specs.StepDefinitions
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
             var date = DateTime.Today.AddMonths(-1);
-            this.Report = CmDataGenerator.Instance.CreateCmReport("", date.Year, date.Month, 1, 1, false);
+            this.Report = MohiDataGenerator.Instance.CreateMohiReport("", date.Year, date.Month, 1, 1, false);
         }
 
-        public CmReport Report { get; private set; }
+        public MohiReport Report { get; private set; }
 
-        public CmReportValidationResult Result
+        public MohiReportValidationResult Result
         {
             get
             {
                 if (_result == null)
                 {
-                    _result = (CmReportValidationResult)Report.Validate();
+                    _result = (MohiReportValidationResult)Report.Validate();
                 }
 
                 return _result;
@@ -58,7 +58,7 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist nicht gesetzt")]
         public void GivenThePropertyIsDefault(string name, string type)
         {
-            if (type == nameof(CmReport))
+            if (type == nameof(MohiReport))
                 this.Report.SetDefault(name);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetDefault(name);
@@ -72,7 +72,7 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist auf '(.*)' gesetzt")]
         public void GivenThePropertyIsSetTo(string name, string type, string value)
         {
-            if (type == nameof(CmReport))
+            if (type == nameof(MohiReport))
                 this.Report.SetValue(name, value);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetValue(name, value);
@@ -88,7 +88,7 @@ namespace Vodamep.Specs.StepDefinitions
         public void GivenThePropertyHasATime(string name, string type)
         {
             IMessage m;
-            if (type == nameof(CmReport))
+            if (type == nameof(MohiReport))
                 m = this.Report;
             else if (type == nameof(Person))
                 m = this.Report.Persons[0];
