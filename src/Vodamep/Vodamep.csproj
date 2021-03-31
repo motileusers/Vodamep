@@ -76,8 +76,8 @@
     <None Include="..\..\specifications\Datasets\Cm\client_activity_type.csv" Link="Data\Cm\client_activity_type.csv" />
     <None Include="..\..\specifications\Datasets\gender.csv" Link="Data\gender.csv" />
     <None Include="..\..\specifications\Datasets\main_attendance_closeness.csv" Link="Data\main_attendance_closeness.csv" />
-    <None Include="..\..\specifications\Datasets\Mohi\admission_type.csv" Link="Data\Mohi\admission_type.csv" />
     <None Include="..\..\specifications\Datasets\Mohi\service.csv" Link="Data\Mohi\service.csv" />
+    <None Include="..\..\specifications\Datasets\Tb\admission_type.csv" Link="Data\Tb\admission_type.csv" />
     <None Include="..\..\specifications\Datasets\Tb\service.csv" Link="Data\Tb\service.csv" />
     <None Include="..\..\specifications\Hkpv\Hkpv.proto" Link="Hkpv\Model\Hkpv.proto" />
     <None Include="..\..\specifications\Mkkp\Mkkp.proto" Link="Mkkp\Model\Mkkp.proto" />
