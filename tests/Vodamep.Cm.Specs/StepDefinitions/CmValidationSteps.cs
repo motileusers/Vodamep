@@ -115,7 +115,20 @@ namespace Vodamep.Specs.StepDefinitions
             field.Accessor.SetValue(m, ts);
         }
 
-       
+        [Given(@"die Liste von '(\w*)' ist leer")]
+        public void GivenTheListPropertyIsEmpty(string type)
+        {
+            if (type == nameof(Person))
+                this.Report.Persons.Clear();
+            else if (type == nameof(Activity))
+                this.Report.Activities.Clear();
+            else if (type == nameof(ClientActivity))
+                this.Report.ClientActivities.Clear();
+            else
+                throw new NotImplementedException();
+        }
+
+
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
         {
