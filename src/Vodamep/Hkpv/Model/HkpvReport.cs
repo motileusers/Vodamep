@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using Google.Protobuf;
 using Vodamep.Data.Dummy;
@@ -16,6 +17,8 @@ namespace Vodamep.Hkpv.Model
         public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }
 
         IInstitution IReportBase.Institution => this.Institution;
+
+        IList<IPerson> IReportBase.Persons => this.Persons.Select(x => x as IPerson).ToList();
 
         public static HkpvReport CreateDummyData()
         {

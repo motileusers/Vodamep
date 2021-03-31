@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Google.Protobuf.Collections;
 using Vodamep.StatLp.Model;
 using Attribute = Vodamep.StatLp.Model.Attribute;
 
@@ -45,7 +44,8 @@ namespace Vodamep.Data.Dummy
             report.AddDummyAdmissions();
             report.AddDummyAttributes();
             report.AddDummyStays(from);
-          
+            report.AddDummyLeavings();
+
             return report;
         }
 
@@ -65,7 +65,6 @@ namespace Vodamep.Data.Dummy
                 Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
                     .Where(x => x != Gender.UndefinedGe)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
-
             };
 
             person.BirthdayD = new DateTime(1920, 01, 01).AddDays(_rand.Next(20000));
@@ -142,6 +141,26 @@ namespace Vodamep.Data.Dummy
                 PersonId = personId,
                 From = from.AsTimestamp(),
                 To = from.AddDays(10).AsTimestamp(),
+            };
+
+            return stay;
+        }
+
+        public IEnumerable<Leaving> CreateLeavings(IEnumerable<Person> persons)
+        {
+            foreach (var person in persons)
+            {
+                yield return CreateLeaving(person.Id);
+            }
+        }
+
+        public Leaving CreateLeaving(string personId)
+        {
+            var stay = new Leaving()
+            {
+                PersonId = personId,
+                LeavingReason = LeavingReason.DischargeLr,
+                DischargeLocation = DischargeLocation.HomeLivingAloneDc,
             };
 
             return stay;

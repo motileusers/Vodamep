@@ -41,5 +41,12 @@ namespace Vodamep.Data.Dummy
             report.AddStays(p);
             return p;
         }
+
+        public static Leaving[] AddDummyLeavings(this StatLpReport report)
+        {
+            var p = StatLpDataGenerator.Instance.CreateLeavings(report.Persons).OrderBy(x => x.PersonId).ToArray();
+            report.AddLeavings(p);
+            return p;
+        }
     }
 }

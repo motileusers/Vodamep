@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Vodamep.Hkpv.Model;
 using Vodamep.Hkpv.Validation;
-using Vodamep.StatLp.Model;
 using Person = Vodamep.Hkpv.Model.Person;
 
 namespace Vodamep.ValidationBase
@@ -52,8 +51,24 @@ namespace Vodamep.ValidationBase
         public static string ItemNotValid => "Keine gültige Angabe bei '{PropertyName}'";
         public static string TextAreaEnterAValue => "Bei '{PropertyName}' im Textfeld bitte einen Wert angegeben.";
         public static string PersonIsNotAvailable => "Person '{PropertyValue}' ist nicht in der Personenliste vorhanden.";
-        public static string PersonInvalidLength (string id) => $"'{{PropertyName}}' von Klient '{id}' besitzt eine ungültige Länge'";
-        public static string InvalidValue (string id) => $"'{{PropertyName}}' von Klient '{id}' hat einen ungülitgen Wert'";
+        public static string FromMustBeBeforeTo => $"'Von' muss vor 'Bis' liegen.";
+        public static string DeadClientNeedsDeadthLocation(string personId) => $"Wenn der Klient '{personId}' gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.";
+        public static string DeadClientMustNotContainDischargeLocation(string personId) => $"Wenn der Klient '{personId}' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.";
+        public static string LeavingOtherFilledNeedsOther(string personId) => $"Wenn bei der Entlassung von Klient '{personId}' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.";
+        public static string LeavingClientNeedsLeavingLocation(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
+        public static string LeavingClientDeathMustNotBeFilled(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.";
+        public static string DischargedClientNeedsDischargeLocation(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
+        public static string InvalidValue(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom '{date}' von Klient '{personId}'.";
+        public static string TextTooLong(string date, string personId) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom '{date}' von Klient '{personId}'.";
+
+        public static string ReportBaseBirthdayNotInFuture(string clientId) => $"'Geburtsdatum' von Klient '{clientId}' darf nicht in der Zukunft liegen.";
+        public static string ReportBaseBirthdayMustNotBeBefore(string clientId) => $"Der Wert von 'Geburtsdatum' von Klient '{clientId}' muss grösser oder gleich .*.";
+        public static string ReportBaseValueMustNotBeEmpty(string clientId) => $"'{{PropertyName}}' von Klient '{clientId}' darf nicht leer sein.";
+        public static string ReportBasePropertyInvalidFormat(string clientId) => $"'{{PropertyName}}' von Klient '{clientId}' weist ein ungültiges Format auf.";
+        public static string ReportBaseInvalidLength(string id) => $"'{{PropertyName}}' von Klient '{id}' besitzt eine ungültige Länge'";
+        public static string ReportBaseInvalidValue(string id) => $"'{{PropertyName}}' von Klient '{id}' hat einen ungülitgen Wert'";
+        public static string ReportBaseDateMustnotHaveTime(string id) => $"'{{PropertyName}}' von Klient '{id}' darf keine Uhrzeit beinhalten.";
+
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

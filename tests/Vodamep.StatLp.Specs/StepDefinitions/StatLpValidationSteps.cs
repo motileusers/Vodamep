@@ -31,7 +31,7 @@ namespace Vodamep.Specs.StepDefinitions
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
-            var date = DateTime.Today.AddMonths(-1);
+            var date = new DateTime(2021, 02, 01);
             this.Report = StatLpDataGenerator.Instance.CreateStatLpReport("", date.Year, date.Month, 1, 1, false);
         }
 
@@ -64,6 +64,8 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.SetDefault(name);
             else if (type == nameof(Admission))
                 this.Report.Admissions[0].SetDefault(name);
+            else if (type == nameof(Leaving))
+                this.Report.Leavings[0].SetDefault(name);
             else if (type == nameof(Person))
                 this.Report.Persons[0].SetDefault(name);
             else
@@ -98,20 +100,29 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist auf '(.*)' gesetzt")]
         public void GivenThePropertyIsSetTo(string name, string type, string value)
         {
+            IMessage message;
+
             if (type == nameof(StatLpReport))
-                this.Report.SetValue(name, value);
+                message = this.Report;
             else if (type == nameof(Institution))
-                this.Report.Institution.SetValue(name, value);
+                message = this.Report.Institution;
             else if (type == nameof(Admission))
-                this.Report.Admissions[0].SetValue(name, value);
+                message = this.Report.Admissions[0];
             else if (type == nameof(Attribute))
-                this.Report.Attributes[0].SetValue(name, value);
+                message = this.Report.Attributes[0];
+            else if (type == nameof(Leaving))
+                message = this.Report.Leavings[0];
             else if (type == nameof(Person))
-                this.Report.Persons[0].SetValue(name, value);
+                message = this.Report.Persons[0];
             else if (type == nameof(Stay))
-                this.Report.Stays[0].SetValue(name, value);
+                message = this.Report.Stays[0];
             else
                 throw new NotImplementedException();
+
+            if (!string.IsNullOrEmpty(value))
+                message.SetValue(name, value);
+            else
+                message.SetDefault(name);
         }
 
         [Given(@"die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '(\w*)' ist auf '(.*)' gesetzt")]
@@ -179,13 +190,6 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
-        [Given(@"die PLZ und der Ort von Admission sind auf auf '(.*)' und '(.*)' gesetzt")]
-        public void GivenThePostCodeCityPropertyIsSetTo(string postCode, string city)
-        {
-            this.Report.Admissions[0].LastPostcode = postCode;
-            this.Report.Admissions[0].LastCity = city;
-        }
-
         [Given(@"die Datums-Eigenschaft '(\w*)' von '(\w*)' hat eine Uhrzeit gesetzt")]
         public void GivenThePropertyHasATime(string name, string type)
         {
@@ -219,6 +223,14 @@ namespace Vodamep.Specs.StepDefinitions
 
             p.Id = p0.Id;
             p.Id = p0.Id;
+        }
+
+        [Given(@"Bis ist vor Von bei einem Stay")]
+        public void GivenToIsBeforeFromAtFirstStay()
+        {
+            var stay = this.Report.Stays[0];
+
+            stay.From = stay.To.AsDate().AddDays(2).AsTimestamp();
         }
 
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]

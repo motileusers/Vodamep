@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.StatLp.Model;
@@ -9,7 +8,6 @@ using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Validation
 {
-
     internal class StatLpReportValidator : AbstractValidator<StatLpReport>
     {
         static StatLpReportValidator()
@@ -55,6 +53,8 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleForEach(report => report.Attributes).SetValidator(report => new AttributeValidator(report));
 
+            this.RuleForEach(report => report.Leavings).SetValidator(report => new LeavingValidator(report));
+      
             this.RuleForEach(report => report.Stays).SetValidator(report => new StayValidator(report));
         }
 

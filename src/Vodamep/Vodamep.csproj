@@ -97,7 +97,6 @@
     <Folder Include="Data\Mohi\" />
     <Folder Include="Data\Tb\" />
     <Folder Include="Data\StatLp\" />
-    <Folder Include="ValidationBase\" />
   </ItemGroup>
 
 </Project>

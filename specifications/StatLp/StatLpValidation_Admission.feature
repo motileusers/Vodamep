@@ -46,8 +46,9 @@ Beispiele:
     | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | abcdefghij abcdefghij abcdefgh | 
 
 Szenariogrundriss: Ungültiger Ort / Plz
-    Angenommen die PLZ und der Ort von Admission sind auf auf '<Value1>' und '<Value2>' gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnahme vom 01.02.2021 von Klient 1.'
+    Angenommen die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
+    Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnahme vom 01.02.2021 von Klient 1.'
 Beispiele:
     | Field1        | Field2    | Value1 | Value2     |
     | last_postcode | last_city | 0349   | Feldkirch  |
@@ -57,7 +58,8 @@ Beispiele:
     | last_postcode | last_city |        |            |
 
 Szenariogrundriss: Gültiger Ort / Plz
-    Angenommen die PLZ und der Ort von Admission sind auf auf '<Value1>' und '<Value2>' gesetzt
+    Angenommen die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
+    Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt  
     Dann enthält das Validierungsergebnis keine Fehler
 Beispiele:
     | Field1        | Field2    | Value1 | Value2    |

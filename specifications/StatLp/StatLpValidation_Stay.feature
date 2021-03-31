@@ -15,3 +15,7 @@ Beispiele:
 
 # Ein Stay (From,To) muss im akutellen Monat liegen
 # From muss <= to sein
+
+Szenario: Bis ist nach Von
+    Angenommen Bis ist vor Von bei einem Stay
+    Dann enthält das Validierungsergebnis den Fehler ''Von' muss vor 'Bis' liegen.'

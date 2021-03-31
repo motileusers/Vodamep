@@ -11,7 +11,8 @@ namespace Vodamep.StatLp.Validation
         {
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
             this.RuleFor(x => x.To).SetValidator(new TimestampWithOutTimeValidator());
-            
+            this.RuleFor(x => x.To.AsDate()).GreaterThan(x => x.From.AsDate()).Unless(x => x.From == null || x.To == null).WithMessage(Validationmessages.FromMustBeBeforeTo);
+
             this.RuleFor(x => x.PersonId)
                 .Must((admission, personId) =>
                 {
