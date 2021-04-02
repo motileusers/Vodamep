@@ -33,59 +33,62 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	# nicht vorhanden
 	#| admission_type            | Aufnahmeart                          |
 #
-## Regex "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$"
-#Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
-#	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#	Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient x weist ein ungültiges Format auf.'
-#
-#	Beispiele:
-#		| Name        | Bezeichnung  | Wert |
-#		| family_name | Familienname | t@st |
-#		| given_name  | Vorname      | t@st |
-#
-## Länge 2 - 50 Zeichen
-#Szenariogrundriss: Der Familienname einer Person ist zu kurz / lang
-#	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#	Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient xx besitzt eine ungültige Länge'
-#
-#	Beispiele:
-#		| Name        | Bezeichnung  | Wert                                                     |
-#		| family_name | Familienname | abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij x |
-#		| family_name | Familienname | x                                                        |
-#
-## Länge 2 - 30 Zeichen
-#Szenariogrundriss: Der Vorname einer Person ist zu kurz / lang
-#	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#	Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient xx besitzt eine ungültige Länge'
-#
-#	Beispiele:
-#		| Name       | Bezeichnung | Wert                               |
-#		| given_name | Vorname     | abcdefghij abcdefghij abcdefghij x |
-#		| given_name | Vorname     | x                                  |
-#
-## Land
-#Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
-#	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#	Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient xx hat einen ungülitgen Wert'
-#
-#	Beispiele:
-#		| Name    | Bezeichnung | Wert |
+# Regex "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$"
+Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
+	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' weist ein ungültiges Format auf.'
+
+	Beispiele:
+		| Name        | Bezeichnung  | Wert |
+		| family_name | Familienname | t@st |
+		| given_name  | Vorname      | t@st |
+
+# Länge 2 - 50 Zeichen
+Szenariogrundriss: Der Familienname einer Person ist zu kurz / lang
+	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' besitzt eine ungültige Länge'
+
+	Beispiele:
+		| Name        | Bezeichnung  | Wert                                                     |
+		| family_name | Familienname | abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij x |
+		| family_name | Familienname | x                                                        |
+
+# Länge 2 - 30 Zeichen
+Szenariogrundriss: Der Vorname einer Person ist zu kurz / lang
+	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' besitzt eine ungültige Länge'
+
+	Beispiele:
+		| Name       | Bezeichnung | Wert                               |
+		| given_name | Vorname     | abcdefghij abcdefghij abcdefghij x |
+		| given_name | Vorname     | x                                  |
+
+# Land
+Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
+	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' hat einen ungülitgen Wert'
+
+	Beispiele:
+		| Name    | Bezeichnung | Wert |
+		| country | Land        | A    |
+		
+# ZZ is valid
 #		| country | Land        | ZZ   |
-#		| country | Land        | A    |
-#
-#Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert
-#	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-#	Dann enthält das Validierungsergebnis keinen Fehler
-#
-#	Beispiele:
-#		| Name    | Bezeichnung | Wert |
-#		| country | Land        | AD   |
-#		| country | Land        | AT   |
-#
-#Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
-#	Angenommen die Datums-Eigenschaft '<Name>' von 'Person' hat eine Uhrzeit gesetzt
-#	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient x darf keine Uhrzeit beinhalten.'
-#
-#	Beispiele:
-#		| Name     | Bezeichnung  |
-#		| birthday | Geburtsdatum |
+
+
+Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert
+	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
+
+	Beispiele:
+		| Name    | Bezeichnung | Wert |
+		| country | Land        | AD   |
+		| country | Land        | AT   |
+
+Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
+	Angenommen die Datums-Eigenschaft '<Name>' von 'Person' hat eine Uhrzeit gesetzt
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' darf keine Uhrzeit beinhalten.'
+
+	Beispiele:
+		| Name     | Bezeichnung  |
+		| birthday | Geburtsdatum |

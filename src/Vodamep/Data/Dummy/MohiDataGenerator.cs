@@ -61,6 +61,9 @@ namespace Vodamep.Data.Dummy
                 Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
                     .Where(x => x != Gender.UndefinedGe)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
+                MainAttendanceCloseness = ((MainAttendanceCloseness[])(Enum.GetValues(typeof(MainAttendanceCloseness))))
+                    .Where(x => x != MainAttendanceCloseness.UndefinedMc)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(MainAttendanceCloseness)).Length - 1)),
 
             };
 
