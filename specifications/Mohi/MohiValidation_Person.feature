@@ -1,35 +1,37 @@
-﻿##language: de-DE
-#Funktionalität: Mohi - Validierung der gemeldeten Personen einer Datenmeldung
+﻿#language: de-DE
+Funktionalität: Mohi - Validierung der gemeldeten Personen einer Datenmeldung
+
+Szenario: Das Geburtsdatum darf nicht in der Zukunft liegen.
+	Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '2058-04-30' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler ''Geburtsdatum' von Klient '1' darf nicht in der Zukunft liegen.'
+
+#todo: > 1890, 1, 1 <heute
+Szenario: Das Geburtsdatum darf nicht vor 1890 liegen.
+	Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '1889-12-31' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Geburtsdatum' von Klient '1' muss grösser oder gleich .*'
+
+Szenario: PersonId ist nicht eindeutig.
+	Angenommen der Id einer Person ist nicht eindeutig
+	Dann enthält das Validierungsergebnis den Fehler 'Der Id ist nicht eindeutig.'
 #
-#Szenario: Das Geburtsdatum darf nicht in der Zukunft liegen.
-#	Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '2058-04-30' gesetzt
-#	Dann enthält das Validierungsergebnis den Fehler ''Geburtsdatum' von Klient x darf nicht in der Zukunft liegen.'
-#
-##todo: > 1890, 1, 1 <heute
-#Szenario: Das Geburtsdatum darf nicht vor 1890 liegen.
-#	Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '1889-12-31' gesetzt
-#	Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Geburtsdatum' von Klient x muss grösser oder gleich .*'
-#
-#Szenario: PersonId ist nicht eindeutig.
-#	Angenommen der Id einer Person ist nicht eindeutig
-#	Dann enthält das Validierungsergebnis den Fehler 'Der Id ist nicht eindeutig.'
-#
-#Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
-#	Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
-#	Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient x darf nicht leer sein.'
-#
-#	Beispiele:
-#		| Name                      | Bezeichnung                          |
-#		| family_name               | Familienname                         |
-#		| given_name                | Vorname                              |
-#		| birthday                  | Geburtsdatum                         |
-#		| gender                    | Geschlecht                           |
-#		| country                   | Land                                 |
-#		| postcode                  | PLZ                                  |
-#		| city                      | Land                                 |
-#		| care_allowance            | Pflegegeld                           |
-#		| main_attendance_closeness | Räumliche Nähe Hauptbetreuungsperson |
-#		| admission_type            | Aufnahmeart                          |
+Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
+	Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' darf nicht leer sein.'
+
+	Beispiele:
+		| Name                      | Bezeichnung                          |
+		| family_name               | Familienname                         |
+		| given_name                | Vorname                              |
+		| birthday                  | Geburtsdatum                         |
+		| gender                    | Geschlecht                           |
+		| country                   | Land                                 |
+		| postcode                  | PLZ                                  |
+		| city                      | Ort                                  |
+		| care_allowance            | Pflegegeld                           |
+		| main_attendance_closeness | Räumliche Nähe Hauptbetreuungsperson |
+	
+	# nicht vorhanden
+	#| admission_type            | Aufnahmeart                          |
 #
 ## Regex "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$"
 #Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen

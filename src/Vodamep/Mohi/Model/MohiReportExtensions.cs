@@ -12,6 +12,10 @@ namespace Vodamep.Mohi.Model
         public static MohiReport AddPerson(this MohiReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static MohiReport AddPersons(this MohiReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
 
+        public static MohiReport AddActivity(this MohiReport report, Activity person) => report.InvokeAndReturn(m => m.Activities.Add(person));
+        public static MohiReport AddActivities(this MohiReport report, IEnumerable<Activity> persons) => report.InvokeAndReturn(m => m.Activities.AddRange(persons));
+
+
         private static MohiReport InvokeAndReturn(this MohiReport m, Action<MohiReport> action)
         {
             action(m);

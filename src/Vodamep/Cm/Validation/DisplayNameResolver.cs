@@ -26,14 +26,6 @@ namespace Vodamep.Cm.Validation
             _dict.Add(nameof(Person.Gender), "Geschlecht");
             _dict.Add(nameof(Person.Country), "Land");
 
-            //_dict.Add(nameof(Staff.Qualification), "Qualifikation");
-
-
-            //_dict.Add(nameof(Activity.Date), "Datum");
-            //_dict.Add(nameof(Activity.DateD), "Datum");
-            //_dict.Add(nameof(Activity.Entries), "Einträge");
-
-
             _dict.Add(nameof(CmReport.To), "Bis");
             _dict.Add(nameof(CmReport.ToD), "Bis");
 
