@@ -46,15 +46,17 @@ Szenariogrundriss: Gültige Werte bei der Leistung
 #		| Name    | Nummer | Wert | Fehler |
 #		| minutes | 2      | 1    |        |
 #		| minutes | 1      | 1    |        |
-#
-#Szenariogrundriss: Gültiger Klient bei der Leistung
-#	Angenommen die Eigenschaft '<Name>' von 'client_activities' '<Nummer>' ist auf '<Wert>' gesetzt
-#	Dann enthält das Validierungsergebnis keinen Fehler
-#
-#	Beispiele:
-#		| Name      | Nummer | Wert | Fehler |
-#		| person_id | 1      | 1    |        |
-#
+# es ist keine person Id verfügbar.
+
+
+Szenariogrundriss: Gültiger Klient bei der Leistung
+	Angenommen die Eigenschaft '<Name>' von 'ClientActivity' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
+
+	Beispiele:
+		| Name      | Nummer | Wert | Fehler |
+		| person_id | 1      | 1    |        |
+
 #Szenariogrundriss: Ungültiger Klient bei der Leistung
 #	Angenommen die Eigenschaft '<Name>' von 'client_activities' '<Nummer>' ist auf '<Wert>' gesetzt
 #	Dann enthält das Validierungsergebnis keinen Fehler
@@ -62,4 +64,7 @@ Szenariogrundriss: Gültige Werte bei der Leistung
 #	Beispiele:
 #		| Name      | Nummer | Wert | Fehler                                             |
 #		| person_id | -1     | 1    | Für Klient xx wurden keine Personendaten gesendet. |
+#verstehe ich nicht
+
+
 ## Todo: Case Manager wird derzeit noch nicht geprüft, weil er noch nicht im Model vorhanden ist
