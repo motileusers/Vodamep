@@ -14,7 +14,7 @@ namespace Vodamep.ValidationBase
             this.RuleFor(x => x.BirthdayD).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.Id));
 
             this.RuleFor(x => x.Birthday)
-                .SetValidator(new TimestampWithOutTimeValidator()).WithMessage(x => Validationmessages.ReportBaseDateMustnotHaveTime(x.Id));
+                .SetValidator(new TimestampWithOutTimeValidator()).WithMessage(x => Validationmessages.ReportBaseDateMustNotHaveTime(x.Id));
 
             RuleFor(x => x.BirthdayD)
                 .LessThan(DateTime.Today)

@@ -21,23 +21,18 @@ namespace Vodamep.Data.Dummy
             return p;
         }
 
-    
-        public static Activity[] AddDummyActivities(this CmReport report)
+        public static ClientActivity AddDummyClientActivity(this CmReport report)
         {
-            if (report.FromD == null)
-                report.FromD = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-1);
+            var p = CmDataGenerator.Instance.CreateClientActivity(report.Persons.First().Id, report.FromD);
+            report.AddClientActivity(p);
+            return p;
+        }
 
-            if (report.ToD == null)
-                report.ToD = report.FromD.LastDateInMonth();
-
-      
-
-            if (report.Persons.Count == 0)
-                report.AddDummyPerson();
-
-            var a = CmDataGenerator.Instance.CreateActivities(report);
-            report.Activities.AddRange(a);
-            return a;
+        public static ClientActivity[] AddDummyClientActivitys(this CmReport report, int count)
+        {
+            var p = CmDataGenerator.Instance.CreateClientActivitys(count, report.FromD).ToArray();
+            report.AddClientActivities(p);
+            return p;
         }
 
     }

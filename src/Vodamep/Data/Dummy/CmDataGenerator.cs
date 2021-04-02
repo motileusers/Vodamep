@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Google.Protobuf.WellKnownTypes;
 using Vodamep.Cm.Model;
+using Enum = System.Enum;
 
 namespace Vodamep.Data.Dummy
 {
@@ -43,6 +45,7 @@ namespace Vodamep.Data.Dummy
             report.ToD = report.FromD.LastDateInMonth();
 
             report.AddDummyPersons(persons);
+            report.AddDummyClientActivity();
             //report.AddDummyStaffs(staffs);
             //report.AddDummyTravelTime();
 
@@ -87,6 +90,28 @@ namespace Vodamep.Data.Dummy
         {
             for (var i = 0; i < count; i++)
                 yield return CreatePerson(i + 1);
+        }
+
+        public ClientActivity CreateClientActivity(string personId, DateTime reportDate)
+        {
+            var clientActivity = new ClientActivity
+            {
+               PersonId = personId,
+               Minutes = 500,
+               Date = reportDate.AddDays(1).AsTimestamp(),
+               ActivityType = ((ClientActivityType[])(Enum.GetValues(typeof(ClientActivityType))))
+                   .Where(x => x != ClientActivityType.UndefinedCa)
+                   .ElementAt(_rand.Next(Enum.GetValues(typeof(ClientActivityType)).Length - 1)),
+
+            };
+
+            return clientActivity;
+        }
+
+        public IEnumerable<ClientActivity> CreateClientActivitys(int count, DateTime reportDate)
+        {
+            for (var i = 0; i < count; i++)
+                yield return CreateClientActivity((i + 1).ToString(), reportDate);
         }
 
 
