@@ -21,6 +21,20 @@ namespace Vodamep.Data.Dummy
             return p;
         }
 
+        public static Activity AddDummyActivity(this CmReport report)
+        {
+            var p = CmDataGenerator.Instance.CreateActivity(report.FromD);
+            report.AddActivity(p);
+            return p;
+        }
+
+        public static Activity[] AddDummyActivities(this CmReport report, int count)
+        {
+            var p = CmDataGenerator.Instance.CreateActivities(report, count).ToArray();
+            report.AddActivities(p);
+            return p;
+        }
+
         public static ClientActivity AddDummyClientActivity(this CmReport report)
         {
             var p = CmDataGenerator.Instance.CreateClientActivity(report.Persons.First().Id, report.FromD);
@@ -28,9 +42,9 @@ namespace Vodamep.Data.Dummy
             return p;
         }
 
-        public static ClientActivity[] AddDummyClientActivitys(this CmReport report, int count)
+        public static ClientActivity[] AddDummyClientActivities(this CmReport report, int count)
         {
-            var p = CmDataGenerator.Instance.CreateClientActivitys(count, report.FromD).ToArray();
+            var p = CmDataGenerator.Instance.CreateClientActivities(count, report.FromD).ToArray();
             report.AddClientActivities(p);
             return p;
         }

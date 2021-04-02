@@ -29,14 +29,14 @@ Szenariogrundriss: Ungültige Werte bei der Leistung
 		| date          | 1      | 2058-04-30   | Bei der Leistung von Person '1' am 30.04.2058 wurde ein Datum außerhalb des Meldungszeitraums angegeben.	|
 		| person_id     | 1      | 3            | Unbekannter Klient bei Leistung am 02.02.2021.																|
 
-#Szenariogrundriss: Gültige Werte bei der Leistung
-#	Angenommen die Eigenschaft '<Name>' von 'activities' '<Nummer>' ist auf '<Wert>' gesetzt
-#	Dann enthält das Validierungsergebnis keinen Fehler
-#
-#	Beispiele:
-#		| Name    | Nummer | Wert | Fehler |
-#		| minutes | 1      | 1000 |        |
-#
+Szenariogrundriss: Gültige Werte bei der Leistung
+	Angenommen die Eigenschaft '<Name>' von 'Activity' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
+
+	Beispiele:
+		| Name    | Nummer | Wert | Fehler |
+		| minutes | 1      | 1000 |        |
+
 ## Beim Generator am besten einfach 2 Leistungen anlegen und die 2. Leistung auf den 1. Klienten setzen
 #Szenariogrundriss: Mehrfache Leistungen pro Klient pro Monat
 #	Angenommen die Eigenschaft '<Name>' von 'activities' '<Nummer>' ist auf '<Wert>' gesetzt
