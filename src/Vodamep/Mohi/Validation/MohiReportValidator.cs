@@ -22,6 +22,10 @@ namespace Vodamep.Mohi.Validation
         }
         public MohiReportValidator()
         {
+            this.RuleFor(x => x.Institution).NotEmpty();
+
+            this.RuleFor(x => x).SetValidator(new ReportDateValidator());
+
             this.RuleFor(x => x).SetValidator(new UniqePersonValidator());
 
             var earliestBirthday = new DateTime(1890, 01, 01);

@@ -137,7 +137,6 @@ namespace Vodamep.Specs.StepDefinitions
                 throw new NotImplementedException();
         }
 
-
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
         {

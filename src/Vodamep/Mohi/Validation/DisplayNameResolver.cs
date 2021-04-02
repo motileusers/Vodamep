@@ -14,6 +14,14 @@ namespace Vodamep.Mohi.Validation
 
         private void Init()
         {
+            _dict.Add(nameof(MohiReport.To), "Bis");
+            _dict.Add(nameof(MohiReport.ToD), "Bis");
+
+            _dict.Add(nameof(MohiReport.From), "Von");
+            _dict.Add(nameof(MohiReport.FromD), "Von");
+
+            _dict.Add(nameof(MohiReport.Institution), "Einrichtung");
+
             _dict.Add(nameof(Person.GivenName), "Vorname");
             _dict.Add(nameof(Person.FamilyName), "Familienname");
             _dict.Add(nameof(Person.Birthday), "Geburtsdatum");
