@@ -66,6 +66,13 @@ namespace Vodamep.Specs.StepDefinitions
             p.Id = p0.Id;
         }
 
+
+        [Given(@"für einen Klient gibt es mehrfache Leistungen")]
+        public void GivenMultipleActivitiesForOneClient()
+        {
+            this.Report.AddDummyActivity();
+        }
+
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist nicht gesetzt")]
         public void GivenThePropertyIsDefault(string name, string type)
         {
@@ -121,9 +128,13 @@ namespace Vodamep.Specs.StepDefinitions
             if (type == nameof(Person))
             {
                 this.Report.Persons.Clear();
+
+                this.Report.Activities.Clear();
             }
             else if (type == nameof(Activity))
+            {
                 this.Report.Activities.Clear();
+            }
             else
                 throw new NotImplementedException();
         }

@@ -33,9 +33,11 @@ namespace Vodamep.Mohi.Validation
             this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(earliestBirthday));
             this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex, 2, 30, 2, 50));
             this.RuleForEach(report => report.Persons).SetValidator(new MohiPersonValidator());
-          
-            this.RuleForEach(report => report.Activities).SetValidator(new MohiActivityValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(x => new PersonHasOnlyOneActivtyValidator(x.Activities));
 
+            this.RuleForEach(report => report.Activities).SetValidator(new MohiActivityValidator());
+            this.RuleForEach(report => report.Activities).SetValidator(x => new PersonActivityHasValidPersonValidator(x.Persons));
+            
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<MohiReport> context, CancellationToken cancellation = default(CancellationToken))
