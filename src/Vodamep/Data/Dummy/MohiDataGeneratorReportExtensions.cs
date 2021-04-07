@@ -23,7 +23,7 @@ namespace Vodamep.Data.Dummy
 
         public static Activity AddDummyActivity(this MohiReport report)
         {
-            var p = MohiDataGenerator.Instance.CreateActivity(report.FromD);
+            var p = MohiDataGenerator.Instance.CreateActivity(report.Persons.First().Id);
             report.AddActivity(p);
             return p;
         }

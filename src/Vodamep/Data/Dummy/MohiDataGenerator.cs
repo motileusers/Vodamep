@@ -43,6 +43,7 @@ namespace Vodamep.Data.Dummy
             report.ToD = report.FromD.LastDateInMonth();
 
             report.AddDummyPersons(persons);
+            report.AddDummyActivity();
            
             return report;
         }
@@ -87,27 +88,26 @@ namespace Vodamep.Data.Dummy
                 yield return CreatePerson(i + 1);
         }
 
-        public Activity CreateActivity(DateTime reportDate)
+        public Activity CreateActivity(string personId)
         {
             var clientActivity = new Activity
             {
-                //Minutes = 500,
-                //Date = reportDate.AddDays(1).AsTimestamp(),
-                //ActivityType = ((ActivityType[])(Enum.GetValues(typeof(ActivityType))))
-                //    .Where(x => x != ActivityType.UndefinedCt)
-                //    .ElementAt(_rand.Next(Enum.GetValues(typeof(ActivityType)).Length - 1)),
-
+                PersonId = personId,
+                HoursPerMonth = 500,
             };
 
             return clientActivity;
         }
 
-
-
         public IEnumerable<Activity> CreateActivities(MohiReport report, int count)
         {
+            Random rand = new Random(DateTime.Now.Millisecond);
+
             for (var i = 0; i < count; i++)
-                yield return CreateActivity(report.FromD);
+            {
+                var personId = report.Persons[rand.Next(0, report.Persons.Count - 1)].Id;
+                yield return CreateActivity(personId);
+            }
         }
 
     }

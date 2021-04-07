@@ -162,8 +162,5 @@ namespace Vodamep.Specs.StepDefinitions
 
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
-
-      
-
     }
 }

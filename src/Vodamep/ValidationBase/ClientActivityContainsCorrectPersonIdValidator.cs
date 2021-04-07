@@ -6,7 +6,7 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.ValidationBase
 {
-    internal class ClientActivityContainsCorrectPersonIdValidator : AbstractValidator<IClientActivity>
+    internal class ClientActivityContainsCorrectPersonIdValidator : AbstractValidator<IPersonDateActivity>
     {
         public ClientActivityContainsCorrectPersonIdValidator(IEnumerable<string> availablePersonIds)
         {
