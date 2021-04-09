@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Vodamep.Mohi.Validation;
 using Vodamep.Tb.Model;
 using Vodamep.ValidationBase;
 
@@ -32,7 +33,10 @@ namespace Vodamep.Tb.Validation
             this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex, 2, 30, 2, 50));
             this.RuleForEach(report => report.Persons).SetValidator(new TbPersonValidator());
             this.RuleForEach(report => report.Persons).SetValidator(x => new UniqePersonValidatorWithClientId(x.Persons));
+            this.RuleForEach(report => report.Persons).SetValidator(x => new PersonHasOnlyOneActivtyValidator(x.Activities));
 
+            this.RuleForEach(report => report.Activities).SetValidator(x => new PersonActivityHasValidPersonValidator(x.Persons));
+            this.RuleForEach(report => report.Activities).SetValidator(new TbActivityValidator());
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<TbReport> context, CancellationToken cancellation = default(CancellationToken))
