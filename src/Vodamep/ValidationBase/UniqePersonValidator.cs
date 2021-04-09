@@ -2,9 +2,11 @@
 using FluentValidation;
 using FluentValidation.Results;
 using Vodamep.ReportBase;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.ValidationBase
 {
+    
     internal class UniqePersonValidator : AbstractValidator<IReportBase>
     {
         public UniqePersonValidator()
@@ -19,7 +21,7 @@ namespace Vodamep.ValidationBase
                         ctx.AddFailure(new ValidationFailure($"{nameof(ctx.PropertyName)}[{index}]", Validationmessages.IdIsNotUnique));
                     }
                 });
-
         }
     }
+
 }

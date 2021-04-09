@@ -25,6 +25,14 @@ namespace Vodamep.Tb.Validation
             this.RuleFor(x => x.Institution).NotEmpty();
             
             this.RuleFor(x => x).SetValidator(new ReportDateValidator());
+
+            var earliestBirthday = new DateTime(1890, 01, 01);
+            var nameRegex = "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$";
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(earliestBirthday));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex, 2, 30, 2, 50));
+            this.RuleForEach(report => report.Persons).SetValidator(new TbPersonValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(x => new UniqePersonValidatorWithClientId(x.Persons));
+
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<TbReport> context, CancellationToken cancellation = default(CancellationToken))
