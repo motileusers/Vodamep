@@ -11,6 +11,8 @@ namespace Vodamep.Tb.Model
     {
         public static TbReport AddPerson(this TbReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static TbReport AddPersons(this TbReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
+        public static TbReport AddActivity(this TbReport report, Activity activity) => report.InvokeAndReturn(m => m.Activities.Add(activity));
+        public static TbReport AddActivities(this TbReport report, IEnumerable<Activity> activities) => report.InvokeAndReturn(m => m.Activities.AddRange(activities));
 
         private static TbReport InvokeAndReturn(this TbReport m, Action<TbReport> action)
         {
