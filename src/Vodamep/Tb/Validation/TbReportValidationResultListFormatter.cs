@@ -2,20 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using Vodamep.Cm.Model;
+using Vodamep.Tb.Model;
 
-namespace Vodamep.Cm.Validation
+namespace Vodamep.Tb.Validation
 {
-    public class CmReportValidationResultListFormatter : CmReportValidationResultFormatterBase
+    public class TbReportValidationResultListFormatter : TbReportValidationResultFormatterBase
     {
 
-        public CmReportValidationResultListFormatter(ResultFormatterTemplate template, bool ignoreWarnings = false)
+        public TbReportValidationResultListFormatter(ResultFormatterTemplate template, bool ignoreWarnings = false)
         : base(template, ignoreWarnings)
         {
         }
 
-        public IEnumerable<string> Format(CmReport report, ValidationResult validationResult)
+        public IEnumerable<string> Format(TbReport report, ValidationResult validationResult)
         {
             var result = new List<string>();
 
@@ -59,6 +58,5 @@ namespace Vodamep.Cm.Validation
 
             return result;
         }
-
     }
 }

@@ -24,7 +24,7 @@ namespace Vodamep.Tb.Model
 
         public static string ValidateToText(this TbReport report, bool ignoreWarnings) => new TbReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
 
-        public static IEnumerable<string> ValidateToEnumerable(this TbReport report, bool ignoreWarnings) => new TpReportValidationResultListFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
+        public static IEnumerable<string> ValidateToEnumerable(this TbReport report, bool ignoreWarnings) => new TbReportValidationResultListFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
 
         public static TbReport AsSorted(this TbReport report)
         {

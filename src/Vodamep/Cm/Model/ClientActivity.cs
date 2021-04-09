@@ -1,5 +1,4 @@
-﻿using System;
-using Vodamep.ReportBase;
+﻿using Vodamep.ReportBase;
 
 namespace Vodamep.Cm.Model
 {
