@@ -23,7 +23,6 @@ namespace Vodamep.Cm.Validation
         public CmReportValidator()
         {
             this.RuleFor(x => x.Institution).NotEmpty();
-            //this.RuleFor(x => x.Institution).SetValidator(new InstitutionValidator());
             
             this.RuleFor(x => x).SetValidator(new ReportDateValidator());
 
@@ -35,29 +34,8 @@ namespace Vodamep.Cm.Validation
             this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex, 2, 30, 2, 50));
             this.RuleForEach(report => report.Persons).SetValidator(new CmPersonValidator());
 
-
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r.FromD, r.ToD));
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator4141617Without123(r.Persons, r.Staffs));
-
-            //// Nur für neu gesendete Daten
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator23Without417(r.Persons, r.Staffs)).Unless(x => x.ToD < new DateTime(2019, 01, 01));
-
-
-            //this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator(r.FromD, r.ToD));
-
-            //this.Include(new ActivityMedicalByQualificationTraineeValidator());
-
-            //this.Include(new ActivityWarningIfMoreThan5Validator());
-
-            //this.Include(new ActivityWarningIfMoreThan350Validator());            
-
-            //this.Include(new HkpvReportPersonIdValidator());
-
-            //this.Include(new HkpvReportStaffIdValidator());
-
-            //this.Include(new PersonSsnIsUniqueValidator());
-
-            //this.Include(new EmploymentActivityValidator());
+            this.RuleForEach(report => report.Activities).SetValidator(r => new CmActivityValidator());
+            this.RuleForEach(report => report.ClientActivities).SetValidator(r => new CmClientActivityValidator(r));
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<CmReport> context, CancellationToken cancellation = default(CancellationToken))

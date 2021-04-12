@@ -29,8 +29,7 @@ namespace Vodamep.Specs.StepDefinitions
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
-            var date = DateTime.Today.AddMonths(-1);
-            this.Report = CmDataGenerator.Instance.CreateCmReport("", date.Year, date.Month, 1, 1, false);
+            this.Report = CmDataGenerator.Instance.CreateCmReport("", 2021, 2, 1, 1, false);
         }
 
         public CmReport Report { get; private set; }
@@ -83,16 +82,20 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist auf '(.*)' gesetzt")]
         public void GivenThePropertyIsSetTo(string name, string type, string value)
         {
-            if (type == nameof(CmReport))
-                this.Report.SetValue(name, value);
-            else if (type == nameof(Person))
-                this.Report.Persons[0].SetValue(name, value);
-            else if (type == nameof(Activity))
-                foreach (var a in this.Report.Activities)
-                    a.SetValue(name, value);
+            IMessage m;
 
+            if (type == nameof(CmReport))
+                m = this.Report;
+            else if (type == nameof(Person))
+                m = this.Report.Persons[0];
+            else if (type == nameof(Activity))
+                m = this.Report.Activities[0];
+            else if (type == nameof(ClientActivity))
+                m = this.Report.ClientActivities[0];
             else
                 throw new NotImplementedException();
+
+            m.SetValue(name, value);
         }
 
         [Given(@"die Datums-Eigenschaft '(\w*)' von '(\w*)' hat eine Uhrzeit gesetzt")]
@@ -105,6 +108,8 @@ namespace Vodamep.Specs.StepDefinitions
                 m = this.Report.Persons[0];
             else if (type == nameof(Activity))
                 m = this.Report.Activities[0];
+            else if (type == nameof(ClientActivity))
+                m = this.Report.ClientActivities[0];
             else
                 throw new NotImplementedException();
 
@@ -118,8 +123,12 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"die Liste von '(\w*)' ist leer")]
         public void GivenTheListPropertyIsEmpty(string type)
         {
-            if (type == nameof(Person))
+            if (type == nameof(Person)) { 
                 this.Report.Persons.Clear();
+
+                //also delete depending data
+                this.Report.ClientActivities.Clear();
+            }
             else if (type == nameof(Activity))
                 this.Report.Activities.Clear();
             else if (type == nameof(ClientActivity))
@@ -127,7 +136,6 @@ namespace Vodamep.Specs.StepDefinitions
             else
                 throw new NotImplementedException();
         }
-
 
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)

@@ -117,7 +117,7 @@ namespace Vodamep.Hkpv.Validation
             if (report.Activities.Count > index && index >= 0)
             {
                 var e = report.Activities[index];
-                return $"Aktivität {e.DateD.ToString("dd.MM.yyyy")}{_template.Linefeed}  {String.Join(",", e.Entries)}{_template.Linefeed}  {GetNameOfPersonById(report, e.PersonId)}{_template.Linefeed}  {GetNameOfStaffById(report, e.StaffId)}";
+                return $"Aktivität {e.DateD:dd.MM.yyyy}{_template.Linefeed}  {String.Join(",", e.Entries)}{_template.Linefeed}  {GetNameOfPersonById(report, e.PersonId)}{_template.Linefeed}  {GetNameOfStaffById(report, e.StaffId)}";
             }
 
             return string.Empty;

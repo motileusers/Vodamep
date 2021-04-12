@@ -55,6 +55,24 @@ namespace Vodamep.Specs.StepDefinitions
             // nichts zu tun
         }
 
+        [Given(@"der Id einer Person ist nicht eindeutig")]
+        public void GivenPersonIdNotUnique()
+        {
+            var p0 = this.Report.Persons[0];
+
+            var p = this.Report.AddDummyPerson();
+
+            p.Id = p0.Id;
+            p.Id = p0.Id;
+        }
+
+
+        [Given(@"für einen Klient gibt es mehrfache Leistungen")]
+        public void GivenMultipleActivitiesForOneClient()
+        {
+            this.Report.AddDummyActivity();
+        }
+
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist nicht gesetzt")]
         public void GivenThePropertyIsDefault(string name, string type)
         {
@@ -104,7 +122,24 @@ namespace Vodamep.Specs.StepDefinitions
             field.Accessor.SetValue(m, ts);
         }
 
-       
+        [Given(@"die Liste von '(\w*)' ist leer")]
+        public void GivenTheListPropertyIsEmpty(string type)
+        {
+            if (type == nameof(Person))
+            {
+                this.Report.Persons.Clear();
+
+                this.Report.Activities.Clear();
+            }
+            else if (type == nameof(Activity))
+            {
+                this.Report.Activities.Clear();
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
         public void ThenTheResultContainsNoErrors(string dummy)
         {
@@ -138,8 +173,5 @@ namespace Vodamep.Specs.StepDefinitions
 
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
-
-      
-
     }
 }

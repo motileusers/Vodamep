@@ -3,7 +3,9 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Vodamep.Mohi.Validation;
 using Vodamep.Tb.Model;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.Tb.Validation
 {
@@ -21,56 +23,20 @@ namespace Vodamep.Tb.Validation
         }
         public TbReportValidator()
         {
-            //this.RuleFor(x => x.Institution).NotEmpty();
-            //this.RuleFor(x => x.Institution).SetValidator(new InstitutionValidator());
-            //this.RuleFor(x => x.From).NotEmpty();
-            //this.RuleFor(x => x.To).NotEmpty();
-            //this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
-            //this.RuleFor(x => x.To).SetValidator(new TimestampWithOutTimeValidator());
-            //this.RuleFor(x => x.ToD).LessThanOrEqualTo(x => DateTime.Today);
-            //this.RuleFor(x => x.ToD).GreaterThan(x => x.FromD).Unless(x => x.From == null || x.To == null);
+            this.RuleFor(x => x.Institution).NotEmpty();
+            
+            this.RuleFor(x => x).SetValidator(new ReportDateValidator());
 
-            ////corert kann derzeit nicht mit AnonymousType umgehen. Vielleicht später: this.RuleFor(x => new { x.From, x.To })
-            //this.RuleFor(x => new Tuple<DateTime, DateTime>(x.FromD, x.ToD))
-            //    .Must(x => x.Item2 == x.Item1.LastDateInMonth())
-            //    .Unless(x => x.From == null || x.To == null)
-            //    .WithMessage(Validationmessages.OneMonth);
+            var earliestBirthday = new DateTime(1890, 01, 01);
+            var nameRegex = "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$";
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(earliestBirthday));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex, 2, 30, 2, 50));
+            this.RuleForEach(report => report.Persons).SetValidator(new TbPersonValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(x => new UniqePersonValidatorWithClientId(x.Persons));
+            this.RuleForEach(report => report.Persons).SetValidator(x => new PersonHasOnlyOneActivtyValidator(x.Activities));
 
-            //this.RuleFor(x => x.ToD)
-            //    .Must(x => x == x.LastDateInMonth())
-            //    .Unless(x => x.To == null)
-            //    .WithMessage(Validationmessages.LastDateInMonth);
-
-            //this.RuleFor(x => x.FromD)
-            //    .Must(x => x.Day == 1)
-            //    .Unless(x => x.From == null)
-            //    .WithMessage(Validationmessages.FirstDateInMonth);
-
-            //this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
-
-
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r.FromD, r.ToD));
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator4141617Without123(r.Persons, r.Staffs));
-
-            //// Nur für neu gesendete Daten
-            //this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator23Without417(r.Persons, r.Staffs)).Unless(x => x.ToD < new DateTime(2019, 01, 01));
-
-
-            //this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator(r.FromD, r.ToD));
-
-            //this.Include(new ActivityMedicalByQualificationTraineeValidator());
-
-            //this.Include(new ActivityWarningIfMoreThan5Validator());
-
-            //this.Include(new ActivityWarningIfMoreThan350Validator());            
-
-            //this.Include(new HkpvReportPersonIdValidator());
-
-            //this.Include(new HkpvReportStaffIdValidator());
-
-            //this.Include(new PersonSsnIsUniqueValidator());
-
-            //this.Include(new EmploymentActivityValidator());
+            this.RuleForEach(report => report.Activities).SetValidator(x => new PersonActivityHasValidPersonValidator(x.Persons));
+            this.RuleForEach(report => report.Activities).SetValidator(new TbActivityValidator());
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<TbReport> context, CancellationToken cancellation = default(CancellationToken))

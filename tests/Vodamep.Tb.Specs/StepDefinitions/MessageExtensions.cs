@@ -2,6 +2,7 @@
 using Google.Protobuf.Reflection;
 using Google.Protobuf.WellKnownTypes;
 using System;
+using System.Globalization;
 using System.Linq;
 using Enum = Google.Protobuf.WellKnownTypes.Enum;
 
@@ -66,7 +67,7 @@ namespace Vodamep.Specs.StepDefinitions
                     break;
                 case FieldType.Double:
                 case FieldType.Float:
-                    field.Accessor.SetValue(m, float.Parse(value));
+                    field.Accessor.SetValue(m, float.Parse(value, CultureInfo.InvariantCulture));
                     break;
                 case FieldType.Message:
                     if (field.MessageType == Timestamp.Descriptor)

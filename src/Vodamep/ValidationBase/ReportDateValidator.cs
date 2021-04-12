@@ -1,6 +1,5 @@
 ﻿using System;
 using FluentValidation;
-using Vodamep.Data;
 using Vodamep.ReportBase;
 
 namespace Vodamep.ValidationBase

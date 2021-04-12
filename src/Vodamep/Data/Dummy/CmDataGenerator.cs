@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Google.Protobuf.WellKnownTypes;
 using Vodamep.Cm.Model;
+using Enum = System.Enum;
 
 namespace Vodamep.Data.Dummy
 {
@@ -43,11 +45,8 @@ namespace Vodamep.Data.Dummy
             report.ToD = report.FromD.LastDateInMonth();
 
             report.AddDummyPersons(persons);
-            //report.AddDummyStaffs(staffs);
-            //report.AddDummyTravelTime();
-
-            //if (addActivities)
-            //    report.AddDummyActivities();
+            report.AddDummyActivity();
+            report.AddDummyClientActivity();
 
             return report;
         }
@@ -89,41 +88,49 @@ namespace Vodamep.Data.Dummy
                 yield return CreatePerson(i + 1);
         }
 
-
-        //private ActivityType[] CreateRandomActivities()
-        //{
-        //    var a = _activities[_rand.Next(_activities.Length)];
-
-        //    if (string.IsNullOrEmpty(a)) return new ActivityType[0];
-
-        //    return a.Split(',').Select(x => (ActivityType)int.Parse(x)).Distinct().ToArray();
-        //}
-
-        //private Activity CreateRandomActivity(string personId, string staffId, DateTime date, int minuten)
-        //{
-        //    var result = new Activity()
-        //    {
-        //        StaffId = staffId,
-        //        PersonId = personId,
-        //        DateD = date,
-        //        PlaceOfAction = ((PlaceOfAction[])(Enum.GetValues(typeof(PlaceOfAction))))
-        //        .Where(x => x != PlaceOfAction.UndefinedPlace )
-        //        .ElementAt(_rand.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1))
-        //    };
-
-        //    result.Minutes = minuten;
-
-        //    var activities = CreateRandomActivities();
-        //    result.Entries.AddRange(activities.OrderBy(x => x));
-
-        //    return result;
-        //}
-
-        public Activity[] CreateActivities(CmReport report)
+        public ClientActivity CreateClientActivity(string personId, DateTime reportDate)
         {
-            var result = new List<Activity>();
+            var clientActivity = new ClientActivity
+            {
+               PersonId = personId,
+               Minutes = 500,
+               Date = reportDate.AddDays(1).AsTimestamp(),
+               ActivityType = ((ClientActivityType[])(Enum.GetValues(typeof(ClientActivityType))))
+                   .Where(x => x != ClientActivityType.UndefinedCa)
+                   .ElementAt(_rand.Next(Enum.GetValues(typeof(ClientActivityType)).Length - 1)),
 
-            return result.ToArray();
+            };
+
+            return clientActivity;
+        }
+
+        public IEnumerable<ClientActivity> CreateClientActivities(int count, DateTime reportDate)
+        {
+            for (var i = 0; i < count; i++)
+                yield return CreateClientActivity((i + 1).ToString(), reportDate);
+        }
+
+        public Activity CreateActivity(DateTime reportDate)
+        {
+            var clientActivity = new Activity
+            {
+                Minutes = 500,
+                Date = reportDate.AddDays(1).AsTimestamp(),
+                ActivityType = ((ActivityType[])(Enum.GetValues(typeof(ActivityType))))
+                    .Where(x => x != ActivityType.UndefinedCt)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(ActivityType)).Length - 1)),
+
+            };
+
+            return clientActivity;
+        }
+
+
+
+        public IEnumerable<Activity> CreateActivities(CmReport report, int count)
+        {
+            for (var i = 0; i < count; i++)
+                yield return CreateActivity(report.FromD);
         }
     }
 }

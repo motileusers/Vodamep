@@ -12,6 +12,12 @@ namespace Vodamep.Cm.Model
         public static CmReport AddPerson(this CmReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static CmReport AddPersons(this CmReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
 
+        public static CmReport AddActivity(this CmReport report, Activity activity) => report.InvokeAndReturn(m => m.Activities.Add(activity));
+        public static CmReport AddActivities(this CmReport report, IEnumerable<Activity> activities) => report.InvokeAndReturn(m => m.Activities.AddRange(activities));
+
+        public static CmReport AddClientActivity(this CmReport report, ClientActivity clientActivity) => report.InvokeAndReturn(m => m.ClientActivities.Add(clientActivity));
+        public static CmReport AddClientActivities(this CmReport report, IEnumerable<ClientActivity> clientActivities) => report.InvokeAndReturn(m => m.ClientActivities.AddRange(clientActivities));
+
         private static CmReport InvokeAndReturn(this CmReport m, Action<CmReport> action)
         {
             action(m);
