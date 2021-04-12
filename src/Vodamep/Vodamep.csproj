@@ -12,9 +12,9 @@
     <PackageIcon></PackageIcon>
     <RepositoryUrl>https://bitbucket.org/team_connexia/vodamep.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.8.0-alpha</Version>
+    <Version>1.9.0-alpha</Version>
     <Product>Vorarlberger Datenmeldung Pflege</Product>
-    <PackageReleaseNotes>MKKP + AGP</PackageReleaseNotes>
+    <PackageReleaseNotes>AB + MH + TB + CM</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
