@@ -75,7 +75,7 @@ message Admission {
     bool finance_personal_contributions = 19;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
 }
 
-// Aufnahme Daten
+// Entlassungs Daten
 message Leaving {
 
     string person_id = 1;
