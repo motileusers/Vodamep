@@ -11,7 +11,7 @@ namespace Vodamep.ValidationBase
             this.RuleFor(x => x.Country).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.Id));
 
             this.RuleFor(x => x.Country)
-                .Must((person, country) => CountryCodeProvider.Instance.IsValid(country))
+                .Must((person, country) => CountryCodeProvider.Instance.IsValid(country) && country != CountryCodeProvider.Instance.Unknown)
                 .Unless(x => string.IsNullOrWhiteSpace(x.Country))
                 .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.Id));
 

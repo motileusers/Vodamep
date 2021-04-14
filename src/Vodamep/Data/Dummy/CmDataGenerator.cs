@@ -119,6 +119,7 @@ namespace Vodamep.Data.Dummy
                 ActivityType = ((ActivityType[])(Enum.GetValues(typeof(ActivityType))))
                     .Where(x => x != ActivityType.UndefinedCt)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(ActivityType)).Length - 1)),
+                CaseManagerId = "1",
 
             };
 

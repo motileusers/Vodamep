@@ -34,7 +34,7 @@ namespace Vodamep.Cm.Validation
             this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex, 2, 30, 2, 50));
             this.RuleForEach(report => report.Persons).SetValidator(new CmPersonValidator());
 
-            this.RuleForEach(report => report.Activities).SetValidator(r => new CmActivityValidator());
+            this.RuleForEach(report => report.Activities).SetValidator(r => new CmActivityValidator(r));
             this.RuleForEach(report => report.ClientActivities).SetValidator(r => new CmClientActivityValidator(r));
         }
 

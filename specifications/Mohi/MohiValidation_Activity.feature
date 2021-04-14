@@ -37,10 +37,9 @@ Szenariogrundriss: Gültiger Klient bei der Leistung
 		| Name      | Nummer | Wert |
 		| person_id | 1      | 1    |
 
-#Szenariogrundriss: Ungültiger Klient bei der Leistung
-#	Angenommen die Eigenschaft '<Name>' von 'activities' '<Nummer>' ist auf '<Wert>' gesetzt
-#	Dann enthält das Validierungsergebnis keinen Fehler
-#
-#	Beispiele:
-#		| Name      | Nummer | Wert | Fehler                                          |
-#		| person_id | -1     | 1    | FKlient xx wurden keine Personendaten gesendet. |
+Szenariogrundriss: Ungültiger Klient bei der Leistung
+	Angenommen die Eigenschaft '<Name>' von 'Activity' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
+	Beispiele:
+		| Name      | Nummer | Wert | Fehler												|
+		| person_id | -1     | 1    | Für Klient '-1' wurden keine Personendaten gesendet.	|

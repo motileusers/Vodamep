@@ -10,7 +10,7 @@ Szenariogrundriss: Ungültige Werte bei der Leistung
 	Beispiele:
 		| Name            | Nummer | Wert  | Fehler                                                                     |
 		| hours_per_month | 1      | 0     | Bei der Leistung von Person '1' wurde ein Wert < 0.25 angegeben.           |
-		| hours_per_month | 1      | 10001 | Bei der Leistung von Person '1' wurde ein Wert > 10000 angegeben.      |
+		| hours_per_month | 1      | 10001 | Bei der Leistung von Person '1' wurde ein Wert > 10000 angegeben.			|
 		| hours_per_month | 1      | 0.375 | muss der Wert in 0.25 Schritten angegeben werden.							|
 
 Szenariogrundriss: Gültige Werte bei der Leistung
@@ -42,5 +42,5 @@ Szenariogrundriss: Ungültiger Klient bei der Leistung
 	Angenommen die Eigenschaft '<Name>' von 'Activity' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 	Beispiele:
-		| Name      | Nummer | Wert | Fehler                                          |
-		| person_id | -1     | 1    | Für Klient '-1' wurden keine Personendaten gesendet. |
+		| Name      | Nummer | Wert | Fehler												|
+		| person_id | -1     | 1    | Für Klient '-1' wurden keine Personendaten gesendet.	|
