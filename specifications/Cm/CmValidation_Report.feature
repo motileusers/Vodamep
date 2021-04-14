@@ -40,17 +40,6 @@ Beispiele:
     | from     | Von         |
     | to       | Bis         |
 
-#Ist das korrekt?
-#Szenariogrundriss: Das Datum einer Entlassung in einer Meldung muss im Gültigkeitsbereich der Meldungen liegen
-#    Angenommen die Datums-Eigenschaft '<Name>' von 'StatLpReport' hat eine Uhrzeit gesetzt
-#    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
-#Beispiele:
-#    | Name     | Bezeichnung |
-#    | from     | Von         |
-#    | to       | Bis         |
-#
-#
-#
 Szenariogrundriss: Listen sind leer
     Angenommen die Liste von '<Name>' ist leer 
     Dann enthält das Validierungsergebnis keine Fehler
@@ -60,5 +49,4 @@ Beispiele:
     | Person            |
     | Activity          |
     | ClientActivity    | 
-#
-#    
+    

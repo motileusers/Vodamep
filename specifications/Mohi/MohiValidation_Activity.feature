@@ -23,7 +23,7 @@ Szenariogrundriss: Gültige Werte bei der Leistung
 		| hours_per_month | 1      | 1000 |
 		| hours_per_month | 1      | 0.5  |
 		| hours_per_month | 1      | 0.25 |
-#
+
 ## Beim Generator am besten einfach 2 Leistungen anlegen und die 2. Leistung auf den 1. Klienten setzen
 Szenario: Mehrfache Leistungen pro Klient pro Monat
 	Angenommen für einen Klient gibt es mehrfache Leistungen

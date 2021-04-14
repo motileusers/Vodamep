@@ -67,8 +67,7 @@ Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
 	Beispiele:
 		| Name    | Bezeichnung | Wert |
 		| country | Land        | A    |
-#ist valid
-#		| country | Land        | ZZ   |
+		| country | Land        | ZZ   |
 
 Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert
 	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt

@@ -64,6 +64,7 @@ Szenariogrundriss: Der Vorname einer Person ist zu kurz / lang
 		| given_name | Vorname     | x                                  |
 
 # Land
+# ZZ ist unbekannt -> darum sollte ein Fehler kommen
 Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
 	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' hat einen ungülitgen Wert'
@@ -71,9 +72,7 @@ Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
 	Beispiele:
 		| Name    | Bezeichnung | Wert |
 		| country | Land        | A    |
-		
-# ZZ is valid
-#		| country | Land        | ZZ   |
+		| country | Land        | ZZ   |
 
 
 Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert

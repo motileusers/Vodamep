@@ -1,5 +1,6 @@
 ﻿#language: de-DE
 Funktionalität: Cm - Validierung der Leistungen
+# case management id
 
 # Werte > 0 und <= 10.000
 # Connexia Source NumberValidationUtility.ValidateDecimalPlace

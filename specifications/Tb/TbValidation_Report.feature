@@ -10,13 +10,16 @@ Szenario: Von-Datum muss der erste Tag des Monats sein.
 	Angenommen die Eigenschaft 'from' von 'TbReport' ist auf '2018-04-04' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''Von' muss der erste Tag des Monats sein.'
 
+# Validator muss mit heutigem Datum initalisiert werden
 ## Das letzt Jahr darf bis Ende April vollständig gemeldet werden, danach nicht mehr
 #Szenario: Das Von-Datum liegt 1 Jahr und 5 Monate zurück
+#	Angenommen heute ist der 1.1....
 #	Angenommen die Eigenschaft 'from' von 'TbReport' ist auf 'xx' gesetzt
 #	Dann enthält das Validierungsergebnis den Fehler 'Nachmeldungen vom Vorjahr sind nur bis 30.April erlaubt.'
 #
 ## Das letzt Jahr darf bis Ende April vollständig gemeldet werden, danach nicht mehr
 #Szenario: Das Von-Datum liegt 1 Jahr und 4 Monate zurück
+#	Angenommen heute ist der 1.1....
 #	Angenommen die Eigenschaft 'from' von 'TbReport' ist auf 'xx' gesetzt
 #	Dann enthält das Validierungsergebnis keine Fehler
 
