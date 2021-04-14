@@ -23,13 +23,9 @@ Szenariogrundriss: Gültige Werte bei der Leistung
 		| hours_per_month | 1      | 0.25 |        |
 
 # Beim Generator am besten einfach 2 Leistungen anlegen und die 2. Leistung auf den 1. Klienten setzen
-Szenariogrundriss: Mehrfache Leistungen pro Klient pro Monat
+Szenario: Mehrfache Leistungen pro Klient pro Monat
 	Angenommen für einen Klient gibt es mehrfache Leistungen
 	Dann enthält das Validierungsergebnis den Fehler 'Mehrfache Leistungen für Klient '1' vorhanden.'
-
-	Beispiele:
-		| Name      | Nummer | Wert |
-		| person_id | 2      | 1    |
 
 Szenariogrundriss: Gültiger Klient bei der Leistung
 	Angenommen die Eigenschaft '<Name>' von 'Activity' ist auf '<Wert>' gesetzt

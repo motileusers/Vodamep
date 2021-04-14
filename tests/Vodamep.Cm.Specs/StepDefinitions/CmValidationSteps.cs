@@ -65,6 +65,12 @@ namespace Vodamep.Specs.StepDefinitions
             p.Id = p0.Id;
         }
 
+        [Given(@"für einen Klient gibt es mehrfache Leistungen")]
+        public void GivenMultipleActivitiesForOneClient()
+        {
+            this.Report.AddDummyActivity();
+        }
+
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist nicht gesetzt")]
         public void GivenThePropertyIsDefault(string name, string type)
         {

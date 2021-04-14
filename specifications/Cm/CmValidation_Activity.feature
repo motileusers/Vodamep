@@ -37,17 +37,10 @@ Szenariogrundriss: Gültige Werte bei der Leistung
 		| Name    | Nummer | Wert | Fehler |
 		| minutes | 1      | 1000 |        |
 
-## Beim Generator am besten einfach 2 Leistungen anlegen und die 2. Leistung auf den 1. Klienten setzen
-#Szenariogrundriss: Mehrfache Leistungen pro Klient pro Monat
-#	Angenommen die Eigenschaft '<Name>' von 'activities' '<Nummer>' ist auf '<Wert>' gesetzt
-#	Dann enthält das Validierungsergebnis keinen Fehler
-#
-#	Beispiele:
-#		| Name    | Nummer | Wert | Fehler |
-#		| minutes | 2      | 1    |        |
-#		| minutes | 1      | 1    |        |
-# es ist keine person Id verfügbar.
-
+# Beim Generator am besten einfach 2 Leistungen anlegen und die 2. Leistung auf den 1. Klienten setzen
+Szenario: Mehrfache Leistungen pro Klient pro Monat
+	Angenommen für einen Klient gibt es mehrfache Leistungen
+	Dann enthält das Validierungsergebnis keine Fehler
 
 Szenariogrundriss: Gültiger Klient bei der Leistung
 	Angenommen die Eigenschaft '<Name>' von 'ClientActivity' ist auf '<Wert>' gesetzt
@@ -57,14 +50,11 @@ Szenariogrundriss: Gültiger Klient bei der Leistung
 		| Name      | Nummer | Wert | Fehler |
 		| person_id | 1      | 1    |        |
 
-#Szenariogrundriss: Ungültiger Klient bei der Leistung
-#	Angenommen die Eigenschaft '<Name>' von 'client_activities' '<Nummer>' ist auf '<Wert>' gesetzt
-#	Dann enthält das Validierungsergebnis keinen Fehler
-#
-#	Beispiele:
-#		| Name      | Nummer | Wert | Fehler                                             |
-#		| person_id | -1     | 1    | Für Klient xx wurden keine Personendaten gesendet. |
-#verstehe ich nicht
+Szenariogrundriss: Ungültiger Klient bei der Leistung
+	Angenommen die Eigenschaft '<Name>' von 'ClientActivity' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
 
+	Beispiele:
+		| Name      | Nummer | Wert | Fehler                                               |
+		| person_id | -1     | 1    | Für Klient '-1' wurden keine Personendaten gesendet. |
 
-## Todo: Case Manager wird derzeit noch nicht geprüft, weil er noch nicht im Model vorhanden ist

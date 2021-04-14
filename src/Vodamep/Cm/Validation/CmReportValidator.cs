@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Cm.Model;
+using Vodamep.Mohi.Validation;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Cm.Validation
@@ -35,6 +36,8 @@ namespace Vodamep.Cm.Validation
             this.RuleForEach(report => report.Persons).SetValidator(new CmPersonValidator());
 
             this.RuleForEach(report => report.Activities).SetValidator(r => new CmActivityValidator(r));
+
+            this.RuleForEach(report => report.ClientActivities).SetValidator(x => new PersonActivityHasValidPersonValidator(x.Persons));
             this.RuleForEach(report => report.ClientActivities).SetValidator(r => new CmClientActivityValidator(r));
         }
 
