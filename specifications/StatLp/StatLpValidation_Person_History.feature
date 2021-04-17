@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: StatLp - Validierung der gemeldeten Personen einer Datenmeldung
+Funktionalität: StatLp - Validierung der gemeldeten Personen Historys einer Datenmeldung
 
 
 #Szenario: Performance bei großem Datenvolumen
@@ -13,16 +13,16 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen einer Datenmeldung
 
 # Korrekte Meldungsreihenfolgen
 
-#Szenario: Gesamter Aufenthalt korrekt in einer Meldung
-#    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 enthält eine Entlassung von Person 1 am 31.12.2020
-#    Dann enthält das Validierungsergebnis keinen Fehler
+Szenario: Gesamter Aufenthalt korrekt in einer Meldung
+    Angenommen Gesendete Meldung '1' gilt vom '2020-12-01' bis '2020-12-31'
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung 1 enthält eine 'Admission' von Person 1 vom '2020-12-01'
+    Angenommen Gesendete Meldung 1 enthält einen Aufenthalt von Person 1 vom '2020-12-01' bis '2020-12-31'
+    Angenommen Gesendete Meldung 1 enthält eine 'Leaving' von Person 1 vom '2020-12-31'
+    Dann enthält das History Validierungsergebnis keine Fehler
 #
 #Szenario: Gesamter Aufenthalt korrekt in 3 Meldungen
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020

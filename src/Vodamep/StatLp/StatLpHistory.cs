@@ -36,13 +36,13 @@ namespace Vodamep.StatLp
         // Die 4 Attribute sind immer dabei und zwar mit dem Wert, der zuletzt gesetzt wurde
         // kann auch schon Monate davor gemeldet worden sein
 
-        public Nullable<AdmissionType> AdmissionType { get; set; }
+        public AdmissionType? AdmissionType { get; set; }
 
-        public Nullable<CareAllowance> CareAllowance { get; set; }
+        public CareAllowance? CareAllowance { get; set; }
 
-        public Nullable<CareAllowanceArge> CareAllowanceArge { get; set; }
+        public CareAllowanceArge? CareAllowanceArge { get; set; }
 
-        public Nullable<Finance> Finance { get; set; }
+        public Finance? Finance { get; set; }
 
 
 
