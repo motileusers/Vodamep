@@ -76,7 +76,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseClientActivityUnknownPerson(string date) => $"Unbekannter Klient bei Leistung am {date}.";
         public static string ReportBaseActivtyMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
         public static string ReportBaseActivtyContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
-
+        public static string StatLpReportEveryPersonMustBeInAStay (string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

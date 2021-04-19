@@ -64,12 +64,6 @@ Beispiele:
     | country | Land        | AD   |
     | country | Land        | AT   |
 
-
-# die Liste enthält eine Person, die nicht in mindestens einem stay ist --> fehler
-
-
-
-
-
-
-   
+Szenario: die Liste enthält eine Person, die nicht in mindestens einem stay ist
+    Angenommen es gibt eine weitere Person
+    Dann enthält das Validierungsergebnis den Fehler 'Die Person '2' wird in keinem Aufenthalt erwähnt.'

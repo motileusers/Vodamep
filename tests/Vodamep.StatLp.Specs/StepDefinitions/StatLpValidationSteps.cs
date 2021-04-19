@@ -92,7 +92,14 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Stays.Clear();
             }
             else if (type == nameof(Stay))
+            {
                 this.Report.Stays.Clear();
+
+                this.Report.Persons.Clear();
+
+                this.Report.Admissions.Clear();
+                this.Report.Attributes.Clear();
+            }
             else
                 throw new NotImplementedException();
         }
@@ -223,6 +230,13 @@ namespace Vodamep.Specs.StepDefinitions
 
             p.Id = p0.Id;
             p.Id = p0.Id;
+        }
+
+
+        [Given(@"es gibt eine weitere Person")]
+        public void GivenThereIsAnotherPerson()
+        {
+            var p = this.Report.AddDummyPerson();
         }
 
         [Given(@"Bis ist vor Von bei einem Stay")]

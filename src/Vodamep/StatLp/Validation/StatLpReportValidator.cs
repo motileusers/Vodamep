@@ -56,6 +56,7 @@ namespace Vodamep.StatLp.Validation
             this.RuleForEach(report => report.Leavings).SetValidator(report => new LeavingValidator(report));
       
             this.RuleForEach(report => report.Stays).SetValidator(report => new StayValidator(report));
+            this.RuleFor(report => report).SetValidator(new PersonStayValidator());
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<StatLpReport> context, CancellationToken cancellation = default(CancellationToken))

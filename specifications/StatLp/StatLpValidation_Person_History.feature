@@ -1,6 +1,7 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Personen Historys einer Datenmeldung
 
+#todo was ist der Unterschied zwischen gesendete und existierende Meldung?
 
 #Szenario: Performance bei großem Datenvolumen
 #    Angenommen Im Meldungsbereich für eine Einrichtung befinden sich monatliche Meldungen vom 01.01.2017 bis 31.12.2020

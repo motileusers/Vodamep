@@ -14,7 +14,6 @@ Beispiele:
     | to            | Bis           |
 
 # Ein Stay (From,To) muss im akutellen Monat liegen
-# From muss <= to sein
 
 Szenario: Bis ist nach Von
     Angenommen Bis ist vor Von bei einem Stay
