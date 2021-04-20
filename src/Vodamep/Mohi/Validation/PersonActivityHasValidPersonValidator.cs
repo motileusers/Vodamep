@@ -12,7 +12,7 @@ namespace Vodamep.Mohi.Validation
         {
             this.RuleFor(x => x)
                 .Must(x => { return persons.Any(y => y.Id == x.PersonId); })
-                .WithMessage(x => Validationmessages.ReportBaseActivtyContainsNonExistingPerson(x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseActivityContainsNonExistingPerson(x.PersonId));
         }
     }
 }

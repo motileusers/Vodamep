@@ -21,6 +21,10 @@ namespace Vodamep.StatLp.Validation
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
 
+            this.RuleFor(x => x.Valid)
+                .Must(x => parentReport.From <= x && x <= parentReport.To)
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth("Die Aufnahme", x.PersonId));
+
             this.RuleFor(x => x.HousingTypeBeforeAdmission).NotEmpty();
             this.RuleFor(x => x.MainAttendanceRelation).NotEmpty();
             this.RuleFor(x => x.MainAttendanceCloseness).NotEmpty();

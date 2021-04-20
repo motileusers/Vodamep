@@ -82,7 +82,7 @@ namespace Vodamep.Specs.StepDefinitions
             this.Report.Stays.Clear();
         }
 
-        [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist auf '(.*)' gesetzt")]
+        [Given(@"die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
         public void GivenThePropertyIsSetTo(string name, string type, string value)
         {
             IMessage message;
@@ -255,6 +255,8 @@ namespace Vodamep.Specs.StepDefinitions
         public void ThenTheResultContainsAnError(string message)
         {
             var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            var abc = this.Result.Errors.Select(x => x.ErrorMessage).FirstOrDefault(y => y == message);
 
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }

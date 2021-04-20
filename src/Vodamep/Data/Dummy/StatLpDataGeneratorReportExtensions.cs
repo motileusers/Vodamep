@@ -23,14 +23,14 @@ namespace Vodamep.Data.Dummy
 
         public static Admission[] AddDummyAdmissions(this StatLpReport report)
         {
-            var p = StatLpDataGenerator.Instance.CreateAdmissions(report.Persons).OrderBy(x => x.PersonId).ToArray();
+            var p = StatLpDataGenerator.Instance.CreateAdmissions(report.Persons, report.From).OrderBy(x => x.PersonId).ToArray();
             report.AddAdmissions(p);
             return p;
         }
 
         public static Vodamep.StatLp.Model.Attribute[] AddDummyAttributes(this StatLpReport report)
         {
-            var p = StatLpDataGenerator.Instance.CreateAttributes(report.Persons).OrderBy(x => x.PersonId).ToArray();
+            var p = StatLpDataGenerator.Instance.CreateAttributes(report.Persons, report.From).OrderBy(x => x.PersonId).ToArray();
             report.AddAttributes(p);
             return p;
         }

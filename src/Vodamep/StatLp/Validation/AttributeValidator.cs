@@ -10,7 +10,12 @@ namespace Vodamep.StatLp.Validation
         public AttributeValidator(StatLpReport parentReport)
         {
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
-            
+
+            this.RuleFor(x => x.From)
+                .Must(x => parentReport.From <= x && x <= parentReport.To)
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth("Das Attribut", x.PersonId));
+
+
             this.RuleFor(x => x.PersonId)
                 .Must((admission, personId) =>
                 {

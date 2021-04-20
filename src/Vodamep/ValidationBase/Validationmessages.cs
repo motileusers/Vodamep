@@ -75,10 +75,12 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseActivityNoCategory(string personId, string date) => $"Bei der Leistung von Person '{personId}' am {date} wurde keine Kategorie angegeben.";
         public static string ReportBaseActivityWrongDate(string personId, string date) => $"Bei der Leistung von Person '{personId}' am {date} wurde ein Datum außerhalb des Meldungszeitraums angegeben.";
         public static string ReportBaseClientActivityUnknownPerson(string date) => $"Unbekannter Klient bei Leistung am {date}.";
-        public static string ReportBaseActivtyMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
-        public static string ReportBaseActivtyContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
+        public static string ReportBaseActivityMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
+        public static string ReportBaseActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
         public static string StatLpReportEveryPersonMustBeInAStay (string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
-        public static string StatLpReportLeavingReasonMustnotBeEmpty (string personId) => $"Beim Abgang von Klient '{personId}' muss eine Abgang Art angegeben werden.' ";
+        public static string ReportBaseItemMustBeInCurrentMonth (string itemName, string personId) => $"{itemName} von Person '{personId}' muss im aktuellen Monat liegen.";
+        public static string StatLpReportLeavingReasonMustnotBeEmpty (string personId) => $"Beim Abgang von Klient '{personId}' muss eine Abgang Art angegeben werden.";
+        public static string StatLpReportAdmissionMustExistAtStartOfStay (string personId) => $"Eine Aufnahme von Person '{personId}' muss zum Start eines Aufenthalts verfügbar sein.";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: StatLp - Validierung der gemeldeten Aufenthalte einer Datenmeldung
+Funktionalität: StatLp - Validierung der gemeldeten Aufnahmen einer Datenmeldung
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
@@ -128,9 +128,13 @@ Szenario: Eine Admission enthält eine Person, die nicht in der Personenliste is
     Angenommen die Eigenschaft 'person_id' von 'Admission' ist auf '2' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Person '2' ist nicht in der Personenliste vorhanden.'
 
-# Ein Admission (valid) muss im akutellen Monat liegen => was heißt aktuller monat? der monat des fromD Datums?
-# Ist der Monat vom Report
-# Ein Admission (valid) muss zum Start eines Stays vorhanden sein
+Szenario: eine Aufnahme muss im aktuellen Monat liegen
+     Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2000-01-01' gesetzt
+     Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '1' muss im aktuellen Monat liegen.'
+
+Szenario: eine Admission muss zum Start eines Stays vorhanden sein
+     Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2000-01-01' gesetzt
+     Dann enthält das Validierungsergebnis den Fehler 'Eine Aufnahme von Person '1' muss zum Start eines Aufenthalts verfügbar sein.'
 
  Szenario: Valid darf keine Zeit beinhalten
     Angenommen die Datums-Eigenschaft 'valid' von 'Admission' hat eine Uhrzeit gesetzt

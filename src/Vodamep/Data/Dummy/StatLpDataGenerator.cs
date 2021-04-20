@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Google.Protobuf.Collections;
+using Google.Protobuf.WellKnownTypes;
 using Vodamep.StatLp.Model;
 using Attribute = Vodamep.StatLp.Model.Attribute;
+using Enum = System.Enum;
 
 namespace Vodamep.Data.Dummy
 {
@@ -54,7 +56,7 @@ namespace Vodamep.Data.Dummy
         {
             var report = new StatLpReport()
             {
-                Institution = new Institution() {}
+                Institution = new Institution() { }
             };
 
             return report;
@@ -89,7 +91,7 @@ namespace Vodamep.Data.Dummy
                 yield return CreatePerson(i + 1);
         }
 
-        public Admission CreateAdmission(string personId)
+        public Admission CreateAdmission(string personId, Timestamp valid = null)
         {
             var admission = new Admission()
             {
@@ -103,35 +105,43 @@ namespace Vodamep.Data.Dummy
                 MainAttendanceCloseness = MainAttendanceCloseness.NoMainattendanceMc,
                 HousingReason = HousingReason.BarriersEntranceHr,
                 PersonalChanges = { PersonalChange.IncreasedAssitanceNeedPc },
-                SocialChanges = { SocialChange.MissingMealsSc }
+                SocialChanges = { SocialChange.MissingMealsSc },
+
             };
+
+
+            if (valid != null)
+                admission.Valid = valid;
 
             return admission;
 
         }
 
-        public IEnumerable<Admission> CreateAdmissions(IEnumerable<Person> persons)
+        public IEnumerable<Admission> CreateAdmissions(IEnumerable<Person> persons, Timestamp reportFrom)
         {
             foreach (var person in persons)
             {
-                yield return CreateAdmission(person.Id);
+                yield return CreateAdmission(person.Id, reportFrom);
             }
         }
 
-        public IEnumerable<Attribute> CreateAttributes(IEnumerable<Person> persons)
+        public IEnumerable<Attribute> CreateAttributes(IEnumerable<Person> persons, Timestamp @from)
         {
             foreach (var person in persons)
             {
-                yield return CreateAttribute(person.Id);
+                yield return CreateAttribute(person.Id, @from);
             }
         }
 
-        public Attribute CreateAttribute(string personId)
+        public Attribute CreateAttribute(string personId, Timestamp @from)
         {
             var attribute = new Attribute()
             {
                 PersonId = personId,
             };
+
+            if (from != null)
+                attribute.From = @from;
 
             return attribute;
 

@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: StatLp - Validierung der gemeldeten Stays einer Datenmeldung
+Funktionalität: StatLp - Validierung der gemeldeten Aufenthalte einer Datenmeldung
 
 Szenario: Ein Stay enthält eine Person, die nicht in der Personenliste ist
     Angenommen die Eigenschaft 'person_id' von 'Stay' ist auf '2' gesetzt
@@ -14,6 +14,13 @@ Beispiele:
     | to            | Bis           |
 
 # Ein Stay (From,To) muss im akutellen Monat liegen
+#
+#Szenariogrundriss: Ein Stay muss im aktuellen Monat liegen
+#    Angenommen die Eigenschaft '<Name>' von 'Stay' ist auf '<Wert>' gesetzt
+#    Dann enthält das Validierungsergebnis den Fehler 'Der Aufenthalt von Person '1' muss im aktuellen Monat liegen.'
+#    | Name          | Wert   |
+#    | from          | Von           |
+#    | to            | Bis           |
 
 Szenario: Bis ist nach Von
     Angenommen Bis ist vor Von bei einem Stay

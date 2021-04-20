@@ -14,11 +14,18 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.To.AsDate()).GreaterThanOrEqualTo(x => x.From.AsDate()).Unless(x => x.From == null || x.To == null).WithMessage(Validationmessages.FromMustBeBeforeTo);
 
             this.RuleFor(x => x.PersonId)
-                .Must((admission, personId) =>
+                .Must((stay, personId) =>
                 {
                     return parentReport.Persons.Any(y => y.Id == personId);
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
+
+            this.RuleFor(x => x)
+                .Must((stay) =>
+                {
+                    return parentReport.Admissions.Any(admission => stay.From == admission.Valid && stay.PersonId == admission.PersonId);
+                })
+                .WithMessage(x => Validationmessages.StatLpReportAdmissionMustExistAtStartOfStay(x.PersonId));
 
         }
     }
