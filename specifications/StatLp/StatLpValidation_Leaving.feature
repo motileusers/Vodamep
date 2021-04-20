@@ -3,10 +3,10 @@ Funktionalität: StatLp - Validierung der gemeldeten Entlassungen einer Datenmel
 
 Szenariogrundriss: Pflichtfelder
     Angenommen die Eigenschaft '<Name>' von 'Leaving' ist nicht gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das escapte Validierungsergebnis den Fehler '<Fehler>'
 Beispiele:
-    | Name           | Bezeichnung |
-    | leaving_reason | Abgangart   | 
+    | Name           | Fehler |
+    | leaving_reason | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.   | 
 
 Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung
 	Angenommen die Eigenschaft 'leaving_reason' von 'Leaving' ist auf '<leaving_reason>' gesetzt
@@ -22,8 +22,6 @@ Beispiele:
 		| DischargeLr    |					    | HomeLivingAloneDc		|                          | EndShortTermCareDr		|                        |
 		| DischargeLr    |						| OtherDc				| asd                      | EndShortTermCareDr		|                        |
 		| DischargeLr    |						| OtherDc				| asd                      | OtherDr				| asd                    |
-#Fehler weil Other gefüllt ist
-#		| DischargeLr    |						| HomeLivingAloneDc		|                          |						| asdf                   |
 
 Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
 	Angenommen die Eigenschaft 'leaving_reason' von 'Leaving' ist auf '<leaving_reason>' gesetzt
@@ -44,15 +42,13 @@ Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
 		| DischargeLr    |                       | NursingHomeDc      |                          | EndShortTermCareDr  | asdfasd                | Wenn bei der Entlassung von Klient '1' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.	|
 		| DischargeLr    |                       |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.			|
 		| DischargeLr    | DeathNursingHomeDl	 |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.					|
-# verstehe den test nicht
-#		| DischargeLr    |                       | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.         |
-# leaving reason darf nicht leer sein
-#		|                |                       |                    |                          |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
-#		|                | DeathNursingHomeDl	 |                    |                          |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
-#		|                |                       | HomeLivingAloneDc  |                          |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
-#		|                |                       |                    |                          | EndShortTermCareDr  |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
-#		|                |                       |                    | abc                      |                     |                        | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
-#		|                |                       |                    |                          |                     | abc                    | Beim Abgang von Klient xx muss eine Abgang Art angegeben werden.'                                         |
+		| DischargeLr    |                       | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.         |
+ 		|                |                       |                    |                          |                     |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.'                                         |
+		|                | DeathNursingHomeDl	 |                    |                          |                     |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.'                                         |
+		|                |                       | HomeLivingAloneDc  |                          |                     |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.'                                         |
+		|                |                       |                    |                          | EndShortTermCareDr  |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.'                                         |
+		|                |                       |                    | abc                      |                     |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.'                                         |
+		|                |                       |                    |                          |                     | abc                    | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.'                                         |
 		
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
     Angenommen die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
@@ -83,7 +79,7 @@ Beispiele:
     | discharge_location_other	| abcdefghij abcdefghij  | discharge_location	| OtherDc |
     | discharge_reason_other	| abcdefghij abcdefghij  | discharge_reason		| OtherDr |
    
-# war nicht beabsichtigt?	
+# hier noch bearbeiten
 #Szenariogrundriss: Die Textfelder enthalten gültige Werte
 #    Angenommen die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
 #    Dann enthält das Validierungsergebnis keine Fehler
@@ -92,4 +88,4 @@ Beispiele:
 #    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | abcdefghij abcdefghij abcdefghij |
 #    | personal_change_other | Veränderungen persönliche Situation        | abcdefghij abcdefghij abcdefghij |
 #    | social_change_other   | Veränderungen nicht bewältigt, weil        | abcdefghij abcdefghij abcdefghij |
-#    | housing_reas
+#    | housing_reason

@@ -129,6 +129,7 @@ Szenario: Eine Admission enthält eine Person, die nicht in der Personenliste is
     Dann enthält das Validierungsergebnis den Fehler 'Person '2' ist nicht in der Personenliste vorhanden.'
 
 # Ein Admission (valid) muss im akutellen Monat liegen => was heißt aktuller monat? der monat des fromD Datums?
+# Ist der Monat vom Report
 # Ein Admission (valid) muss zum Start eines Stays vorhanden sein
 
  Szenario: Valid darf keine Zeit beinhalten

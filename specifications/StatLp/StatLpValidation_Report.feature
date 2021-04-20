@@ -50,16 +50,7 @@ Beispiele:
     | from     | Von         |
     | to       | Bis         |
 
-
-
 Szenariogrundriss: Listen sind leer
-    Angenommen die Liste von '<Name>' ist leer 
+    Angenommen alle Listen sind leer
     Dann enthält das Validierungsergebnis keine Fehler
     Und enthält das Validierungsergebnis keine Warnungen
-Beispiele:
-    | Name          | 
-    | Admission     |
-    | Attribute     |
-    | Leaving       |  
-    | Person        |  
-    | Stay          |  

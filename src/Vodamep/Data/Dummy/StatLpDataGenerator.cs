@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Google.Protobuf.Collections;
 using Vodamep.StatLp.Model;
 using Attribute = Vodamep.StatLp.Model.Attribute;
 
@@ -45,6 +46,16 @@ namespace Vodamep.Data.Dummy
             report.AddDummyAttributes();
             report.AddDummyStays(from);
             report.AddDummyLeavings();
+
+            return report;
+        }
+
+        public StatLpReport CreateEmptyStatLpReport()
+        {
+            var report = new StatLpReport()
+            {
+                Institution = new Institution() {}
+            };
 
             return report;
         }
@@ -161,6 +172,7 @@ namespace Vodamep.Data.Dummy
                 PersonId = personId,
                 LeavingReason = LeavingReason.DischargeLr,
                 DischargeLocation = DischargeLocation.HomeLivingAloneDc,
+                DischargeReason = DischargeReason.OwnDesireDr,
             };
 
             return stay;

@@ -56,6 +56,7 @@ namespace Vodamep.ValidationBase
         public static string DeadClientMustNotContainDischargeLocation(string personId) => $"Wenn der Klient '{personId}' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.";
         public static string LeavingOtherFilledNeedsOther(string personId) => $"Wenn bei der Entlassung von Klient '{personId}' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.";
         public static string LeavingClientNeedsLeavingLocation(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
+        public static string LeavingClientNeedsLeavingReason(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.";
         public static string LeavingClientDeathMustNotBeFilled(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.";
         public static string DischargedClientNeedsDischargeLocation(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
         public static string InvalidValue(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom '{date}' von Klient '{personId}'.";
@@ -77,6 +78,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseActivtyMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
         public static string ReportBaseActivtyContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
         public static string StatLpReportEveryPersonMustBeInAStay (string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
+        public static string StatLpReportLeavingReasonMustnotBeEmpty (string personId) => $"Beim Abgang von Klient '{personId}' muss eine Abgang Art angegeben werden.' ";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

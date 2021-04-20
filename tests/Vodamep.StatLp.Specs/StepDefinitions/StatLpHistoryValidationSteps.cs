@@ -30,12 +30,12 @@ namespace Vodamep.Specs.StepDefinitions
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
             var date = new DateTime(2021, 02, 01);
-            this.Report = StatLpDataGenerator.Instance.CreateStatLpReport("", date.Year, date.Month, 1, 1, false);
-            this.Reports = new List<StatLpReport>();
+            this.SentReport = StatLpDataGenerator.Instance.CreateEmptyStatLpReport();
+            this.ExistingReports = new List<StatLpReport>();
         }
 
-        public StatLpReport Report { get; private set; }
-        public List<StatLpReport> Reports { get; private set; }
+        public StatLpReport SentReport { get; private set; }
+        public List<StatLpReport> ExistingReports { get; private set; }
 
         public StatLpReportValidationResult Result
         {
@@ -43,7 +43,7 @@ namespace Vodamep.Specs.StepDefinitions
             {
                 if (_result == null)
                 {
-                    _result = (StatLpReportValidationResult)Report.ValidateHistory();
+                    _result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports);
                 }
 
                 return _result;
@@ -58,8 +58,8 @@ namespace Vodamep.Specs.StepDefinitions
 
             if (reportNumber == 1)
             {
-                this.Report.FromD = from;
-                this.Report.ToD = to;
+                this.SentReport.FromD = from;
+                this.SentReport.ToD = to;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Vodamep.Specs.StepDefinitions
                     FromD = DateTime.Parse(date)
                 };
 
-                this.Report.Attributes.Add(attribute);
+                this.SentReport.Attributes.Add(attribute);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Vodamep.Specs.StepDefinitions
                         var admission = new Admission();
                         admission.PersonId = personId;
                         admission.Valid = DateTime.Parse(date).AsTimestamp();
-                        this.Report.Admissions.Add(admission);
+                        this.SentReport.Admissions.Add(admission);
 
                         break;
 
@@ -101,7 +101,7 @@ namespace Vodamep.Specs.StepDefinitions
                         var leaving = new Leaving();
                         leaving.PersonId = personId;
                         //leaving = DateTime.Parse(date).AsTimestamp();
-                        this.Report.Leavings.Add(leaving);
+                        this.SentReport.Leavings.Add(leaving);
 
                         break;
                 }
@@ -117,7 +117,7 @@ namespace Vodamep.Specs.StepDefinitions
                 stay.PersonId = personId;
                 stay.From = DateTime.Parse(from).AsTimestamp();
                 stay.To = DateTime.Parse(to).AsTimestamp();
-                this.Report.Stays.Add(stay);
+                this.SentReport.Stays.Add(stay);
             }
         }
 

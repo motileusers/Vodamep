@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using FluentValidation;
 using Vodamep.StatLp.Model;
@@ -10,7 +11,7 @@ namespace Vodamep.StatLp.Validation
     {
         public LeavingValidator(StatLpReport parentReport)
         {
-            this.RuleFor(x => x.LeavingReason).NotEmpty();
+            this.RuleFor(x => x.LeavingReason).NotEmpty().WithMessage(x => Validationmessages.StatLpReportLeavingReasonMustnotBeEmpty(x.PersonId));
            
             this.RuleFor(x => x.DeathLocation).NotEmpty()
                 .Unless(x => x.LeavingReason != LeavingReason.DeceasedLr)
@@ -49,6 +50,10 @@ namespace Vodamep.StatLp.Validation
              this.RuleFor(x => x.DischargeLocation).NotEmpty()
                 .When(x => x.LeavingReason == LeavingReason.DischargeLr)
                 .WithMessage(x => Validationmessages.LeavingClientNeedsLeavingLocation(x.PersonId));
+
+             this.RuleFor(x => x.DischargeReason).NotEmpty()
+                 .When(x => x.LeavingReason == LeavingReason.DischargeLr)
+                 .WithMessage(x => Validationmessages.LeavingClientNeedsLeavingReason(x.PersonId));
 
             this.RuleFor(x => x.DeathLocation).Empty()
                 .When(x => x.LeavingReason != LeavingReason.DeceasedLr)

@@ -8,7 +8,7 @@ using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Validation
 {
-    internal class StatLpReportHistoryValidator : AbstractValidator<StatLpReport>
+    internal class StatLpReportHistoryValidator : AbstractValidator<StatLpReportHistory>
     {
         static StatLpReportHistoryValidator()
         {
@@ -23,12 +23,12 @@ namespace Vodamep.StatLp.Validation
         {
         }
 
-        public override async Task<ValidationResult> ValidateAsync(ValidationContext<StatLpReport> context, CancellationToken cancellation = default(CancellationToken))
+        public override async Task<ValidationResult> ValidateAsync(ValidationContext<StatLpReportHistory> context, CancellationToken cancellation = default(CancellationToken))
         {
             return new StatLpReportValidationResult(await base.ValidateAsync(context, cancellation));
         }
 
-        public override ValidationResult Validate(ValidationContext<StatLpReport> context)
+        public override ValidationResult Validate(ValidationContext<StatLpReportHistory> context)
         {
             return new StatLpReportValidationResult(base.Validate(context));
         }

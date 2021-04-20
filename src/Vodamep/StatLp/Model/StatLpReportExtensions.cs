@@ -25,7 +25,8 @@ namespace Vodamep.StatLp.Model
         public static Task<SendResult> Send(this StatLpReport report, Uri address, string username, string password) => new ReportSendClient(address).Send(report, username, password);
 
         public static StatLpReportValidationResult Validate(this StatLpReport report) => (StatLpReportValidationResult)new StatLpReportValidator().Validate(report);
-        public static StatLpReportValidationResult ValidateHistory(this StatLpReport report) => (StatLpReportValidationResult)new StatLpReportHistoryValidator().Validate(report);
+      
+        public static StatLpReportValidationResult ValidateHistory(this StatLpReport report, List<StatLpReport> existingReports) => (StatLpReportValidationResult)new StatLpReportHistoryValidator().Validate(new StatLpReportHistory {StatLpReport = report, StatLpReports = existingReports});
 
         public static string ValidateToText(this StatLpReport report, bool ignoreWarnings) => new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
 

@@ -19,8 +19,9 @@ namespace Vodamep.StatLp.Validation
                 ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
             }
         }
-        public StatLpReportValidator()
+        public StatLpReportValidator(string institutionType = "")
         {
+         
             this.RuleFor(x => x.Institution).NotEmpty();
             this.RuleFor(x => x.Institution).SetValidator(new InstitutionValidator());
             this.RuleFor(x => x.From).NotEmpty();

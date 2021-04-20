@@ -11,7 +11,7 @@ Szenario: Ein Attribut enthält eine Person, die nicht in der Personenliste ist
     Angenommen die Datums-Eigenschaft 'from' von 'Attribute' hat eine Uhrzeit gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''Von' darf keine Uhrzeit beinhalten.'
 
-# Todo
+# Todo => der Validator bekommt ein Enum (von Gerhard geliefert) im Konstruktor, hier abfragen
 # Attribute CAREALLOWANCEARGE darf nur L0_AR sein, wenn es sich um Altersheim handelt
 # Klären: Wie kommen wir zur Gruppe ABAH?
 # - innerhalb von Vodamep lokal
@@ -20,7 +20,7 @@ Szenario: Ein Attribut enthält eine Person, die nicht in der Personenliste ist
 
 
 #Szenario: Pflegegeld ist undefiniert
-#    Angenommen die Eigenschaft 'care_allowance' von 'Person' ist auf 'UndefinedAllowance' gesetzt
+#    Angenommen die Eigenschaft 'care_allowance' von 'Attribute' ist auf 'UndefinedAllowance' gesetzt
 #    Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' darf nicht leer sein.'
 
 

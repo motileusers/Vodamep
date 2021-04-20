@@ -72,36 +72,14 @@ namespace Vodamep.Specs.StepDefinitions
                 throw new NotImplementedException();
         }
 
-        [Given(@"die Liste von '(\w*)' ist leer")]
-        public void GivenTheListPropertyIsEmpty(string type)
+        [Given(@"alle Listen sind leer")]
+        public void GivenAllListsAreEmpty(string type)
         {
-            if (type == nameof(Admission))
-                this.Report.Admissions.Clear();
-            else if (type == nameof(Attribute))
-                this.Report.Attributes.Clear();
-            else if (type == nameof(Leaving))
-                this.Report.Leavings.Clear();
-            else if (type == nameof(Person))
-            {
-                //es müssen auch admissions und attributes gelöscht werden,
-                //weil sonst die personen in den jeweiligen listen fehlen
-                this.Report.Persons.Clear();
-
-                this.Report.Admissions.Clear();
-                this.Report.Attributes.Clear();
-                this.Report.Stays.Clear();
-            }
-            else if (type == nameof(Stay))
-            {
-                this.Report.Stays.Clear();
-
-                this.Report.Persons.Clear();
-
-                this.Report.Admissions.Clear();
-                this.Report.Attributes.Clear();
-            }
-            else
-                throw new NotImplementedException();
+            this.Report.Admissions.Clear();
+            this.Report.Attributes.Clear();
+            this.Report.Leavings.Clear();
+            this.Report.Persons.Clear();
+            this.Report.Stays.Clear();
         }
 
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist auf '(.*)' gesetzt")]
@@ -177,7 +155,7 @@ namespace Vodamep.Specs.StepDefinitions
         private void SetSocialChanges(string value)
         {
             this.Report.Admissions.First().SocialChanges.Clear();
-            
+
             if (value.Contains(','))
             {
                 var activityTypes = value.Split(',').Select(x => (SocialChange)Enum.Parse(typeof(SocialChange), x));
