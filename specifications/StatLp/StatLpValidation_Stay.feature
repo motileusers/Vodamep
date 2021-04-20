@@ -13,14 +13,13 @@ Beispiele:
     | from          | Von           |
     | to            | Bis           |
 
-# Ein Stay (From,To) muss im akutellen Monat liegen
-#
-#Szenariogrundriss: Ein Stay muss im aktuellen Monat liegen
-#    Angenommen die Eigenschaft '<Name>' von 'Stay' ist auf '<Wert>' gesetzt
-#    Dann enthält das Validierungsergebnis den Fehler 'Der Aufenthalt von Person '1' muss im aktuellen Monat liegen.'
-#    | Name          | Wert   |
-#    | from          | Von           |
-#    | to            | Bis           |
+Szenariogrundriss: Ein Stay muss im aktuellen Monat liegenn
+    Angenommen die Eigenschaft '<Name>' von 'Stay' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Ein Aufenthalt von Person '1' muss im aktuellen Monat liegen.'
+Beispiele:
+    | Name     | Wert       |
+    | from     | 2000-01-01 |
+    | to       | 2050-01-01 |
 
 Szenario: Bis ist nach Von
     Angenommen Bis ist vor Von bei einem Stay

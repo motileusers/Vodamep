@@ -81,7 +81,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseItemMustBeInCurrentMonth (string itemName, string personId) => $"{itemName} von Person '{personId}' muss im aktuellen Monat liegen.";
         public static string StatLpReportLeavingReasonMustnotBeEmpty (string personId) => $"Beim Abgang von Klient '{personId}' muss eine Abgang Art angegeben werden.";
         public static string StatLpReportAdmissionMustExistAtStartOfStay (string personId) => $"Eine Aufnahme von Person '{personId}' muss zum Start eines Aufenthalts verfügbar sein.";
-
+     
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {
             if (minDate == maxDate)

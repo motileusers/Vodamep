@@ -40,11 +40,9 @@ Beispiele:
     | from     | Von         |
     | to       | Bis         |
 
-
-
 Szenariogrundriss: Das Datum einer Entlassung in einer Meldung muss im Gültigkeitsbereich der Meldungen liegen
     Angenommen die Datums-Eigenschaft '<Name>' von 'StatLpReport' hat eine Uhrzeit gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
+    Dann enthält das Validierungsergebnis den Fehler 'Ein Aufenthalt von Perosn '1' muss im akutellen Monat liegen.'
 Beispiele:
     | Name     | Bezeichnung |
     | from     | Von         |
