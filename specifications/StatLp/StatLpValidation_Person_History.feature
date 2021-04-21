@@ -1,8 +1,5 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Personen Historys einer Datenmeldung
-
-#todo was ist der Unterschied zwischen gesendete und existierende Meldung?
-
 #Szenario: Performance bei großem Datenvolumen
 #    Angenommen Im Meldungsbereich für eine Einrichtung befinden sich monatliche Meldungen vom 01.01.2017 bis 31.12.2020
 #    Angenommen Im Meldungsbereich für eine Einrichtung befinden sich Meldungen von 100 Klienten
@@ -16,38 +13,36 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen Historys einer Dat
 
 Szenario: Gesamter Aufenthalt korrekt in einer Meldung
     Angenommen Gesendete Meldung '1' gilt vom '2020-12-01' bis '2020-12-31'
-    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '2020-12-01'
-    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '2020-12-01'
-    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '2020-12-01'
-    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '2020-12-01'
-    Angenommen Gesendete Meldung 1 enthält eine 'Admission' von Person 1 vom '2020-12-01'
-    Angenommen Gesendete Meldung 1 enthält einen Aufenthalt von Person 1 vom '2020-12-01' bis '2020-12-31'
-    Angenommen Gesendete Meldung 1 enthält eine 'Leaving' von Person 1 vom '2020-12-31'
+    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung '1' enthält eine 'Admission' von Person 1 vom '2020-12-01'
+    Angenommen Gesendete Meldung '1' enthält einen Aufenthalt von Person 1 vom '2020-12-01' bis '2020-12-31'
+    Angenommen Gesendete Meldung '1' enthält eine 'Leaving' von Person 1 vom '2020-12-31'
     Dann enthält das History Validierungsergebnis keine Fehler
-#
-#Szenario: Gesamter Aufenthalt korrekt in 3 Meldungen
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Existierende Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 3 gilt vom 01.02.2021 bis 28.02.2021
-#    Angenommen Gesendete Meldung 3 enthält eine Aufenthalt von Person 1 vom 01.02.2021 bis 28.02.2021
-#    Angenommen Gesendete Meldung 3 enthält eine Entlassung von Person 1 am 28.02.2021
-#    Dann enthält das Validierungsergebnis keinen Fehler
-#
-#
+
+Szenario: Gesamter Aufenthalt korrekt in 3 Meldungen
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '2020-12-01'
+    Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '2020-12-01' bis '2020-12-31'
+    Angenommen Existierende Meldung '2' gilt vom '2021-01-01' bis '2021-01-31'
+    Angenommen Existierende Meldung '2' enthält einen Aufenthalt von Person 1 vom '2021-01-01' bis '2021-01-31'
+    Angenommen Gesendete Meldung '3' gilt vom '2021-02-01' bis '2021-02-28'
+    Angenommen Gesendete Meldung '3' enthält einen Aufenthalt von Person 1 vom '2021-02-01' bis '2021-02-28'
+    Angenommen Gesendete Meldung '3' enthält eine 'Leaving' von Person 1 vom '2021-02-28'
+    Dann enthält das History Validierungsergebnis keine Fehler
 
 # Fehlende Meldungen
 
-#Szenario: Fehlende Monatsmeldungen mit Leermeldungen
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.03.2021 bis 31.03.2021
-#    Dann enthält das Validierungsergebnis den Fehler 'Die Meldungen für den Zeitraum 01.01.2021 bis 28.02.2021 wurden noch nicht übermittelt.'
+Szenario: Fehlende Monatsmeldungen mit Leermeldungen
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Gesendete Meldung '2' gilt vom '01.03.2021' bis '31.03.2021'
+    Dann enthält das History Validierungsergebnis den Fehler 'Die Meldungen für den Zeitraum 01.01.2021 bis 28.02.2021 wurden noch nicht übermittelt.'
 
 
 # Nachsendungen

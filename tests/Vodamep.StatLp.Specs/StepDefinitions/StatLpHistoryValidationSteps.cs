@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using TechTalk.SpecFlow;
 using Vodamep.Data.Dummy;
@@ -51,74 +52,51 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
         [Given(@"Gesendete Meldung '(.*)' gilt vom '(.*)' bis '(.*)'")]
-        public void GivenReportIsValidFromTo(int reportNumber, string dateFrom, string dateTo)
+        public void GivenSentReportIsValidFromTo(int reportNumber, string dateFrom, string dateTo)
         {
-            var from = DateTime.Parse(dateFrom);
-            var to = DateTime.Parse(dateTo);
-
-            if (reportNumber == 1)
-            {
-                this.SentReport.FromD = from;
-                this.SentReport.ToD = to;
-            }
+            this.GivenReportIsValidFromTo(-1, dateFrom, dateTo);
         }
 
-        [Given(@"Gesendete Meldung (.*) von Person (.*) enthält das Attribut '(.*)' mit dem Wert '(.*)' mit Datum '(.*)'")]
-        public void GivenPersonPropertyIsSetTo(int reportNumber, string personId, string attributeType, string value, string date)
+        [Given(@"Existierende Meldung '(.*)' gilt vom '(.*)' bis '(.*)'")]
+        public void GivenExistingReportIsValidFromTo(int reportNumber, string dateFrom, string dateTo)
         {
-            if (reportNumber == 1)
-            {
-                var attribute = new Attribute
-                {
-                    PersonId = personId,
-                    AttributeType = (AttributeType)Enum.Parse(typeof(AttributeType), attributeType),
-                    Value = value,
-                    FromD = DateTime.Parse(date)
-                };
-
-                this.SentReport.Attributes.Add(attribute);
-            }
+            this.GivenReportIsValidFromTo(reportNumber - 1, dateFrom, dateTo);
         }
 
-        [Given(@"Gesendete Meldung (.*) enthält eine '(.*)' von Person (.*) vom '(.*)'")]
-        public void GivenPropertyContainsItem(int reportNumber, string itemType, string personId, string date)
+        [Given(@"Gesendete Meldung '(.*)' von Person (.*) enthält das Attribut '(.*)' mit dem Wert '(.*)' mit Datum '(.*)'")]
+        public void GivenSentPersonPropertyIsSetTo(int reportNumber, string personId, string attributeType, string value, string date)
         {
-            if (reportNumber == 1)
-            {
-                switch (itemType)
-                {
-                    case nameof(Admission):
-
-                        var admission = new Admission();
-                        admission.PersonId = personId;
-                        admission.Valid = DateTime.Parse(date).AsTimestamp();
-                        this.SentReport.Admissions.Add(admission);
-
-                        break;
-
-                    case nameof(Leaving):
-
-                        var leaving = new Leaving();
-                        leaving.PersonId = personId;
-                        //leaving = DateTime.Parse(date).AsTimestamp();
-                        this.SentReport.Leavings.Add(leaving);
-
-                        break;
-                }
-            }
+            this.GivenPersonPropertyIsSetTo(-1, personId, attributeType, value, date);
         }
 
-        [Given(@"Gesendete Meldung (.*) enthält einen Aufenthalt von Person (.*) vom '(.*)' bis '(.*)'")]
-        public void GivenPropertyContainsStay(int reportNumber, string personId, string @from, string to)
+        [Given(@"Existierende Meldung '(.*)' von Person (.*) enthält das Attribut '(.*)' mit dem Wert '(.*)' mit Datum '(.*)'")]
+        public void GivenExistingPersonPropertyIsSetTo(int reportNumber, string personId, string attributeType, string value, string date)
         {
-            if (reportNumber == 1)
-            {
-                var stay = new Stay();
-                stay.PersonId = personId;
-                stay.From = DateTime.Parse(from).AsTimestamp();
-                stay.To = DateTime.Parse(to).AsTimestamp();
-                this.SentReport.Stays.Add(stay);
-            }
+            this.GivenPersonPropertyIsSetTo(reportNumber - 1, personId, attributeType, value, date);
+        }
+
+        [Given(@"Gesendete Meldung '(.*)' enthält eine '(.*)' von Person (.*) vom '(.*)'")]
+        public void GivenSentPropertyContainsItem(int reportNumber, string itemType, string personId, string date)
+        {
+            this.GivenPropertyContainsItem(-1, itemType, personId, date);
+        }
+
+        [Given(@"Existierende Meldung '(.*)' enthält eine '(.*)' von Person (.*) vom '(.*)'")]
+        public void GivenExistingPropertyContainsItem(int reportNumber, string itemType, string personId, string date)
+        {
+            this.GivenPropertyContainsItem(reportNumber - 1, itemType, personId, date);
+        }
+
+        [Given(@"Gesendete Meldung '(.*)' enthält einen Aufenthalt von Person (.*) vom '(.*)' bis '(.*)'")]
+        public void GivenSentPropertyContainsStay(int reportNumber, string personId, string @from, string to)
+        {
+            this.GivenPropertyContainsStay(-1, personId, from, to);
+        }
+
+        [Given(@"Existierende Meldung '(.*)' enthält einen Aufenthalt von Person (.*) vom '(.*)' bis '(.*)'")]
+        public void GivenExistingPropertyContainsStay(int reportNumber, string personId, string @from, string to)
+        {
+            this.GivenPropertyContainsStay(reportNumber - 1, personId, from, to);
         }
 
         [Then(@"enthält das History Validierungsergebnis keine Fehler")]
@@ -129,9 +107,90 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
         [Then(@"enthält das History Validierungsergebnis den Fehler '(.*)'")]
-        public void ThenTheResultContainsAnError(string p0)
+        public void ThenTheResultContainsAnError(string message)
         {
-            ScenarioContext.Current.Pending();
+            var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
+        }
+
+        private StatLpReport GetReportAndCreateNonExisting(int index)
+        {
+            if (index < 0)
+            {
+                return this.SentReport;
+            }
+            else
+            {
+                while (index >= this.ExistingReports.Count)
+                {
+                    this.ExistingReports.Add(StatLpDataGenerator.Instance.CreateEmptyStatLpReport());
+                }
+
+                return this.ExistingReports[index];
+            }
+        }
+
+        private void GivenReportIsValidFromTo(int reportIndex, string dateFrom, string dateTo)
+        {
+            var from = DateTime.Parse(dateFrom);
+            var to = DateTime.Parse(dateTo);
+
+            var report = this.GetReportAndCreateNonExisting(reportIndex);
+
+            report.FromD = from;
+            report.ToD = to;
+        }
+
+        private void GivenPersonPropertyIsSetTo(int reportIndex, string personId, string attributeType, string value, string date)
+        {
+            var attribute = new Attribute
+            {
+                PersonId = personId,
+                AttributeType = (AttributeType)Enum.Parse(typeof(AttributeType), attributeType),
+                Value = value,
+                FromD = DateTime.Parse(date)
+            };
+
+            this.GetReportAndCreateNonExisting(reportIndex).Attributes.Add(attribute);
+        }
+
+        private void GivenPropertyContainsItem(int reportIndex, string itemType, string personId, string date)
+        {
+            var report = this.GetReportAndCreateNonExisting(reportIndex);
+
+            switch (itemType)
+            {
+                case nameof(Admission):
+
+                    var admission = new Admission();
+                    admission.PersonId = personId;
+                    admission.Valid = DateTime.Parse(date).AsTimestamp();
+                    report.Admissions.Add(admission);
+
+                    break;
+
+                case nameof(Leaving):
+
+                    var leaving = new Leaving();
+                    leaving.PersonId = personId;
+                    //leaving = DateTime.Parse(date).AsTimestamp();
+                    report.Leavings.Add(leaving);
+
+                    break;
+
+            }
+        }
+
+        private void GivenPropertyContainsStay(int reportIndex, string personId, string @from, string to)
+        {
+            var report = this.GetReportAndCreateNonExisting(reportIndex);
+
+            var stay = new Stay();
+            stay.PersonId = personId;
+            stay.From = DateTime.Parse(from).AsTimestamp();
+            stay.To = DateTime.Parse(to).AsTimestamp();
+            report.Stays.Add(stay);
         }
     }
 }

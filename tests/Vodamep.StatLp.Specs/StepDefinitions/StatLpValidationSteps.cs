@@ -256,8 +256,6 @@ namespace Vodamep.Specs.StepDefinitions
         {
             var pattern = new Regex(message, RegexOptions.IgnoreCase);
 
-            var abc = this.Result.Errors.Select(x => x.ErrorMessage).FirstOrDefault(y => y == message);
-
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
 
