@@ -78,14 +78,4 @@ Beispiele:
     | Name1						| Wert1                  | Name2				| Wert2   |
     | discharge_location_other	| abcdefghij abcdefghij  | discharge_location	| OtherDc |
     | discharge_reason_other	| abcdefghij abcdefghij  | discharge_reason		| OtherDr |
-   
-# hier noch bearbeiten
-#Szenariogrundriss: Die Textfelder enthalten gültige Werte
-#    Angenommen die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
-#    Dann enthält das Validierungsergebnis keine Fehler
-#Beispiele:
-#    | Name                  | Bezeichnung                                | Wert                             |
-#    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | abcdefghij abcdefghij abcdefghij |
-#    | personal_change_other | Veränderungen persönliche Situation        | abcdefghij abcdefghij abcdefghij |
-#    | social_change_other   | Veränderungen nicht bewältigt, weil        | abcdefghij abcdefghij abcdefghij |
-#    | housing_reason
+  
