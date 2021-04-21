@@ -75,6 +75,7 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Vor dem Aufenthalt von Klient xx am xx wurden keine Aufnahmedaten gesendet'
 
+# StandardAufenthalsmeldung was hat die für ein Datum
 #Szenario: Fehlende Entlassung, wenn Aufenthalt nicht bis zum Ende des Monats dauert
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
@@ -83,7 +84,8 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 #    Angenommen Gesendete Meldung 3 gilt vom 01.02.2021 bis 28.02.2021
 #    Angenommen Gesendete Meldung 3 enthält eine Aufenthalt von Person 1 vom 01.02.2020 bis 16.02.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Zur Aufenthaltsende von Klient xx am xx wurden keine Entlassungsdaten gesendet'
-#
+
+# StandardAufenthalsmeldung was hat die für ein Datum
 #Szenario: Fehlende Entlassung, weil Person im nächsten Monat nicht mehr aufscheint, sie hätte entlassen werden müssen
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
@@ -92,6 +94,7 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 #    Angenommen Gesendete Meldung 3 gilt vom 01.02.2021 bis 28.02.2021
 #    Dann enthält das Validierungsergebnis den Fehler 'Zur Aufenthaltsende von Klient xx am xx wurden keine Entlassungsdaten gesendet'
 #
+# StandardAufenthalsmeldung was hat die für ein Datum
 #Szenario: Erneute Aufnahme mit fehlender Entlassung
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
@@ -105,6 +108,7 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 
 # Fehlende Pflichtfelder für die Aufnahme
 
+# sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Fehlende Aufnahmeart vor der Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
@@ -114,6 +118,7 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das History Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Aufnahmeart gesendet'
 
+# sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Fehlende Pflegestufe vor der Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
@@ -123,6 +128,7 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Pflegestufe gesendet'
 #
+# sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Fehlende Pflegestufe Arge vor der Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
@@ -132,6 +138,7 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Pflegestufe (Arge) gesendet'
 #
+# sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Fehlende Finanzierung vor der Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
@@ -141,6 +148,7 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Finanzierung gesendet'
 
+# sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Falsches Gültigkeitsdatum einer Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
@@ -153,6 +161,7 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 
 # Entlassung
 
+# sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Falsches Gültigkeitsdatum einer Entlassung
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
