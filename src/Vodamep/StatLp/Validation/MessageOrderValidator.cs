@@ -13,22 +13,21 @@ namespace Vodamep.StatLp.Validation
         {
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
-                var firstMessage = x.StatLpReport;
+                var sendMessage = x.StatLpReport;
 
-                foreach (var report in x.StatLpReports.OrderByDescending(y => y.FromD))
+                var futureMessages = x.StatLpReports.Where(y => y.FromD >= x.StatLpReport.FromD).OrderBy(y => y.FromD);
+                var nextFutureMessage = futureMessages.FirstOrDefault();
+                var historyMessages = x.StatLpReports.Where(y => y.FromD <= x.StatLpReport.FromD).OrderByDescending(y => y.FromD);
+                var lastHistoryMessage = historyMessages.FirstOrDefault();
+
+                if (lastHistoryMessage != null && nextFutureMessage == null)
                 {
-                    var firstMessageDate = firstMessage.FromD.AddMonths(-1);
-
-                    if (report.FromD == firstMessageDate)
-                    {
-                        firstMessage = report;
-                    }
-                    else
+                    if (sendMessage.FromD.AddMonths(-1) > lastHistoryMessage.FromD)
                     {
                         ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                            Validationmessages.StatLpReportPersonHistoryMissingReports(
-                                report.ToD.AddDays(1).ToShortDateString(),
-                                firstMessage.FromD.AddDays(-1).ToShortDateString())));
+                                    Validationmessages.StatLpReportPersonHistoryMissingReports(
+                                        lastHistoryMessage.ToD.AddDays(1).ToShortDateString(),
+                                        sendMessage.FromD.AddDays(-1).ToShortDateString())));
                     }
 
                 }

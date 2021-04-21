@@ -47,22 +47,25 @@ Szenario: Fehlende Monatsmeldungen mit Leermeldungen
 
 # Nachsendungen
 
-#Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 2 gilt vom 01.03.2021 bis 31.03.2021
-#    Angenommen Gesendete Meldung 3 gilt vom 01.01.2021 bis 31.01.2021
-#    Dann enthält das Validierungsergebnis keinen Fehler
+Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Existierende Meldung '2' gilt vom '01.03.2021' bis '31.03.2021'
+    Angenommen Gesendete Meldung '3' gilt vom '01.01.2021' bis '31.01.2021'
+    Dann enthält das Validierungsergebnis keine Fehler
 
 
 # Unkorrekte Meldungsreihenfolgen
 
+# warum ist das inkorrekt? weil kein leaving vorhanden ist? theoretisch wäre es ja möglich, dass jemand am 20.12. 
+# aufgenommen wird, wieder entlassen wird und dann am 01.01.2021 wieder aufgenommen wird?
 #Szenario: Doppelte Aufnahme
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 ist eine Standard Aufnahme Meldung von Person 1 mit 01.01.2021
+#    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+#    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '2020-12-20'
+#    Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
+#    Angenommen Gesendete Meldung '1' enthält eine 'Admission' von Person 1 vom '2021-01-01'
 #    Dann enthält das Validierungsergebnis den Fehler 'Für Klient xx wurde bereits eine Aufnahme am 20.12.2020 gesendet'
-#
+
+# warum soll das in den history abgehandelt werden und nicht in den normalen validations?
 #Szenario: Fehlende Aufnahme vor Aufenthalt
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
@@ -71,7 +74,7 @@ Szenario: Fehlende Monatsmeldungen mit Leermeldungen
 #    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Vor dem Aufenthalt von Klient xx am xx wurden keine Aufnahmedaten gesendet'
-#
+
 #Szenario: Fehlende Entlassung, wenn Aufenthalt nicht bis zum Ende des Monats dauert
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
