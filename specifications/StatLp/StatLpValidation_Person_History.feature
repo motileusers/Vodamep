@@ -233,53 +233,47 @@ Szenario: Gleiche Finanzierung
     Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
     Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Finance' von Klient '1' auf 'Selbst/Angehörige 100 %' wurde bereits mit der Meldung am '01.12.2020' gesendet'
 
-
-# Mehrere Aufnahmearten am gleichen Tag
-
-#Szenario: Mehrere Aufnahmearten am gleichen Tag
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Übergangspflege' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2020'
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Überleitungspflege' mit Datum '01.01.2020'
-#    Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahmeart von Klient xx am xx wurde mehrfach am gleichen Tag geändert.'
-#
-
-
+Szenario: Mehrere Aufnahmearten am gleichen Tag
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Übergangspflege' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
+    Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2020'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Überleitungspflege' mit Datum '01.01.2020'
+    Dann enthält das History Validierungsergebnis den Fehler 'Die Aufnahmeart von Klient 1 am 01.01.2020 wurde mehrfach am gleichen Tag geändert.'
 
 # Änderung Aufnahmeart
 
-#Szenario: Keine Änderung von Daueraufnahme auf Urlaub
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.01.2020'
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei Klient xx ist kein Wechsel von einer Daueraufname auf xx möglich'
-#
-#Szenario: Keine Änderung von Daueraufnahme auf Übergangspflege
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Übergangspflege' mit Datum '01.01.2020'
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei Klient xx ist kein Wechsel von einer Daueraufname auf xx möglich'
+Szenario: Keine Änderung von Daueraufnahme auf Urlaub
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
+    Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.01.2020'
+    Dann enthält das History Validierungsergebnis den Fehler 'Bei Klient '1' ist kein Wechsel von einer Daueraufname auf 'Urlaub von der Pflege' möglich.'
+
+Szenario: Keine Änderung von Daueraufnahme auf Übergangspflege
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
+    Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Übergangspflege' mit Datum '01.01.2020'
+    Dann enthält das History Validierungsergebnis den Fehler 'Bei Klient '1' ist kein Wechsel von einer Daueraufname auf 'Übergangspflege' möglich'
 
 
 

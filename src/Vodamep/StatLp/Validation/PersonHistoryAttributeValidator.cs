@@ -6,13 +6,20 @@ using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Validation
 {
-    internal class AttributeSameValueHistoryValidator : AbstractValidator<StatLpReportHistory>
+    internal class PersonHistoryAttributeValidator : AbstractValidator<StatLpReportHistory>
     {
-        public AttributeSameValueHistoryValidator()
+        public PersonHistoryAttributeValidator()
         {
             this.RuleFor(x => x).Custom((a, ctx) =>
             {
                 var sendMessage = a.StatLpReport;
+
+                // only one admission type is allowed
+                var admissionAttributes = sendMessage.Attributes.Where(x => x.AttributeType == AttributeType.AdmissionType).ToArray();
+                if (admissionAttributes.Count() > 1)
+                {
+                    ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeMultipleChanged(admissionAttributes.First().PersonId, admissionAttributes.First().FromD.ToShortDateString()));
+                }
 
                 var lastMessage = a.StatLpReports.Where(b => b.FromD <= a.StatLpReport.FromD).OrderByDescending(y => y.FromD).FirstOrDefault();
 
@@ -21,6 +28,7 @@ namespace Vodamep.StatLp.Validation
                     return;
                 }
 
+                //attributes must not be resend
                 foreach (var sendMessageAttribute in sendMessage.Attributes)
                 {
                     var lastMessageAttribute = lastMessage.Attributes.FirstOrDefault(c =>
@@ -32,7 +40,6 @@ namespace Vodamep.StatLp.Validation
                             sendMessageAttribute.Value, lastMessageAttribute.FromD.ToShortDateString()));
                     }
                 }
-            
 
             });
         }

@@ -7,9 +7,9 @@ using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Validation
 {
-    internal class MessageOrderValidator : AbstractValidator<StatLpReportHistory>
+    internal class PersonHistoryMessageOrderValidator : AbstractValidator<StatLpReportHistory>
     {
-        public MessageOrderValidator()
+        public PersonHistoryMessageOrderValidator()
         {
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
