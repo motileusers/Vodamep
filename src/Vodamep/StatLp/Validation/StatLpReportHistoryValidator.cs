@@ -22,6 +22,7 @@ namespace Vodamep.StatLp.Validation
         public StatLpReportHistoryValidator()
         {
             this.RuleFor(x => x).SetValidator(new MessageOrderValidator());
+            this.RuleFor(x => x).SetValidator(new AttributeSameValueHistoryValidator());
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<StatLpReportHistory> context, CancellationToken cancellation = default(CancellationToken))

@@ -82,6 +82,7 @@ namespace Vodamep.ValidationBase
         public static string StatLpReportLeavingReasonMustnotBeEmpty (string personId) => $"Beim Abgang von Klient '{personId}' muss eine Abgang Art angegeben werden.";
         public static string StatLpReportAdmissionMustExistAtStartOfStay (string personId) => $"Eine Aufnahme von Person '{personId}' muss zum Start eines Aufenthalts verfügbar sein.";
         public static string StatLpReportPersonHistoryMissingReports (string date1, string date2) => $"Die Meldungen für den Zeitraum {date1} bis {date2} wurden noch nicht übermittelt.";
+        public static string StatLpReportPersonHistoryAttributeAlreadySent (string attributeType, string clientId, string attributeValue, string date) => $"Die Änderung von '{attributeType}' von Klient '{clientId}' auf '{attributeValue}' wurde bereits mit der Meldung am '{date}' gesendet";
      
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

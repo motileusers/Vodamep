@@ -51,7 +51,7 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
     Angenommen Existierende Meldung '2' gilt vom '01.03.2021' bis '31.03.2021'
     Angenommen Gesendete Meldung '3' gilt vom '01.01.2021' bis '31.01.2021'
-    Dann enthält das Validierungsergebnis keine Fehler
+    Dann enthält das History Validierungsergebnis keine Fehler
 
 
 # Unkorrekte Meldungsreihenfolgen
@@ -177,20 +177,20 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 
 # Gleiche Attribute
 
-#Szenario: Gleiche Aufnahmeart
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 2' mit Datum '01.01.2020'
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2020'
-#    Dann enthält das Validierungsergebnis den Fehler 'Die Änderung der Aufnahmeart von Klient xx auf Daueraufnahme wurde bereits mit der Meldung am 01.12.2020 gesendet'
-#
+Szenario: Gleiche Aufnahmeart
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
+    Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 2' mit Datum '01.01.2020'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2020'
+    Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'AdmissionType' von Klient '1' auf 'Daueraufnahme' wurde bereits mit der Meldung am '01.12.2020' gesendet'
+  
 #Szenario: Gleiche Pflegestufe
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Übergangspflege' mit Datum '01.12.2020'
