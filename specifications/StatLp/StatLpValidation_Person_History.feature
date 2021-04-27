@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: StatLp - Validierung der gemeldeten Personen Historys einer Datenmeldung
+Funktionalität: StatLp - Validierung der gemeldeten Personen Geschichte einer Datenmeldung
 #Szenario: Performance bei großem Datenvolumen
 #    Angenommen Im Meldungsbereich für eine Einrichtung befinden sich monatliche Meldungen vom 01.01.2017 bis 31.12.2020
 #    Angenommen Im Meldungsbereich für eine Einrichtung befinden sich Meldungen von 100 Klienten
@@ -275,87 +275,78 @@ Szenario: Keine Änderung von Daueraufnahme auf Übergangspflege
     Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Übergangspflege' mit Datum '01.01.2020'
     Dann enthält das History Validierungsergebnis den Fehler 'Bei Klient '1' ist kein Wechsel von einer Daueraufname auf 'Übergangspflege' möglich'
 
+#Zeitlich limitierte Aufnahmearten
 
+Szenario: Urlaub von der Pflege maximal 42 Tage 1
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
+    Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2021'
+    Dann enthält das History Validierungsergebnis keine Fehler
 
+Szenario: Urlaub von der Pflege maximal 42 Tage 2
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
+    Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '15.01.2021'
+    Dann enthält das escapte History Validierungsergebnis den Fehler 'Bei Klient '1' wurde der Zeitraum für die Aufnahmeart 'Urlaub von der Pflege' überschritten (mehr als 42 Tage).'
 
+Szenario: Übergangspflege maximal 365 Tage 1
+    Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Übergangspflege' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
+    Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
+    Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2021'
+    Dann enthält das History Validierungsergebnis keine Fehler
 
-
-# Zeitlich limitierte Aufnahmearten
-
-
-#Szenario: Urlaub von der Pflege maximal 42 Tage
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2021'
-#    Dann enthält das Validierungsergebnis keinen Fehler
-
-
-#Szenario: Urlaub von der Pflege maximal 42 Tage
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '15.01.2021'
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei Klient xx wurde der Zeitraum für die Aufnahmeart {0} überschritten (mehr als 42 Tage).'
-
-
-#Szenario: Übergangspflege maximal 365 Tage
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Übergangspflege' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2021'
-#    Dann enthält das Validierungsergebnis keinen Fehler
-
-
-#Szenario: Übergangspflege maximal 365 Tage
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2019 bis 31.12.2019
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-#    Angenommen Existierende Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Existierende Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 2 gilt vom 01.01.2020 bis 31.01.2020
-#    Angenommen Existierende Meldung 2 enthält eine Aufenthalt von Person 1 vom 01.01.2020 bis 31.01.2020
-#    Angenommen Existierende Meldung 3 gilt vom 01.02.2020 bis 28.02.2020
-#    Angenommen Existierende Meldung 3 enthält eine Aufenthalt von Person 1 vom 01.02.2020 bis 28.02.2020
-#    Angenommen Existierende Meldung 4 gilt vom 01.03.2020 bis 31.03.2020
-#    Angenommen Existierende Meldung 4 enthält eine Aufenthalt von Person 1 vom 01.03.2020 bis 31.03.2020
-#    Angenommen Existierende Meldung 5 gilt vom 01.04.2020 bis 30.04.2020
-#    Angenommen Existierende Meldung 5 enthält eine Aufenthalt von Person 1 vom 01.04.2020 bis 30.04.2020
-#    Angenommen Existierende Meldung 6 gilt vom 01.05.2020 bis 31.05.2020
-#    Angenommen Existierende Meldung 6 enthält eine Aufenthalt von Person 1 vom 01.05.2020 bis 31.05.2020
-#    Angenommen Existierende Meldung 7 gilt vom 01.06.2020 bis 30.06.2020
-#    Angenommen Existierende Meldung 7 enthält eine Aufenthalt von Person 1 vom 01.06.2020 bis 30.06.2020
-#    Angenommen Existierende Meldung 8 gilt vom 01.07.2020 bis 31.07.2020
-#    Angenommen Existierende Meldung 8 enthält eine Aufenthalt von Person 1 vom 01.07.2020 bis 31.07.2020
-#    Angenommen Existierende Meldung 9 gilt vom 01.08.2020 bis 31.08.2020
-#    Angenommen Existierende Meldung 9 enthält eine Aufenthalt von Person 1 vom 01.08.2020 bis 31.08.2020
-#    Angenommen Existierende Meldung 10 gilt vom 01.09.2020 bis 30.09.2020
-#    Angenommen Existierende Meldung 10 enthält eine Aufenthalt von Person 1 vom 01.09.2020 bis 30.09.2020
-#    Angenommen Existierende Meldung 11 gilt vom 01.10.2020 bis 31.10.2020
-#    Angenommen Existierende Meldung 11 enthält eine Aufenthalt von Person 1 vom 01.10.2020 bis 31.10.2020
-#    Angenommen Existierende Meldung 12 gilt vom 01.10.2020 bis 31.10.2020
-#    Angenommen Existierende Meldung 12 enthält eine Aufenthalt von Person 1 vom 01.11.2020 bis 30.11.2020
-#    Angenommen Gesendete Meldung 13 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 13 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Dann enthält das Validierungsergebnis den Fehler 'Bei Klient xx wurde der Zeitraum für die Aufnahmeart {0} überschritten (mehr als 365 Tage).'
+#Szenario: Übergangspflege maximal 365 Tage 2
+#    Angenommen Existierende Meldung '1' gilt vom '01.12.2019' bis '31.12.2019'
+#    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.12.2020'
+#    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+#    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+#    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+#    Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
+#    Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
+#    Angenommen Existierende Meldung '2' gilt vom '01.01.2020' bis '31.01.2020'
+#    Angenommen Existierende Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2020' bis '31.01.2020'
+#    Angenommen Existierende Meldung '3' gilt vom '01.02.2020' bis '28.02.2020'
+#    Angenommen Existierende Meldung '3' enthält einen Aufenthalt von Person 1 vom '01.02.2020' bis '28.02.2020'  
+#    Angenommen Existierende Meldung '4' gilt vom '01.03.2020' bis '31.03.2020'
+#    Angenommen Existierende Meldung '4' enthält einen Aufenthalt von Person 1 vom '01.03.2020' bis '31.03.2020'
+#    Angenommen Existierende Meldung '5' gilt vom '01.04.2020' bis '30.04.2020'
+#    Angenommen Existierende Meldung '5' enthält einen Aufenthalt von Person 1 vom '01.04.2020' bis '30.04.2020'
+#    Angenommen Existierende Meldung '6' gilt vom '01.05.2020' bis '31.05.2020'
+#    Angenommen Existierende Meldung '6' enthält einen Aufenthalt von Person 1 vom '01.05.2020' bis '31.05.2020'
+#    Angenommen Existierende Meldung '7' gilt vom '01.06.2020' bis '30.06.2020'
+#    Angenommen Existierende Meldung '7' enthält einen Aufenthalt von Person 1 vom '01.06.2020' bis '30.06.2020'
+#    Angenommen Existierende Meldung '8' gilt vom '01.07.2020' bis '31.07.2020'
+#    Angenommen Existierende Meldung '8' enthält einen Aufenthalt von Person 1 vom '01.07.2020' bis '31.07.2020'
+#    Angenommen Existierende Meldung '9' gilt vom '01.08.2020' bis '31.08.2020'
+#    Angenommen Existierende Meldung '9' enthält einen Aufenthalt von Person 1 vom '01.08.2020' bis '31.08.2020'
+#    Angenommen Existierende Meldung '10' gilt vom '01.09.2020' bis '30.09.2020'
+#    Angenommen Existierende Meldung '10' enthält einen Aufenthalt von Person 1 vom '01.09.2020' bis '30.09.2020'
+#    Angenommen Existierende Meldung '11' gilt vom '01.10.2020' bis '31.10.2020'
+#    Angenommen Existierende Meldung '11' enthält einen Aufenthalt von Person 1 vom '01.10.2020' bis '31.10.2020'
+#    Angenommen Existierende Meldung '12' gilt vom '01.10.2020' bis '31.10.2020'
+#    Angenommen Existierende Meldung '12' enthält einen Aufenthalt von Person 1 vom '01.11.2020' bis '30.11.2020'
+#    Angenommen Gesendete Meldung '13' gilt vom '01.12.2020' bis '31.12.2020'
+#    Angenommen Gesendete Meldung '13' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
+#    Dann enthält das escapte History Validierungsergebnis den Fehler 'Bei Klient '1' wurde der Zeitraum für die Aufnahmeart 'Übergangspflege' überschritten (mehr als 365 Tage).'
 
 
 

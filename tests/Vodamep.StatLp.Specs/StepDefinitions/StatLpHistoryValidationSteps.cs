@@ -106,6 +106,14 @@ namespace Vodamep.Specs.StepDefinitions
             Assert.Empty(this.Result.Errors.Where(x => x.Severity == Severity.Error));
         }
 
+        [Then(@"enthält das escapte History Validierungsergebnis den Fehler '(.*)'")]
+        public void ThenTheEscapedResultContainsAnErrorRegex(string message)
+        {
+            var pattern = new Regex(Regex.Escape(message), RegexOptions.IgnoreCase);
+
+            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
+        }
+
         [Then(@"enthält das History Validierungsergebnis den Fehler '(.*)'")]
         public void ThenTheResultContainsAnError(string message)
         {
