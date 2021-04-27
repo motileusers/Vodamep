@@ -80,12 +80,14 @@ message Leaving {
 
     string person_id = 1;
 
-    LeavingReason leaving_reason = 2;                      // Abgang
-    DeathLocation death_location = 3;                      // Sterbefall
-    DischargeLocation discharge_location = 4;              // Entlassung Wohin
-    string discharge_location_other = 5;                   // Sonstige Lebens-/Betreuungssituation
-    DischargeReason discharge_reason = 6;                  // Entlassung Grund
-    string discharge_reason_other = 7;                     // Anderer Grund
+    google.protobuf.Timestamp valid = 2;                   // Gültigkeitsdatum der Aufnahme
+
+    LeavingReason leaving_reason = 3;                      // Abgang
+    DeathLocation death_location = 4;                      // Sterbefall
+    DischargeLocation discharge_location = 5;              // Entlassung Wohin
+    string discharge_location_other = 6;                   // Sonstige Lebens-/Betreuungssituation
+    DischargeReason discharge_reason = 7;                  // Entlassung Grund
+    string discharge_reason_other = 8;                     // Anderer Grund
 }
 
 // Merkmale mit Von-Datum, ab wann sie gültig sind
