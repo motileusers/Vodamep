@@ -12,8 +12,7 @@ namespace Vodamep.StatLp.Validation
 {
     internal class PersonHistoryTimeValidator : AbstractValidator<StatLpReportHistory>
     {
-        private const string HolidayOfCare = "Urlaub von der Pflege";
-        private const string TemporaryCare = "Übergangspflege";
+        private static DisplayNameResolver displayNameResolver = new DisplayNameResolver();
 
         public PersonHistoryTimeValidator()
         {
@@ -58,19 +57,21 @@ namespace Vodamep.StatLp.Validation
 
         private void CheckAdmissionType(Attribute attribute, List<StatLpReport> newerReports, CustomContext ctx)
         {
-            switch (attribute.Value)
+            var admissionType = (AdmissionType)Enum.Parse(typeof(AdmissionType), attribute.Value);
+
+            switch (admissionType)
             {
-                case HolidayOfCare:
-                    this.CheckHolidayOfCare(attribute, newerReports, 42, HolidayOfCare, ctx);
+                case AdmissionType.HolidayAt:
+                    this.CheckMaxDurationPerType(attribute, newerReports, 42, AdmissionType.HolidayAt.ToString(), ctx);
                     break;
 
-                case TemporaryCare:
-                    this.CheckHolidayOfCare(attribute, newerReports, 365, TemporaryCare, ctx);
+                case AdmissionType.TransitionalAt:
+                    this.CheckMaxDurationPerType(attribute, newerReports, 365, AdmissionType.TransitionalAt.ToString(), ctx);
                     break;
             }
         }
 
-        private void CheckHolidayOfCare(Attribute attribute, List<StatLpReport> newerReports, int maxDays, string value, CustomContext ctx)
+        private void CheckMaxDurationPerType(Attribute attribute, List<StatLpReport> newerReports, int maxDays, string value, CustomContext ctx)
         {
             var startDate = attribute.FromD;
 
@@ -113,7 +114,8 @@ namespace Vodamep.StatLp.Validation
                     {
                         ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                             Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(attribute.PersonId,
-                                attribute.Value, $"mehr als {maxDays} Tage")));
+                                displayNameResolver.GetDisplayName(attribute.Value),
+                                $"mehr als {maxDays} Tage")));
 
                         break;
                     }

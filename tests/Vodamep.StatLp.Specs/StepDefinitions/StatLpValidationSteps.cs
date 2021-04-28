@@ -33,6 +33,8 @@ namespace Vodamep.Specs.StepDefinitions
 
             var date = new DateTime(2021, 02, 01);
             this.Report = StatLpDataGenerator.Instance.CreateStatLpReport("", date.Year, date.Month, 1, 1, false);
+
+          
         }
 
         public StatLpReport Report { get; private set; }

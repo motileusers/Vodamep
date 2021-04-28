@@ -8,6 +8,8 @@ namespace Vodamep.StatLp.Validation
 {
     internal class PersonHistoryAttributeValidator : AbstractValidator<StatLpReportHistory>
     {
+        private static DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+
         public PersonHistoryAttributeValidator()
         {
             this.RuleFor(x => x).Custom((a, ctx) =>
@@ -36,8 +38,10 @@ namespace Vodamep.StatLp.Validation
 
                     if (lastMessageAttribute != null && sendMessageAttribute.Value == lastMessageAttribute.Value)
                     {
-                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAttributeAlreadySent(sendMessageAttribute.AttributeType.ToString(), sendMessageAttribute.PersonId,
-                            sendMessageAttribute.Value, lastMessageAttribute.FromD.ToShortDateString()));
+                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAttributeAlreadySent(displayNameResolver.GetDisplayName(sendMessageAttribute.AttributeType.ToString()),
+                            sendMessageAttribute.PersonId,
+                            displayNameResolver.GetDisplayName(sendMessageAttribute.Value),
+                            lastMessageAttribute.FromD.ToShortDateString()));
                     }
                 }
 

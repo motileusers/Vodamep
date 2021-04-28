@@ -13,10 +13,10 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen Geschichte einer D
 
 Szenario: Gesamter Aufenthalt korrekt in einer Meldung
     Angenommen Gesendete Meldung '1' gilt vom '2020-12-01' bis '2020-12-31'
-    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '2020-12-01'
-    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '2020-12-01'
-    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '2020-12-01'
-    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '2020-12-01'
+    Angenommen Gesendete Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '2020-12-01'
     Angenommen Gesendete Meldung '1' enthält eine 'Admission' von Person 1 vom '2020-12-01'
     Angenommen Gesendete Meldung '1' enthält einen Aufenthalt von Person 1 vom '2020-12-01' bis '2020-12-31'
     Angenommen Gesendete Meldung '1' enthält eine 'Leaving' von Person 1 vom '2020-12-31'
@@ -24,10 +24,10 @@ Szenario: Gesamter Aufenthalt korrekt in einer Meldung
 
 Szenario: Gesamter Aufenthalt korrekt in 3 Meldungen
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '2020-12-01'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '2020-12-01' bis '2020-12-31'
     Angenommen Existierende Meldung '2' gilt vom '2021-01-01' bis '2021-01-31'
@@ -68,10 +68,10 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 # warum soll das in den history abgehandelt werden und nicht in den normalen validations?
 #Szenario: Fehlende Aufnahme vor Aufenthalt
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Vor dem Aufenthalt von Klient xx am xx wurden keine Aufnahmedaten gesendet'
 
@@ -111,9 +111,9 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 # sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Fehlende Aufnahmeart vor der Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
 #    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das History Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Aufnahmeart gesendet'
@@ -121,9 +121,9 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 # sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Fehlende Pflegestufe vor der Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
 #    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Pflegestufe gesendet'
@@ -131,9 +131,9 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 # sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Fehlende Pflegestufe Arge vor der Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
 #    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Pflegestufe (Arge) gesendet'
@@ -141,9 +141,9 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 # sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Fehlende Finanzierung vor der Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L1' mit Datum '01.12.2020'
 #    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Finanzierung gesendet'
@@ -151,9 +151,9 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 # sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Falsches Gültigkeitsdatum einer Aufnahme
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
 #    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.1999
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Das Gültigkeitsdatum der Aufnahme von Klient xx muss im Meldungszeitraum liegen'
@@ -164,10 +164,10 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 # sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Falsches Gültigkeitsdatum einer Entlassung
 #    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
 #    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Angenommen Gesendete Meldung 1 enthält eine Entlassung von Person 1 am 31.12.1999
@@ -179,147 +179,147 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 
 Szenario: Gleiche Aufnahmeart
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 2' mit Datum '01.01.2020'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2020'
-    Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'AdmissionType' von Klient '1' auf 'Daueraufnahme' wurde bereits mit der Meldung am '01.12.2020' gesendet'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2020'
+    Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Aufnahmeart' von Klient '1' auf 'Daueraufnahme' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
   
 Szenario: Gleiche Pflegestufe
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Übergangspflege' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'TransitionalAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2020'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.01.2020'
-    Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Careallowance' von Klient '1' auf 'Pflegestufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2020'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.01.2020'
+    Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe' von Klient '1' auf 'Pflegestufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 
 Szenario: Gleiche Pflegestufe Arge
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 2' mit Datum '01.12.2020'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.01.2020'
-    Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Careallowancearge' von Klient '1' auf 'Pflegestufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L2' mit Datum '01.12.2020'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.01.2020'
+    Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe Arge' von Klient '1' auf 'Pflegestufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 
 Szenario: Gleiche Finanzierung
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 2' mit Datum '01.01.2020'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
-    Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Finance' von Klient '1' auf 'Selbst/Angehörige 100 %' wurde bereits mit der Meldung am '01.12.2020' gesendet'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
+    Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Finanzierung' von Klient '1' auf 'Selbst/Angehörige 100 %' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 
 Szenario: Mehrere Aufnahmearten am gleichen Tag
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Übergangspflege' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'TransitionalAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2020'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Überleitungspflege' mit Datum '01.01.2020'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2020'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'CareTransitionAt' mit Datum '01.01.2020'
     Dann enthält das History Validierungsergebnis den Fehler 'Die Aufnahmeart von Klient 1 am 01.01.2020 wurde mehrfach am gleichen Tag geändert.'
 
 # Änderung Aufnahmeart
 
-Szenario: Keine Änderung von Daueraufnahme auf Urlaub
+Szenario: Keine Änderung von DauerAufnahme auf Urlaub
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.01.2020'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'HolidayAt' mit Datum '01.01.2020'
     Dann enthält das History Validierungsergebnis den Fehler 'Bei Klient '1' ist kein Wechsel von einer Daueraufname auf 'Urlaub von der Pflege' möglich.'
 
-Szenario: Keine Änderung von Daueraufnahme auf Übergangspflege
+Szenario: Keine Änderung von DauerAufnahme auf Übergangspflege
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Übergangspflege' mit Datum '01.01.2020'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'TransitionalAt' mit Datum '01.01.2020'
     Dann enthält das History Validierungsergebnis den Fehler 'Bei Klient '1' ist kein Wechsel von einer Daueraufname auf 'Übergangspflege' möglich'
 
 #Zeitlich limitierte Aufnahmearten
 
 Szenario: Urlaub von der Pflege maximal 42 Tage 1
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'HolidayAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
     Dann enthält das History Validierungsergebnis keine Fehler
 
 Szenario: Urlaub von der Pflege maximal 42 Tage 2
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Urlaub von der Pflege' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'HolidayAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
     Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '15.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '15.01.2021'
     Dann enthält das escapte History Validierungsergebnis den Fehler 'Bei Klient '1' wurde der Zeitraum für die Aufnahmeart 'Urlaub von der Pflege' überschritten (mehr als 42 Tage).'
 
 Szenario: Übergangspflege maximal 365 Tage 1
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Übergangspflege' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'TransitionalAt' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
-    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '01.01.2021'
+    Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
     Dann enthält das History Validierungsergebnis keine Fehler
 
 Szenario: Übergangspflege maximal 365 Tage 2
     Angenommen Existierende Meldung '1' gilt vom '01.12.2019' bis '31.12.2019'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Übergangspflege' mit Datum '01.12.2019'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2019'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '01.12.2019'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '01.12.2019'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'TransitionalAt' mit Datum '01.12.2019'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.12.2019'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.12.2019'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.12.2019'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Existierende Meldung '2' gilt vom '01.01.2020' bis '31.01.2020'
@@ -353,10 +353,10 @@ Szenario: Übergangspflege maximal 365 Tage 2
 
 Szenario: Änderung bei Geschlecht
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '20.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '20.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '20.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '20.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '20.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '20.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '20.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '20.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Existierende Meldung '1': die Eigenschaft 'gender' von 'Person' ist auf 'MaleGe' gesetzt
@@ -366,10 +366,10 @@ Szenario: Änderung bei Geschlecht
 
 Szenario: Änderung bei Geburtsdatum
     Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'Daueraufnahme' mit Datum '20.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'Pflegestufe 1' mit Datum '20.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'Pflegestufe 1' mit Datum '20.12.2020'
-    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'Selbst/Angehörige 100 %' mit Datum '20.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '20.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '20.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '20.12.2020'
+    Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '20.12.2020'
     Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
     Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
     Angenommen Existierende Meldung '1': die Eigenschaft 'birthday' von 'Person' ist auf '1935-01-01' gesetzt

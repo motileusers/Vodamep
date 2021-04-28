@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentValidation;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
@@ -7,9 +8,11 @@ namespace Vodamep.StatLp.Validation
 {
     internal class PersonHistoryAdmissionTypeValidator : AbstractValidator<StatLpReportHistory>
     {
+        private static DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+
         public PersonHistoryAdmissionTypeValidator()
         {
-            this.RuleFor(x => x).Custom((a, ctx) =>
+this.RuleFor(x => x).Custom((a, ctx) =>
             {
                 var sendMessage = a.StatLpReport;
 
@@ -23,11 +26,18 @@ namespace Vodamep.StatLp.Validation
                 var sendMessageAdmissionType = sendMessage.Attributes.FirstOrDefault(c => c.AttributeType == AttributeType.AdmissionType);
                 var existingMessageAdmissionType = lastMessage.Attributes.FirstOrDefault(c => c.AttributeType == AttributeType.AdmissionType);
 
-                if (sendMessageAdmissionType != null && existingMessageAdmissionType != null &&
-                    existingMessageAdmissionType.Value == "Daueraufnahme" && 
-                    (sendMessageAdmissionType.Value == "Urlaub von der Pflege" || sendMessageAdmissionType.Value == "Übergangspflege"))
+
+                if (sendMessageAdmissionType != null && existingMessageAdmissionType != null)
                 {
-                    ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeNoChangeFromLongTimeCarePossible(sendMessageAdmissionType.PersonId, sendMessageAdmissionType.Value));
+                    var sendMessageAdmissionTypeValue = (AdmissionType)Enum.Parse(typeof(AdmissionType), sendMessageAdmissionType.Value);
+                    var existingMessageAdmissionTypeValue = (AdmissionType)Enum.Parse(typeof(AdmissionType), existingMessageAdmissionType.Value);
+
+                    if (existingMessageAdmissionTypeValue == AdmissionType.ContinuousAt &&
+                        (sendMessageAdmissionTypeValue == AdmissionType.HolidayAt ||
+                         sendMessageAdmissionTypeValue == AdmissionType.TransitionalAt))
+                    {
+                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeNoChangeFromLongTimeCarePossible(sendMessageAdmissionType.PersonId, displayNameResolver.GetDisplayName(sendMessageAdmissionType.Value)));
+                    }
                 }
 
             });

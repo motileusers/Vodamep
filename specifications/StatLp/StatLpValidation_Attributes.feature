@@ -26,3 +26,8 @@ Szenario: ein Attribut muss im aktuellen Monat liegen
 #    Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' darf nicht leer sein.'
 
 
+
+#Szenario: Attribute müssen mit AttributeType übereinstimmen
+#    Angenommen die Eigenschaft 'care_allowance' von 'Attribute' ist auf 'UndefinedAllowance' gesetzt
+#    Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' darf nicht leer sein.'
+

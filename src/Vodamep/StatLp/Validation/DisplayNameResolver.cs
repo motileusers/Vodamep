@@ -22,14 +22,14 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(StatLpReport.FromD), "Von");
 
             _dict.Add(nameof(StatLpReport.Institution), "Einrichtung");
-           
+
             _dict.Add(nameof(Person.FamilyName), "Familienname");
             _dict.Add(nameof(Person.GivenName), "Vorname");
             _dict.Add(nameof(Person.Gender), "Geschlecht");
             _dict.Add(nameof(Person.Country), "Land");
             _dict.Add(nameof(Person.Birthday), "Geburtsdatum");
             _dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
-           
+
             _dict.Add(nameof(Admission.HousingTypeBeforeAdmission), "Wohnsituation vor der Aufnahme");
             _dict.Add(nameof(Admission.MainAttendanceRelation), "Verwandtschaftsverhältnis Hauptbetreuungspers.");
             _dict.Add(nameof(Admission.MainAttendanceCloseness), "Räumliche Nähe Hauptbetreuungsperson");
@@ -40,14 +40,48 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(Admission.SocialChanges), "Veränderungen nicht bewältigt, weil");
             _dict.Add(nameof(Admission.SocialChangeOther), "Veränderungen nicht bewältigt, weil");
             _dict.Add(nameof(Admission.HousingReasonOther), "Wohnraumsituations- und Ausstattungsgründe");
-         
+
             _dict.Add(nameof(Leaving.LeavingReason), "Abgangart");
             _dict.Add(nameof(Leaving.DischargeLocationOther), "Sonstige Lebens-/Betreuungssituation");
             _dict.Add(nameof(Leaving.DischargeReasonOther), "Entlassung Grund");
+
+            //enums
+            _dict.Add(nameof(AttributeType.AdmissionType), "Aufnahmeart");
+            _dict.Add(nameof(AttributeType.Careallowance), "Pflegestufe");
+            _dict.Add(nameof(AttributeType.Careallowancearge), "Pflegestufe Arge");
+            _dict.Add(nameof(AttributeType.Finance), "Finanzierung");
+
+            _dict.Add(nameof(Finance.SelfFi), "Selbst/Angehörige 100 %");
+            _dict.Add(nameof(Finance.SocialAssistanceFi), "Mindestsicherung");
+            _dict.Add(nameof(Finance.SocialAssistanceClaimFi), "Mindestsicherungsantrag in Bearbeitung");
+
+            _dict.Add(nameof(CareAllowance.L1), "Pflegestufe 1");
+            _dict.Add(nameof(CareAllowance.L2), "Pflegestufe 2");
+            _dict.Add(nameof(CareAllowance.L3), "Pflegestufe 3");
+            _dict.Add(nameof(CareAllowance.L4), "Pflegestufe 4");
+            _dict.Add(nameof(CareAllowance.L5), "Pflegestufe 5");
+            _dict.Add(nameof(CareAllowance.L6), "Pflegestufe 6");
+            _dict.Add(nameof(CareAllowance.L7), "Pflegestufe 7");
+
+            _dict.Add(nameof(CareAllowanceArge.L0Ar), "Pflegestufe 1");
+            _dict.Add(nameof(CareAllowanceArge.L1Ar), "Pflegestufe 2");
+            _dict.Add(nameof(CareAllowanceArge.L2Ar), "Pflegestufe 3");
+            _dict.Add(nameof(CareAllowanceArge.L3Ar), "Pflegestufe 4");
+            _dict.Add(nameof(CareAllowanceArge.L4Ar), "Pflegestufe 5");
+            _dict.Add(nameof(CareAllowanceArge.L5Ar), "Pflegestufe 6");
+            _dict.Add(nameof(CareAllowanceArge.L6Ar), "Pflegestufe 7");
+            _dict.Add(nameof(CareAllowanceArge.L7Ar), "Pflegestufe 8");
+
+            _dict.Add(nameof(AdmissionType.ContinuousAt), "Daueraufnahme");
+            _dict.Add(nameof(AdmissionType.HolidayAt), "Urlaub von der Pflege");
+            _dict.Add(nameof(AdmissionType.TransitionalAt), "Übergangspflege");
+            _dict.Add(nameof(AdmissionType.Covid19RespiteAt), "COVID-19 Entlastungspflege");
+            _dict.Add(nameof(AdmissionType.GeriatricRemobilizationAt), "Geriatrische Remobilisation");
+            _dict.Add(nameof(AdmissionType.CareTransitionAt), "Überleitungspflege");
         }
 
         public string GetDisplayName(string name)
-        {            
+        {
             if (!string.IsNullOrEmpty(name) && _dict.TryGetValue(name, out string value))
                 return value;
 
