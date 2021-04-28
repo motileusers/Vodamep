@@ -56,7 +56,7 @@ namespace Vodamep.StatLp.Validation
             });
         }
 
-        private void CheckAdmissionType(Attribute attribute, IEnumerable<StatLpReport> newerReports, CustomContext ctx)
+        private void CheckAdmissionType(Attribute attribute, List<StatLpReport> newerReports, CustomContext ctx)
         {
             switch (attribute.Value)
             {
@@ -70,17 +70,42 @@ namespace Vodamep.StatLp.Validation
             }
         }
 
-        private void CheckHolidayOfCare(Attribute attribute, IEnumerable<StatLpReport> newerReports, int maxDays, string value, CustomContext ctx)
+        private void CheckHolidayOfCare(Attribute attribute, List<StatLpReport> newerReports, int maxDays, string value, CustomContext ctx)
         {
             var startDate = attribute.FromD;
 
-            foreach (var report in newerReports)
+            for (var i = 0; i < newerReports.Count(); i++)
             {
-                var admissionAttribute = report.Attributes.FirstOrDefault(x => x.PersonId == attribute.PersonId && x.AttributeType == AttributeType.AdmissionType);
+                var report = newerReports[i];
 
-                if (admissionAttribute != null && admissionAttribute.Value != value)
+                var admissionAttribute = report.Attributes.FirstOrDefault(x => x.PersonId == attribute.PersonId && x.AttributeType == AttributeType.AdmissionType);
+                var stay = report.Stays.FirstOrDefault(x => x.PersonId == attribute.PersonId);
+                var leaving = report.Leavings.FirstOrDefault(x => x.PersonId == attribute.PersonId);
+
+                if (admissionAttribute?.Value != value || i == newerReports.Count - 1)
                 {
-                    var stopDate = admissionAttribute.FromD;
+                    DateTime stopDate = DateTime.MinValue;
+
+                    if (admissionAttribute != null && admissionAttribute.Value != value)
+                    {
+                        stopDate = admissionAttribute.FromD;
+                    }
+                    else if (i == newerReports.Count - 1)
+                    {
+                        if (stay != null)
+                        {
+                            stopDate = stay.To.AsDate();
+                        }
+                        else if (leaving != null)
+                        {
+                            stopDate = leaving.Valid.AsDate();
+                        }
+                    }
+
+                    if (stopDate == DateTime.MinValue)
+                    {
+                        continue;
+                    }
 
                     var timeSpan = stopDate - startDate;
 
