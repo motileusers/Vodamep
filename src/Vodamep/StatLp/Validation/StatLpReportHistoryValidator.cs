@@ -21,6 +21,8 @@ namespace Vodamep.StatLp.Validation
         }
         public StatLpReportHistoryValidator()
         {
+            this.RuleFor(x => x).SetValidator(new PersonHistoryPersonValidator());
+
             this.RuleFor(x => x).SetValidator(new PersonHistoryMessageOrderValidator());
             this.RuleFor(x => x).SetValidator(new PersonHistoryAttributeValidator());
             this.RuleFor(x => x).SetValidator(new PersonHistoryAdmissionTypeValidator());

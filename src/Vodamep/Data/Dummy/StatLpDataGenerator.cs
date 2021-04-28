@@ -62,25 +62,30 @@ namespace Vodamep.Data.Dummy
             return report;
         }
 
-        public Person CreatePerson()
+        public Person CreatePerson(bool randomValues = true)
         {
-            return this.CreatePerson(_id++);
+            return this.CreatePerson(_id++, randomValues);
         }
 
-        public Person CreatePerson(long index)
+        public Person CreatePerson(long index, bool randomValues)
         {
+            if (index < 0)
+            {
+                index = _id++;
+            }
+
             var person = new Person()
             {
                 Id = index.ToString(),
-                FamilyName = _familynames[_rand.Next(_familynames.Length)],
-                GivenName = _names[_rand.Next(_names.Length)],
-                Country = CountryCodeProvider.Instance.Values.Keys.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
-                Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
+                FamilyName = randomValues ? _familynames[_rand.Next(_familynames.Length)] : _familynames[0],
+                GivenName = randomValues ? _names[_rand.Next(_names.Length)] : _names[0],
+                Country = randomValues ? CountryCodeProvider.Instance.Values.Keys.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())] : CountryCodeProvider.Instance.Values.Keys.ToArray()[0],
+                Gender = randomValues ? ((Gender[])(Enum.GetValues(typeof(Gender))))
                     .Where(x => x != Gender.UndefinedGe)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)) : Gender.MaleGe,
             };
 
-            person.BirthdayD = new DateTime(1920, 01, 01).AddDays(_rand.Next(20000));
+            person.BirthdayD = randomValues ? new DateTime(1920, 01, 01).AddDays(_rand.Next(20000)) : new DateTime(1920, 01, 01);
 
             return person;
         }
@@ -88,7 +93,7 @@ namespace Vodamep.Data.Dummy
         public IEnumerable<Person> CreatePersons(int count)
         {
             for (var i = 0; i < count; i++)
-                yield return CreatePerson(i + 1);
+                yield return CreatePerson(i + 1, true);
         }
 
         public Admission CreateAdmission(string personId, Timestamp valid = null)

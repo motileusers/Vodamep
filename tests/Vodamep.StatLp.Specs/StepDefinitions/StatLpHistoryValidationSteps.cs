@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Google.Protobuf;
 using TechTalk.SpecFlow;
 using Vodamep.Data.Dummy;
 using Vodamep.StatLp.Model;
@@ -97,6 +98,18 @@ namespace Vodamep.Specs.StepDefinitions
         public void GivenExistingPropertyContainsStay(int reportNumber, string personId, string @from, string to)
         {
             this.GivenPropertyContainsStay(reportNumber - 1, personId, from, to);
+        }
+
+        [Given(@"Gesendete Meldung '(.*)': die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
+        public void GivenSentMessageThePropertyIsSetTo(int reportNumber, string name, string type, string value)
+        {
+            this.GivenPropertyIsSetTo(-1, name, type, value);
+        }
+
+        [Given(@"Existierende Meldung '(.*)': die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
+        public void GivenExistingMessageThePropertyIsSetTo(int reportNumber, string name, string type, string value)
+        {
+            this.GivenPropertyIsSetTo(reportNumber - 1, name, type, value);
         }
 
         [Then(@"enthält das History Validierungsergebnis keine Fehler")]
@@ -200,5 +213,41 @@ namespace Vodamep.Specs.StepDefinitions
             stay.To = DateTime.Parse(to).AsTimestamp();
             report.Stays.Add(stay);
         }
+
+        public void GivenPropertyIsSetTo(int reportIndex, string name, string type, string value)
+        {
+            var report = this.GetReportAndCreateNonExisting(reportIndex);
+
+            IMessage message;
+
+            if (type == nameof(StatLpReport))
+                message = report;
+            else if (type == nameof(Institution))
+                message = report.Institution;
+            else if (type == nameof(Admission))
+                message = report.Admissions[0];
+            else if (type == nameof(Attribute))
+                message = report.Attributes[0];
+            else if (type == nameof(Leaving))
+                message = report.Leavings[0];
+            else if (type == nameof(Person))
+            {
+                if (!report.Persons.Any())
+                {
+                    report.AddDummyPerson(1,false);
+                }
+                message = report.Persons[0];
+            }
+            else if (type == nameof(Stay))
+                message = report.Stays[0];
+            else
+                throw new NotImplementedException();
+
+            if (!string.IsNullOrEmpty(value))
+                message.SetValue(name, value);
+            else
+                message.SetDefault(name);
+        }
+
     }
 }

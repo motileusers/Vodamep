@@ -7,9 +7,9 @@ namespace Vodamep.Data.Dummy
 {
     internal static class StatLpDataGeneratorReportExtensions
     {
-        public static Person AddDummyPerson(this StatLpReport report)
+        public static Person AddDummyPerson(this StatLpReport report, int id = -1, bool randomValues = true)
         {
-            var p = StatLpDataGenerator.Instance.CreatePerson();
+            var p = StatLpDataGenerator.Instance.CreatePerson(id, randomValues);
             report.AddPerson(p);
             return p;
         }
