@@ -21,10 +21,24 @@ namespace Vodamep.Data.Dummy
             return p;
         }
 
+        public static Admission AddDummyAdmission(this StatLpReport report)
+        {
+            var p = StatLpDataGenerator.Instance.CreateAdmission(report.Persons.First().Id, report.From);
+            report.AddAdmission(p);
+            return p;
+        }
+
         public static Admission[] AddDummyAdmissions(this StatLpReport report)
         {
             var p = StatLpDataGenerator.Instance.CreateAdmissions(report.Persons, report.From).OrderBy(x => x.PersonId).ToArray();
             report.AddAdmissions(p);
+            return p;
+        }
+
+        public static Vodamep.StatLp.Model.Attribute AddDummyAttribute(this StatLpReport report)
+        {
+            var p = StatLpDataGenerator.Instance.CreateAttribute(report.Persons.First().Id, report.From);
+            report.AddAttribute(p);
             return p;
         }
 
@@ -34,11 +48,24 @@ namespace Vodamep.Data.Dummy
             report.AddAttributes(p);
             return p;
         }
+        public static Stay AddDummyStay(this StatLpReport report, DateTime from)
+        {
+            var p = StatLpDataGenerator.Instance.CreateStay(report.Persons.First().Id, from);
+            report.AddStay(p);
+            return p;
+        }
 
         public static Stay[] AddDummyStays(this StatLpReport report, DateTime from)
         {
             var p = StatLpDataGenerator.Instance.CreateStays(report.Persons, from).OrderBy(x => x.PersonId).ToArray();
             report.AddStays(p);
+            return p;
+        }
+
+        public static Leaving AddDummyLeaving(this StatLpReport report)
+        {
+            var p = StatLpDataGenerator.Instance.CreateLeaving(report.Persons.First().Id);
+            report.AddLeaving(p);
             return p;
         }
 
