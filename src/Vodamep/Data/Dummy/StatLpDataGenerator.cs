@@ -148,6 +148,9 @@ namespace Vodamep.Data.Dummy
             if (from != null)
                 attribute.From = @from;
 
+            attribute.AttributeType = AttributeType.AdmissionType;
+            attribute.Value = AdmissionType.Covid19RespiteAt.ToString();
+
             return attribute;
 
         }

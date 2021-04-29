@@ -87,6 +87,7 @@ namespace Vodamep.ValidationBase
         public static string StatLpReportPersonHistoryAdmissionAttributeNoChangeFromLongTimeCarePossible (string clientId,  string newAdmissionTypeValue) => $"Bei Klient '{clientId}' ist kein Wechsel von einer Daueraufname auf '{newAdmissionTypeValue}' möglich.";
         public static string StatLpReportPersonPeriodForAdmissionTooLong (string clientId, string admissionType, string maxPersiod) => $"Bei Klient '{clientId}' wurde der Zeitraum für die Aufnahmeart '{admissionType}' überschritten ({maxPersiod}).";
         public static string StatLpReportPersonHistoryGenderAttributeChanged (string propertyName, string clientId, string date) => $"Unterschied bei '{propertyName}' von Klient {clientId} bei Meldung vom {date}.";
+        public static string StatLpReportAttributeWrongValue (string attributeName, string value) => $"Der Wert des Attributs mit dem Typen '{attributeName}' kann nicht auf den Wert '{value}' gesetzt werden.";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

@@ -83,8 +83,6 @@ namespace Vodamep.Specs.StepDefinitions
 
         public static FieldDescriptor GetField(this IMessage m, string name)
         {
-            var fields = m.Descriptor.Fields.InDeclarationOrder().Select(x => x.Name);
-
             return m.Descriptor.Fields.InDeclarationOrder().Where(x => x.Name == name).First();
         }
     }
