@@ -10,7 +10,7 @@ namespace Vodamep.StatLp.Validation
 
     internal class AttributeValidator : AbstractValidator<Attribute>
     {
-        private static DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+        private static readonly DisplayNameResolver DisplayNameResolver = new DisplayNameResolver();
 
         public AttributeValidator(StatLpReport parentReport)
         {
@@ -20,13 +20,30 @@ namespace Vodamep.StatLp.Validation
                 .Must(x => parentReport.From <= x && x <= parentReport.To)
                 .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth("Das Attribut", x.PersonId));
 
-
             this.RuleFor(x => x.PersonId)
                 .Must((attribute, personId) =>
                 {
                     return parentReport.Persons.Any(y => y.Id == personId);
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
+
+            this.RuleFor(x => x)
+                .Must((attribute) =>
+                {
+                    var value = attribute.Value;
+
+                    if (string.IsNullOrWhiteSpace(value) ||
+                        value == AdmissionType.UndefinedAt.ToString() ||
+                        value == CareAllowance.UndefinedAllowance.ToString() || 
+                        value == CareAllowanceArge.UndefinedAr.ToString() || 
+                        value == Finance.UndefinedFi.ToString())
+                    {
+                        return false;
+                    }
+
+                    return true;
+                })
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(DisplayNameResolver.GetDisplayName(x.AttributeType.ToString()), x.PersonId));
 
             this.RuleFor(x => x)
                 .Must((attribute, personId) =>
@@ -49,8 +66,8 @@ namespace Vodamep.StatLp.Validation
 
                 })
                 .WithMessage(x => Validationmessages.StatLpReportAttributeWrongValue(
-                   displayNameResolver.GetDisplayName(x.AttributeType.ToString()),
-                    displayNameResolver.GetDisplayName(x.Value)));
+                   DisplayNameResolver.GetDisplayName(x.AttributeType.ToString()),
+                    DisplayNameResolver.GetDisplayName(x.Value)));
 
         }
     }
