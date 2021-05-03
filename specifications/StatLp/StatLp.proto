@@ -56,7 +56,7 @@ message Admission {
 
     bool hospital_emergency = 7;                                // 12 Krankenhaus (Akut, vor der Aufnahme)
     bool aftercare_institution = 8;                             // 13 Nachsorgeeinrichtung (vor der Aufnahme)
-    bool rehab_transitional_care = 9;                           // 14 Geriatrische Remobilisation (vor der Aufnahme)
+    bool geriatric_rehabilitation = 9;                          // 14 Geriatrische Remobilisation (vor der Aufnahme)
 
     MainAttendanceRelation main_attendance_relation = 10;       // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
     MainAttendanceCloseness main_attendance_closeness = 11;     // 22 Räumliche Nähe Hauptbetreuungsperson
@@ -208,7 +208,7 @@ enum MainAttendanceCloseness {
   UP_TO_30_MIN_MC = 3;                         // bis zu 30 Minuten
   OVER_TO_30_MIN_MC = 4;                       // über 30 Minuten
   NO_MAINATTENDANCE_MC = 5;                    // keine Hauptbetreuungsperson
-  NO_MAINATTENDANCECLOSENESS_MC = 6;           // keine Angabe
+  NO_MAINATTENDANCE_CLOSENESS_MC = 6;           // keine Angabe
 }
 
 
