@@ -77,13 +77,13 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
         [Given(@"Gesendete Meldung '(.*)' enthält eine '(.*)' von Person (.*) vom '(.*)'")]
-        public void GivenSentPropertyContainsItem(int reportNumber, string itemType, string personId, string date)
+        public void GivenSentPropertyContainsItem(int reportNumber, string itemType, int personId, string date)
         {
             this.GivenPropertyContainsItem(-1, itemType, personId, date);
         }
 
         [Given(@"Existierende Meldung '(.*)' enthält eine '(.*)' von Person (.*) vom '(.*)'")]
-        public void GivenExistingPropertyContainsItem(int reportNumber, string itemType, string personId, string date)
+        public void GivenExistingPropertyContainsItem(int reportNumber, string itemType, int personId, string date)
         {
             this.GivenPropertyContainsItem(reportNumber - 1, itemType, personId, date);
         }
@@ -110,6 +110,18 @@ namespace Vodamep.Specs.StepDefinitions
         public void GivenExistingMessageThePropertyIsSetTo(int reportNumber, string name, string type, string value)
         {
             this.GivenPropertyIsSetTo(reportNumber - 1, name, type, value);
+        }
+      
+        [Given(@"Existierende Meldung (.*) gilt vom (.*) bis (.*) und ist eine Standard Meldung und enthält eine '(.*)' von Person (.*) vom (.*)")]
+        public void GivenExistingMessageIsAStandardAdmissionMessage(int reportNumber, string validFrom, string validTo, string itemType, int personNumber, string admissionDate)
+        {
+            GivenMessageIsAStandardAdmissionMessage(reportNumber - 1, validFrom, validTo, itemType, personNumber, admissionDate);
+        }
+
+        [Given(@"Existierende Meldung (.*) gilt vom (.*) bis (.*) und ist eine Standard Meldung und enthält einen Aufenthalt")]
+        public void GivenExistingMessageIsAStandardStayMessage(int reportNumber, string validFrom, string validTo)
+        {
+            GivenMessageIsAStandardStayMessage(reportNumber - 1, validFrom, validTo);
         }
 
         [Then(@"enthält das History Validierungsergebnis keine Fehler")]
@@ -152,6 +164,13 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
+        private Person GetOrCreatePerson(StatLpReport report, int id)
+        {
+            var person = report.Persons.FirstOrDefault(x => x.Id == id.ToString()) ?? report.AddDummyPerson(id, false);
+
+            return person;
+        }
+
         private void GivenReportIsValidFromTo(int reportIndex, string dateFrom, string dateTo)
         {
             var from = DateTime.Parse(dateFrom);
@@ -161,6 +180,8 @@ namespace Vodamep.Specs.StepDefinitions
 
             report.FromD = from;
             report.ToD = to;
+
+            var person = this.GetOrCreatePerson(report, 1);
         }
 
         private void GivenPersonPropertyIsSetTo(int reportIndex, string personId, string attributeType, string value, string date)
@@ -176,16 +197,18 @@ namespace Vodamep.Specs.StepDefinitions
             this.GetReportAndCreateNonExisting(reportIndex).Attributes.Add(attribute);
         }
 
-        private void GivenPropertyContainsItem(int reportIndex, string itemType, string personId, string date)
+        private void GivenPropertyContainsItem(int reportIndex, string itemType, int personId, string date)
         {
             var report = this.GetReportAndCreateNonExisting(reportIndex);
+
+            var person = this.GetOrCreatePerson(report, personId); 
 
             switch (itemType)
             {
                 case nameof(Admission):
 
                     var admission = new Admission();
-                    admission.PersonId = personId;
+                    admission.PersonId = personId.ToString();
                     admission.Valid = DateTime.Parse(date).AsTimestamp();
                     report.Admissions.Add(admission);
 
@@ -194,8 +217,8 @@ namespace Vodamep.Specs.StepDefinitions
                 case nameof(Leaving):
 
                     var leaving = new Leaving();
-                    leaving.PersonId = personId;
-                    //leaving = DateTime.Parse(date).AsTimestamp();
+                    leaving.PersonId = personId.ToString();
+                    leaving.ValidD = DateTime.Parse(date);
                     report.Leavings.Add(leaving);
 
                     break;
@@ -249,5 +272,35 @@ namespace Vodamep.Specs.StepDefinitions
                 message.SetDefault(name);
         }
 
+        public void GivenMessageIsAStandardAdmissionMessage(int reportIndex, string validFrom, string validTo, string itemType, int personNumber, string admissionDate)
+        {
+            var report = this.GetReportAndCreateNonExisting(reportIndex);
+
+            var from = DateTime.Parse(validFrom);
+            var to = DateTime.Parse(validTo);
+
+            report.FromD = from;
+            report.ToD = to;
+
+            var person = this.GetOrCreatePerson(report, personNumber);
+            report.AddDummyPerson(Convert.ToInt32(personNumber), false);
+
+            this.GivenPropertyContainsItem(reportIndex, itemType, personNumber, admissionDate);
+        }
+
+        public void GivenMessageIsAStandardStayMessage(int reportIndex, string validFrom, string validTo)
+        {
+            var report = this.GetReportAndCreateNonExisting(reportIndex);
+
+            var from = DateTime.Parse(validFrom);
+            var to = DateTime.Parse(validTo);
+
+            report.FromD = from;
+            report.ToD = to;
+
+            report.AddDummyPerson(1, false);
+
+            this.GivenPropertyContainsStay(reportIndex, report.Persons.First().Id, validFrom, validTo);
+        }
     }
 }
