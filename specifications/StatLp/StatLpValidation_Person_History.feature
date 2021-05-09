@@ -71,22 +71,20 @@ Szenario: Fehlende Entlassung, wenn Aufenthalt nicht bis zum Ende des Monats dau
 	Angenommen Gesendete Meldung '3' enthält einen Aufenthalt von Person 1 vom '01.02.2021' bis '16.02.2021'
 	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient '1' am '16.02.2021' wurden keine Entlassungsdaten gesendet.'
 
-# StandardAufenthalsmeldung was hat die für ein Datum orig
-#Szenario: Fehlende Entlassung, wenn Aufenthalt nicht bis zum Ende des Monats dauert 2
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
-#    Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Existierende Meldung 2 ist eine Standard Aufenthaltsmeldung Meldung von Person 1
-#    Angenommen Gesendete Meldung 3 gilt vom 01.02.2021 bis 28.02.2021
-#    Angenommen Gesendete Meldung 3 enthält eine Aufenthalt von Person 1 vom 01.02.2020 bis 16.02.2020
-#    Dann enthält das Validierungsergebnis den Fehler 'Zur Aufenthaltsende von Klient xx am xx wurden keine Entlassungsdaten gesendet'
 Szenario: Fehlende Entlassung, weil Person im nächsten Monat nicht mehr aufscheint, sie hätte entlassen werden müssen
 	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
 	Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021 und ist eine Standard Meldung und enthält einen Aufenthalt
 	Angenommen Gesendete Meldung '3' gilt vom '01.02.2021' bis '28.02.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient '1' am '28.02.2021' wurden keine Entlassungsdaten gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient '1' am '31.01.2021' wurden keine Entlassungsdaten gesendet.'
 
-# StandardAufenthalsmeldung was hat die für ein Datum
+Szenario: Erneute Aufnahme mit fehlender Entlassung
+   	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
+	Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021 und ist eine Standard Meldung und enthält einen Aufenthalt
+	Angenommen Gesendete Meldung '3' gilt vom '01.02.2021' bis '28.02.2021'
+	Angenommen Gesendete Meldung '3' gilt vom '01.02.2021' bis '28.02.2021'
+	Angenommen Gesendete Meldung '3' enthält eine 'Admission' von Person 1 vom '01.02.2021'
+	Dann enthält das History Validierungsergebnis den Fehler 'Aufnahme von Klient '1' am '01.02.2021' nicht möglich, weil keine Entlassung gesendet wurde.'
+
 #Szenario: Erneute Aufnahme mit fehlender Entlassung
 #    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
 #    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
@@ -95,7 +93,10 @@ Szenario: Fehlende Entlassung, weil Person im nächsten Monat nicht mehr aufsche
 #    Angenommen Existierende Meldung 1 gilt vom 01.02.2021 bis 28.02.2021
 #    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 01.02.2021
 #    Dann enthält das Validierungsergebnis den Fehler 'Aufnahme von Klient xx am xx nicht möglich, weil keine Entlassung gesendet wurde'
-#
+
+   
+#Dann enthält das Validierungsergebnis den Fehler 'Aufnahme von Klient xx am xx nicht möglich, weil keine Entlassung gesendet wurde'
+
 #
 # Fehlende Pflichtfelder für die Aufnahme
 # sollte das nicht in den normalen Validations abgehandelt werden?

@@ -92,6 +92,7 @@ namespace Vodamep.ValidationBase
         public static string StatLpReportAlreadyExistingAdmission (string clientId, string date) => $"Für Klient '{clientId}' wurde bereits eine Aufnahme am '{date}' gesendet.";
         public static string StatLpReportNoAdmission(string clientId, string date) => $"Vor dem Aufenthalt von Klient '{clientId}' am '{date}' wurden keine Aufnahmedaten gesendet.";
         public static string StatLpReportNoLeaving (string clientId, string date) => $"Zum Aufenthaltsende von Klient '{clientId}' am '{date}' wurden keine Entlassungsdaten gesendet.";
+        public static string StatLpReportNoLeavingWhenAdmissionIsResent (string clientId, string date) => $"Aufnahme von Klient '{clientId}' am '{date}' nicht möglich, weil keine Entlassung gesendet wurde.";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

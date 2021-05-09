@@ -286,6 +286,11 @@ namespace Vodamep.Specs.StepDefinitions
             report.AddDummyPerson(Convert.ToInt32(personNumber), false);
 
             this.GivenPropertyContainsItem(reportIndex, itemType, personNumber, admissionDate);
+
+            if (itemType == nameof(Admission))
+            {
+                this.GivenPropertyContainsStay(reportIndex, personNumber.ToString(), validFrom, validTo);
+            }
         }
 
         public void GivenMessageIsAStandardStayMessage(int reportIndex, string validFrom, string validTo)

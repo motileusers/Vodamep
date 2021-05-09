@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
@@ -17,7 +18,8 @@ namespace Vodamep.StatLp.Validation
 
                 var futureMessages = x.StatLpReports.Where(y => y.FromD >= x.StatLpReport.FromD).OrderBy(y => y.FromD);
                 var nextFutureMessage = futureMessages.FirstOrDefault();
-                var historyMessages = x.StatLpReports.Where(y => y.FromD <= x.StatLpReport.FromD).OrderByDescending(y => y.FromD);
+                var historyMessages = x.StatLpReports.Where(y => y.FromD <= x.StatLpReport.FromD)
+                    .OrderByDescending(y => y.FromD);
                 var lastHistoryMessage = historyMessages.FirstOrDefault();
 
                 if (lastHistoryMessage != null && nextFutureMessage == null)
@@ -31,61 +33,195 @@ namespace Vodamep.StatLp.Validation
                     }
                 }
 
+                var personHistories = new List<PersonHistory>();
+
                 foreach (var person in sendMessage.Persons)
                 {
+                    var personHistory = new PersonHistory();
+                    personHistory.PersonId = person.Id;
 
-                    var lastAdmission = lastHistoryMessage?.Admissions.FirstOrDefault(s => s.PersonId == person.Id);
-                    var lastStay = lastHistoryMessage?.Admissions.FirstOrDefault(s => s.PersonId == person.Id);
-                    var lastLeaving = lastHistoryMessage?.Leavings.FirstOrDefault(s => s.PersonId == person.Id);
+                    var admissions = new List<Admission>();
+                    var stays = new List<Stay>();
+                    var leavings = new List<Leaving>();
 
-                    var currentAdmission = sendMessage.Admissions.FirstOrDefault(s => s.PersonId == person.Id);
-                    var currentStay = sendMessage.Stays.FirstOrDefault(s => s.PersonId == person.Id);
-                    var currentLeaving = sendMessage.Leavings.FirstOrDefault(l => l.PersonId == person.Id);
-
-                    //Fehlende Aufnahme
-                    if (currentStay != null && ((currentStay.FromD == sendMessage.FromD && currentAdmission == null && lastStay == null) ||
-                        (currentStay.FromD > sendMessage.FromD && (currentAdmission == null || currentAdmission.ValidD != currentStay.FromD))))
+                    foreach (var statLpReport in x.StatLpReports.OrderBy(sl => sl.FromD))
                     {
-                        ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                            Validationmessages.StatLpReportNoAdmission(
-                                person.Id,
-                                currentStay.FromD.ToShortDateString()
-                            )));
+                        admissions.AddRange(statLpReport.Admissions.Where(ad => ad.PersonId == person.Id));
+                        stays.AddRange(statLpReport.Stays.Where(ad => ad.PersonId == person.Id));
+                        leavings.AddRange(statLpReport.Leavings.Where(ad => ad.PersonId == person.Id));
                     }
 
-                    //doppelte aufnahme
-                    if (currentAdmission != null && lastAdmission != null)
+                    personHistory.Admissions.AddRange(admissions.OrderByDescending(st => st.ValidD));
+                    personHistory.Stays.AddRange(stays.OrderByDescending(st => st.FromD));
+                    personHistory.Leavings.AddRange(leavings.OrderByDescending(st => st.ValidD));
+
+                    personHistories.Add(personHistory);
+                }
+
+                foreach (var personHistory in personHistories)
+                {
+                    var sendMessageAdmission = sendMessage.Admissions.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
+                    var sendMessageStay = sendMessage.Stays.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
+                    var sendMessageLeaving = sendMessage.Leavings.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
+
+                    Admission admission = null;
+                    Leaving leaving = null;
+                    Stay enduringStay = sendMessageStay
+;
+                    if (sendMessageAdmission != null && sendMessageStay != null && sendMessageAdmission.ValidD == sendMessageStay.FromD)
                     {
-                        ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                            Validationmessages.StatLpReportAlreadyExistingAdmission(
-                                person.Id,
-                                lastHistoryMessage.Admissions.First(b => b.PersonId == person.Id).ValidD.ToShortDateString()
-                            )));
+                        admission = sendMessageAdmission;
                     }
 
-                    //Fehlende Entlassung, wenn Aufenthalt nicht bis zum Ende des Monats dauert
-                    if (currentStay != null && currentStay.ToD < sendMessage.ToD &&
-                        (currentLeaving == null || currentLeaving.ValidD != currentStay.ToD))
+                    enduringStay = GetOverallStay(personHistory, enduringStay, sendMessageStay);
+
+                    if (enduringStay != null)
+                    {
+                        if (sendMessageLeaving != null && sendMessageLeaving.ValidD == enduringStay.ToD)
+                        {
+                            leaving = sendMessageLeaving;
+                        }
+
+                        if (leaving == null)
+                        {
+                            leaving = personHistory.Leavings.FirstOrDefault(l => l.ValidD == enduringStay.ToD);
+                        }
+                    }
+
+
+                    if (admission == null && enduringStay != null)
+                    {
+                        admission = personHistory.Admissions.FirstOrDefault(a => a.ValidD == enduringStay.FromD);
+                    }
+
+                    //doppelte aufnahmen
+                    if (enduringStay == null && sendMessageAdmission != null && personHistory.Admissions.Any())
+                    {
+                        ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
+                                Validationmessages.StatLpReportAlreadyExistingAdmission(
+                                    personHistory.PersonId,
+                                    personHistory.Admissions.First().ValidD.ToShortDateString()
+                                )));
+
+                    }
+
+                    //erneute aufnahme
+                    if (sendMessageAdmission != null)
+                    {
+                       var previousEnduringStay = GetOverallStay(personHistory, null, sendMessageStay);
+
+                       if (sendMessageAdmission.ValidD > previousEnduringStay.ToD)
+                       {
+                           Leaving leavingResentMessage = sendMessageLeaving;
+
+                           if (leavingResentMessage == null || leavingResentMessage.ValidD != previousEnduringStay.ToD)
+                           {
+                               leavingResentMessage = personHistory.Leavings.FirstOrDefault(l =>l.ValidD == previousEnduringStay.ToD);
+                           }
+
+                           if (leavingResentMessage == null)
+                           {
+                               // fehlende Aufnahme
+                               ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
+                                   Validationmessages.StatLpReportNoLeavingWhenAdmissionIsResent(
+                                       personHistory.PersonId,
+                                       sendMessageAdmission.ValidD.ToShortDateString()
+                                   )));
+                           }
+                       }
+
+                    }
+
+                    if (admission == null)
+                    {
+                        //leermeldungen ignorieren
+                        if ((sendMessageAdmission != null || personHistory.Admissions.Any()) ||
+                            (sendMessageStay != null || personHistory.Stays.Any()) ||
+                            (sendMessageLeaving != null || personHistory.Leavings.Any()))
+                        {
+
+                            // fehlende Aufnahme
+                            ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
+                                Validationmessages.StatLpReportNoAdmission(
+                                    personHistory.PersonId,
+                                    enduringStay.FromD.ToShortDateString()
+                                )));
+                        }
+                    }
+
+                    //leavings
+                    if (enduringStay != null && enduringStay.ToD != sendMessage.ToD && leaving == null)
                     {
                         ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                             Validationmessages.StatLpReportNoLeaving(
-                                person.Id,
-                                currentStay.ToD.ToShortDateString()
-                            )));
-                    }
-
-                    //keine entlassung
-                    if (lastStay != null && currentStay == null && lastLeaving == null && currentLeaving == null)
-                    {
-                        ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                            Validationmessages.StatLpReportNoLeaving(
-                                person.Id,
-                                sendMessage.ToD.ToShortDateString()
+                                personHistory.PersonId,
+                                enduringStay.ToD.ToShortDateString()
                             )));
                     }
                 }
-
             });
+        }
+
+        private Stay GetOverallStay(PersonHistory personHistory, Stay enduringStay, Stay sendMessageStay)
+        {
+            var admissionDate = GetAdmissionDate(sendMessageStay, personHistory);
+
+            //find first stay 
+            var stayIndex = 0;
+            foreach (var stay in personHistory.Stays)
+            {
+                if (enduringStay == null)
+                {
+                    enduringStay = stay;
+                }
+
+                if (stay.ToD != admissionDate)
+                {
+                    break;
+                }
+
+                if (stay.FromD <= admissionDate)
+                {
+                    enduringStay.FromD = stay.FromD;
+                }
+
+                if (stayIndex++ < personHistory.Stays.Count - 1)
+                {
+                    admissionDate = enduringStay.FromD.AddDays(-1);
+                }
+            }
+
+            return enduringStay;
+        }
+
+        private static DateTime GetAdmissionDate(Stay sendMessageStay, PersonHistory personHistory)
+        {
+            DateTime admissionDate = DateTime.MinValue;
+            if (sendMessageStay != null)
+            {
+                admissionDate = sendMessageStay.FromD;
+            }
+
+            if (personHistory.Stays.Any())
+            {
+                if (admissionDate == DateTime.MinValue)
+                {
+                    if (personHistory.Stays.Count == 1)
+                    {
+                        admissionDate = personHistory.Stays.First().FromD;
+                    }
+                    else
+                    {
+                        admissionDate = personHistory.Stays.First().FromD.AddDays(-1);
+                    }
+                }
+                else
+                {
+                    admissionDate = admissionDate.AddDays(-1);
+                }
+            }
+
+            return admissionDate;
         }
     }
 }
