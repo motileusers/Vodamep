@@ -1,12 +1,13 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Personen Geschichte einer Datenmeldung
 
-#Szenario: Performance bei großem Datenvolumen
-#    Angenommen Im Meldungsbereich für eine Einrichtung befinden sich monatliche Meldungen vom 01.01.2017 bis 31.12.2020
-#    Angenommen Im Meldungsbereich für eine Einrichtung befinden sich Meldungen von 100 Klienten
-#    Angenommen Im Meldungsbereich für eine Einrichtung wird jeder Klient 5 x aufgenommen und entlassen
-#    Angenommen Im Meldungsbereich für eine Einrichtung wird jeder Klient 5 x geändert
-#    Dann dauert die Validierung aller Meldungen nicht länger als 5 Sekunden
+# was meinst du mit klient wird geändert
+Szenario: Performance bei großem Datenvolumen
+    Angenommen Im Meldungsbereich für eine Einrichtung befinden sich monatliche Meldungen vom '01.01.2017' bis '31.12.2020'
+    Angenommen Im Meldungsbereich für eine Einrichtung befinden sich Meldungen von 100 Klienten
+    Angenommen Im Meldungsbereich für eine Einrichtung wird jeder Klient 5 x aufgenommen und entlassen
+	Angenommen Im Meldungsbereich für eine Einrichtung wird jeder Klient 5 x geändert
+    Dann dauert die Validierung aller Meldungen nicht länger als 5 Sekunden
 
 # Korrekte Meldungsreihenfolgen
 Szenario: Gesamter Aufenthalt korrekt in einer Meldung

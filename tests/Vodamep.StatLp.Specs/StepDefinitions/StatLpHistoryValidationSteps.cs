@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -50,6 +51,134 @@ namespace Vodamep.Specs.StepDefinitions
 
                 return _result;
             }
+        }
+
+        [Given(@"Im Meldungsbereich für eine Einrichtung befinden sich monatliche Meldungen vom '(.*)' bis '(.*)'")]
+        public void GivenThereAreMonthlyReports(string dateFrom, string dateTo)
+        {
+            var from = DateTime.Parse(dateFrom);
+            var to = DateTime.Parse(dateTo);
+
+            var reports = new List<StatLpReport>();
+
+            for (var toDate = to.AddMonths(-1); toDate > from; toDate = toDate.AddMonths(-1))
+            {
+                var report = StatLpDataGenerator.Instance.CreateEmptyStatLpReport();
+                report.FromD = new DateTime(toDate.Year, toDate.Month, 1);
+                report.ToD = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
+                reports.Add(report);
+            }
+
+            this.SentReport = StatLpDataGenerator.Instance.CreateEmptyStatLpReport();
+            this.SentReport.FromD = new DateTime(to.Year, to.Month, 1);
+            this.SentReport.ToD = to;
+            this.ExistingReports = reports;
+        }
+
+        [Given(@"Im Meldungsbereich für eine Einrichtung befinden sich Meldungen von (.*) Klienten")]
+        public void GivenThereArePersons(int numberOfPersons)
+        {
+            for (var i = 0; i < numberOfPersons; i++)
+            {
+                var person = StatLpDataGenerator.Instance.CreatePerson(i + 1, true);
+
+                this.SentReport.Persons.Add(person);
+
+                foreach (var existingReport in this.ExistingReports)
+                {
+                    existingReport.Persons.Add(person);
+                }
+            }
+        }
+
+        [Given(@"Im Meldungsbereich für eine Einrichtung wird jeder Klient (.*) x aufgenommen und entlassen")]
+        public void GivenEveryClientsAdmissionStaysAndLeavings(int numberOfStays)
+        {
+            var random = new Random(DateTime.Now.Millisecond);
+
+            var firstDate = this.ExistingReports.Last().FromD;
+
+            var duration = this.SentReport.ToD - firstDate;
+
+            var correctionFactor = 2;
+            var roundedMonthLength = 35;
+            var maxStayDuration = duration.Days / numberOfStays / correctionFactor / roundedMonthLength;
+
+            float distanceBetweenStaysInMonth = (float)duration.Days / (float)(numberOfStays * maxStayDuration * roundedMonthLength);
+
+            foreach (var person in SentReport.Persons)
+            {
+
+                for (var i = 0; i < numberOfStays - 1; i++)
+                {
+                    var stayDuration = random.Next(2,4);
+
+                    var fromDate = firstDate.AddMonths(i * (int)Math.Floor(distanceBetweenStaysInMonth));
+
+                    var firstStay = this.CreateStay(fromDate, person.Id);
+                    var firstReport = this.ExistingReports.First(x => x.FromD == firstStay.FromD);
+                    var admission = this.CreateAdmission(firstStay);
+                    firstReport.Admissions.Add(admission);
+                    firstReport.Stays.Add(firstStay);
+
+                    for (var j = 1; j < stayDuration - 1; j++)
+                    {
+                        var stay = this.CreateStay(fromDate.AddMonths(j), person.Id);
+                        var report = this.ExistingReports.First(x => x.FromD == stay.FromD);
+                        report.Stays.Add(stay);
+                    }
+
+                    var lastStay = this.CreateStay(fromDate.AddMonths(stayDuration - 1), person.Id);
+                    var leaving = this.CreateLeaving(lastStay);
+
+                    var lastReport = this.ExistingReports.First(x => x.FromD == lastStay.FromD);
+                    lastReport.Stays.Add(lastStay);
+                    lastReport.Leavings.Add(leaving);
+                }
+
+                var sentStay = this.CreateStay(this.SentReport.FromD, person.Id);
+                var sentAdmission = this.CreateAdmission(sentStay);
+                var sentLeaving = this.CreateLeaving(sentStay);
+               
+                this.SentReport.Admissions.Add(sentAdmission);
+                this.SentReport.Stays.Add(sentStay);
+                this.SentReport.Leavings.Add(sentLeaving);
+
+            }
+        }
+
+        [Given(@"Im Meldungsbereich für eine Einrichtung wird jeder Klient (.*) x geändert")]
+        public void GivenEveryClientIsChanged(int p0)
+        {
+
+        }
+
+        private Stay CreateStay(DateTime from, string personId)
+        {
+            return new Stay
+            {
+                FromD = from,
+                ToD = new DateTime(from.Year, from.Month, DateTime.DaysInMonth(from.Year, from.Month)),
+                PersonId = personId
+            };
+        }
+
+        private Admission CreateAdmission(Stay stay)
+        {
+            return new Admission
+            {
+                ValidD = stay.FromD,
+                PersonId = stay.PersonId
+            };
+        }
+
+        private Leaving CreateLeaving(Stay stay)
+        {
+            return new Leaving
+            {
+                ValidD = stay.ToD,
+                PersonId = stay.PersonId
+            };
         }
 
         [Given(@"Gesendete Meldung '(.*)' gilt vom '(.*)' bis '(.*)'")]
@@ -111,7 +240,7 @@ namespace Vodamep.Specs.StepDefinitions
         {
             this.GivenPropertyIsSetTo(reportNumber - 1, name, type, value);
         }
-      
+
         [Given(@"Existierende Meldung (.*) gilt vom (.*) bis (.*) und ist eine Standard Meldung und enthält eine '(.*)' von Person (.*) vom (.*)")]
         public void GivenExistingMessageIsAStandardAdmissionMessage(int reportNumber, string validFrom, string validTo, string itemType, int personNumber, string admissionDate)
         {
@@ -122,6 +251,18 @@ namespace Vodamep.Specs.StepDefinitions
         public void GivenExistingMessageIsAStandardStayMessage(int reportNumber, string validFrom, string validTo)
         {
             GivenMessageIsAStandardStayMessage(reportNumber - 1, validFrom, validTo);
+        }
+
+        [Then(@"dauert die Validierung aller Meldungen nicht länger als (.*) Sekunden")]
+        public void ThenTheValidiationTakesMaxSeconds(int seconds)
+        {
+            var stopWatch = new Stopwatch();
+
+            stopWatch.Start();
+            var result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports);
+            stopWatch.Stop();
+
+            Assert.True(seconds >= stopWatch.Elapsed.Seconds);
         }
 
         [Then(@"enthält das History Validierungsergebnis keine Fehler")]
@@ -201,7 +342,7 @@ namespace Vodamep.Specs.StepDefinitions
         {
             var report = this.GetReportAndCreateNonExisting(reportIndex);
 
-            var person = this.GetOrCreatePerson(report, personId); 
+            var person = this.GetOrCreatePerson(report, personId);
 
             switch (itemType)
             {
@@ -257,7 +398,7 @@ namespace Vodamep.Specs.StepDefinitions
             {
                 if (!report.Persons.Any())
                 {
-                    report.AddDummyPerson(1,false);
+                    report.AddDummyPerson(1, false);
                 }
                 message = report.Persons[0];
             }
