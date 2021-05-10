@@ -7,6 +7,7 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen Geschichte einer D
 #    Angenommen Im Meldungsbereich für eine Einrichtung wird jeder Klient 5 x aufgenommen und entlassen
 #    Angenommen Im Meldungsbereich für eine Einrichtung wird jeder Klient 5 x geändert
 #    Dann dauert die Validierung aller Meldungen nicht länger als 5 Sekunden
+
 # Korrekte Meldungsreihenfolgen
 Szenario: Gesamter Aufenthalt korrekt in einer Meldung
 	Angenommen Gesendete Meldung '1' gilt vom '2020-12-01' bis '2020-12-31'
@@ -85,19 +86,6 @@ Szenario: Erneute Aufnahme mit fehlender Entlassung
 	Angenommen Gesendete Meldung '3' enthält eine 'Admission' von Person 1 vom '01.02.2021'
 	Dann enthält das History Validierungsergebnis den Fehler 'Aufnahme von Klient '1' am '01.02.2021' nicht möglich, weil keine Entlassung gesendet wurde.'
 
-#Szenario: Erneute Aufnahme mit fehlender Entlassung
-#    Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 20.12.2020
-#    Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021
-#    Angenommen Existierende Meldung 2 ist eine Standard Aufenthaltsmeldung Meldung von Person 1
-#    Angenommen Existierende Meldung 1 gilt vom 01.02.2021 bis 28.02.2021
-#    Angenommen Existierende Meldung 1 ist eine Standard Aufnahme Meldung von Person 1 mit 01.02.2021
-#    Dann enthält das Validierungsergebnis den Fehler 'Aufnahme von Klient xx am xx nicht möglich, weil keine Entlassung gesendet wurde'
-
-   
-#Dann enthält das Validierungsergebnis den Fehler 'Aufnahme von Klient xx am xx nicht möglich, weil keine Entlassung gesendet wurde'
-
-#
 # Fehlende Pflichtfelder für die Aufnahme
 # sollte das nicht in den normalen Validations abgehandelt werden?
 #Szenario: Fehlende Aufnahmeart vor der Aufnahme
@@ -257,6 +245,7 @@ Szenario: Keine Änderung von DauerAufnahme auf Übergangspflege
 	Dann enthält das History Validierungsergebnis den Fehler 'Bei Klient '1' ist kein Wechsel von einer Daueraufname auf 'Übergangspflege' möglich'
 
 #Zeitlich limitierte Aufnahmearten
+#todo ich hab bei gesendete Meldung noch einen Aufenthalt hinnzugefügt
 Szenario: Urlaub von der Pflege maximal 42 Tage 1
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'HolidayAt' mit Datum '01.12.2020'
@@ -267,7 +256,8 @@ Szenario: Urlaub von der Pflege maximal 42 Tage 1
 	Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
-	Angenommen Gesendete Meldung '2' enthält eine 'Leaving' von Person 1 vom '31.01.2020'
+	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+	Angenommen Gesendete Meldung '2' enthält eine 'Leaving' von Person 1 vom '31.01.2021'
 	Dann enthält das History Validierungsergebnis keine Fehler
 
 Szenario: Urlaub von der Pflege maximal 42 Tage 2
@@ -283,6 +273,7 @@ Szenario: Urlaub von der Pflege maximal 42 Tage 2
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '15.01.2021'
 	Dann enthält das escapte History Validierungsergebnis den Fehler 'Bei Klient '1' wurde der Zeitraum für die Aufnahmeart 'Urlaub von der Pflege' überschritten (mehr als 42 Tage).'
 
+	#todo hab heir einen aufenthalt eingefügt
 Szenario: Übergangspflege maximal 365 Tage 1
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'TransitionalAt' mit Datum '01.12.2020'
@@ -293,6 +284,7 @@ Szenario: Übergangspflege maximal 365 Tage 1
 	Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
+	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' enthält eine 'Leaving' von Person 1 vom '31.01.2020'
 	Dann enthält das History Validierungsergebnis keine Fehler
 

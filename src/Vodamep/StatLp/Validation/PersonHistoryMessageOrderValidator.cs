@@ -110,7 +110,7 @@ namespace Vodamep.StatLp.Validation
                     {
                        var previousEnduringStay = GetOverallStay(personHistory, null, sendMessageStay);
 
-                       if (sendMessageAdmission.ValidD > previousEnduringStay.ToD)
+                       if (previousEnduringStay != null && sendMessageAdmission.ValidD > previousEnduringStay.ToD)
                        {
                            Leaving leavingResentMessage = sendMessageLeaving;
 
@@ -139,12 +139,14 @@ namespace Vodamep.StatLp.Validation
                             (sendMessageStay != null || personHistory.Stays.Any()) ||
                             (sendMessageLeaving != null || personHistory.Leavings.Any()))
                         {
+                            DateTime date = enduringStay != null ? enduringStay.FromD :
+                                sendMessageStay != null ? sendMessageStay.FromD : DateTime.MinValue;
 
                             // fehlende Aufnahme
                             ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                                 Validationmessages.StatLpReportNoAdmission(
                                     personHistory.PersonId,
-                                    enduringStay.FromD.ToShortDateString()
+                                    date.ToShortDateString()
                                 )));
                         }
                     }
