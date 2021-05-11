@@ -176,6 +176,32 @@ Szenario: Gleiche Pflegestufe
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.01.2020'
 	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe' von Klient '1' auf 'Pflegestufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 
+Szenario: Special Case
+	Angenommen Existierende Meldung '1' gilt vom '2016-10-01' bis '2016-10-31'
+	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'CareTransitionAt' mit Datum '2016-10-04'
+	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '2016-10-04'
+	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '2016-10-04'
+	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '2016-10-04'
+	Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '2016-10-04'
+	Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '2016-10-04' bis '2016-10-31'
+
+	Angenommen Existierende Meldung '2' gilt vom '2016-11-01' bis '2016-11-30'
+	Angenommen Existierende Meldung '2' enthält einen Aufenthalt von Person 1 vom '2016-11-01' bis '2016-11-30'
+
+	Angenommen Existierende Meldung '3' gilt vom '2016-12-01' bis '2016-12-31'
+	Angenommen Existierende Meldung '3' enthält einen Aufenthalt von Person 1 vom '2016-11-01' bis '2016-11-30'
+
+	Angenommen Existierende Meldung '4' gilt vom '2017-01-01' bis '2017-01-31'
+	Angenommen Existierende Meldung '4' enthält einen Aufenthalt von Person 1 vom '2017-01-01' bis '2017-01-31'
+
+	Angenommen Gesendete Meldung '5' gilt vom '2017-02-01' bis '2017-02-28'
+	Angenommen Gesendete Meldung '5' enthält einen Aufenthalt von Person 1 vom '2017-02-01' bis '2017-02-04'
+    Angenommen Gesendete Meldung '5' enthält eine Entlassung von Person 1 am '2017-02-04'
+
+	Dann enthält das History Validierungsergebnis keine Fehler
+
+
+
 Szenario: Gleiche Pflegestufe Arge
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
