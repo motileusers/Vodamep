@@ -179,7 +179,7 @@ Szenario: Special Case
 	Angenommen Existierende Meldung '2' enthält einen Aufenthalt von Person 1 vom '2016-11-01' bis '2016-11-30'
 
 	Angenommen Existierende Meldung '3' gilt vom '2016-12-01' bis '2016-12-31'
-	Angenommen Existierende Meldung '3' enthält einen Aufenthalt von Person 1 vom '2016-11-01' bis '2016-11-30'
+	Angenommen Existierende Meldung '3' enthält einen Aufenthalt von Person 1 vom '2016-12-01' bis '2016-12-31'
 
 	Angenommen Existierende Meldung '4' gilt vom '2017-01-01' bis '2017-01-31'
 	Angenommen Existierende Meldung '4' enthält einen Aufenthalt von Person 1 vom '2017-01-01' bis '2017-01-31'
