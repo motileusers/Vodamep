@@ -193,11 +193,12 @@ enum DeathLocation {
 // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
 enum MainAttendanceRelation {
   UNDEFINED_MR = 0;
-  CHILD_MR = 1;                                // Kind/Schwiegerkind          
-  RELATED_PERSON_MR = 2;                       // andere verwandte Person     
-  UNRELATED_PERSON_MR = 3;                     // nicht verwandte Person      
-  NO_MAIN_CARER_MR = 4;                        // keine Hauptbetreuungsperson 
-  NO_MAINATTENDANCERELATION_MR = 5;            // keine Angabe
+  PARTNER_MR = 1;                              // Partner/in           
+  CHILD_MR = 2;                                // Kind/Schwiegerkind          
+  RELATED_PERSON_MR = 3;                       // andere verwandte Person     
+  UNRELATED_PERSON_MR = 4;                     // nicht verwandte Person      
+  NO_MAIN_CARER_MR = 5;                        // keine Hauptbetreuungsperson 
+  NO_MAINATTENDANCERELATION_MR = 6;            // keine Angabe
 }
 
 // 22 Räumliche Nähe Hauptbetreuungsperson

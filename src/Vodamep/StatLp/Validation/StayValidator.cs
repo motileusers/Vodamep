@@ -27,14 +27,6 @@ namespace Vodamep.StatLp.Validation
                     return parentReport.Persons.Any(y => y.Id == personId);
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
-
-            this.RuleFor(x => x)
-                .Must((stay) =>
-                {
-                    return parentReport.Admissions.Any(admission => stay.From == admission.Valid && stay.PersonId == admission.PersonId);
-                })
-                .WithMessage(x => Validationmessages.StatLpReportAdmissionMustExistAtStartOfStay(x.PersonId));
-
         }
     }
 }
