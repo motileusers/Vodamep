@@ -175,15 +175,15 @@ namespace Vodamep.Data.Dummy
             return stay;
         }
 
-        public IEnumerable<Leaving> CreateLeavings(IEnumerable<Person> persons)
+        public IEnumerable<Leaving> CreateLeavings(IEnumerable<Person> persons, DateTime valid)
         {
             foreach (var person in persons)
             {
-                yield return CreateLeaving(person.Id);
+                yield return CreateLeaving(person.Id, valid);
             }
         }
 
-        public Leaving CreateLeaving(string personId)
+        public Leaving CreateLeaving(string personId, DateTime valid)
         {
             var stay = new Leaving()
             {
@@ -191,6 +191,7 @@ namespace Vodamep.Data.Dummy
                 LeavingReason = LeavingReason.DischargeLr,
                 DischargeLocation = DischargeLocation.HomeLivingAloneDc,
                 DischargeReason = DischargeReason.OwnDesireDr,
+                ValidD = valid,
             };
 
             return stay;

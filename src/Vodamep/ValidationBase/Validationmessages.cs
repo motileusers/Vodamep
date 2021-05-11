@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Vodamep.Hkpv.Model;
 using Vodamep.Hkpv.Validation;
-using Person = Vodamep.Hkpv.Model.Person;
 
 namespace Vodamep.ValidationBase
 {

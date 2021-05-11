@@ -64,14 +64,14 @@ namespace Vodamep.Data.Dummy
 
         public static Leaving AddDummyLeaving(this StatLpReport report)
         {
-            var p = StatLpDataGenerator.Instance.CreateLeaving(report.Persons.First().Id);
+            var p = StatLpDataGenerator.Instance.CreateLeaving(report.Persons.First().Id, report.ToD);
             report.AddLeaving(p);
             return p;
         }
 
         public static Leaving[] AddDummyLeavings(this StatLpReport report)
         {
-            var p = StatLpDataGenerator.Instance.CreateLeavings(report.Persons).OrderBy(x => x.PersonId).ToArray();
+            var p = StatLpDataGenerator.Instance.CreateLeavings(report.Persons, report.ToD).OrderBy(x => x.PersonId).ToArray();
             report.AddLeavings(p);
             return p;
         }

@@ -17,7 +17,11 @@ namespace Vodamep.StatLp.Validation
                 .Unless(x => x.LeavingReason != LeavingReason.DeceasedLr)
                 .Unless(x => x.LeavingReason == LeavingReason.UndefinedLr)
                 .WithMessage(x => Validationmessages.DeadClientNeedsDeadthLocation(x.PersonId));
-            
+
+            this.RuleFor(x => x.Valid)
+                .Must(x => parentReport.From <= x && x <= parentReport.To)
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth("Die Entlassung", x.PersonId));
+
             this.RuleFor(x => x).Must(x =>
             {
                 if (x.LeavingReason == LeavingReason.DeceasedLr)

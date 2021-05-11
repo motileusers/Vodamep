@@ -1,6 +1,14 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Entlassungen einer Datenmeldung
 
+Szenario: eine Entlassung muss gesetzt sein
+	 Angenommen die Eigenschaft 'valid' von 'Leaving' ist nicht gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '1' muss im aktuellen Monat liegen.'
+
+Szenario: eine Entlassung muss im aktuellen Monat liegen
+     Angenommen die Eigenschaft 'valid' von 'Leaving' ist auf '2000-01-01' gesetzt
+     Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '1' muss im aktuellen Monat liegen.'
+
 Szenariogrundriss: Pflichtfelder
     Angenommen die Eigenschaft '<Name>' von 'Leaving' ist nicht gesetzt
     Dann enthält das escapte Validierungsergebnis den Fehler '<Fehler>'

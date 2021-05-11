@@ -136,17 +136,7 @@ Szenario: Erneute Aufnahme mit fehlender Entlassung
 #    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
 #    Dann enthält das Validierungsergebnis den Fehler 'Das Gültigkeitsdatum der Aufnahme von Klient xx muss im Meldungszeitraum liegen'
 # Entlassung
-# sollte das nicht in den normalen Validations abgehandelt werden?
-#Szenario: Falsches Gültigkeitsdatum einer Entlassung
-#    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 enthält eine Entlassung von Person 1 am 31.12.1999
-#    Dann enthält das Validierungsergebnis den Fehler 'Das Gültigkeitsdatum der Entlassung von Klient xx muss im Meldungszeitraum liegen'
+
 # Gleiche Attribute
 Szenario: Gleiche Aufnahmeart
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
@@ -196,7 +186,7 @@ Szenario: Special Case
 
 	Angenommen Gesendete Meldung '5' gilt vom '2017-02-01' bis '2017-02-28'
 	Angenommen Gesendete Meldung '5' enthält einen Aufenthalt von Person 1 vom '2017-02-01' bis '2017-02-04'
-    Angenommen Gesendete Meldung '5' enthält eine Entlassung von Person 1 am '2017-02-04'
+    Angenommen Gesendete Meldung '5' enthält eine 'Leaving' von Person 1 vom '2017-02-04'
 
 	Dann enthält das History Validierungsergebnis keine Fehler
 
