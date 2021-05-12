@@ -77,8 +77,10 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseClientActivityUnknownPerson(string date) => $"Unbekannter Klient bei Leistung am {date}.";
         public static string ReportBaseActivityMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
         public static string ReportBaseActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
-        public static string StatLpReportEveryPersonMustBeInAStay (string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
         public static string ReportBaseItemMustBeInCurrentMonth (string itemName, string personId) => $"{itemName} von Person '{personId}' muss im aktuellen Monat liegen.";
+        public static string StatLpReportAttributeMissing(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde keine '{attributeType}' gesendet.";
+        public static string StatLpReportMultipleAttribute(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde '{attributeType}' mehrfach gesendet.";
+        public static string StatLpReportEveryPersonMustBeInAStay(string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
         public static string StatLpReportLeavingReasonMustnotBeEmpty (string personId) => $"Beim Abgang von Klient '{personId}' muss eine Abgang Art angegeben werden.";
         public static string StatLpReportPersonHistoryMissingReports (string date1, string date2) => $"Die Meldungen für den Zeitraum {date1} bis {date2} wurden noch nicht übermittelt.";
         public static string StatLpReportPersonHistoryAttributeAlreadySent (string attributeType, string clientId, string attributeValue, string date) => $"Die Änderung von '{attributeType}' von Klient '{clientId}' auf '{attributeValue}' wurde bereits mit der Meldung am '{date}' gesendet.";

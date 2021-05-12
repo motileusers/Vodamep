@@ -35,16 +35,9 @@ namespace Vodamep.Data.Dummy
             return p;
         }
 
-        public static Vodamep.StatLp.Model.Attribute AddDummyAttribute(this StatLpReport report)
-        {
-            var p = StatLpDataGenerator.Instance.CreateAttribute(report.Persons.First().Id, report.From);
-            report.AddAttribute(p);
-            return p;
-        }
-
         public static Vodamep.StatLp.Model.Attribute[] AddDummyAttributes(this StatLpReport report)
         {
-            var p = StatLpDataGenerator.Instance.CreateAttributes(report.Persons, report.From).OrderBy(x => x.PersonId).ToArray();
+            var p = StatLpDataGenerator.Instance.CreateAttributes(report.Admissions).OrderBy(x => x.PersonId).ToArray();
             report.AddAttributes(p);
             return p;
         }

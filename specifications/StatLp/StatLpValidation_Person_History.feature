@@ -87,56 +87,6 @@ Szenario: Erneute Aufnahme mit fehlender Entlassung
 	Angenommen Gesendete Meldung '3' enthält eine 'Admission' von Person 1 vom '01.02.2021'
 	Dann enthält das History Validierungsergebnis den Fehler 'Aufnahme von Klient '1' am '01.02.2021' nicht möglich, weil keine Entlassung gesendet wurde.'
 
-# Fehlende Pflichtfelder für die Aufnahme
-# sollte das nicht in den normalen Validations abgehandelt werden?
-#Szenario: Fehlende Aufnahmeart vor der Aufnahme
-#    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Dann enthält das History Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Aufnahmeart gesendet'
-# sollte das nicht in den normalen Validations abgehandelt werden?
-#Szenario: Fehlende Pflegestufe vor der Aufnahme
-#    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Pflegestufe gesendet'
-#
-# sollte das nicht in den normalen Validations abgehandelt werden?
-#Szenario: Fehlende Pflegestufe Arge vor der Aufnahme
-#    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Finanzierung' mit dem Wert 'SelfFi' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Pflegestufe (Arge) gesendet'
-#
-# sollte das nicht in den normalen Validations abgehandelt werden?
-#Szenario: Fehlende Finanzierung vor der Aufnahme
-#    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.2020
-#    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient xx am xx wurde keine Finanzierung gesendet'
-# sollte das nicht in den normalen Validations abgehandelt werden?
-#Szenario: Falsches Gültigkeitsdatum einer Aufnahme
-#    Angenommen Gesendete Meldung 1 gilt vom 01.12.2020 bis 31.12.2020
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Aufnahmeart' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe' mit dem Wert 'L1' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 von Person 1 enthält das Attribut 'Pflegestufe Arge' mit dem Wert 'L0Ar' mit Datum '01.12.2020'
-#    Angenommen Gesendete Meldung 1 enthält eine Aufnahme von Person 1 vom 01.12.1999
-#    Angenommen Gesendete Meldung 1 enthält eine Aufenthalt von Person 1 vom 01.12.2020 bis 31.12.2020
-#    Dann enthält das Validierungsergebnis den Fehler 'Das Gültigkeitsdatum der Aufnahme von Klient xx muss im Meldungszeitraum liegen'
-# Entlassung
-
 # Gleiche Attribute
 Szenario: Gleiche Aufnahmeart
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'

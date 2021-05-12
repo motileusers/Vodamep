@@ -130,28 +130,51 @@ namespace Vodamep.Data.Dummy
             }
         }
 
-        public IEnumerable<Attribute> CreateAttributes(IEnumerable<Person> persons, Timestamp @from)
+        public IEnumerable<Attribute> CreateAttributes(IEnumerable<Admission> admissions)
         {
-            foreach (var person in persons)
+            var attributes = new List<Attribute>();
+
+            foreach (var admission in admissions)
             {
-                yield return CreateAttribute(person.Id, @from);
+                attributes.AddRange(CreateAttributesForSingleAdmission(admission));
             }
+
+            return attributes;
         }
 
-        public Attribute CreateAttribute(string personId, Timestamp @from)
+        public IEnumerable<Attribute> CreateAttributesForSingleAdmission(Admission admission)
         {
-            var attribute = new Attribute()
-            {
-                PersonId = personId,
-            };
+            var attributes = new List<Attribute>();
 
-            if (from != null)
-                attribute.From = @from;
+            var admissionTypeAttribute = new Attribute();
+            admissionTypeAttribute.PersonId = admission.PersonId;
+            admissionTypeAttribute.FromD = admission.ValidD;
+            admissionTypeAttribute.AttributeType = AttributeType.AdmissionType;
+            admissionTypeAttribute.Value = AdmissionType.ContinuousAt.ToString();
+            attributes.Add(admissionTypeAttribute);
 
-            attribute.AttributeType = AttributeType.AdmissionType;
-            attribute.Value = AdmissionType.Covid19RespiteAt.ToString();
+            var careAllowanceAttribute = new Attribute();
+            careAllowanceAttribute.FromD = admission.ValidD;
+            careAllowanceAttribute.PersonId = admission.PersonId;
+            careAllowanceAttribute.AttributeType = AttributeType.Careallowance;
+            careAllowanceAttribute.Value = CareAllowance.L1.ToString();
+            attributes.Add(careAllowanceAttribute);
 
-            return attribute;
+            var careAllowanceArgeAttribute = new Attribute();
+            careAllowanceArgeAttribute.FromD = admission.ValidD;
+            careAllowanceArgeAttribute.PersonId = admission.PersonId;
+            careAllowanceArgeAttribute.AttributeType = AttributeType.Careallowancearge;
+            careAllowanceArgeAttribute.Value = CareAllowanceArge.L1Ar.ToString();
+            attributes.Add(careAllowanceArgeAttribute);
+
+            var financeAttribute = new Attribute();
+            financeAttribute.FromD = admission.ValidD;
+            financeAttribute.PersonId = admission.PersonId;
+            financeAttribute.AttributeType = AttributeType.Finance;
+            financeAttribute.Value = Finance.SelfFi.ToString();
+            attributes.Add(financeAttribute);
+
+            return attributes;
 
         }
 

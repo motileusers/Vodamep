@@ -73,7 +73,7 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
         [Given(@"alle Listen sind leer")]
-        public void GivenAllListsAreEmpty(string type)
+        public void GivenAllListsAreEmpty()
         {
             this.Report.Admissions.Clear();
             this.Report.Attributes.Clear();
@@ -82,8 +82,18 @@ namespace Vodamep.Specs.StepDefinitions
             this.Report.Stays.Clear();
         }
 
+        [Given(@"die Liste '(.*)' ist leer")]
+        public void GivenTheListIsEmpty(string type)
+        {
+            if (type == nameof(Attribute))
+            {
+                this.Report.Attributes.Clear();
+            }
+
+        }
+
         [Given(@"die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
-        public void GivenThePropertyIsSetTo(string name, string type, string value)
+            public void GivenThePropertyIsSetTo(string name, string type, string value)
         {
             IMessage message;
 
@@ -223,6 +233,36 @@ namespace Vodamep.Specs.StepDefinitions
             var stay = this.Report.Stays[0];
 
             stay.From = stay.To.AsDate().AddDays(2).AsTimestamp();
+        }
+
+        [Given(@"das Attribut '(.*)' fehlt")]
+        public void GivenAttributeIsMissing(string attributeType)
+        {
+            var type = (AttributeType)Enum.Parse(typeof(AttributeType), attributeType);
+
+            this.Report.Attributes.Remove(this.Report.Attributes.FirstOrDefault(x => x.AttributeType == type));
+        }
+
+        [Given(@"das Attribut mit dem  Typ '(.*)' ist auf den Wert '(.*)' gesetzt")]
+        public void GivenAttributeValueIsSet(string attributeType, string value)
+        {
+            var type = (AttributeType)Enum.Parse(typeof(AttributeType), attributeType);
+
+            this.Report.Attributes.First(x => x.AttributeType == type).Value = value;
+        }
+
+        [Given(@"enthält das zusätzliche Attribut der Person '(.*)' mit dem  Typ '(.*)' und dem Wert '(.*)'")]
+        public void GivenThereIsOneAdditionalAttribute(string clientId, string attributeType, string value)
+        {
+            var type = (AttributeType)Enum.Parse(typeof(AttributeType), attributeType);
+
+            this.Report.Attributes.Add(new Attribute()
+            {
+                AttributeType = type, 
+                FromD = this.Report.FromD, 
+                PersonId = clientId, 
+                Value =value
+            });
         }
 
         [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]

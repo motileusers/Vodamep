@@ -1,6 +1,14 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Aufnahmen einer Datenmeldung
 
+Szenario: das Aufnahmedatum muss gesetzt sein
+	 Angenommen die Eigenschaft 'valid' von 'Admission' ist nicht gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '1' muss im aktuellen Monat liegen.'
+
+Szenario: das Aufnahmedatum muss im aktuellen Monat liegen
+     Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2000-01-01' gesetzt
+     Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '1' muss im aktuellen Monat liegen.'
+
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
@@ -135,5 +143,3 @@ Szenario: eine Aufnahme muss im aktuellen Monat liegen
 Szenario: Valid darf keine Zeit beinhalten
     Angenommen die Datums-Eigenschaft 'valid' von 'Admission' hat eine Uhrzeit gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''Valid' darf keine Uhrzeit beinhalten.'
-
-    

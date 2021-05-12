@@ -26,8 +26,7 @@ Szenario: Pflegegeld ist undefiniert
 	Dann enthält das Validierungsergebnis den Fehler 'Pflegestufe' von Klient '1' darf nicht leer sein.'
 
 Szenariogrundriss: Attributewert stimmt mit AttributTyp zusammen
-	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf '<AttributeType>' gesetzt
-	Angenommen die Eigenschaft 'value' von 'Attribute' ist auf '<Wert>' gesetzt
+	Angenommen das Attribut mit dem  Typ '<AttributeType>' ist auf den Wert '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 	Beispiele:
@@ -88,3 +87,17 @@ Szenariogrundriss: Attributewert stimmt nicht mit AttributTyp zusammen
 		| Careallowancearge | SelfFi                    | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Selbst/Angehörige 100 %' gesetzt werden.                |
 		| Careallowancearge | SocialAssistanceFi        | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherung' gesetzt werden.                       |
 		| Careallowancearge | SocialAssistanceClaimFi   | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherungsantrag in Bearbeitung' gesetzt werden. |
+
+Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
+    Angenommen das Attribut '<Name>' fehlt
+    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '1' am 01.02.2021 wurde keine '<Bezeichnung>' gesendet.'
+Beispiele:
+    | Name              | Bezeichnung        |
+    | AdmissionType     | Aufnahmeart        |
+    | Careallowance     | Pflegestufe        |
+    | Careallowancearge | Pflegestufe (Arge) |
+    | Finance           | Finanzierung       |
+
+Szenario: Mehrfache Attribute
+    Angenommen enthält das zusätzliche Attribut der Person '1' mit dem  Typ 'AdmissionType' und dem Wert 'ContinuousAt'
+    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '1' am 01.02.2021 wurde 'Aufnahmeart' mehrfach gesendet.'
