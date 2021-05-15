@@ -39,7 +39,6 @@ namespace Vodamep.Data.Dummy
 
             var from = year.HasValue || month.HasValue ? new DateTime(year ?? DateTime.Today.Year, month ?? DateTime.Today.Month, 1) : DateTime.Today.FirstDateInMonth().AddMonths(-1);
 
-
             report.FromD = from;
             report.ToD = report.FromD.LastDateInMonth();
 
@@ -56,7 +55,7 @@ namespace Vodamep.Data.Dummy
         {
             var report = new StatLpReport()
             {
-                Institution = new Institution() { }
+                Institution = new Institution() { Id = "1234", Name = "Testverein" }
             };
 
             return report;

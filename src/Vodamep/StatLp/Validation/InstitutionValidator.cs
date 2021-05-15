@@ -7,9 +7,11 @@ namespace Vodamep.StatLp.Validation
 {
     internal class InstitutionValidator : AbstractValidator<Institution>
     {
+        DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+
         public InstitutionValidator()
         {
-            this.RuleFor(x => x.Id).NotEmpty();
+            this.RuleFor(x => x.Id).NotEmpty().WithMessage(Validationmessages.ReportBaseValueMustNotBeEmptyWithProperty(displayNameResolver.GetDisplayName(nameof(Institution))));
             this.RuleFor(x => x.Name).NotEmpty();
 
             //Einrichtungsnummer: Numerisch, genau 4 Zeichen, nicht 0000

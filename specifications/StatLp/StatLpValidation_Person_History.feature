@@ -7,6 +7,7 @@ Szenario: Performance bei großem Datenvolumen
     Angenommen Im Meldungsbereich für eine Einrichtung befinden sich Meldungen von 100 Klienten
     Angenommen Im Meldungsbereich für eine Einrichtung wird jeder Klient 5 x aufgenommen und entlassen
 	Angenommen Im Meldungsbereich für eine Einrichtung wird jeder Klient 5 x geändert
+	Angenommen Im Meldungsbereich für eine Einrichtung wird jeder Klient 5 x geändert
     Dann dauert die Validierung aller Meldungen nicht länger als 5 Sekunden
 
 # Korrekte Meldungsreihenfolgen
@@ -45,8 +46,11 @@ Szenario: Fehlende Monatsmeldungen mit Leermeldungen
 # Nachsendungen
 Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
+	Angenommen Existierende Meldung '1': die Liste 'Person' ist leer
 	Angenommen Existierende Meldung '2' gilt vom '01.03.2021' bis '31.03.2021'
+	Angenommen Existierende Meldung '2': die Liste 'Person' ist leer
 	Angenommen Gesendete Meldung '3' gilt vom '01.01.2021' bis '31.01.2021'
+	Angenommen Gesendete Meldung: die Liste 'Person' ist leer
 	Dann enthält das History Validierungsergebnis keine Fehler
 
 # Unkorrekte Meldungsreihenfolgen
@@ -212,7 +216,6 @@ Szenario: Keine Änderung von DauerAufnahme auf Übergangspflege
 	Dann enthält das History Validierungsergebnis den Fehler 'Bei Klient '1' ist kein Wechsel von einer Daueraufname auf 'Übergangspflege' möglich'
 
 #Zeitlich limitierte Aufnahmearten
-#todo ich hab bei gesendete Meldung noch einen Aufenthalt hinnzugefügt
 Szenario: Urlaub von der Pflege maximal 42 Tage 1
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'HolidayAt' mit Datum '01.12.2020'
@@ -240,7 +243,6 @@ Szenario: Urlaub von der Pflege maximal 42 Tage 2
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '15.01.2021'
 	Dann enthält das escapte History Validierungsergebnis den Fehler 'Bei Klient '1' wurde der Zeitraum für die Aufnahmeart 'Urlaub von der Pflege' überschritten (mehr als 42 Tage).'
 
-	#todo hab heir einen aufenthalt eingefügt
 Szenario: Übergangspflege maximal 365 Tage 1
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'TransitionalAt' mit Datum '01.12.2020'
@@ -252,7 +254,7 @@ Szenario: Übergangspflege maximal 365 Tage 1
 	Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-	Angenommen Gesendete Meldung '2' enthält eine 'Leaving' von Person 1 vom '31.01.2020'
+	Angenommen Gesendete Meldung '2' enthält eine 'Leaving' von Person 1 vom '31.01.2021'
 	Dann enthält das History Validierungsergebnis keine Fehler
 
 Szenario: Übergangspflege maximal 365 Tage 2

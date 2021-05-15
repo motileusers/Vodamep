@@ -47,6 +47,20 @@ namespace Vodamep.Specs.StepDefinitions
                 if (_result == null)
                 {
                     _result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports);
+
+                    foreach (var error in SentReport.Validate().Errors)
+                    {
+                        _result.Errors.Add(error);
+                    }
+
+                    foreach (var existingReport in ExistingReports)
+                    {
+                        foreach (var error in existingReport.Validate().Errors)
+                        {
+                            _result.Errors.Add(error);
+                        }
+
+                    }
                 }
 
                 return _result;
@@ -108,10 +122,9 @@ namespace Vodamep.Specs.StepDefinitions
 
             foreach (var person in SentReport.Persons)
             {
-
                 for (var i = 0; i < numberOfStays - 1; i++)
                 {
-                    var stayDuration = random.Next(2,4);
+                    var stayDuration = random.Next(2, 4);
 
                     var fromDate = firstDate.AddMonths(i * (int)Math.Floor(distanceBetweenStaysInMonth));
 
@@ -139,16 +152,15 @@ namespace Vodamep.Specs.StepDefinitions
                 var sentStay = this.CreateStay(this.SentReport.FromD, person.Id);
                 var sentAdmission = this.CreateAdmission(sentStay);
                 var sentLeaving = this.CreateLeaving(sentStay);
-               
+
                 this.SentReport.Admissions.Add(sentAdmission);
                 this.SentReport.Stays.Add(sentStay);
                 this.SentReport.Leavings.Add(sentLeaving);
-
             }
         }
 
         [Given(@"Im Meldungsbereich für eine Einrichtung wird jeder Klient (.*) x geändert")]
-        public void GivenEveryClientIsChanged(int p0)
+        public void GivenEveryClientIsChanged(int noOfChnges)
         {
 
         }
@@ -253,6 +265,18 @@ namespace Vodamep.Specs.StepDefinitions
             GivenMessageIsAStandardStayMessage(reportNumber - 1, validFrom, validTo);
         }
 
+        [Given(@"Gesendete Meldung: die Liste '(.*)' ist leer")]
+        public void GivenTheListIsEmpty(string type)
+        {
+            GivenListIsIsEmpty(-1, type);
+        }
+
+        [Given(@"Existierende Meldung '(.*)': die Liste '(.*)' ist leer")]
+        public void GivenTheListIsEmpty(int reportNumber, string type)
+        {
+            GivenListIsIsEmpty(reportNumber - 1, type);
+        }
+
         [Then(@"dauert die Validierung aller Meldungen nicht länger als (.*) Sekunden")]
         public void ThenTheValidiationTakesMaxSeconds(int seconds)
         {
@@ -347,21 +371,14 @@ namespace Vodamep.Specs.StepDefinitions
             switch (itemType)
             {
                 case nameof(Admission):
-
-                    var admission = new Admission();
-                    admission.PersonId = personId.ToString();
-                    admission.Valid = DateTime.Parse(date).AsTimestamp();
+                    var admission = StatLpDataGenerator.Instance.CreateAdmission(personId.ToString(), DateTime.Parse(date).AsTimestamp());
                     report.Admissions.Add(admission);
-
                     break;
 
                 case nameof(Leaving):
 
-                    var leaving = new Leaving();
-                    leaving.PersonId = personId.ToString();
-                    leaving.ValidD = DateTime.Parse(date);
+                    var leaving = StatLpDataGenerator.Instance.CreateLeaving(personId.ToString(), DateTime.Parse(date));
                     report.Leavings.Add(leaving);
-
                     break;
 
             }
@@ -378,7 +395,7 @@ namespace Vodamep.Specs.StepDefinitions
             report.Stays.Add(stay);
         }
 
-        public void GivenPropertyIsSetTo(int reportIndex, string name, string type, string value)
+        private void GivenPropertyIsSetTo(int reportIndex, string name, string type, string value)
         {
             var report = this.GetReportAndCreateNonExisting(reportIndex);
 
@@ -413,7 +430,7 @@ namespace Vodamep.Specs.StepDefinitions
                 message.SetDefault(name);
         }
 
-        public void GivenMessageIsAStandardAdmissionMessage(int reportIndex, string validFrom, string validTo, string itemType, int personNumber, string admissionDate)
+        private void GivenMessageIsAStandardAdmissionMessage(int reportIndex, string validFrom, string validTo, string itemType, int personNumber, string admissionDate)
         {
             var report = this.GetReportAndCreateNonExisting(reportIndex);
 
@@ -434,7 +451,7 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
-        public void GivenMessageIsAStandardStayMessage(int reportIndex, string validFrom, string validTo)
+        private void GivenMessageIsAStandardStayMessage(int reportIndex, string validFrom, string validTo)
         {
             var report = this.GetReportAndCreateNonExisting(reportIndex);
 
@@ -447,6 +464,16 @@ namespace Vodamep.Specs.StepDefinitions
             report.AddDummyPerson(1, false);
 
             this.GivenPropertyContainsStay(reportIndex, report.Persons.First().Id, validFrom, validTo);
+        }
+
+        private void GivenListIsIsEmpty(int reportIndex, string type)
+        {
+            var report = this.GetReportAndCreateNonExisting(reportIndex);
+
+            if (type == nameof(Person))
+            {
+                report.Persons.Clear();
+            }
         }
     }
 }

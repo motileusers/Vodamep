@@ -66,7 +66,7 @@ namespace Vodamep.StatLp.Validation
 
                     Admission admission = null;
                     Leaving leaving = null;
-                    Stay enduringStay = sendMessageStay
+                    Stay enduringStay = sendMessageStay != null ? new Stay(sendMessageStay) : null;
 ;
                     if (sendMessageAdmission != null && sendMessageStay != null && sendMessageAdmission.ValidD == sendMessageStay.FromD)
                     {
