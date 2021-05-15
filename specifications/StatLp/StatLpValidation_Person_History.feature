@@ -118,7 +118,7 @@ Szenario: Gleiche Pflegestufe
 	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2020'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L1' mit Datum '01.01.2020'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe' von Klient '1' auf 'Pflegestufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe' von Klient '1' auf 'Stufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 
 Szenario: Special Case
 	Angenommen Existierende Meldung '1' gilt vom '2016-10-01' bis '2016-10-31'
@@ -145,7 +145,6 @@ Szenario: Special Case
 	Dann enthält das History Validierungsergebnis keine Fehler
 
 
-
 Szenario: Gleiche Pflegestufe Arge
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
@@ -158,7 +157,7 @@ Szenario: Gleiche Pflegestufe Arge
 	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowance' mit dem Wert 'L2' mit Datum '01.12.2020'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Careallowancearge' mit dem Wert 'L0Ar' mit Datum '01.01.2020'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe Arge' von Klient '1' auf 'Pflegestufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe Arge' von Klient '1' auf 'Stufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 
 Szenario: Gleiche Finanzierung
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'

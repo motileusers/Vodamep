@@ -69,21 +69,21 @@ Szenariogrundriss: Attributewert stimmt nicht mit AttributTyp zusammen
 		| Careallowance     | Covid19RespiteAt          | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'COVID-19 Entlastungspflege' gesetzt werden.                  |
 		| Careallowance     | GeriatricRemobilizationAt | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Geriatrische Remobilisation' gesetzt werden.                 |
 		| Careallowance     | CareTransitionAt          | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Überleitungspflege' gesetzt werden.                          |
-		| AdmissionType     | L1                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Pflegestufe 1' gesetzt werden.                               |
-		| AdmissionType     | L2                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Pflegestufe 2' gesetzt werden.                               |
-		| AdmissionType     | L3                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Pflegestufe 3' gesetzt werden.                               |
-		| AdmissionType     | L4                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Pflegestufe 4' gesetzt werden.                               |
-		| AdmissionType     | L5                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Pflegestufe 5' gesetzt werden.                               |
-		| AdmissionType     | L6                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Pflegestufe 6' gesetzt werden.                               |
-		| AdmissionType     | L7                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Pflegestufe 7' gesetzt werden.                               |
-		| Finance           | L0Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Pflegestufe 1' gesetzt werden.                              |
-		| Finance           | L1Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Pflegestufe 2' gesetzt werden.                              |
-		| Finance           | L2Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Pflegestufe 3' gesetzt werden.                              |
-		| Finance           | L3Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Pflegestufe 4' gesetzt werden.                              |
-		| Finance           | L4Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Pflegestufe 5' gesetzt werden.                              |
-		| Finance           | L5Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Pflegestufe 6' gesetzt werden.                              |
-		| Finance           | L6Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Pflegestufe 7' gesetzt werden.                              |
-		| Finance           | L7Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Pflegestufe 8' gesetzt werden.                              |
+		| AdmissionType     | L1                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 1' gesetzt werden.                               |
+		| AdmissionType     | L2                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 2' gesetzt werden.                               |
+		| AdmissionType     | L3                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 3' gesetzt werden.                               |
+		| AdmissionType     | L4                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 4' gesetzt werden.                               |
+		| AdmissionType     | L5                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 5' gesetzt werden.                               |
+		| AdmissionType     | L6                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 6' gesetzt werden.                               |
+		| AdmissionType     | L7                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 7' gesetzt werden.                               |
+		| Finance           | L0Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 1' gesetzt werden.                              |
+		| Finance           | L1Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 2' gesetzt werden.                              |
+		| Finance           | L2Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 3' gesetzt werden.                              |
+		| Finance           | L3Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 4' gesetzt werden.                              |
+		| Finance           | L4Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 5' gesetzt werden.                              |
+		| Finance           | L5Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 6' gesetzt werden.                              |
+		| Finance           | L6Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 7' gesetzt werden.                              |
+		| Finance           | L7Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 8' gesetzt werden.                              |
 		| Careallowancearge | SelfFi                    | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Selbst/Angehörige 100 %' gesetzt werden.                |
 		| Careallowancearge | SocialAssistanceFi        | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherung' gesetzt werden.                       |
 		| Careallowancearge | SocialAssistanceClaimFi   | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherungsantrag in Bearbeitung' gesetzt werden. |

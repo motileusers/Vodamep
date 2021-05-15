@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Vodamep.Data.StatLp;
 using Vodamep.StatLp.Model;
 
 namespace Vodamep.StatLp.Validation
@@ -55,22 +56,44 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(Finance.SocialAssistanceFi), "Mindestsicherung");
             _dict.Add(nameof(Finance.SocialAssistanceClaimFi), "Mindestsicherungsantrag in Bearbeitung");
 
-            _dict.Add(nameof(CareAllowance.L1), "Pflegestufe 1");
-            _dict.Add(nameof(CareAllowance.L2), "Pflegestufe 2");
-            _dict.Add(nameof(CareAllowance.L3), "Pflegestufe 3");
-            _dict.Add(nameof(CareAllowance.L4), "Pflegestufe 4");
-            _dict.Add(nameof(CareAllowance.L5), "Pflegestufe 5");
-            _dict.Add(nameof(CareAllowance.L6), "Pflegestufe 6");
-            _dict.Add(nameof(CareAllowance.L7), "Pflegestufe 7");
+            foreach (var keyValuePair in FinanceProvider.Instance.Values)
+            {
+                _dict.Add(keyValuePair.Key, keyValuePair.Value);
+            }
 
-            _dict.Add(nameof(CareAllowanceArge.L0Ar), "Pflegestufe 1");
-            _dict.Add(nameof(CareAllowanceArge.L1Ar), "Pflegestufe 2");
-            _dict.Add(nameof(CareAllowanceArge.L2Ar), "Pflegestufe 3");
-            _dict.Add(nameof(CareAllowanceArge.L3Ar), "Pflegestufe 4");
-            _dict.Add(nameof(CareAllowanceArge.L4Ar), "Pflegestufe 5");
-            _dict.Add(nameof(CareAllowanceArge.L5Ar), "Pflegestufe 6");
-            _dict.Add(nameof(CareAllowanceArge.L6Ar), "Pflegestufe 7");
-            _dict.Add(nameof(CareAllowanceArge.L7Ar), "Pflegestufe 8");
+            foreach (var keyValuePair in CareAllowanceProvider.Instance.Values)
+            {
+                _dict.Add(keyValuePair.Key, keyValuePair.Value);
+            }
+
+            foreach (var keyValuePair in CareAllowanceArgeProvider.Instance.Values)
+            {
+                _dict.Add(keyValuePair.Key, keyValuePair.Value);
+            }
+
+            foreach (var keyValuePair in AdmissionTypeProvider.Instance.Values)
+            {
+                _dict.Add(keyValuePair.Key, keyValuePair.Value);
+            }
+
+            //todo folgende dict.add löschen und mit dem Provider machen
+
+            //_dict.Add(nameof(CareAllowance.L1), "Pflegestufe 1");
+            //_dict.Add(nameof(CareAllowance.L2), "Pflegestufe 2");
+            //_dict.Add(nameof(CareAllowance.L3), "Pflegestufe 3");
+            //_dict.Add(nameof(CareAllowance.L4), "Pflegestufe 4");
+            //_dict.Add(nameof(CareAllowance.L5), "Pflegestufe 5");
+            //_dict.Add(nameof(CareAllowance.L6), "Pflegestufe 6");
+            //_dict.Add(nameof(CareAllowance.L7), "Pflegestufe 7");
+
+            _dict.Add(nameof(CareAllowanceArge.L0Ar), "Stufe 1");
+            _dict.Add(nameof(CareAllowanceArge.L1Ar), "Stufe 2");
+            _dict.Add(nameof(CareAllowanceArge.L2Ar), "Stufe 3");
+            _dict.Add(nameof(CareAllowanceArge.L3Ar), "Stufe 4");
+            _dict.Add(nameof(CareAllowanceArge.L4Ar), "Stufe 5");
+            _dict.Add(nameof(CareAllowanceArge.L5Ar), "Stufe 6");
+            _dict.Add(nameof(CareAllowanceArge.L6Ar), "Stufe 7");
+            _dict.Add(nameof(CareAllowanceArge.L7Ar), "Stufe 8");
 
             _dict.Add(nameof(AdmissionType.ContinuousAt), "Daueraufnahme");
             _dict.Add(nameof(AdmissionType.HolidayAt), "Urlaub von der Pflege");
