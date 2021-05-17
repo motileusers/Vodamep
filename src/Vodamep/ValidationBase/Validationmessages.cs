@@ -46,7 +46,7 @@ namespace Vodamep.ValidationBase
         public static string InvalidValueAdmission(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";
         public static string TextTooLongAdmission(string date, string personId) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";
         public static string WrongPostCodeAdmission(string date, string personId) => $"Ungültige Kombination Ort/Plz bei Aufnahme vom {date} von Klient {personId}.";
-        public static string NoDoubledValuesAreAllowed => "Doppelte Angaben bei '{PropertyName}'";
+        public static string NoDoubledValuesAreAllowed => $"Doppelte Angaben bei '{{PropertyName}}'";
         public static string ItemNotValid => "Keine gültige Angabe bei '{PropertyName}'";
         public static string TextAreaEnterAValue => "Bei '{PropertyName}' im Textfeld bitte einen Wert angegeben.";
         public static string PersonIsNotAvailable => "Person '{PropertyValue}' ist nicht in der Personenliste vorhanden.";

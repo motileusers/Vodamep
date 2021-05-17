@@ -10,6 +10,8 @@ namespace Vodamep.StatLp.Validation
 {
     internal class AdmissionValidator : AbstractValidator<Admission>
     {
+        private DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+
         public AdmissionValidator(StatLpReport parentReport)
         {
             this.RuleFor(x => x.Valid).SetValidator(new TimestampWithOutTimeValidator());
@@ -48,20 +50,24 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.PersonalChanges)
                 .Must((admission, ctx) => !admission.PersonalChanges.Any(x => x == PersonalChange.UndefinedPc))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.PersonalChanges)))
                 .WithMessage(Validationmessages.ItemNotValid);
 
             this.RuleFor(x => x.PersonalChanges)
                 .Must((admission, ctx) => ContainsDoubledValues(admission.PersonalChanges))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.PersonalChanges)))
                 .WithMessage(Validationmessages.NoDoubledValuesAreAllowed);
 
             this.RuleFor(x => x.SocialChanges).NotEmpty().Unless(x => !string.IsNullOrEmpty(x.SocialChangeOther)).WithMessage(Validationmessages.ItemNotValid);
 
             this.RuleFor(x => x.SocialChanges)
                 .Must((admission, ctx) => !admission.SocialChanges.Any(x => x == SocialChange.UndefinedSc))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.SocialChanges)))
                 .WithMessage(Validationmessages.ItemNotValid);
 
             this.RuleFor(x => x.SocialChanges)
                 .Must((admission, ctx) => ContainsDoubledValues(admission.SocialChanges))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.SocialChanges)))
                 .WithMessage(Validationmessages.NoDoubledValuesAreAllowed);
 
             this.RuleFor(x => x.HousingTypeBeforeAdmission)

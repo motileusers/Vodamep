@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Vodamep.StatLp.Model;
@@ -83,6 +84,16 @@ namespace Vodamep.Data.Dummy
                     .Where(x => x != Gender.UndefinedGe)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)) : Gender.MaleGe,
             };
+
+            var regex = new Regex(@"^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$");
+            while (!regex.IsMatch(person.GivenName))
+            {
+                person.GivenName = randomValues ? _names[_rand.Next(_names.Length)] : _names[0];
+            }
+            while (!regex.IsMatch(person.FamilyName))
+            {
+                person.FamilyName = randomValues ? _names[_rand.Next(_names.Length)] : _names[0];
+            }
 
             person.BirthdayD = randomValues ? new DateTime(1920, 01, 01).AddDays(_rand.Next(20000)) : new DateTime(1920, 01, 01);
 

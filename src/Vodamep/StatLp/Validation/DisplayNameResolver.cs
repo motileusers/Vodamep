@@ -108,6 +108,13 @@ namespace Vodamep.StatLp.Validation
             if (!string.IsNullOrEmpty(name) && _dict.TryGetValue(name, out string value))
                 return value;
 
+            if (!string.IsNullOrWhiteSpace(name) && name != "Id" && name != "Name" && name != "Persons" && name != "Admissions"
+                && name != "Valid" && name != "PersonId" && name != "Attributes" && name != "Leavings" && name != "Stays" &&
+                name != "DeathLocation" && name != "DischargeLocation" && name != "DischargeReason" && name != "Pflegestufe 2")
+            {
+
+            }
+
             return name;
         }
 
