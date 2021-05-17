@@ -24,6 +24,11 @@ namespace Vodamep.Data
             }
         }
 
+        public override bool IsValid(string code)
+        {
+            return base.IsValid(code);
+        }
+
         protected override string ResourceName => "Data.postcode_cities.csv";
 
         public override string Unknown => "";
