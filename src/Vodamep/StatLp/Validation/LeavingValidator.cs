@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using FluentValidation;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
@@ -9,6 +7,8 @@ namespace Vodamep.StatLp.Validation
 {
     internal class LeavingValidator : AbstractValidator<Leaving>
     {
+        private DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+
         public LeavingValidator(StatLpReport parentReport)
         {
             this.RuleFor(x => x.LeavingReason).NotEmpty().WithMessage(x => Validationmessages.StatLpReportLeavingReasonMustnotBeEmpty(x.PersonId));
@@ -71,18 +71,22 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.DischargeLocationOther)
                 .Matches(r).Unless(x => string.IsNullOrEmpty(x.DischargeLocationOther))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.DischargeLocationOther)))
                 .WithMessage(x => Validationmessages.InvalidValue(parentReport.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.DischargeLocationOther)
                 .MaximumLength(30).Unless(x => string.IsNullOrEmpty(x.DischargeLocationOther))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.DischargeLocationOther)))
                 .WithMessage(x => Validationmessages.TextTooLong(parentReport.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.DischargeReasonOther)
                 .Matches(r).Unless(x => string.IsNullOrEmpty(x.DischargeReasonOther))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.DischargeReasonOther)))
                 .WithMessage(x => Validationmessages.InvalidValue(parentReport.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.DischargeReasonOther)
                 .MaximumLength(30).Unless(x => string.IsNullOrEmpty(x.DischargeReasonOther))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.DischargeReasonOther)))
                 .WithMessage(x => Validationmessages.TextTooLong(parentReport.FromD.ToShortDateString(), x.PersonId));
 
         }

@@ -9,6 +9,8 @@ namespace Vodamep.StatLp.Validation
 {
     internal class PersonValidator : AbstractValidator<Person>
     {
+        DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+
         public PersonValidator()
         {
             this.RuleFor(x => x.FamilyName).NotEmpty();
@@ -33,6 +35,7 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.Country)
                 .Must((person, country) => CountryCodeProvider.Instance.IsValid(country))
                 .Unless(x => string.IsNullOrEmpty(x.Country))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.Country)))
                 .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.Id));
         }
     }
