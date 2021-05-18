@@ -23,9 +23,9 @@ namespace Vodamep.StatLp.Validation
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
 
-            this.RuleFor(x => x.Valid)
-                .Must(x => parentReport.From <= x && x <= parentReport.To)
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth("Die Aufnahme", x.PersonId));
+            //this.RuleFor(x => x.Valid)
+            //    .Must(x => parentReport.From <= x && x <= parentReport.To)
+            //    .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth("Die Aufnahme", x.PersonId));
 
             this.RuleFor(x => x.HousingTypeBeforeAdmission).NotEmpty();
             this.RuleFor(x => x.MainAttendanceRelation).NotEmpty();
@@ -50,19 +50,19 @@ namespace Vodamep.StatLp.Validation
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
                 .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
 
-            this.RuleFor(x => x.OtherHousingType).MaximumLength(30)
+            this.RuleFor(x => x.OtherHousingType).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.OtherHousingType)))
                 .WithMessage(x => Validationmessages.TextTooLongAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
 
-            this.RuleFor(x => x.PersonalChangeOther).MaximumLength(30)
+            this.RuleFor(x => x.PersonalChangeOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.PersonalChangeOther)))
                 .WithMessage(x => Validationmessages.TextTooLongAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
 
-            this.RuleFor(x => x.SocialChangeOther).MaximumLength(30)
+            this.RuleFor(x => x.SocialChangeOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.SocialChangeOther)))
                 .WithMessage(x => Validationmessages.TextTooLongAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
 
-            this.RuleFor(x => x.HousingReasonOther).MaximumLength(30)
+            this.RuleFor(x => x.HousingReasonOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
                 .WithMessage(x => Validationmessages.TextTooLongAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
             
