@@ -14,6 +14,19 @@ namespace Vodamep.StatLp.Validation
 
         public AdmissionValidator(StatLpReport parentReport)
         {
+
+            this.RuleFor(x => x.Gender).NotEmpty();
+            this.RuleFor(x => x.Gender).NotEmpty();
+
+            this.RuleFor(x => x.Country).NotEmpty();
+
+            this.RuleFor(x => x.Country)
+                .Must((person, country) => CountryCodeProvider.Instance.IsValid(country))
+                .Unless(x => string.IsNullOrEmpty(x.Country))
+                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.Country)))
+                .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.PersonId));
+
+
             this.RuleFor(x => x.Valid).SetValidator(new TimestampWithOutTimeValidator());
 
             this.RuleFor(x => x.PersonId)
@@ -22,10 +35,6 @@ namespace Vodamep.StatLp.Validation
                     return parentReport.Persons.Any(y => y.Id == personId);
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
-
-            //this.RuleFor(x => x.Valid)
-            //    .Must(x => parentReport.From <= x && x <= parentReport.To)
-            //    .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth("Die Aufnahme", x.PersonId));
 
             this.RuleFor(x => x.HousingTypeBeforeAdmission).NotEmpty();
             this.RuleFor(x => x.MainAttendanceRelation).NotEmpty();

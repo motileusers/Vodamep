@@ -79,10 +79,6 @@ namespace Vodamep.Data.Dummy
                 Id = index.ToString(),
                 FamilyName = randomValues ? _familynames[_rand.Next(_familynames.Length)] : _familynames[0],
                 GivenName = randomValues ? _names[_rand.Next(_names.Length)] : _names[0],
-                Country = randomValues ? CountryCodeProvider.Instance.Values.Keys.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())] : CountryCodeProvider.Instance.Values.Keys.ToArray()[0],
-                Gender = randomValues ? ((Gender[])(Enum.GetValues(typeof(Gender))))
-                    .Where(x => x != Gender.UndefinedGe)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)) : Gender.MaleGe,
             };
 
             var regex = new Regex(@"^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$");
@@ -122,7 +118,15 @@ namespace Vodamep.Data.Dummy
                 PersonalChanges = { PersonalChange.IncreasedAssitanceNeedPc },
                 SocialChanges = { SocialChange.MissingMealsSc },
 
+                Country = CountryCodeProvider.Instance.Values.Keys.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
+                Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
+                    .Where(x => x != Gender.UndefinedGe)
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
+
+
             };
+
+         
 
 
             if (valid != null)

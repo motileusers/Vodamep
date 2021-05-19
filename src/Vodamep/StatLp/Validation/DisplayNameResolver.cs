@@ -26,11 +26,11 @@ namespace Vodamep.StatLp.Validation
 
             _dict.Add(nameof(Person.FamilyName), "Familienname");
             _dict.Add(nameof(Person.GivenName), "Vorname");
-            _dict.Add(nameof(Person.Gender), "Geschlecht");
-            _dict.Add(nameof(Person.Country), "Land");
             _dict.Add(nameof(Person.Birthday), "Geburtsdatum");
             _dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
 
+            _dict.Add(nameof(Admission.Gender), "Geschlecht");
+            _dict.Add(nameof(Admission.Country), "Land");
             _dict.Add(nameof(Admission.HousingTypeBeforeAdmission), "Wohnsituation vor der Aufnahme");
             _dict.Add(nameof(Admission.MainAttendanceRelation), "Verwandtschaftsverhältnis Hauptbetreuungspers.");
             _dict.Add(nameof(Admission.MainAttendanceCloseness), "Räumliche Nähe Hauptbetreuungsperson");

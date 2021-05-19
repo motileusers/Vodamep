@@ -27,16 +27,6 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
 
             this.Include(new PersonBirthdayValidator());
-
-            this.RuleFor(x => x.Gender).NotEmpty();
-
-            this.RuleFor(x => x.Country).NotEmpty();
-
-            this.RuleFor(x => x.Country)
-                .Must((person, country) => CountryCodeProvider.Instance.IsValid(country))
-                .Unless(x => string.IsNullOrEmpty(x.Country))
-                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.Country)))
-                .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.Id));
         }
     }
 }

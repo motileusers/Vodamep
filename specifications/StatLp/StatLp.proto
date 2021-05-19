@@ -22,14 +22,12 @@ message Institution {
     string name = 2;    
 }
 
-// Personen, für die eine Betreuung im Meldungszeitraum durchgeführt wurde
+// Personen, fÃ¼r die eine Betreuung im Meldungszeitraum durchgefÃ¼hrt wurde
 message Person {
     string id = 1;
     string family_name = 2;
     string given_name = 3;
     google.protobuf.Timestamp birthday = 4;
-    Gender gender = 5;
-    string country = 6;                                        // Land aus german-iso-3166.csv
 }
 
 // Aufenthalt in der Einrichtung
@@ -46,33 +44,36 @@ message Admission {
 
     string person_id = 1;
 
-    string last_postcode = 2;				                    // postcode und city müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
-    string last_city = 3;
+    Gender gender = 2;
 
-    google.protobuf.Timestamp valid = 4;                        // Gültigkeitsdatum der Aufnahme
+    string last_postcode = 3;				                    // postcode und city mÃ¼ssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
+    string last_city = 4;
+    string country = 5;                                         // StaatsbÃ¼rgerschaft, Land aus german-iso-3166.csv
 
-    AdmissionLocation housing_type_before_admission = 5;        // 11 Wohnsituation vor der Aufnahme
-    string other_housing_type = 6;                              // Sonstige Lebens-/Betreuungssituation
+    google.protobuf.Timestamp valid = 6;                        // Aufnahmedatum, wann wurde der Bewohner aufgenommen, immer im akutellen Monat, nur bei Erstmeldungen (vor dem Start der Schnittstelle), Datum wann der Bewohner im Heim ursprÃ¼nglich aufgenommen wurde
 
-    bool hospital_emergency = 7;                                // 12 Krankenhaus (Akut, vor der Aufnahme)
-    bool aftercare_institution = 8;                             // 13 Nachsorgeeinrichtung (vor der Aufnahme)
-    bool geriatric_rehabilitation = 9;                          // 14 Geriatrische Remobilisation (vor der Aufnahme)
+    AdmissionLocation housing_type_before_admission = 7;        // 11 Wohnsituation vor der Aufnahme
+    string other_housing_type = 8;                              // Sonstige Lebens-/Betreuungssituation
 
-    MainAttendanceRelation main_attendance_relation = 10;       // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
-    MainAttendanceCloseness main_attendance_closeness = 11;     // 22 Räumliche Nähe Hauptbetreuungsperson
+    bool hospital_emergency = 9;                                // 12 Krankenhaus (Akut, vor der Aufnahme)
+    bool aftercare_institution = 10;                            // 13 Nachsorgeeinrichtung (vor der Aufnahme)
+    bool geriatric_rehabilitation = 11;                         // 14 Geriatrische Remobilisation (vor der Aufnahme)
 
-    repeated Service services = 12;                             // 24 Inanspruchnahme anderer Dienste
+    MainAttendanceRelation main_attendance_relation = 12;       // 21 VerwandtschaftsverhÃ¤ltnis Hauptbetreuungspers.
+    MainAttendanceCloseness main_attendance_closeness = 13;     // 22 RÃ¤umliche NÃ¤he Hauptbetreuungsperson
 
-    repeated PersonalChange personal_changes = 13;              // 31 Veränderungen persönliche Situation
-    string personal_change_other = 14;                          // Anderer
+    repeated Service services = 14;                             // 24 Inanspruchnahme anderer Dienste
 
-    repeated SocialChange social_changes = 15;                  // 32 Veränderungen nicht bewältigt, weil
-    string social_change_other = 16;                            // Anderer
+    repeated PersonalChange personal_changes = 15;              // 31 VerÃ¤nderungen persÃ¶nliche Situation
+    string personal_change_other = 16;                          // Anderer
 
-    HousingReason housing_reason = 17;                          // 33 Wohnraumsituations- und Ausstattungsgründe
-    string housing_reason_other = 18;                           // Anderer
+    repeated SocialChange social_changes = 17;                  // 32 VerÃ¤nderungen nicht bewÃ¤ltigt, weil
+    string social_change_other = 18;                            // Anderer
 
-    bool finance_personal_contributions = 19;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
+    HousingReason housing_reason = 19;                          // 33 Wohnraumsituations- und AusstattungsgrÃ¼nde
+    string housing_reason_other = 20;                           // Anderer
+
+    bool finance_personal_contributions = 21;                   // 44 Kontinuierliche Eigenleistungen durch AngehÃ¶rige bzw. Besucher
 }
 
 // Entlassungs Daten
@@ -80,7 +81,7 @@ message Leaving {
 
     string person_id = 1;
 
-    google.protobuf.Timestamp valid = 2;                   // Gültigkeitsdatum der Aufnahme
+    google.protobuf.Timestamp valid = 2;                   // GÃ¼ltigkeitsdatum des Abgangs
 
     LeavingReason leaving_reason = 3;                      // Abgang
     DeathLocation death_location = 4;                      // Sterbefall
@@ -90,15 +91,15 @@ message Leaving {
     string discharge_reason_other = 8;                     // Anderer Grund
 }
 
-// Merkmale mit Von-Datum, ab wann sie gültig sind
-// Diese Merkmale können sich innerhalb der Meldung ändern
+// Merkmale mit Von-Datum, ab wann sie gÃ¼ltig sind
+// Diese Merkmale kÃ¶nnen sich innerhalb der Meldung Ã¤ndern
 message Attribute {
 
     string person_id = 1;
 
     google.protobuf.Timestamp from = 2;
     AttributeType attribute_type = 3;
-    string value = 4;                       // Gültiger Wert ist abhängig vom attribute_type
+    string value = 4;                       // GÃ¼ltiger Wert ist abhÃ¤ngig vom attribute_type
 }
 
 // Merkmal Typen
@@ -110,7 +111,7 @@ enum AttributeType {
   FINANCE = 4;                              // 43 Finanzierung Selbstzahler/Sozialhilfe
 }
 
-// 33 Wohnraumsituations- und Ausstattungsgründe
+// 33 Wohnraumsituations- und AusstattungsgrÃ¼nde
 enum HousingReason {
   UNDEFINED_HR = 0;
   NOT_SPECIFIED_HR = 1;                        // Keine Angabe
@@ -121,25 +122,25 @@ enum HousingReason {
   OTHER_HR = 6;                                // Anderer
 }
 
-// 32 Veränderungen nicht bewältigt, weil
+// 32 VerÃ¤nderungen nicht bewÃ¤ltigt, weil
 enum SocialChange {
   UNDEFINED_SC = 0;
-  NO_RELATIVE_CARER_SC = 1;                 // Keine angehörige Pflegeperson
+  NO_RELATIVE_CARER_SC = 1;                 // Keine angehÃ¶rige Pflegeperson
   MISSING_MEALS_SC = 2;                     // Fehlende Mahlzeiten
   NO_ADEQUATE_OVERSIGHT_SC = 3;             // Keine ausreichende Beaufsichtigung
   NO_ADEQUATE_CARE_SERVICES_SC = 4;         // Keine ausreichenden Betreuungsdienste
   NO_HOME_CARE_SC = 5;                      // Keine ausreichende Hauskrankenpflege
 }
 
-// 31 Veränderungen persönliche Situation
+// 31 VerÃ¤nderungen persÃ¶nliche Situation
 enum PersonalChange {
   UNDEFINED_PC = 0;
   OWN_DESIRE_PC = 1;                         // Eigener Wunsch
   LOSS_MAIN_ATTENDANCE_PC = 2;               // Ausfall der Hauptbetreuungsperson
-  INCREASED_ASSITANCE_NEED_PC = 3;           // Erhöhter Betreuungsbedarf
-  NURSING_NEED_PHYSICAL_PC = 4;              // Gestiegener Pflegebedarf körperlich
+  INCREASED_ASSITANCE_NEED_PC = 3;           // ErhÃ¶hter Betreuungsbedarf
+  NURSING_NEED_PHYSICAL_PC = 4;              // Gestiegener Pflegebedarf kÃ¶rperlich
   NURSING_NEED_MENTAL_PC = 5;                // Gestiegener Pflegebedarf psychisch
-  NEGLECT_RISK_PC = 6;                       // Verstärkte Verwahrlosungsgefahr
+  NEGLECT_RISK_PC = 6;                       // VerstÃ¤rkte Verwahrlosungsgefahr
 }
 
 // 24 Inanspruchnahme anderer Dienste
@@ -157,8 +158,8 @@ enum Service {
 enum DischargeReason {
   UNDEFINED_DR = 0;
   END_SHORT_TERM_CARE_DR = 1;                // Ende der Kurzzeitpflege
-  INCREASED_NEED_FOR_CARE_DR = 2;            // erhöhte Betreuungs/Pflegebedürftigkeit
-  LOWER_NEED_FOR_CARE_DR = 3;                // geringere Betreuungs/Pflegebedürftigkeit
+  INCREASED_NEED_FOR_CARE_DR = 2;            // erhÃ¶hte Betreuungs/PflegebedÃ¼rftigkeit
+  LOWER_NEED_FOR_CARE_DR = 3;                // geringere Betreuungs/PflegebedÃ¼rftigkeit
   OWN_DESIRE_DR = 4;                         // eigener Wunsch
   OTHER_DR = 5;                              // sonstige
 }
@@ -190,7 +191,7 @@ enum DeathLocation {
   DEATH_HOSPITAL_DL = 2;                       // Krankenhaus
 }
 
-// 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
+// 21 VerwandtschaftsverhÃ¤ltnis Hauptbetreuungspers.
 enum MainAttendanceRelation {
   UNDEFINED_MR = 0;
   PARTNER_MR = 1;                              // Partner/in           
@@ -201,13 +202,13 @@ enum MainAttendanceRelation {
   NO_MAINATTENDANCERELATION_MR = 6;            // keine Angabe
 }
 
-// 22 Räumliche Nähe Hauptbetreuungsperson
+// 22 RÃ¤umliche NÃ¤he Hauptbetreuungsperson
 enum MainAttendanceCloseness {
   UNDEFINED_MC = 0;
   SAME_FLAT_MC = 1;                            // in der gleichen Wohnung
   SAME_HOUSE_OTHER_FLAT_MC = 2;                // im gleichen Haus aber in einer anderen Wohnung
   UP_TO_30_MIN_MC = 3;                         // bis zu 30 Minuten
-  OVER_TO_30_MIN_MC = 4;                       // über 30 Minuten
+  OVER_TO_30_MIN_MC = 4;                       // Ã¼ber 30 Minuten
   NO_MAINATTENDANCE_MC = 5;                    // keine Hauptbetreuungsperson
   NO_MAINATTENDANCE_CLOSENESS_MC = 6;           // keine Angabe
 }
@@ -241,7 +242,7 @@ enum Gender {
 // Finanzierung
 enum Finance {
   UNDEFINED_FI = 0;
-  SELF_FI = 1;                       // Selbst/Angehörige 100 %
+  SELF_FI = 1;                       // Selbst/AngehÃ¶rige 100 %
   SOCIAL_ASSISTANCE_FI = 2;          // Mindestsicherung
   SOCIAL_ASSISTANCE_CLAIM_FI = 3;    // Mindestsicherungsantrag in Bearbeitung
 }
@@ -284,8 +285,8 @@ enum AdmissionType {
   UNDEFINED_AT = 0;
   CONTINUOUS_AT = 1;                    // Daueraufnahme
   HOLIDAY_AT = 2;                       // Urlaub von der Pflege
-  TRANSITIONAL_AT = 3;                  // Übergangspflege
+  TRANSITIONAL_AT = 3;                  // Ãœbergangspflege
   COVID19_RESPITE_AT = 4;               // COVID-19 Entlastungspflege
   GERIATRIC_REMOBILIZATION_AT = 5;      // Geriatrische Remobilisation
-  CARE_TRANSITION_AT = 6;               // Überleitungspflege
+  CARE_TRANSITION_AT = 6;               // Ãœberleitungspflege
 }
