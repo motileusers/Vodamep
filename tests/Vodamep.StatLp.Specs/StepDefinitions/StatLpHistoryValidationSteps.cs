@@ -177,20 +177,12 @@ namespace Vodamep.Specs.StepDefinitions
 
         private Admission CreateAdmission(Stay stay)
         {
-            return new Admission
-            {
-                ValidD = stay.FromD,
-                PersonId = stay.PersonId
-            };
+            return StatLpDataGenerator.Instance.CreateAdmission(stay.PersonId, stay.From, false);
         }
 
         private Leaving CreateLeaving(Stay stay)
         {
-            return new Leaving
-            {
-                ValidD = stay.ToD,
-                PersonId = stay.PersonId
-            };
+            return StatLpDataGenerator.Instance.CreateLeaving(stay.PersonId, stay.FromD);
         }
 
         [Given(@"Gesendete Meldung '(.*)' gilt vom '(.*)' bis '(.*)'")]

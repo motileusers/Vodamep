@@ -102,7 +102,7 @@ namespace Vodamep.Data.Dummy
                 yield return CreatePerson(i + 1, true);
         }
 
-        public Admission CreateAdmission(string personId, Timestamp valid = null)
+        public Admission CreateAdmission(string personId, Timestamp valid = null, bool randomValues = true)
         {
             var admission = new Admission()
             {
@@ -118,17 +118,15 @@ namespace Vodamep.Data.Dummy
                 PersonalChanges = { PersonalChange.IncreasedAssitanceNeedPc },
                 SocialChanges = { SocialChange.MissingMealsSc },
 
-                Country = CountryCodeProvider.Instance.Values.Keys.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
-                Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
+                Country = randomValues ? CountryCodeProvider.Instance.Values.Keys.Where(a => a != "ZZ").ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count()) - 1] : CountryCodeProvider.Instance.Values[CountryCodeProvider.Instance.Values.Keys.ToArray()[0]],
+                Gender = randomValues ?  ((Gender[])(Enum.GetValues(typeof(Gender))))
                     .Where(x => x != Gender.UndefinedGe)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
+                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)) : Gender.MaleGe,
 
 
             };
 
          
-
-
             if (valid != null)
                 admission.Valid = valid;
 
@@ -136,11 +134,11 @@ namespace Vodamep.Data.Dummy
 
         }
 
-        public IEnumerable<Admission> CreateAdmissions(IEnumerable<Person> persons, Timestamp reportFrom)
+        public IEnumerable<Admission> CreateAdmissions(IEnumerable<Person> persons, Timestamp reportFrom, bool randomValues = true)
         {
             foreach (var person in persons)
             {
-                yield return CreateAdmission(person.Id, reportFrom);
+                yield return CreateAdmission(person.Id, reportFrom, randomValues);
             }
         }
 
