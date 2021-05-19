@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using FluentValidation;
@@ -11,6 +12,13 @@ namespace Vodamep.StatLp.Validation
     internal class AdmissionValidator : AbstractValidator<Admission>
     {
         private DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+
+
+        private Dictionary<string, DateTime> institutionAdmissionValid = new Dictionary<string, DateTime>()
+        {
+            {"07*", new DateTime(2021, 01, 01) },
+            {"0712", new DateTime(2008, 01, 01) },
+        };
 
         public AdmissionValidator(StatLpReport parentReport)
         {
@@ -26,8 +34,19 @@ namespace Vodamep.StatLp.Validation
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.Country)))
                 .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.PersonId));
 
-
             this.RuleFor(x => x.Valid).SetValidator(new TimestampWithOutTimeValidator());
+
+            this.RuleFor(x => x.Valid)
+                .Must(x => parentReport.From <= x && x <= parentReport.To)
+                .When(x => parentReport.FromD >= new DateTime(2021, 05, 01) || GetEarliestAdmissionIdFromInstitution(parentReport) == null)
+                .WithName(this.displayNameResolver.GetDisplayName(nameof(Admission)))
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
+
+            this.RuleFor(x => x.Valid)
+                .Must(x => parentReport.From <= x && x <= parentReport.To)
+                .When(x => GetEarliestAdmissionIdFromInstitution(parentReport) != null)
+                .WithName(this.displayNameResolver.GetDisplayName(nameof(Admission)))
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
 
             this.RuleFor(x => x.PersonId)
                 .Must((admission, personId) =>
@@ -46,7 +65,7 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.OtherHousingType).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.OtherHousingType))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.OtherHousingType)))
                 .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
-            
+
             this.RuleFor(x => x.PersonalChangeOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.PersonalChangeOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.PersonalChangeOther)))
                 .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
@@ -54,7 +73,7 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.SocialChangeOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.SocialChangeOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.SocialChangeOther)))
                 .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
-            
+
             this.RuleFor(x => x.HousingReasonOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.HousingReasonOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
                 .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
@@ -74,7 +93,7 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.HousingReasonOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
                 .WithMessage(x => Validationmessages.TextTooLongAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
-            
+
             this.RuleFor(x => new { x.LastPostcode, x.LastCity }).Must(x => Postcode_CityProvider.Instance.IsValid($"{x.LastPostcode} {x.LastCity}")).WithMessage(x => Validationmessages.WrongPostCodeAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.PersonalChanges).NotEmpty().Unless(x => !string.IsNullOrEmpty(x.PersonalChangeOther))
@@ -114,8 +133,28 @@ namespace Vodamep.StatLp.Validation
                 .Must((admission, ctx) => !(admission.HousingReason == HousingReason.OtherHr &&
                                             string.IsNullOrEmpty(admission.HousingReasonOther)))
                 .WithMessage(Validationmessages.TextAreaEnterAValue);
+        }
 
+        private DateTime? GetEarliestAdmissionIdFromInstitution(StatLpReport parentReport)
+        {
+            var institutionId = parentReport.Institution.Id;
 
+            if (this.institutionAdmissionValid.ContainsKey(institutionId))
+            {
+                return this.institutionAdmissionValid[institutionId];
+            }
+
+            var wildcardKey = this.institutionAdmissionValid.Keys
+                .Where(x => x.EndsWith("*"))
+                .Select(x => x.Substring(0, x.Length - 1))
+                .FirstOrDefault(x => institutionId.StartsWith(x));
+
+            if (wildcardKey != null)
+            {
+                return this.institutionAdmissionValid[wildcardKey];
+            }
+
+            return null;
         }
 
         private bool ContainsDoubledValues<T>(IEnumerable<T> values)

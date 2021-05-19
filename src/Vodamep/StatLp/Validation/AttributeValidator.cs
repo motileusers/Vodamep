@@ -18,7 +18,8 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.From)
                 .Must(x => parentReport.From <= x && x <= parentReport.To)
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth("Das Attribut", x.PersonId));
+                .WithName(DisplayNameResolver.GetDisplayName(nameof(Attribute)))
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
 
             this.RuleFor(x => x.PersonId)
                 .Must((attribute, personId) =>

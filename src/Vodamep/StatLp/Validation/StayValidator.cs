@@ -7,6 +7,8 @@ namespace Vodamep.StatLp.Validation
 {
     internal class StayValidator : AbstractValidator<Stay>
     {
+        private DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+
         public StayValidator(StatLpReport parentReport)
         {
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
@@ -19,7 +21,8 @@ namespace Vodamep.StatLp.Validation
                            x.From <= parentReport.To &&
                            x.To >= parentReport.From &&
                            x.To <= parentReport.To)
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth("Ein Aufenthalt", x.PersonId));
+                .WithName(displayNameResolver.GetDisplayName(nameof(Stay)))
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
 
             this.RuleFor(x => x.PersonId)
                 .Must((stay, personId) =>

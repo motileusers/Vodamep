@@ -21,9 +21,9 @@ namespace Vodamep.Data.Dummy
             return p;
         }
 
-        public static Admission AddDummyAdmission(this StatLpReport report)
+        public static Admission AddDummyAdmission(this StatLpReport report, bool randomValues = true)
         {
-            var p = StatLpDataGenerator.Instance.CreateAdmission(report.Persons.First().Id, report.From);
+            var p = StatLpDataGenerator.Instance.CreateAdmission(report.Persons.First().Id, report.From, randomValues);
             report.AddAdmission(p);
             return p;
         }

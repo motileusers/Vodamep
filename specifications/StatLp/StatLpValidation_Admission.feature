@@ -18,7 +18,8 @@ Beispiele:
     | main_attendance_relation      | Verwandtschaftsverhältnis Hauptbetreuungspers. |
     | main_attendance_closeness     | Räumliche Nähe Hauptbetreuungsperson           |
     | housing_reason                | Wohnraumsituations- und Ausstattungsgründe     | 
-
+    | gender                        | Geschlecht                                     |    
+    | country                       | Land                                           |
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
     Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von Klient 1.'
@@ -37,11 +38,11 @@ Szenariogrundriss: Die Textfelder enthalten zu lange Werte
     Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von Klient 1.'
 Beispiele:
-    | Name                  | Bezeichnung                                | Wert                               |
-    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | abcdefghij abcdefghij abcdefghij x |
-    | personal_change_other | Veränderungen persönliche Situation        | abcdefghij abcdefghij abcdefghij x |
-    | social_change_other   | Veränderungen nicht bewältigt, weil        | abcdefghij abcdefghij abcdefghij x |
-    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | abcdefghij abcdefghij abcdefghij x | 
+    | Name                  | Bezeichnung                                | Wert                                                                                                     |
+    | other_housing_type    | Sonstige Lebens-/Betreuungssituation       | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m x   |
+    | personal_change_other | Veränderungen persönliche Situation        | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m x   |
+    | social_change_other   | Veränderungen nicht bewältigt, weil        | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m x   |
+    | housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m x   | 
 
 Szenariogrundriss: Die Textfelder enthalten gültige Werte
     Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
@@ -143,3 +144,19 @@ Szenario: eine Aufnahme muss im aktuellen Monat liegen
 Szenario: Valid darf keine Zeit beinhalten
     Angenommen die Datums-Eigenschaft 'valid' von 'Admission' hat eine Uhrzeit gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''Valid' darf keine Uhrzeit beinhalten.'
+    
+Szenariogrundriss: Das Land einer Aufnahme enthält einen ungültigen Wert
+    Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' hat einen ungülitgen Wert'
+Beispiele: 
+    | Name    | Bezeichnung | Wert |
+    | country | Land        | B    |
+    | country | Land        | A    |
+
+Szenariogrundriss: Das Land einer Aufnahme enthält einen gültigen Wert
+    Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+    Dann enthält das Validierungsergebnis keine Fehler
+Beispiele: 
+    | Name    | Bezeichnung | Wert |
+    | country | Land        | AD   |
+    | country | Land        | AT   |

@@ -21,9 +21,7 @@ Beispiele:
     | family_name  | Familienname   |
     | given_name   | Vorname        |
     | birthday     | Geburtsdatum   |
-    | gender       | Geschlecht     |    
-    | country      | Land           |
- 
+   
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
     Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' weist ein ungültiges Format auf.'
@@ -47,22 +45,6 @@ Beispiele:
     | Name             | Bezeichnung    | Wert                                |
     | given_name       | Vorname        | abcdefghij abcdefghij abcdefghij x  |
     | given_name       | Vorname        | x                                   |
-
-Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
-    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' hat einen ungülitgen Wert'
-Beispiele: 
-    | Name    | Bezeichnung | Wert |
-    | country | Land        | B    |
-    | country | Land        | A    |
-
-Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert
-    Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis keine Fehler
-Beispiele: 
-    | Name    | Bezeichnung | Wert |
-    | country | Land        | AD   |
-    | country | Land        | AT   |
 
 Szenario: die Liste enthält eine Person, die nicht in mindestens einem stay ist
     Angenommen es gibt eine weitere Person

@@ -299,9 +299,9 @@ Szenario: Änderung bei Geschlecht
 	Angenommen Existierende Meldung '1' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '20.12.2020'
 	Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
 	Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
-	Angenommen Existierende Meldung '1': die Eigenschaft 'gender' von 'Person' ist auf 'MaleGe' gesetzt
+	Angenommen Existierende Meldung '1': die Eigenschaft 'gender' von 'Admission' ist auf 'MaleGe' gesetzt
 	Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
-	Angenommen Gesendete Meldung '2': die Eigenschaft 'gender' von 'Person' ist auf 'FemaleGe' gesetzt
+	Angenommen Gesendete Meldung '2': die Eigenschaft 'gender' von 'Admission' ist auf 'FemaleGe' gesetzt
 	Dann enthält das History Validierungsergebnis den Fehler 'Unterschied bei 'Geschlecht' von Klient 1 bei Meldung vom 01.01.2021.'
 
 Szenario: Änderung bei Geburtsdatum

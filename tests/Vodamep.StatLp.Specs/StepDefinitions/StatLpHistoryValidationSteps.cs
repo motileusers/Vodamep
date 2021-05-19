@@ -398,9 +398,13 @@ namespace Vodamep.Specs.StepDefinitions
             else if (type == nameof(Institution))
                 message = report.Institution;
             else if (type == nameof(Admission))
+            { 
+                if (!report.Admissions.Any())
+                {
+                    report.AddDummyAdmission(false);
+                }
                 message = report.Admissions[0];
-            else if (type == nameof(Attribute))
-                message = report.Attributes[0];
+            }
             else if (type == nameof(Leaving))
                 message = report.Leavings[0];
             else if (type == nameof(Person))
