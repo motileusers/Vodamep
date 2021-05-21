@@ -45,11 +45,12 @@ namespace Vodamep.StatLp.Model
                 To = report.To
             };
 
-            //result.Activities.AddRange(report.Activities.AsSorted());
-            
-            result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));            
-            //result.Staffs.AddRange(report.Staffs.OrderBy(x => x.Id));
-
+            result.Admissions.AddRange(report.Admissions.OrderBy(x => x.PersonId));            
+            result.Attributes.AddRange(report.Attributes.OrderBy(x => x.PersonId));
+            result.Leavings.AddRange(report.Leavings.OrderBy(x => x.PersonId));
+            result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
+            result.Stays.AddRange(report.Stays.OrderBy(x => x.PersonId));
+           
             return result;
         }
 
