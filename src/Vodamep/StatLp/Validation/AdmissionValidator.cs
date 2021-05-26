@@ -135,6 +135,16 @@ namespace Vodamep.StatLp.Validation
                 .WithMessage(Validationmessages.TextAreaEnterAValue);
         }
 
+
+        /// <summary>
+        /// Mindestdatum für Aufnahmen anhand der Einrichtungs-ID ermitteln
+        /// </summary>
+        /// <remarks>
+        /// Betimmte Einrichtungen dürfen Aufnahmen senden, bei denen das Aufnahmedatum nicht in
+        /// der aktuellen Monatsmeldung liegt.
+        /// Es sind auch Wildcars möglich. Z.B. dürfen die Einrichtungen 07* alle bis zu einem 
+        /// bestimmten Datum senden.
+        /// </remarks>
         private DateTime? GetEarliestAdmissionIdFromInstitution(StatLpReport parentReport)
         {
             var institutionId = parentReport.Institution.Id;
@@ -151,7 +161,7 @@ namespace Vodamep.StatLp.Validation
 
             if (wildcardKey != null)
             {
-                return this.institutionAdmissionValid[wildcardKey];
+                return this.institutionAdmissionValid[wildcardKey + "*"];
             }
 
             return null;

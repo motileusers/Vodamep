@@ -12,7 +12,7 @@
     <PackageIcon></PackageIcon>
     <RepositoryUrl>https://bitbucket.org/team_connexia/vodamep.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.11.4-alpha</Version>
+    <Version>1.11.5-alpha</Version>
     <Product>Vorarlberger Datenmeldung Pflege</Product>
     <PackageReleaseNotes>AB + MH + TB + CM</PackageReleaseNotes>
     <AssemblyVersion>1.11.4.0</AssemblyVersion>
