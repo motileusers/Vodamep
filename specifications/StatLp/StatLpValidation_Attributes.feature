@@ -5,9 +5,9 @@ Szenario: Ein Attribut enthält eine Person, die nicht in der Personenliste ist
 	Angenommen die Eigenschaft 'person_id' von 'Attribute' ist auf '2' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Person '2' ist nicht in der Personenliste vorhanden.'
 
-Szenario: ein Attribut muss im aktuellen Monat liegen
-	Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2000-01-01' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '1' muss im aktuellen Monat liegen.'
+Szenario: Ein Attribut muss im aktuellen Monat liegen
+	Angenommen die Eigenschaft 'from' von 'Attribute' ist auf '2000-01-01' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'Attribute von Person '1' muss im aktuellen Monat liegen.'
 
 Szenario: Von darf keine Zeit beinhalten
 	Angenommen die Datums-Eigenschaft 'from' von 'Attribute' hat eine Uhrzeit gesetzt

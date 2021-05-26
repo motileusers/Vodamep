@@ -16,8 +16,8 @@ namespace Vodamep.StatLp.Validation
 
         private Dictionary<string, DateTime> institutionAdmissionValid = new Dictionary<string, DateTime>()
         {
-            {"*", new DateTime(1995, 01, 01) },
-            // {"0712", new DateTime(2008, 01, 01) },
+            {"0*", new DateTime(1995, 01, 01) },
+            // {"1234", new DateTime(2008, 01, 01) },
         };
 
         public AdmissionValidator(StatLpReport parentReport)
@@ -144,24 +144,12 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private bool ValidateAdmissionDate(DateTime from, DateTime admission, string instituionID)
         {
-            DateTime? earliest = GetEarliestAdmissionIdFromInstitution(instituionID, from);
+            DateTime earliest = GetEarliestAdmissionIdFromInstitution(instituionID, from);
 
-            if (earliest == null)
+            // Valid darf auch früher sein, abhängig von der Konfiguration
+            if (admission < earliest)
             {
-                // Valid muss im akutellen Monat liegen
-                if (admission < from)
-                {
-                    return false;
-                }
-
-            }
-            else
-            {
-                // Valid darf auch früher sein, abhängig von der Konfiguration
-                if (admission < earliest.Value)
-                {
-                    return false;
-                }
+                return false;
             }
 
 
