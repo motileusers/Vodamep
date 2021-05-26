@@ -79,6 +79,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseActivityMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
         public static string ReportBaseActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
         public static string ReportBaseItemMustBeInCurrentMonth (string personId) => $"{{PropertyName}} von Person '{personId}' muss im aktuellen Monat liegen.";
+        public static string AdmissionDateMustBeBetween(string personId, DateTime from) => $"Das Aufnahmedatum von Person '{personId}' muss größer als der {from.ToShortDateString()} sein.";
         public static string StatLpReportAttributeMissing(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde keine '{attributeType}' gesendet.";
         public static string StatLpReportMultipleAttribute(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde '{attributeType}' mehrfach gesendet.";
         public static string StatLpReportEveryPersonMustBeInAStay(string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
@@ -94,6 +95,7 @@ namespace Vodamep.ValidationBase
         public static string StatLpReportNoAdmission(string clientId, string date) => $"Vor dem Aufenthalt von Klient '{clientId}' am '{date}' wurden keine Aufnahmedaten gesendet.";
         public static string StatLpReportNoLeaving (string clientId, string date) => $"Zum Aufenthaltsende von Klient '{clientId}' am '{date}' wurden keine Entlassungsdaten gesendet.";
         public static string StatLpReportNoLeavingWhenAdmissionIsResent (string clientId, string date) => $"Aufnahme von Klient '{clientId}' am '{date}' nicht möglich, weil keine Entlassung gesendet wurde.";
+
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

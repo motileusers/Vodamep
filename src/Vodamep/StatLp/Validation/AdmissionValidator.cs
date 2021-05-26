@@ -16,8 +16,8 @@ namespace Vodamep.StatLp.Validation
 
         private Dictionary<string, DateTime> institutionAdmissionValid = new Dictionary<string, DateTime>()
         {
-            {"07*", new DateTime(2021, 01, 01) },
-            {"0712", new DateTime(2008, 01, 01) },
+            {"*", new DateTime(1995, 01, 01) },
+            // {"0712", new DateTime(2008, 01, 01) },
         };
 
         public AdmissionValidator(StatLpReport parentReport)
@@ -36,17 +36,12 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.Valid).SetValidator(new TimestampWithOutTimeValidator());
 
-            this.RuleFor(x => x.Valid)
-                .Must(x => parentReport.From <= x && x <= parentReport.To)
-                .When(x => parentReport.FromD >= new DateTime(2021, 05, 01) || GetEarliestAdmissionIdFromInstitution(parentReport) == null)
-                .WithName(this.displayNameResolver.GetDisplayName(nameof(Admission)))
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
 
-            this.RuleFor(x => x.Valid)
-                .Must(x => parentReport.From <= x && x <= parentReport.To)
-                .When(x => GetEarliestAdmissionIdFromInstitution(parentReport) != null)
+            this.RuleFor(x => x.ValidD)
+                .Must((valid) => ValidateAdmissionDate(parentReport.FromD, valid, parentReport.Institution.Id))
                 .WithName(this.displayNameResolver.GetDisplayName(nameof(Admission)))
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
+                .WithMessage(x => Validationmessages.AdmissionDateMustBeBetween(x.PersonId, GetEarliestAdmissionIdFromInstitution(parentReport.Institution.Id, parentReport.FromD)));
+
 
             this.RuleFor(x => x.PersonId)
                 .Must((admission, personId) =>
@@ -139,6 +134,41 @@ namespace Vodamep.StatLp.Validation
         }
 
 
+
+
+        /// <summary>
+        /// Prüfung, ob das Aufnahmedatum 
+        /// - im akutellen Monat oder 
+        /// - in einem speziell (evtl. auch nur für diese Einrichtung) definierten Bereich 
+        /// liegen darf
+        /// </summary>
+        private bool ValidateAdmissionDate(DateTime from, DateTime admission, string instituionID)
+        {
+            DateTime? earliest = GetEarliestAdmissionIdFromInstitution(instituionID, from);
+
+            if (earliest == null)
+            {
+                // Valid muss im akutellen Monat liegen
+                if (admission < from)
+                {
+                    return false;
+                }
+
+            }
+            else
+            {
+                // Valid darf auch früher sein, abhängig von der Konfiguration
+                if (admission < earliest.Value)
+                {
+                    return false;
+                }
+            }
+
+
+            return true;
+        }
+
+
         /// <summary>
         /// Mindestdatum für Aufnahmen anhand der Einrichtungs-ID ermitteln
         /// </summary>
@@ -148,10 +178,8 @@ namespace Vodamep.StatLp.Validation
         /// Es sind auch Wildcars möglich. Z.B. dürfen die Einrichtungen 07* alle bis zu einem 
         /// bestimmten Datum senden.
         /// </remarks>
-        private DateTime? GetEarliestAdmissionIdFromInstitution(StatLpReport parentReport)
+        private DateTime GetEarliestAdmissionIdFromInstitution(string institutionId, DateTime from)
         {
-            var institutionId = parentReport.Institution.Id;
-
             if (this.institutionAdmissionValid.ContainsKey(institutionId))
             {
                 return this.institutionAdmissionValid[institutionId];
@@ -167,8 +195,9 @@ namespace Vodamep.StatLp.Validation
                 return this.institutionAdmissionValid[wildcardKey + "*"];
             }
 
-            return null;
+            return from;
         }
+
 
         private bool ContainsDoubledValues<T>(IEnumerable<T> values)
         {
