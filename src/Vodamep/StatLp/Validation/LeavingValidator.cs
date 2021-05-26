@@ -68,7 +68,7 @@ namespace Vodamep.StatLp.Validation
                 .When(x => x.LeavingReason == LeavingReason.DischargeLr)
                 .WithMessage(x => Validationmessages.DischargedClientNeedsDischargeLocation(x.PersonId));
 
-            var r = new Regex(@"^[-,.a-zA-ZäöüÄÖÜß\(\) ][-,.a-zA-ZäöüÄÖÜß\(\) ]*[-,.a-zA-ZäöüÄÖÜß\(\) ]$");
+            var r = new Regex(@"^[-,.a-zA-Z0-9äöüÄÖÜß\(\) ][-,.a-zA-Z0-9äöüÄÖÜß\(\) ]*[-,.a-zA-Z0-9äöüÄÖÜß\(\) ]$");
 
             this.RuleFor(x => x.DischargeLocationOther)
                 .Matches(r).Unless(x => string.IsNullOrEmpty(x.DischargeLocationOther))

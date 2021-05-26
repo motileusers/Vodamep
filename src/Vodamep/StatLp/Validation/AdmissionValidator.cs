@@ -60,8 +60,11 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.MainAttendanceCloseness).NotEmpty();
             this.RuleFor(x => x.HousingReason).NotEmpty();
 
+
+
             //ungültige werte
-            var regex0 = new Regex(@"^[-,.a-zA-ZäöüÄÖÜß\(\) ][-,.a-zA-ZäöüÄÖÜß\(\) ]*[-,.a-zA-ZäöüÄÖÜß\(\) ]$");
+            var regex0 = new Regex(@"^[-,.a-zA-Z0-9äöüÄÖÜß\(\) ][-,.a-zA-Z0-9äöüÄÖÜß\(\) ]*[-,.a-zA-Z0-9äöüÄÖÜß\(\) ]$");
+
             this.RuleFor(x => x.OtherHousingType).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.OtherHousingType))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.OtherHousingType)))
                 .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
