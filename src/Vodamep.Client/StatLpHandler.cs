@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Vodamep.Data.Dummy;
 using Vodamep.StatLp.Model;
 using Vodamep.StatLp.Validation;
@@ -73,6 +75,35 @@ namespace Vodamep.Client
 
             Console.WriteLine(message);
         }
+
+
+        protected override void ValidateHistory(ValidateArgs args, string[] files)
+        {
+            List<StatLpReport> reports = new List<StatLpReport>();
+
+            foreach (string file in files)
+            {
+                var report = ReadReport(file);
+                reports.Add(report);
+            }
+
+            // der Reihenfolge nach sortieren
+            reports = reports.OrderBy(x => x.From).ToList();
+
+            // Es gibt immer einen aktiven Report, der mit einer Geschichte an Reports
+            // geprüft wird. In unserem Fall ist das dann immer der letzte, den wir finden.
+            StatLpReport lastReport = reports.LastOrDefault();
+            reports.Remove(lastReport);
+
+            var result = lastReport.ValidateHistory(reports);
+
+            var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
+            var message = formatter.Format(lastReport, result);
+
+            Console.WriteLine(message);
+        }
+
+
 
         private StatLpReport ReadReport(string file)
         {

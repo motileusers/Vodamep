@@ -8,29 +8,7 @@ namespace Vodamep.Client
 
         public void Send(SendArgs args)
         {
-            var wildcard = args.File.IndexOf("*");
-
-            string[] files;
-
-            if (wildcard >= 0)
-            {
-                if (wildcard == 0)
-                {
-                    files = Directory.GetFiles(Directory.GetCurrentDirectory(), args.File);
-                }
-                else
-                {
-                    var dirIndex = args.File.Substring(0, wildcard).LastIndexOf(@"\");
-                    var dir = args.File.Substring(0, dirIndex);
-                    var pattern = args.File.Substring(dirIndex + 1);
-                    files = Directory.GetFiles(dir, pattern);
-                }
-            }
-            else
-            {
-                files = new[] { args.File };
-            }
-
+            string[] files = GetFiles(args.File);
 
             foreach (var file in files)
             {
@@ -40,7 +18,30 @@ namespace Vodamep.Client
 
         public void Validate(ValidateArgs args)
         {
-            var wildcard = args.File.IndexOf("*");
+            string[] files = GetFiles(args.File);
+
+            foreach (var file in files)
+            {
+                this.Validate(args, file);
+            }
+        }
+
+        public void ValidateHistory(ValidateArgs args)
+        {
+            string[] files = GetFiles(args.File);
+
+            this.ValidateHistory(args, files);
+        }
+
+
+        /// <summary>
+        /// Liefert die Dateien anhand der übergebenen Argumente
+        /// - Wildcard * möglich
+        /// - Oder einzelnes File
+        /// </summary>
+        private string[] GetFiles(string filePattern)
+        {
+            var wildcard = filePattern.IndexOf("*");
 
             string[] files;
 
@@ -48,26 +49,24 @@ namespace Vodamep.Client
             {
                 if (wildcard == 0)
                 {
-                    files = Directory.GetFiles(Directory.GetCurrentDirectory(), args.File);
+                    files = Directory.GetFiles(Directory.GetCurrentDirectory(), filePattern);
                 }
                 else
                 {
-                    var dirIndex = args.File.Substring(0, wildcard).LastIndexOf(@"\");
-                    var dir = args.File.Substring(0, dirIndex);
-                    var pattern = args.File.Substring(dirIndex + 1);
+                    var dirIndex = filePattern.Substring(0, wildcard).LastIndexOf(@"\");
+                    var dir = filePattern.Substring(0, dirIndex);
+                    var pattern = filePattern.Substring(dirIndex + 1);
                     files = Directory.GetFiles(dir, pattern);
                 }
             }
             else
             {
-                files = new[] { args.File };
+                files = new[] { filePattern };
             }
 
-            foreach (var file in files)
-            {
-                this.Validate(args, file);
-            }
+            return files;
         }
+
 
         public abstract void PackFile(PackFileArgs args);
 
@@ -77,6 +76,11 @@ namespace Vodamep.Client
 
         protected abstract void Validate(ValidateArgs args, string file);
 
+        protected virtual void ValidateHistory(ValidateArgs args, string[] files)
+        {
+            HandleFailure("Für dieses Modul nicht verfügbar.");
+        }
+        
         protected void HandleFailure(string message = null)
         {
             throw new Exception(message);
