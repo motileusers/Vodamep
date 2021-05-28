@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 using Vodamep.Mkkp.Model;
@@ -13,11 +15,14 @@ namespace Vodamep.Mkkp.Validation
 
         public SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator()
         {
-            this.RuleFor(x => x.Activities)
-                .Custom((activities, ctx) =>
+            this.RuleFor(x => new Tuple<IList<Staff>, IEnumerable<Activity>>(x.Staffs, x.Activities))
+                .Custom((data, ctx) =>
                 {
+                    var staffs = data.Item1;
+                    var activities = data.Item2;
+
                     var activitiesByStaffId = activities.GroupBy(y => y.StaffId)
-                        .Select( (group) => new { Key = group.Key, Items = group.ToList() });
+                        .Select((group) => new { Key = group.Key, Items = group.ToList() });
 
                     foreach (var activityByStaffId in activitiesByStaffId)
                     {
@@ -25,8 +30,9 @@ namespace Vodamep.Mkkp.Validation
 
                         if (sumOfMinutes > maxNoOfMinutes)
                         {
-                            ctx.AddFailure(new ValidationFailure(nameof(MkkpReport.Activities), Validationmessages.MaxSumOfMinutesPerStaffMemberIs10Hours));
+                            var staff = staffs.Where(x => x.Id == activityByStaffId.Key).FirstOrDefault();
 
+                            ctx.AddFailure(new ValidationFailure(nameof(MkkpReport.Activities), $"{staff?.FamilyName} {staff?.GivenName}: {Validationmessages.MaxSumOfMinutesPerStaffMemberIs10Hours}"));
                         }
                     }
 
