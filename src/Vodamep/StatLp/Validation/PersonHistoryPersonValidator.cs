@@ -33,7 +33,7 @@ namespace Vodamep.StatLp.Validation
                 messages.Add(a.StatLpReport);
                 messages.AddRange(a.StatLpReports);
 
-                foreach (string personId in personIdsFull)
+                foreach (string personId in personIds)
                 {
                     var changedBirthdays = messages.SelectMany(p => p.Persons).Where(q => q.Id == personId)
                         .GroupBy(r => r.BirthdayD);

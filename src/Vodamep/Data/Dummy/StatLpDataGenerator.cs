@@ -113,11 +113,15 @@ namespace Vodamep.Data.Dummy
                 LastCity = "Feldkirch",
 
                 HousingTypeBeforeAdmission = AdmissionLocation.AmbulatorySupervisedFlatAl,
+                OtherHousingType = "",
                 MainAttendanceRelation = MainAttendanceRelation.ChildMr,
                 MainAttendanceCloseness = MainAttendanceCloseness.NoMainattendanceMc,
                 HousingReason = HousingReason.BarriersEntranceHr,
+                HousingReasonOther = "",
                 PersonalChanges = { PersonalChange.IncreasedAssitanceNeedPc },
+                PersonalChangeOther = "",
                 SocialChanges = { SocialChange.MissingMealsSc },
+                SocialChangeOther = "",
                 Country = "AT",
                 Gender = (Gender)GetRandomEnum(typeof(Gender)),
             };

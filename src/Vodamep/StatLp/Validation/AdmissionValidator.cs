@@ -24,7 +24,6 @@ namespace Vodamep.StatLp.Validation
         {
 
             this.RuleFor(x => x.Gender).NotEmpty();
-            this.RuleFor(x => x.Gender).NotEmpty();
 
             this.RuleFor(x => x.Country).NotEmpty();
 

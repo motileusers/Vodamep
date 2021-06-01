@@ -12,7 +12,7 @@ namespace Vodamep.StatLp.Validation
 
         public PersonHistoryAdmissionTypeValidator()
         {
-this.RuleFor(x => x).Custom((a, ctx) =>
+            this.RuleFor(x => x).Custom((a, ctx) =>
             {
                 var sendMessage = a.StatLpReport;
 
