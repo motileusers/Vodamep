@@ -185,7 +185,7 @@ Szenario: Mehrere Aufnahmearten am gleichen Tag
 	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2020'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'CareTransitionAt' mit Datum '01.01.2020'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Aufnahmeart von Klient 1 am 01.01.2020 wurde mehrfach am gleichen Tag geändert.'
+Dann enthält das History Validierungsergebnis den Fehler 'Die Eigenschaft AdmissionType von Klient 1 am 01.01.2020 wurde mehrfach am gleichen Tag geändert.'
 
 # Änderung Aufnahmeart
 Szenario: Keine Änderung von DauerAufnahme auf Urlaub

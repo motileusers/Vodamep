@@ -104,6 +104,7 @@ namespace Vodamep.Data.Dummy
 
         public Admission CreateAdmission(string personId, Timestamp valid = null, bool randomValues = true)
         {
+
             var admission = new Admission()
             {
                 PersonId = personId,
@@ -117,16 +118,10 @@ namespace Vodamep.Data.Dummy
                 HousingReason = HousingReason.BarriersEntranceHr,
                 PersonalChanges = { PersonalChange.IncreasedAssitanceNeedPc },
                 SocialChanges = { SocialChange.MissingMealsSc },
-
-                Country = randomValues ? CountryCodeProvider.Instance.Values.Keys.Where(a => a != "ZZ").ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count()) - 1] : CountryCodeProvider.Instance.Values[CountryCodeProvider.Instance.Values.Keys.ToArray()[0]],
-                Gender = randomValues ?  ((Gender[])(Enum.GetValues(typeof(Gender))))
-                    .Where(x => x != Gender.UndefinedGe)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)) : Gender.MaleGe,
-
-
+                Country = "AT",
+                Gender = (Gender)GetRandomEnum(typeof(Gender)),
             };
 
-         
             if (valid != null)
                 admission.Valid = valid;
 

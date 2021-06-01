@@ -45,5 +45,39 @@ namespace Vodamep.Data.Dummy
         }
 
 
+
+        /// <summary>
+        /// Liefert ein zufälliges Land, ohne ZZ
+        /// </summary>
+        protected string GetRandomCountryCode()
+        {
+            string result = "";
+
+            string[] keys = CountryCodeProvider.Instance.Values.Keys
+                            .Where(a => a != "ZZ")
+                            .ToArray();
+
+            int rand = _rand.Next(keys.Count() - 1);
+
+            if (keys.Count() <= rand)
+            {
+            }
+            result = keys[rand];
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Liefert einen zufälligen Enum, ohne den Index 0 (= Undefined)
+        /// </summary>
+        protected object GetRandomEnum(Type t)
+        {
+            Array array = Enum.GetValues(t);
+            int rand = _rand.Next(array.Length - 1);
+            return array.GetValue(rand + 1);
+        }
+
     }
 }
+

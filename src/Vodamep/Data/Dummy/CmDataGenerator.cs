@@ -61,11 +61,8 @@ namespace Vodamep.Data.Dummy
                 CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
                     .Where(x => x != CareAllowance.UndefinedAllowance)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(CareAllowance)).Length - 1)),
-                Country = CountryCodeProvider.Instance.Values.Keys.ToArray()[_rand.Next(CountryCodeProvider.Instance.Values.Keys.Count())],
-                Gender = ((Gender[])(Enum.GetValues(typeof(Gender))))
-                    .Where(x => x != Gender.UndefinedGe)
-                    .ElementAt(_rand.Next(Enum.GetValues(typeof(Gender)).Length - 1)),
-
+                Country = "AT",
+                Gender = Gender.MaleGe,
             };
 
             // die Anschrift

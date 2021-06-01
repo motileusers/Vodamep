@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
 using Vodamep.StatLp.Model;
@@ -16,13 +17,21 @@ namespace Vodamep.StatLp.Validation
             {
                 var sendMessage = a.StatLpReport;
 
-                // only one admission type is allowed
-                var admissionAttributes = sendMessage.Attributes.Where(x => x.AttributeType == AttributeType.AdmissionType).ToArray();
-                if (admissionAttributes.Count() > 1)
+
+                var groupedAttributes = sendMessage.Attributes.GroupBy(x => (x.PersonId, x.FromD, x.AttributeType))
+                                                    .Select(g => (g.Key.PersonId, g.Key.FromD, g.Key.AttributeType, Count: g.Count()));
+
+                foreach (var group in groupedAttributes)
                 {
-                    ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeMultipleChanged(admissionAttributes.First().PersonId, admissionAttributes.First().FromD.ToShortDateString()));
+                    if (group.Count > 1)
+                    {
+                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeMultipleChanged(group.PersonId, group.FromD.ToShortDateString(), group.AttributeType.ToString()));
+                    }
                 }
 
+
+
+                // Letzte Nachricht suchen
                 var lastMessage = a.StatLpReports.Where(b => b.FromD <= a.StatLpReport.FromD).OrderByDescending(y => y.FromD).FirstOrDefault();
 
                 if (lastMessage == null)
@@ -44,7 +53,6 @@ namespace Vodamep.StatLp.Validation
                             lastMessageAttribute.FromD.ToShortDateString()));
                     }
                 }
-
             });
         }
     }

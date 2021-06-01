@@ -14,7 +14,7 @@ namespace Vodamep.StatLp.Validation
         {
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
-                var sendMessage = x.StatLpReport;
+                var sentMessage = x.StatLpReport;
 
                 var futureMessages = x.StatLpReports.Where(y => y.FromD >= x.StatLpReport.FromD).OrderBy(y => y.FromD);
                 var nextFutureMessage = futureMessages.FirstOrDefault();
@@ -24,18 +24,18 @@ namespace Vodamep.StatLp.Validation
 
                 if (lastHistoryMessage != null && nextFutureMessage == null)
                 {
-                    if (sendMessage.FromD.AddMonths(-1) > lastHistoryMessage.FromD)
+                    if (sentMessage.FromD.AddMonths(-1) > lastHistoryMessage.FromD)
                     {
                         ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                             Validationmessages.StatLpReportPersonHistoryMissingReports(
                                 lastHistoryMessage.ToD.AddDays(1).ToShortDateString(),
-                                sendMessage.FromD.AddDays(-1).ToShortDateString())));
+                                sentMessage.FromD.AddDays(-1).ToShortDateString())));
                     }
                 }
 
                 var personHistories = new List<PersonHistory>();
 
-                foreach (var person in sendMessage.Persons)
+                foreach (var person in sentMessage.Persons)
                 {
                     var personHistory = new PersonHistory();
                     personHistory.PersonId = person.Id;
@@ -44,6 +44,7 @@ namespace Vodamep.StatLp.Validation
                     var stays = new List<Stay>();
                     var leavings = new List<Leaving>();
 
+                    // Die von den History Reports
                     foreach (var statLpReport in x.StatLpReports.OrderBy(sl => sl.FromD))
                     {
                         admissions.AddRange(statLpReport.Admissions.Where(ad => ad.PersonId == person.Id));
@@ -60,18 +61,38 @@ namespace Vodamep.StatLp.Validation
 
                 foreach (var personHistory in personHistories)
                 {
-                    var sendMessageAdmission = sendMessage.Admissions.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
-                    var sendMessageStay = sendMessage.Stays.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
-                    var sendMessageLeaving = sendMessage.Leavings.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
+                    var sendMessageAdmission = sentMessage.Admissions.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
+                    var sendMessageStay = sentMessage.Stays.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
+                    var sendMessageLeaving = sentMessage.Leavings.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
 
                     Admission admission = null;
                     Leaving leaving = null;
                     Stay enduringStay = sendMessageStay != null ? new Stay(sendMessageStay) : null;
-;
-                    if (sendMessageAdmission != null && sendMessageStay != null && sendMessageAdmission.ValidD == sendMessageStay.FromD)
+
+
+
+                    // #Vorherige Aufnahmen:
+                    // Das Aufnahmedatum entspricht dem Stay, akuteller Ansatz,
+                    // für alle neuen, ab jetzt gemeldeten Nachrichten
+                    if (sendMessageAdmission != null && 
+                        sendMessageStay != null && 
+                        sendMessageAdmission.ValidD == sendMessageStay.FromD)
                     {
                         admission = sendMessageAdmission;
                     }
+
+                    // #Vorherige Aufnahmen:
+                    // Die Aufnahme lag vor dem Tag, als überhaupt Meldungen an connexia gesendet wurden,
+                    // dieser Ansatz wird noch diskutiert. Soll das überhaupt möglich sein?
+                    if (admission == null &&
+                        sendMessageAdmission != null &&
+                        sendMessageStay != null &&
+                        sendMessageAdmission.ValidD <= sendMessageStay.FromD)
+                    {
+                        admission = sendMessageAdmission;
+                    }
+
+
 
                     enduringStay = GetOverallStay(personHistory, enduringStay, sendMessageStay);
 
@@ -91,7 +112,27 @@ namespace Vodamep.StatLp.Validation
 
                     if (admission == null && enduringStay != null)
                     {
-                        admission = personHistory.Admissions.FirstOrDefault(a => a.ValidD == enduringStay.FromD);
+                        // Wir suchen die letzte Admission, vor dem eigentlichen Aufenthaltstart
+                        List<Admission> admissions = personHistory.Admissions.OrderBy(a => a.ValidD).ToList();
+                        foreach (Admission currentAdmission in admissions)
+                        {
+                            if (currentAdmission.ValidD == enduringStay.FromD)
+                            {
+                                // #Vorherige Aufnahmen:
+                                // Das Aufnahmedatum entspricht dem Stay, akuteller Ansatz,
+                                // für alle neuen, ab jetzt gemeldeten Nachrichten
+                                admission = currentAdmission;
+                            }
+
+                            if (currentAdmission.ValidD < enduringStay.FromD)
+                            {
+                                // #Vorherige Aufnahmen:
+                                // Die Aufnahme lag vor dem Tag, als überhaupt Meldungen an connexia gesendet wurden,
+                                // dieser Ansatz wird noch diskutiert. Soll das überhaupt möglich sein?
+                                admission = currentAdmission;
+                            }
+
+                        }
                     }
 
                     //doppelte aufnahmen
@@ -152,7 +193,7 @@ namespace Vodamep.StatLp.Validation
                     }
 
                     //leavings
-                    if (enduringStay != null && enduringStay.ToD != sendMessage.ToD && leaving == null)
+                    if (enduringStay != null && enduringStay.ToD != sentMessage.ToD && leaving == null)
                     {
                         ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                             Validationmessages.StatLpReportNoLeaving(

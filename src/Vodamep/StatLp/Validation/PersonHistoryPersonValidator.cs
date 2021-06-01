@@ -15,13 +15,25 @@ namespace Vodamep.StatLp.Validation
         {
             this.RuleFor(x => x).Custom((a, ctx) =>
             {
-                var personIds = a.StatLpReport.Persons.Select(b => b.Id);
+                // Personen im aktuellen Report
+                List<string> personIds = a.StatLpReport.Persons.Select(b => b.Id).ToList();
+
+                // Personen in allen Reports
+                List<Person> personListFull = a.StatLpReports.SelectMany(x => x.Persons).ToList();
+                List<string> personIdsFull = personListFull.Select(b => b.Id).Distinct().ToList();
+
+                if (a.StatLpReports.Count() > 100)
+                {
+              
+                
+                }
+
 
                 var messages = new List<StatLpReport>();
                 messages.Add(a.StatLpReport);
                 messages.AddRange(a.StatLpReports);
 
-                foreach (var personId in personIds)
+                foreach (string personId in personIdsFull)
                 {
                     var changedBirthdays = messages.SelectMany(p => p.Persons).Where(q => q.Id == personId)
                         .GroupBy(r => r.BirthdayD);
