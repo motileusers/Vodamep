@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Vodamep.Agp.Model;
-using Vodamep.Data.AgpCodeProvider;
+using Vodamep.Data.Agp;
 using Xunit;
 
 namespace Vodamep.Tests.Agp.Model

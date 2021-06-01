@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vodamep.Data.MkkpCodeProvider
+namespace Vodamep.Data.Agp
 {
     public class PlaceOfActionProvider : CodeProviderBase
     {
@@ -26,6 +26,6 @@ namespace Vodamep.Data.MkkpCodeProvider
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Data.Mkkp.places_of_action.csv";
+        protected override string ResourceName => "Data.Agp.places_of_action.csv";
     }
 }

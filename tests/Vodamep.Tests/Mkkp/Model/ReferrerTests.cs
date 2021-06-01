@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Vodamep.Mkkp.Model;
-using Vodamep.Data.MkkpCodeProvider;
+using Vodamep.Data.Mkkp;
 using Xunit;
 
 namespace Vodamep.Tests.Mkkp.Model

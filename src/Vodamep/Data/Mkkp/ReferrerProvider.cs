@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vodamep.Data.MkkpCodeProvider
+namespace Vodamep.Data.Mkkp
 {
     public class ReferrerProvider : CodeProviderBase
     {

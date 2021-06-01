@@ -100,7 +100,6 @@ namespace Vodamep.Mkkp.Validation
                 return string.Empty;
 
             return $"{e.FamilyName} {e.GivenName}";
-            return "";
         }
 
         private string GetNameOfStaffById(MkkpReport report, string id)

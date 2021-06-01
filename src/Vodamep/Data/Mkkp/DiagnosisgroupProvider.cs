@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vodamep.Data.AgpCodeProvider
+namespace Vodamep.Data.Mkkp
 {
     public class DiagnosisgroupProvider : CodeProviderBase
     {
@@ -26,6 +26,6 @@ namespace Vodamep.Data.AgpCodeProvider
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Data.Agp.diagnosisgroups.csv";
+        protected override string ResourceName => "Data.Mkkp.diagnosisgroups.csv";
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Vodamep.Data.AgpCodeProvider
+namespace Vodamep.Data.Mkkp
 {
-    public class PlaceOfActionProvider : CodeProviderBase
+    public class ActivityTypeProvider : CodeProviderBase
     {
-        private static volatile PlaceOfActionProvider instance;
+        private static volatile ActivityTypeProvider instance;
         private static object syncRoot = new Object();
 
-        public static PlaceOfActionProvider Instance
+        public static ActivityTypeProvider Instance
         {
             get
             {
@@ -16,7 +16,7 @@ namespace Vodamep.Data.AgpCodeProvider
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new PlaceOfActionProvider();
+                            instance = new ActivityTypeProvider();
                     }
                 }
 
@@ -26,6 +26,6 @@ namespace Vodamep.Data.AgpCodeProvider
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Data.Agp.places_of_action.csv";
+        protected override string ResourceName => "Data.Mkkp.activitytypes.csv";
     }
 }

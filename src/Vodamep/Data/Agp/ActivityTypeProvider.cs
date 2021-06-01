@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Vodamep.Data.AgpCodeProvider
+namespace Vodamep.Data.Agp
 {
-    public class ReferrerProvider : CodeProviderBase
+    public class ActivityTypeProvider : CodeProviderBase
     {
-        private static volatile ReferrerProvider instance;
+        private static volatile ActivityTypeProvider instance;
         private static object syncRoot = new Object();
 
-        public static ReferrerProvider Instance
+        public static ActivityTypeProvider Instance
         {
             get
             {
@@ -16,7 +16,7 @@ namespace Vodamep.Data.AgpCodeProvider
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new ReferrerProvider();
+                            instance = new ActivityTypeProvider();
                     }
                 }
 
@@ -26,6 +26,6 @@ namespace Vodamep.Data.AgpCodeProvider
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Data.Agp.referrer.csv";
+        protected override string ResourceName => "Data.Agp.activitytypes.csv";
     }
 }
