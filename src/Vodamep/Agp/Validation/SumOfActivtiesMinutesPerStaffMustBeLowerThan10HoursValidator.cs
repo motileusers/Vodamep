@@ -12,7 +12,7 @@ namespace Vodamep.Agp.Validation
     internal class SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator : AbstractValidator<AgpReport>
     {
         //10 hours max
-        private const int maxNoOfMinutes = 10 * 60;
+        private const int maxNoOfMinutes = 12 * 60;
 
         public SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator()
         {
@@ -28,7 +28,7 @@ namespace Vodamep.Agp.Validation
 
                         if (sumOfMinutes > maxNoOfMinutes)
                         {
-                            ctx.AddFailure(new ValidationFailure(nameof(AgpReport.Activities), Validationmessages.MaxSumOfMinutesPerStaffMemberIs10Hours));
+                            ctx.AddFailure(new ValidationFailure(nameof(AgpReport.Activities), Validationmessages.MaxSumOfMinutesPerStaffMemberIs12Hours));
 
                         }
                     }

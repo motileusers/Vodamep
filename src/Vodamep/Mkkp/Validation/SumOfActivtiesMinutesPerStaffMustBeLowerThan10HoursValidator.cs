@@ -11,7 +11,7 @@ namespace Vodamep.Mkkp.Validation
     internal class SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator : AbstractValidator<MkkpReport>
     {
         //10 hours max
-        private const int maxNoOfMinutes = 10 * 60;
+        private const int maxNoOfMinutes = 12 * 60;
 
         public SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator()
         {
@@ -32,7 +32,7 @@ namespace Vodamep.Mkkp.Validation
                         {
                             var staff = staffs.Where(x => x.Id == activityByStaffId.Key).FirstOrDefault();
 
-                            ctx.AddFailure(new ValidationFailure(nameof(MkkpReport.Activities), $"{staff?.FamilyName} {staff?.GivenName}: {Validationmessages.MaxSumOfMinutesPerStaffMemberIs10Hours}"));
+                            ctx.AddFailure(new ValidationFailure(nameof(MkkpReport.Activities), $"{staff?.FamilyName} {staff?.GivenName}: {Validationmessages.MaxSumOfMinutesPerStaffMemberIs12Hours}"));
                         }
                     }
 
