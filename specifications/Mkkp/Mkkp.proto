@@ -125,7 +125,6 @@ enum Referrer {
 }
 
 // Pflegegeld
-// Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
 enum CareAllowance {
   UNDEFINED_ALLOWANCE = 0;
   L1 = 1;
@@ -136,9 +135,11 @@ enum CareAllowance {
   L6 = 6;
   L7 = 7;	
   ANY = 9;              // Pflegegeld ja, Stufe unbekannt
-  UNKNOWN = 88;         // unbekannt ob ja oder nein
-  NONE = 99;            // Keine Pflegegeld
+  UNKNOWN = 88;         // Keine Angabe, unbekannt ob ja oder nein
+  INPROGRESS = 90;      // In Bearbeitung
+  NONE = 99;            // Kein Pflegegeld
 }
+
 
 enum Gender {
   UNDEFINED_GENDER = 0;
