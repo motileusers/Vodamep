@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 using Vodamep.StatLp.Model;
@@ -17,31 +18,34 @@ namespace Vodamep.StatLp.Validation
             {
                 if (x.Admissions.Any())
                 {
-                    foreach (var personId in x.Attributes.Select(a => a.PersonId).Distinct())
+                    foreach (Admission admission in x.Admissions)
                     {
-                        var attributes = x.Attributes.Where(at => at.PersonId == personId);
+                        // Alle Attribute für diese Aufnahme
+                        List<Attribute> attributesForAddmission = x.Attributes.Where(att => att.PersonId == admission.PersonId &&
+                                                                                            admission.ValidD == att.FromD &&
+                                                                                            att.AttributeType != AttributeType.UndefinedAttribute).ToList();
 
-                        foreach (var attributeType in
-                            ((AttributeType[])System.Enum.GetValues(typeof(AttributeType))).Where(at =>
-                                at != AttributeType.UndefinedAttribute))
+
+                        // Alle Attributtypen prüfen
+                        foreach (AttributeType attributeType in ((AttributeType[])System.Enum.GetValues(typeof(AttributeType))).Where(at =>
+                                                                    at != AttributeType.UndefinedAttribute))
                         {
-
-                            var attributeCount = attributes.Count(a => a.AttributeType == attributeType);
+                            int attributeCount = attributesForAddmission.Count(a => a.AttributeType == attributeType);
 
                             if (attributeCount <= 0)
                             {
                                 ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.Admissions),
                                     Validationmessages.StatLpReportAttributeMissing(
-                                        personId,
-                                        x.FromD.ToShortDateString(),
+                                        admission.PersonId,
+                                        admission.ValidD.ToShortDateString(),
                                         DisplayNameResolver.GetDisplayName(attributeType.ToString()))));
                             }
                             else if (attributeCount > 1)
                             {
                                 ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.Admissions),
                                     Validationmessages.StatLpReportMultipleAttribute(
-                                        personId,
-                                        x.FromD.ToShortDateString(),
+                                        admission.PersonId,
+                                        admission.ValidD.ToShortDateString(),
                                         DisplayNameResolver.GetDisplayName(attributeType.ToString()))));
 
                             }

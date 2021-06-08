@@ -77,7 +77,7 @@ namespace Vodamep.Client
         }
 
 
-        protected override void ValidateHistory(ValidateArgs args, string[] files)
+        protected override void ValidateHistory(ValidateHistoryArgs args, string[] files)
         {
             List<StatLpReport> reports = new List<StatLpReport>();
 
@@ -92,13 +92,13 @@ namespace Vodamep.Client
 
             // Es gibt immer einen aktiven Report, der mit einer Geschichte an Reports
             // geprüft wird. In unserem Fall ist das dann immer der letzte, den wir finden.
-            StatLpReport lastReport = reports.LastOrDefault();
-            reports.Remove(lastReport);
+            StatLpReport reportToValidate = ReadReport(args.File);
+            reports.Remove(reportToValidate);
 
-            var result = lastReport.ValidateHistory(reports);
+            var result = reportToValidate.ValidateHistory(reports);
 
             var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
-            var message = formatter.Format(lastReport, result);
+            var message = formatter.Format(reportToValidate, result);
 
             Console.WriteLine(message);
         }
