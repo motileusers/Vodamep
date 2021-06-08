@@ -59,7 +59,7 @@ enum CareAllowance {
   L7 = 7;	
   ANY = 9;              // Pflegegeld ja, Stufe unbekannt
   UNKNOWN = 88;         // Keine Angabe, unbekannt ob ja oder nein
-  INPROGRESS = 90;      // In Bearbeitung
+  IN_PROGRESS = 90;     // In Bearbeitung
   NONE = 99;            // Kein Pflegegeld
 }
 
