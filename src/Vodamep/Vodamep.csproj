@@ -94,9 +94,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\AgpCodeProvider\" />
     <Folder Include="Data\Cm\" />
-    <Folder Include="Data\MkkpCodeProvider\" />
     <Folder Include="Data\Mohi\" />
     <Folder Include="Data\Tb\" />
   </ItemGroup>
