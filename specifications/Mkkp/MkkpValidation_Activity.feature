@@ -17,7 +17,7 @@ Szenario: Leistungszeit muss > 0 sein
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
     Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient 'Peter Gruber' darf keine Uhrzeit beinhalten.'
 Beispiele:
     | Name | Bezeichnung |
     | date | Datum       |
@@ -34,7 +34,7 @@ Beispiele:
 Szenariogrundriss: Minuten  dürfen nur in 5 Minuten Schritten eingegeben werden
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Minutes dürfen nur in 5 Minuten Schritten eingegeben werden.'
+    Und die Fehlermeldung lautet: 'Leistungszeit von Klient 'Peter Gruber' darf nur in 5 Minuten Schritten eingegeben werden.'
 Beispiele: 
     | Wert |
     | 1 |
@@ -86,11 +86,11 @@ Szenario: Mehrfache Leistungstypen pro Leistung
 
 Szenario: Doppelte Leistungen innerhalb einer Aktivität
     Angenommen die Leistungstypen 'MedicalDiet,MedicalDiet' sind für eine Aktivität gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität von Klient 'Peter Gruber' dürfen keine doppelten Leistungstypen vorhanden sein.'
     
-Szenario: Leistung darf nicht AccompanyingWithContact und AccompanyingWithoutContact enhalten
+Szenario: Leistung darf bestimmte Kombinationen nicht enhalten
     Angenommen  die Leistungstypen 'AccompanyingWithContact,AccompanyingWithoutContact' sind für eine Aktivität gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen nicht gleichzeitg die Leistungstypen 'AccompanyingWithContact' und 'AccompanyingWithoutContacts' vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität von Klient 'Peter Gruber' dürfen nicht gleichzeitg die Leistungstypen 'Begleitende Maßnahmen mit Patientenkontakt' und 'Begleitende Maßnahmen ohne Patientenkontakt' vorhanden sein.'
 
 Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt

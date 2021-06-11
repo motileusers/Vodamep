@@ -51,15 +51,15 @@ namespace Vodamep.Data.Dummy
             return report;
         }
 
-        public Person CreatePerson()
+        public Person CreatePerson(string id = null)
         {
-            var id = (_id++).ToString();
+            id = id ?? (_id++).ToString();
 
             var person = new Person()
             {
                 Id = id,
-                FamilyName = _familynames[_rand.Next(_familynames.Length)],
-                GivenName = _names[_rand.Next(_names.Length)],
+                FamilyName = id == null ? _familynames[_rand.Next(_familynames.Length)] : _familynames[0],
+                GivenName = id == null ? _names[_rand.Next(_names.Length)]: _names[0],
                 Insurance = "19",
 
                 CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
@@ -96,7 +96,7 @@ namespace Vodamep.Data.Dummy
         public IEnumerable<Person> CreatePersons(int count)
         {
             for (var i = 0; i < count; i++)
-                yield return CreatePerson();
+                yield return CreatePerson((i + 1).ToString());
         }
 
         public Staff CreateStaff(MkkpReport report)

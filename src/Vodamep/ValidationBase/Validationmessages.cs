@@ -36,12 +36,12 @@ namespace Vodamep.ValidationBase
         public static string DoubledDiagnosisGroups => "Es dürfen keine doppelten Diagnosegruppen vorhanden sein.";
         public static string OnlyONePalliativeDiagnosisGroup => "Es darf nur eine Palliativ Diagnose Gruppe vorhanden sein.";
         public static string AtLeastOneDiagnosisGroup => "Es muss mindestens eine Diagnosegruppe vorhanden sein.";
-        public static string MinutesHasToBeEnteredInFiveMinuteSteps => "Minutes dürfen nur in 5 Minuten Schritten eingegeben werden.";
+        public static string ReportBaseStepWidthWrong (string propertyName, string clientId, int nrOfMinutes) => $"{propertyName} von Klient '{clientId}' darf nur in {nrOfMinutes} Minuten Schritten eingegeben werden.";
         public static string MaxSumOfMinutesPerStaffMemberIs12Hours => "Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht überschreiten.";
         public static string MaxSumOfMinutesTravelTimesIs10Hours => "Summe Reisezeiten darf 5 Stunden nicht überschreiten.";
         public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeiten pro Tag erlaubt.";
-        public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed => "Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.";
-        public static string WithinAnActivityThereIsNotAccompanyingWithContactAndAccompanyingWithoutContactsAllowed => "Innerhalb einer Aktivität dürfen nicht gleichzeitg die Leistungstypen 'AccompanyingWithContact' und 'AccompanyingWithoutContacts' vorhanden sein.";
+        public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed (string personId) => $"Innerhalb einer Aktivität von Klient '{personId}' dürfen keine doppelten Leistungstypen vorhanden sein.";
+        public static string WithinAnActivityTheValuesAreNotAllowedInCombination(string client, string activityType1, string activityType2) => $"Innerhalb einer Aktivität von Klient '{client}' dürfen nicht gleichzeitg die Leistungstypen '{activityType1}' und '{activityType2}' vorhanden sein.";
         public static string InvalidInstitutionNumber => "Ungültige Einrichtungsnummer.";
         public static string InvalidValueAdmission(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";
         public static string TextTooLongAdmission(string date, string personId) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";

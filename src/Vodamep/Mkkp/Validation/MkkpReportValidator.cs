@@ -49,7 +49,7 @@ namespace Vodamep.Mkkp.Validation
 
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
 
-            this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r.FromD, r.ToD));
+            this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r, r.FromD, r.ToD));
 
             this.Include(new SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator());
 

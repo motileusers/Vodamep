@@ -5,7 +5,7 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.Mkkp.Model
 {
-    public partial class Activity : IComparable<Activity>, IActivity<ActivityType>
+    public partial class Activity : IComparable<Activity>, IMinutesActivity, IActivity<ActivityType>
     {
         public DateTime DateD { get => this.Date.AsDate(); set => this.Date = value.AsTimestamp(); }
         public IEnumerable<ActivityType> EntriesT => this.entries_;
