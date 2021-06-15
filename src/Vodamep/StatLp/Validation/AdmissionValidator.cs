@@ -36,10 +36,39 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.Valid).SetValidator(new TimestampWithOutTimeValidator());
 
 
+
+            // Gültigkeitsdatum
+
             this.RuleFor(x => x.ValidD)
-                .Must((valid) => ValidateAdmissionDate(parentReport.FromD, valid, parentReport.Institution.Id))
-                .WithName(this.displayNameResolver.GetDisplayName(nameof(Admission)))
-                .WithMessage(x => Validationmessages.AdmissionDateMustBeBetween(x.PersonId, GetEarliestAdmissionIdFromInstitution(parentReport.Institution.Id, parentReport.FromD)));
+                .NotEmpty()
+                .DependentRules(() =>
+                {
+                    // Aufnahmedatum
+
+                    // Nicht leer
+                    this.RuleFor(x => x.PriorAdmission).NotEmpty();
+
+                    // Aufnahmedatum größer als das Gültigkeitsdatum der Aufname
+                    this.RuleFor(x => x.PriorAdmission)
+                        .Must((admission, personId) =>
+                        {
+                            return admission.PriorAdmissionD <= admission.ValidD;
+                        })
+                        .WithMessage(x => Validationmessages.AdmissionDateMustBeLessThanValid(x.PersonId, x.ValidD));
+
+                    // Aufnahmedatum <> Gültigkeitsdatum der Aufnahme
+                    this.RuleFor(x => x.PriorAdmission)
+                        .Must((admission, personId) =>
+                        {
+                            return admission.PriorAdmissionD == admission.ValidD;
+                        })
+                        .WithSeverity(Severity.Warning)
+                        .WithMessage(x => Validationmessages.AdmissionDifferentToValid(x.PersonId, x.ValidD));
+
+                });
+
+
+
 
 
             this.RuleFor(x => x.PersonId)
@@ -132,58 +161,6 @@ namespace Vodamep.StatLp.Validation
                 .WithMessage(Validationmessages.TextAreaEnterAValue);
         }
 
-
-
-
-        /// <summary>
-        /// Prüfung, ob das Aufnahmedatum 
-        /// - im akutellen Monat oder 
-        /// - in einem speziell (evtl. auch nur für diese Einrichtung) definierten Bereich 
-        /// liegen darf
-        /// </summary>
-        private bool ValidateAdmissionDate(DateTime from, DateTime admission, string instituionID)
-        {
-            DateTime earliest = GetEarliestAdmissionIdFromInstitution(instituionID, from);
-
-            // Valid darf auch früher sein, abhängig von der Konfiguration
-            if (admission < earliest)
-            {
-                return false;
-            }
-
-
-            return true;
-        }
-
-
-        /// <summary>
-        /// Mindestdatum für Aufnahmen anhand der Einrichtungs-ID ermitteln
-        /// </summary>
-        /// <remarks>
-        /// Betimmte Einrichtungen dürfen Aufnahmen senden, bei denen das Aufnahmedatum nicht in
-        /// der aktuellen Monatsmeldung liegt.
-        /// Es sind auch Wildcars möglich. Z.B. dürfen die Einrichtungen 07* alle bis zu einem 
-        /// bestimmten Datum senden.
-        /// </remarks>
-        private DateTime GetEarliestAdmissionIdFromInstitution(string institutionId, DateTime from)
-        {
-            if (this.institutionAdmissionValid.ContainsKey(institutionId))
-            {
-                return this.institutionAdmissionValid[institutionId];
-            }
-
-            var wildcardKey = this.institutionAdmissionValid.Keys
-                .Where(x => x.EndsWith("*"))
-                .Select(x => x.Substring(0, x.Length - 1))
-                .FirstOrDefault(x => institutionId.StartsWith(x));
-
-            if (wildcardKey != null)
-            {
-                return this.institutionAdmissionValid[wildcardKey + "*"];
-            }
-
-            return from;
-        }
 
 
         private bool ContainsDoubledValues<T>(IEnumerable<T> values)

@@ -60,6 +60,15 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist nicht gesetzt")]
         public void GivenThePropertyIsDefault(string name, string type)
         {
+            if (type == nameof(Admission) &&
+                name == "valid")
+            { 
+            }
+
+            if (type == nameof(StatLpReport))
+            {
+            }
+
             if (type == nameof(StatLpReport))
                 this.Report.SetDefault(name);
             else if (type == nameof(Admission))
@@ -297,6 +306,14 @@ namespace Vodamep.Specs.StepDefinitions
             var pattern = new Regex(message, RegexOptions.IgnoreCase);
 
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
+        }
+
+        [Then(@"enthält das Validierungsergebnis die Warnung '(.*)'")]
+        public void ThenTheResultContainsAWarning(string message)
+        {
+            var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Warning && pattern.IsMatch(x.ErrorMessage)));
         }
 
         [Then(@"enthält das escapte Validierungsergebnis den Fehler '(.*)'")]

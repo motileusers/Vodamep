@@ -32,8 +32,8 @@ Beispiele:
 
 Szenariogrundriss: Minuten  dürfen nur in 5 Minuten Schritten eingegeben werden
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Minutes dürfen nur in 5 Minuten Schritten eingegeben werden.'
+    Dann enthält das Validierungsergebnis den Fehler 'Leistungszeit von Klient'
+    Und enthält das Validierungsergebnis den Fehler 'darf nur in 5 Minuten Schritten eingegeben werden.'
 Beispiele: 
     | Wert |
     | 1 |
@@ -84,7 +84,8 @@ Szenario: Mehrfache Leistungstypen pro Leistung
 
 Szenario: Doppelte Leistungen innerhalb einer Aktivität
     Angenommen die Leistungstypen 'CareDocumentation,CareDocumentation' sind für eine Aktivität gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität von Klient'
+    Und enthält das Validierungsergebnis den Fehler 'dürfen keine doppelten Leistungstypen vorhanden sein.'
 
 Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt
