@@ -4,7 +4,7 @@ namespace Vodamep.Cm
 {
     public class CmReportFilenameHandler : ReportFilenameHandler
     {
-        public override string GetFileName(IReportBase report, bool asJson, bool compressed = true)
+        public override string GetFileName(IReport report, bool asJson, bool compressed = true)
         {
             var filename = base.GetFileName(report, asJson, compressed);
 

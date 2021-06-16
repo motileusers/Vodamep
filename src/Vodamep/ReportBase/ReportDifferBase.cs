@@ -71,7 +71,7 @@ namespace Vodamep.ReportBase
 
         }
 
-        public List<DiffObject> DiffList(IReportBase report1, IReportBase report2)
+        public List<DiffObject> DiffList(IReport report1, IReport report2)
         {
             var result = new List<DiffObject>();
 

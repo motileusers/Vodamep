@@ -8,16 +8,16 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.Cm.Model
 {
-    public partial class CmReport : IReportBase
+    public partial class CmReport : IReport
     {
         public ReportType ReportType => ReportType.Cm;
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
         public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }
 
-        IInstitution IReportBase.Institution => this.Institution;
+        IInstitution IReport.Institution => this.Institution;
 
-        IList<IPerson> IReportBase.Persons => this.Persons.Select(x => x as IPerson).ToList();
+        IList<IPerson> IReport.Persons => this.Persons.Select(x => x as IPerson).ToList();
 
         public static CmReport ReadFile(string file)
         {

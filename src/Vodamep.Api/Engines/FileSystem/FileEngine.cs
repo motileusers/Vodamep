@@ -42,7 +42,7 @@ namespace Vodamep.Api.Engines.FileSystem
             }
         }
 
-        private void Save(IReportBase report)
+        private void Save(IReport report)
         {
             var (info, lastFilename) = GetLastFile(report.Institution.Id);
 
@@ -66,7 +66,7 @@ namespace Vodamep.Api.Engines.FileSystem
 
         private static Regex _filenamePattern = new Regex(@"^(?<id>\d+)__(?<institution>.+?)_(?<year>\d+)_(?<month>\d+)_(?<hash>.+?)\.(zip|hkpv|json)$");
 
-        private string GetFilename(IReportBase report, int id) => $"{id:00000000}__{new ReportFilenameHandlerFactory().Create(report.ReportType).GetFileName(report, false, true)}";
+        private string GetFilename(IReport report, int id) => $"{id:00000000}__{new ReportFilenameHandlerFactory().Create(report.ReportType).GetFileName(report, false, true)}";
 
         private (ReportInfo info, string filename) GetLastFile(string institution)
         {

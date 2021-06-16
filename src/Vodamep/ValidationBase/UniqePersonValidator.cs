@@ -7,7 +7,7 @@ using Vodamep.ValidationBase;
 namespace Vodamep.ValidationBase
 {
     
-    internal class UniqePersonValidator : AbstractValidator<IReportBase>
+    internal class UniqePersonValidator : AbstractValidator<IReport>
     {
         public UniqePersonValidator()
         {

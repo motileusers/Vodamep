@@ -15,6 +15,7 @@ namespace Vodamep.ValidationBase
         public static string IdIsMissing(string id) => $"Der Id '{id}' fehlt.";
         public static string WithoutEntry(string e, string person, string staff, string date) => $"Kein Eintrag '{e}': bei '{person}', von '{staff}', am '{date}'.";
         public static string WithoutActivity => $"Keine Aktivitäten.";
+        public static string ReportBaseWithoutActivity (string clientOrStaff, string name) => $"Keine Aktivitäten für {clientOrStaff} '{name}'.";
         public static string WithoutPerson => $"Keine Person.";
         public static string WithoutStaff => $"Kein Mitarbeiter.";
         public static string StaffWithoutEmployment => $"Beim Mitarbeiter ist keine Beschäftigung vorhanden";
@@ -39,7 +40,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseMinutesMustBeGreater0 (string propertyName, string clientId) => $"{propertyName} von Klient '{clientId}' muss größer 0 sein.";
         public static string ReportBaseStepWidthWrong (string propertyName, string clientId, int nrOfMinutes) => $"{propertyName} von Klient '{clientId}' darf nur in {nrOfMinutes} Minuten Schritten eingegeben werden.";
         public static string MaxSumOfMinutesPerStaffMemberIs12Hours => "Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht überschreiten.";
-        public static string MaxSumOfMinutesTravelTimesIs10Hours => "Summe Reisezeiten darf 5 Stunden nicht überschreiten.";
+        public static string MaxSumOfMinutesTravelTimesIs10Hours (string staff) => $"Summe Reisezeiten von Mitarbeiter {staff} darf 5 Stunden nicht überschreiten.";
         public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeiten pro Tag erlaubt.";
         public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed (string personId) => $"Innerhalb einer Aktivität von Klient '{personId}' dürfen keine doppelten Leistungstypen vorhanden sein.";
         public static string WithinAnActivityTheValuesAreNotAllowedInCombination(string client, string activityType1, string activityType2) => $"Innerhalb einer Aktivität von Klient '{client}' dürfen nicht gleichzeitg die Leistungstypen '{activityType1}' und '{activityType2}' vorhanden sein.";

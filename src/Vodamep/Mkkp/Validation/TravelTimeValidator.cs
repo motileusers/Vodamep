@@ -2,12 +2,13 @@
 using System.Linq;
 using FluentValidation;
 using Vodamep.Mkkp.Model;
+using Vodamep.ReportBase;
 using Vodamep.ValidationBase;
 
 
 namespace Vodamep.Mkkp.Validation
 {
-    internal class TravelTimeValidator : AbstractValidator<TravelTime>
+    internal class TravelTimeValidator : AbstractValidator<ITravelTime>
     {
         private readonly MkkpReport report;
 

@@ -8,16 +8,16 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.Mohi.Model
 {
-    public partial class MohiReport : IReportBase
+    public partial class MohiReport : IReport
     {
         public ReportType ReportType => ReportType.Mohi;
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
         public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }
 
-        IInstitution IReportBase.Institution => this.Institution;
+        IInstitution IReport.Institution => this.Institution;
 
-        IList<IPerson> IReportBase.Persons => this.Persons.Select(x => x as IPerson).ToList();
+        IList<IPerson> IReport.Persons => this.Persons.Select(x => x as IPerson).ToList();
 
 
         public static MohiReport ReadFile(string file)
