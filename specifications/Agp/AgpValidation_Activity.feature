@@ -12,7 +12,7 @@ Beispiele:
 
 Szenario: Leistungszeit muss > 0 sein 
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+    Dann enthält das Validierungsergebnis den Fehler 'Leistungszeit von Klient '1' muss größer 0 sein.'
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
     Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
@@ -24,7 +24,7 @@ Beispiele:
 Szenariogrundriss: Minuten Werte müssen > 0 sein
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+    Und die Fehlermeldung lautet: 'Leistungszeit von Klient '1' muss größer 0 sein.'
 Beispiele: 
     | Wert |
     | 0 |
@@ -33,7 +33,7 @@ Beispiele:
 Szenariogrundriss: Minuten  dürfen nur in 5 Minuten Schritten eingegeben werden
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Minutes dürfen nur in 5 Minuten Schritten eingegeben werden.'
+    Und die Fehlermeldung lautet: 'Leistungszeit von Klient '1' darf nur in 5 Minuten Schritten eingegeben werden.'
 Beispiele: 
     | Wert |
     | 1 |
@@ -66,7 +66,7 @@ Beispiele:
 
 Szenario: Summe TravelTimes darf 5 Stunden nicht überschreiten
     Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '305' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Summe Reisezeiten darf 5 Stunden nicht überschreiten.'
+    Dann enthält das Validierungsergebnis den Fehler 'Summe Reisezeiten von Mitarbeiter Peter Gruber darf 5 Stunden nicht überschreiten.'
 
 Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
     Angenommen es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen
@@ -84,7 +84,7 @@ Szenario: Mehrfache Leistungstypen pro Leistung
 
 Szenario: Doppelte Leistungen innerhalb einer Aktivität
     Angenommen die Leistungstypen 'CareDocumentation,CareDocumentation' sind für eine Aktivität gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität von Klient '1' dürfen keine doppelten Leistungstypen vorhanden sein.'
 
 Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt
