@@ -46,34 +46,39 @@ message Admission {
 
     Gender gender = 2;
 
-    string last_postcode = 3;				                    // postcode und city müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
+    string last_postcode = 3;				                    // Postcode und City müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
     string last_city = 4;
     string country = 5;                                         // Staatsbürgerschaft, Land aus german-iso-3166.csv
 
-    google.protobuf.Timestamp valid = 6;                        // Aufnahmedatum, wann wurde der Bewohner aufgenommen, immer im akutellen Monat, nur bei Erstmeldungen (vor dem Start der Schnittstelle), Datum wann der Bewohner im Heim ursprünglich aufgenommen wurde
+    google.protobuf.Timestamp valid = 6;                        // Gültigkeitsdatum, ab wann ist diese Aufnahme gültig. Entspricht dem Aufnahmedatum bei allen Meldungen, außer der ersten, initialen Meldung der Bewohner
+                                                                // Beispiel 1: Einrichtung meldet das erste mal seine Bewohner am 31.1.2021. Der Bewohner wurde jedoch ursprünglich am 15.10.2015 aufgenommen. Gültigkeitsdatum: 1.1.2021 (Anfang des Monats)
+                                                                // Beispiel 2: Einrichtung meldet das erste mal seine Bewohner am 31.1.2021. Der Bewohner wurde am 8.1.2021 aufgenommen. Gültigkeitsdatum: 8.1.2021 (= Aufnahmedatum)
+                                                                // Beispiel 3: Alle folgenden Meldungen der Einrichtung: Gültigkeitsdatum entspricht immer dem Aufnahmedatum
 
-    AdmissionLocation housing_type_before_admission = 7;        // 11 Wohnsituation vor der Aufnahme
-    string other_housing_type = 8;                              // Sonstige Lebens-/Betreuungssituation
+    google.protobuf.Timestamp prior_admission = 7;              // (Ursprüngliches) Aufnahmedatum: Wann wurde der Bewohner ursprünglich in der Einrichtung aufgenommen. Siehe Gültigkeitsdatum.
 
-    bool hospital_emergency = 9;                                // 12 Krankenhaus (Akut, vor der Aufnahme)
-    bool aftercare_institution = 10;                            // 13 Nachsorgeeinrichtung (vor der Aufnahme)
-    bool geriatric_rehabilitation = 11;                         // 14 Geriatrische Remobilisation (vor der Aufnahme)
+    AdmissionLocation housing_type_before_admission = 8;        // 11 Wohnsituation vor der Aufnahme
+    string other_housing_type = 9;                              // Sonstige Lebens-/Betreuungssituation
 
-    MainAttendanceRelation main_attendance_relation = 12;       // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
-    MainAttendanceCloseness main_attendance_closeness = 13;     // 22 Räumliche Nähe Hauptbetreuungsperson
+    bool hospital_emergency = 10;                               // 12 Krankenhaus (Akut, vor der Aufnahme)
+    bool aftercare_institution = 11;                            // 13 Nachsorgeeinrichtung (vor der Aufnahme)
+    bool geriatric_rehabilitation = 12;                         // 14 Geriatrische Remobilisation (vor der Aufnahme)
 
-    repeated Service services = 14;                             // 24 Inanspruchnahme anderer Dienste
+    MainAttendanceRelation main_attendance_relation = 13;       // 21 Verwandtschaftsverhältnis Hauptbetreuungspers.
+    MainAttendanceCloseness main_attendance_closeness = 14;     // 22 Räumliche Nähe Hauptbetreuungsperson
 
-    repeated PersonalChange personal_changes = 15;              // 31 Veränderungen persönliche Situation
-    string personal_change_other = 16;                          // Anderer
+    repeated Service services = 15;                             // 24 Inanspruchnahme anderer Dienste
 
-    repeated SocialChange social_changes = 17;                  // 32 Veränderungen nicht bewältigt, weil
-    string social_change_other = 18;                            // Anderer
+    repeated PersonalChange personal_changes = 16;              // 31 Veränderungen persönliche Situation
+    string personal_change_other = 17;                          // Anderer
 
-    HousingReason housing_reason = 19;                          // 33 Wohnraumsituations- und Ausstattungsgründe
-    string housing_reason_other = 20;                           // Anderer
+    repeated SocialChange social_changes = 18;                  // 32 Veränderungen nicht bewältigt, weil
+    string social_change_other = 19;                            // Anderer
 
-    bool finance_personal_contributions = 21;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
+    HousingReason housing_reason = 20;                          // 33 Wohnraumsituations- und Ausstattungsgründe
+    string housing_reason_other = 21;                           // Anderer
+
+    bool finance_personal_contributions = 22;                   // 44 Kontinuierliche Eigenleistungen durch Angehörige bzw. Besucher
 }
 
 // Entlassungs Daten

@@ -129,6 +129,9 @@ namespace Vodamep.Data.Dummy
             if (valid != null)
                 admission.Valid = valid;
 
+            if (valid != null)
+                admission.PriorAdmission = valid;
+
             return admission;
 
         }

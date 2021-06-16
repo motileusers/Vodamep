@@ -30,6 +30,9 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
 
             _dict.Add(nameof(Admission), "Die Aufnahme");
+            _dict.Add(nameof(Admission.Valid), "Gültigkeitsdatum der Aufnahme");
+            _dict.Add(nameof(Admission.ValidD), "Gültigkeitsdatum der Aufnahme");
+            _dict.Add(nameof(Admission.PriorAdmission), "Aufnahmedatum");
             _dict.Add(nameof(Admission.Gender), "Geschlecht");
             _dict.Add(nameof(Admission.Country), "Land");
             _dict.Add(nameof(Admission.HousingTypeBeforeAdmission), "Wohnsituation vor der Aufnahme");
@@ -109,6 +112,11 @@ namespace Vodamep.StatLp.Validation
 
         public string GetDisplayName(string name)
         {
+
+            if (name == "der Aufnahme")
+            {
+            }
+
             if (!string.IsNullOrEmpty(name) && _dict.TryGetValue(name, out string value))
                 return value;
 
@@ -118,6 +126,7 @@ namespace Vodamep.StatLp.Validation
             {
 
             }
+
 
             return name;
         }
