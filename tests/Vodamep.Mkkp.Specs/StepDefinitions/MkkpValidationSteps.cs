@@ -131,7 +131,9 @@ namespace Vodamep.Specs.StepDefinitions
                 throw new NotImplementedException();
 
             var field = m.GetField(name);
-            var ts = (field.Accessor.GetValue(m) as Timestamp) ?? this.Report.From;
+            var ts = (field.Accessor.GetValue(m) as Timestamp);
+
+            if (ts == null) throw new Exception();
 
             ts.Seconds = ts.Seconds + 60 * 60;
             field.Accessor.SetValue(m, ts);

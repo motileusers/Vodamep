@@ -6,7 +6,7 @@ namespace Vodamep.ReportBase
 {
     internal abstract class ActivityReportDifferBase<T>  : ReportDifferBase where T : Enum
     {
-        protected DiffObject DiffActivities(IEnumerable<IActivity<T>> activities1, IEnumerable<IActivity<T>> activities2)
+        protected DiffObject DiffActivities(IEnumerable<IEntriesActivity<T>> activities1, IEnumerable<IEntriesActivity<T>> activities2)
         {
 
             bool isChanged = false;
@@ -58,8 +58,8 @@ namespace Vodamep.ReportBase
                 };
         }
 
-        protected DiffObject DiffActivitiesByActivityType(IEnumerable<IActivity<T>> activities1, IEnumerable<IActivity<T>> activities2,
-            Func<IActivity<T>, bool> activityFilter, Func<IActivity<T>, IActivity<T>, bool> activityFindCriteria, DifferenceIdType differenceIdType)
+        protected DiffObject DiffActivitiesByActivityType(IEnumerable<IEntriesActivity<T>> activities1, IEnumerable<IEntriesActivity<T>> activities2,
+            Func<IEntriesActivity<T>, bool> activityFilter, Func<IEntriesActivity<T>, IEntriesActivity<T>, bool> activityFindCriteria, DifferenceIdType differenceIdType)
         {
             var result = new DiffObject();
             var sum1 = 0;

@@ -53,7 +53,7 @@ namespace Vodamep.Mkkp.Validation
 
             this.Include(new SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator());
 
-            this.RuleForEach(report => report.TravelTimes).SetValidator(r => new TravelTimeValidator());
+            this.RuleForEach(report => report.TravelTimes).SetValidator(r => new TravelTimeValidator(r));
 
             this.Include(new SumOfTravelTimesMustBeLowerThan5HoursValidator());
 

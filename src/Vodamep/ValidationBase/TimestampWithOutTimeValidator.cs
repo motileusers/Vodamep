@@ -11,6 +11,12 @@ namespace Vodamep.ValidationBase
 
         }
 
+        public TimestampWithOutTimeValidator(string propertyName, string client)
+            : base(Validationmessages.ReportBaseDateMustNotHaveTime(propertyName, client))
+        {
+
+        }
+
         protected override bool IsValid(PropertyValidatorContext context)
         {
             if (!(context.PropertyValue is Timestamp ts)) return true;

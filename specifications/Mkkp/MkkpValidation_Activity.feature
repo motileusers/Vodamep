@@ -3,29 +3,32 @@ Funktionalität: Mkkp - Validierung der gemeldeten Aktivitäten der Datenmeldung
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler '<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Aktivität von Klient 'Peter Gruber' darf nicht leer sein.'
 Beispiele:
     | Name              | Bezeichnung     |
     | date              | Datum           |
-    | person_id         | Personen-ID     |
     | staff_id          | Mitarbeiter-ID  |
     | place_of_Action   | Einsatzort      |
+ 
+Szenario: Pesonen ID ist nicht gesetzt
+    Angenommen die Eigenschaft 'person_id' von 'Activity' ist nicht gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Personen-ID' von Aktivität darf nicht leer sein.'
 
 Szenario: Leistungszeit muss > 0 sein 
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+    Dann enthält das Validierungsergebnis den Fehler 'Leistungszeit von Klient 'Peter Gruber' muss größer 0 sein.'
 
-Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
-    Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient 'Peter Gruber' darf keine Uhrzeit beinhalten.'
-Beispiele:
-    | Name | Bezeichnung |
-    | date | Datum       |
+#Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
+#    Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
+#    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient 'Peter Gruber' darf keine Uhrzeit beinhalten.'
+#Beispiele:
+#    | Name | Bezeichnung |
+#    | date | Datum       |
 
 Szenariogrundriss: Minuten Werte müssen > 0 sein
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+    Und die Fehlermeldung lautet: 'Leistungszeit von Klient 'Peter Gruber' muss größer 0 sein.'
 Beispiele: 
     | Wert |
     | 0 |
@@ -58,7 +61,7 @@ Szenario: Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht
 Szenariogrundriss: TravelTime Werte müssen > 0 sein
     Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+    Und die Fehlermeldung lautet: 'Der Wert von'Leistungszeit' von Wegzeit von Mitarbeiter '(.+)' muss größer 0 sein.'
 Beispiele: 
     | Wert |
     | 0 |
@@ -94,15 +97,15 @@ Szenario: Leistung darf bestimmte Kombinationen nicht enhalten
 
 Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt
-   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' darf nicht leer sein.'
+   Dann enthält das Validierungsergebnis den Fehler ''Leistungsbereiche' von Aktivität von Klient 'Peter Gruber' darf nicht leer sein.'
 
 Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
     Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2058-09-29' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss kleiner oder gleich (.*) sein'
+    Dann enthält das Validierungsergebnis den Fehler ''Datum' einer Aktivität von Klient 'Peter Gruber' muss innerhalb des Meldungszeitraums liegen.'
     
 Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
     Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2008-04-30' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss grösser oder gleich (.*) sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''Datum' einer Aktivität von Klient 'Peter Gruber' muss innerhalb des Meldungszeitraums liegen.'
 
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons
     Angenommen die Eigenschaft 'person_id' von 'Activity' ist auf '-1' gesetzt
@@ -122,4 +125,4 @@ Szenario: Eine Mitarbeiterin ohne Aktivität.
 
 Szenario: Einsatzort ist undefiniert
     Angenommen die Eigenschaft 'place_of_Action' von 'Activity' ist auf 'UndefinedPlace' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Einsatzort' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''Einsatzort' von Aktivität von Klient 'Peter Gruber' darf nicht leer sein.'
