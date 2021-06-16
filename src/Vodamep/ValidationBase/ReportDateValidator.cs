@@ -4,7 +4,7 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.ValidationBase
 {
-    internal class ReportDateValidator : AbstractValidator<IReportBase>
+    internal class ReportDateValidator : AbstractValidator<IReport>
     {
         public ReportDateValidator()
         {

@@ -28,7 +28,7 @@ namespace Vodamep.Data.Dummy
 
         }
 
-        public MkkpReport CreateMkkpReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
+        public MkkpReport CreateMkkpReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool useRandomValues = true, bool addActivities = true)
         {
             var report = new MkkpReport()
             {
@@ -42,7 +42,7 @@ namespace Vodamep.Data.Dummy
             report.ToD = report.FromD.LastDateInMonth();
 
             report.AddDummyPersons(persons);
-            report.AddDummyStaffs(staffs);
+            report.AddDummyStaffs(staffs, useRandomValues);
             report.AddDummyTravelTime();
 
             if (addActivities)
@@ -99,24 +99,24 @@ namespace Vodamep.Data.Dummy
                 yield return CreatePerson((i + 1).ToString());
         }
 
-        public Staff CreateStaff(MkkpReport report)
+        public Staff CreateStaff(MkkpReport report, bool useRandomValues)
         {
             var id = (_id++).ToString();
 
             var staff = new Staff
             {
                 Id = id,
-                FamilyName = _familynames[_rand.Next(_familynames.Length)],
-                GivenName = _names[_rand.Next(_names.Length)],
+                FamilyName = useRandomValues ? _familynames[_rand.Next(_familynames.Length)] : _familynames[0],
+                GivenName = useRandomValues ? _names[_rand.Next(_names.Length)] :  _names[0],
             };
 
             return staff;
         }
 
-        public IEnumerable<Staff> CreateStaffs(MkkpReport report, int count)
+        public IEnumerable<Staff> CreateStaffs(MkkpReport report, int count, bool useRandomValues)
         {
             for (var i = 0; i < count; i++)
-                yield return CreateStaff(report);
+                yield return CreateStaff(report, useRandomValues);
         }
         public TravelTime CreateTravelTimes(MkkpReport report)
         {

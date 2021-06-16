@@ -20,6 +20,8 @@ namespace Vodamep.Mkkp.Validation
             _dict.Add(nameof(MkkpReport.From), "Von");
             _dict.Add(nameof(MkkpReport.FromD), "Von");
             _dict.Add(nameof(MkkpReport.Institution), "Einrichtung");
+            _dict.Add(nameof(Activity), "Aktivität");
+            _dict.Add(nameof(Staff), "Mitarbeiter");
 
             _dict.Add(nameof(Person.Id), "ID");
             _dict.Add(nameof(Person.FamilyName), "Familienname");
@@ -54,6 +56,7 @@ namespace Vodamep.Mkkp.Validation
             if (!_dict.ContainsKey(nameof(Activity.Minutes)))
                 _dict.Add(nameof(Activity.Minutes), "Leistungszeit");
 
+            _dict.Add(nameof(TravelTime), "Wegzeit");
             if (!_dict.ContainsKey(nameof(TravelTime.Id)))
                 _dict.Add(nameof(TravelTime.Id), "Wegzeiten-ID");
             if (!_dict.ContainsKey(nameof(TravelTime.Date)))

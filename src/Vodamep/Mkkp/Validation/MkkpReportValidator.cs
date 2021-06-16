@@ -8,7 +8,6 @@ using Vodamep.ValidationBase;
 
 namespace Vodamep.Mkkp.Validation
 {
-
     internal class MkkpReportValidator : AbstractValidator<MkkpReport>
     {
         static MkkpReportValidator()
@@ -53,13 +52,9 @@ namespace Vodamep.Mkkp.Validation
 
             this.Include(new SumOfActivtiesMinutesPerStaffMustBeLowerThan10HoursValidator());
 
-            this.RuleForEach(report => report.TravelTimes).SetValidator(r => new TravelTimeValidator());
-
-            this.Include(new SumOfTravelTimesMustBeLowerThan5HoursValidator());
-
-            this.Include(new OnlyOneTravelTimesEntryPerStaffMemberAndDayValidator());
-
             this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator());
+
+            this.Include(new MkkpReportTravelTimeValidator());
 
             this.Include(new MkkpReportPersonIdValidator());
 

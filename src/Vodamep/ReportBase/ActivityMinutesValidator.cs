@@ -8,7 +8,10 @@ namespace Vodamep.ReportBase
     {
         public ActivityMinutesValidator(string propertyName, string client)
         {
-            this.RuleFor(x => x.Minutes).GreaterThan(0);
+            this.RuleFor(x => x.Minutes)
+                .GreaterThan(0)
+                .WithMessage(x => Validationmessages.ReportBaseMinutesMustBeGreater0(propertyName, client));
+
             this.RuleFor(x => x)
                 .Custom((activity, ctx) =>
                 {

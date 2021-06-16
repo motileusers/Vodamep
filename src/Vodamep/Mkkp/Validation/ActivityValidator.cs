@@ -19,28 +19,22 @@ namespace Vodamep.Mkkp.Validation
 
             this.mkkpReport = report;
 
-            this.RuleFor(x => x.Date).NotEmpty();
+            this.RuleFor(x => x.StaffId).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.StaffId)), displayNameResolver.GetDisplayName(nameof(Activity)), this.GetClient(x.PersonId)));
+            this.RuleFor(x => x.PlaceOfAction).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.PlaceOfAction)), displayNameResolver.GetDisplayName(nameof(Activity)), this.GetClient(x.PersonId)));
+            this.RuleFor(x => x.Entries).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Entries)), displayNameResolver.GetDisplayName(nameof(Activity)), this.GetClient(x.PersonId)));
+            this.RuleFor(x => x.Date).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Date)), displayNameResolver.GetDisplayName(nameof(Activity)), this.GetClient(x.PersonId)));
 
-            this.RuleFor(x => x.Date)
-                .SetValidator(new TimestampWithOutTimeValidator())
-                .Unless(x => x.Date == null)
-                .WithMessage(x => Validationmessages.ReportBaseDateMustNotHaveTime(this.GetClient(x.PersonId)));
+            this.RuleFor(x => x.DateD)
+                .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
+                    this.GetClient(x.PersonId), from, to, x.Date));
 
+            this.RuleFor(x => x.PersonId).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithParentProperty(displayNameResolver.GetDisplayName(nameof(x.PersonId)), displayNameResolver.GetDisplayName(nameof(Activity))));
 
-            if (from != DateTime.MinValue)
-            {
-                this.RuleFor(x => x.DateD).GreaterThanOrEqualTo(from).Unless(x => x.Date == null);
-            }
-            if (to > from)
-            {
-                this.RuleFor(x => x.DateD).LessThanOrEqualTo(to).Unless(x => x.Date == null);
-            }
-
-            this.RuleFor(x => x.StaffId).NotEmpty();
-
-            this.RuleFor(x => x.PersonId).NotEmpty();
-
-            this.RuleFor(x => x.Entries).NotEmpty();
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
                 var entries = x.Entries;
@@ -67,22 +61,6 @@ namespace Vodamep.Mkkp.Validation
             });
 
             this.RuleFor(x => x).SetValidator(x => new ActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(x.Minutes)), this.GetClient(x.PersonId)));
-
-            //this.RuleFor(x => x.Minutes).GreaterThan(0);
-            //this.RuleFor(x => x)
-            //    .Custom((activity, ctx) =>
-            //    {
-            //        var activityMinutes = activity.Minutes;
-
-            //        if (activityMinutes > 0 && activityMinutes % 5 != 0)
-            //        {
-            //            var client = this.GetClient(activity.PersonId);
-            //            ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.ReportBaseStepWidthWrong(this.GetClient(client), 5)));
-            //        }
-            //    });
-
-            this.RuleFor(x => x.PlaceOfAction).NotEmpty();
-
         }
 
         private string GetClient(string id)

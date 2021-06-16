@@ -13,11 +13,11 @@ namespace Vodamep.Api
 {
     public class ReportFactory
     {
-        public IReportBase Create(ReportType reportType, Stream reportStream)
+        public IReport Create(ReportType reportType, Stream reportStream)
         {
             var bytes = this.Convert(reportStream);
 
-            IReportBase report = null;
+            IReport report = null;
 
             //#extend 
             switch (reportType)

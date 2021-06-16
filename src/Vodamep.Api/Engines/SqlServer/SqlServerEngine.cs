@@ -63,7 +63,7 @@ namespace Vodamep.Api.Engines.SqlServer
             }
         }
 
-        private void Save(IReportBase report)
+        private void Save(IReport report)
         {
             if (_authContext?.Principal == null)
             {
@@ -92,7 +92,7 @@ namespace Vodamep.Api.Engines.SqlServer
             }
         }
 
-        private void SaveReport(SqlConnection connection, IReportBase report, ReportInfo info, int institutionId,
+        private void SaveReport(SqlConnection connection, IReport report, ReportInfo info, int institutionId,
             string state)
         {
             using (var ms = report.WriteToStream(asJson: false, compressed: true))

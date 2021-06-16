@@ -32,7 +32,7 @@ namespace Vodamep.Specs.StepDefinitions
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
             var date = DateTime.Today.AddMonths(-1);
-            this.Report = MkkpDataGenerator.Instance.CreateMkkpReport("", date.Year, date.Month, 1, 1, false);
+            this.Report = MkkpDataGenerator.Instance.CreateMkkpReport("", date.Year, date.Month, 1, 1, false, false);
 
             this.AddDummyActivity(Report.Persons[0].Id, Report.Staffs[0].Id);
         }
@@ -109,7 +109,7 @@ namespace Vodamep.Specs.StepDefinitions
         {
             var s0 = this.Report.Staffs[0];
 
-            var s = this.Report.AddDummyStaff();
+            var s = this.Report.AddDummyStaff(true);
 
             s.Id = s0.Id;
         }
@@ -131,7 +131,9 @@ namespace Vodamep.Specs.StepDefinitions
                 throw new NotImplementedException();
 
             var field = m.GetField(name);
-            var ts = (field.Accessor.GetValue(m) as Timestamp) ?? this.Report.From;
+            var ts = (field.Accessor.GetValue(m) as Timestamp);
+
+            if (ts == null) throw new Exception();
 
             ts.Seconds = ts.Seconds + 60 * 60;
             field.Accessor.SetValue(m, ts);

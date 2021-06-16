@@ -29,9 +29,9 @@ namespace Vodamep.Data.Dummy
             return s;
         }
 
-        public static Staff[] AddDummyStaffs(this AgpReport report, int count)
+        public static Staff[] AddDummyStaffs(this AgpReport report, int count, bool useRandomValues = true)
         {
-            var s = AgpDataGenerator.Instance.CreateStaffs(report, count).ToArray();
+            var s = AgpDataGenerator.Instance.CreateStaffs(report, count, useRandomValues).ToArray();
             report.Staffs.AddRange(s);
             return s;
         }

@@ -20,7 +20,7 @@ namespace Vodamep.Api
 {
     public class VodamepValidator
     {
-        public async Task<Tuple<bool, string>> Validate(IReportBase report)
+        public async Task<Tuple<bool, string>> Validate(IReport report)
         {
             //#extend 
             if (report is AgpReport agpReport)

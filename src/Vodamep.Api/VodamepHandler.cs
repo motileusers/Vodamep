@@ -124,7 +124,7 @@ namespace Vodamep.Api
 
             _logger?.LogInformation("Reading data.");
 
-            IReportBase report;
+            IReport report;
 
             try
             {

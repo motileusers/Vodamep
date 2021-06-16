@@ -5,7 +5,7 @@ using Google.Protobuf.WellKnownTypes;
 
 namespace Vodamep.ReportBase
 {
-    public interface IReportBase
+    public interface IReport
     {
         ReportType ReportType { get; }
         DateTime FromD { get; }
@@ -18,5 +18,6 @@ namespace Vodamep.ReportBase
         string GetSHA256Hash();
 
         IList<IPerson> Persons { get; }
+      
     }
 }
