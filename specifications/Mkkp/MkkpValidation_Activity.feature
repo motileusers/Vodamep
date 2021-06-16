@@ -61,7 +61,7 @@ Szenario: Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht
 Szenariogrundriss: TravelTime Werte müssen > 0 sein
     Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Der Wert von'Leistungszeit' von Wegzeit von Mitarbeiter '(.+)' muss größer 0 sein.'
+    Und die Fehlermeldung lautet: 'Der Wert von'Leistungszeit' von Wegzeit von Mitarbeiter 'Peter Gruber' muss größer 0 sein.'
 Beispiele: 
     | Wert |
     | 0 |
