@@ -57,8 +57,10 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 Szenario: Doppelte Aufnahme
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '2020-12-20'
+	Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' enthält eine 'Admission' von Person 1 vom '2021-01-01'
+	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Dann enthält das History Validierungsergebnis den Fehler 'Für Klient '1' wurde bereits eine Aufnahme am '20.12.2020' gesendet'
 
 Szenario: Fehlende Aufnahme vor Aufenthalt
@@ -87,9 +89,9 @@ Szenario: Erneute Aufnahme mit fehlender Entlassung
    	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
 	Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021 und ist eine Standard Meldung und enthält einen Aufenthalt
 	Angenommen Gesendete Meldung '3' gilt vom '01.02.2021' bis '28.02.2021'
-	Angenommen Gesendete Meldung '3' gilt vom '01.02.2021' bis '28.02.2021'
 	Angenommen Gesendete Meldung '3' enthält eine 'Admission' von Person 1 vom '01.02.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Aufnahme von Klient '1' am '01.02.2021' nicht möglich, weil keine Entlassung gesendet wurde.'
+	Angenommen Gesendete Meldung '3' enthält einen Aufenthalt von Person 1 vom '01.02.2021' bis '28.02.2021'
+	Dann enthält das History Validierungsergebnis den Fehler 'Für Klient '1' wurde bereits eine Aufnahme am '20.12.2020' gesendet.'
 
 # Gleiche Attribute
 Szenario: Gleiche Aufnahmeart
@@ -314,5 +316,6 @@ Szenario: Änderung bei Geburtsdatum
 	Angenommen Existierende Meldung '1' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung '1': die Eigenschaft 'birthday' von 'Person' ist auf '1935-01-01' gesetzt
 	Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
+	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2': die Eigenschaft 'birthday' von 'Person' ist auf '1934-01-01' gesetzt
 	Dann enthält das History Validierungsergebnis den Fehler 'Unterschied bei 'Geburtsdatum' von Klient 1 bei Meldung vom 01.01.2021'

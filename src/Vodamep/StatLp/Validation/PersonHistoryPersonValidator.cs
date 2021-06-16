@@ -22,13 +22,6 @@ namespace Vodamep.StatLp.Validation
                 List<Person> personListFull = a.StatLpReports.SelectMany(x => x.Persons).ToList();
                 List<string> personIdsFull = personListFull.Select(b => b.Id).Distinct().ToList();
 
-                if (a.StatLpReports.Count() > 100)
-                {
-              
-                
-                }
-
-
                 var messages = new List<StatLpReport>();
                 messages.Add(a.StatLpReport);
                 messages.AddRange(a.StatLpReports);
@@ -51,12 +44,10 @@ namespace Vodamep.StatLp.Validation
 
                     if (changedGenders.Count() > 1)
                     {
-                        {
-                            ctx.AddFailure(nameof(Admission.Gender),
-                                Validationmessages.StatLpReportPersonHistoryGenderAttributeChanged(
-                                    displayNameResolver.GetDisplayName(nameof(Admission.Gender)), personId,
-                                    a.StatLpReport.FromD.ToShortDateString()));
-                        }
+                        ctx.AddFailure(nameof(Admission.Gender),
+                            Validationmessages.StatLpReportPersonHistoryGenderAttributeChanged(
+                                displayNameResolver.GetDisplayName(nameof(Admission.Gender)), personId,
+                                a.StatLpReport.FromD.ToShortDateString()));
                     }
                 }
             });

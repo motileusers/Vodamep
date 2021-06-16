@@ -39,7 +39,7 @@ namespace Vodamep.Client
         /// - Wildcard * möglich
         /// - Oder einzelnes File
         /// </summary>
-        private string[] GetFiles(string filePattern)
+        protected string[] GetFiles(string filePattern)
         {
             var wildcard = filePattern.IndexOf("*");
 

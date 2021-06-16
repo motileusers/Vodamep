@@ -79,28 +79,54 @@ namespace Vodamep.Client
 
         protected override void ValidateHistory(ValidateHistoryArgs args, string[] files)
         {
-            List<StatLpReport> reports = new List<StatLpReport>();
+            List<StatLpReport> historyReports = new List<StatLpReport>();
 
             foreach (string file in files)
             {
-                var report = ReadReport(file);
-                reports.Add(report);
+                StatLpReport report = ReadReport(file);
+                historyReports.Add(report);
             }
 
             // der Reihenfolge nach sortieren
-            reports = reports.OrderBy(x => x.From).ToList();
+            historyReports = historyReports.OrderBy(x => x.From).ToList();
+
 
             // Es gibt immer einen aktiven Report, der mit einer Geschichte an Reports
-            // geprüft wird. In unserem Fall ist das dann immer der letzte, den wir finden.
-            StatLpReport reportToValidate = ReadReport(args.File);
-            reports.Remove(reportToValidate);
+            // geprüft wird. Wir können aber viele Reports gegen die Historie prüfen lasen.
+            List<StatLpReport> validateReports = new List<StatLpReport>();
 
-            var result = reportToValidate.ValidateHistory(reports);
+            string[] checkFiles = GetFiles(args.File);
+            foreach (string file in checkFiles)
+            {
+                StatLpReport report = ReadReport(file);
+                validateReports.Add(report);
+            }
 
-            var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
-            var message = formatter.Format(reportToValidate, result);
+            validateReports = validateReports.OrderBy(x => x.FromD).ToList();
 
-            Console.WriteLine(message);
+            foreach (StatLpReport report in validateReports)
+            {
+                var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
+                string message = "";
+
+                List<StatLpReport> previousReports = historyReports.Where(x => x.FromD < report.FromD).ToList();
+
+                if (previousReports.Count > 0)
+                {
+                    var result = report.ValidateHistory(previousReports);
+
+                    message = formatter.Format(report, result);
+
+                }
+                else
+                {
+                    message = formatter.Format(report, null);
+                }
+
+                Console.WriteLine(message);
+
+            }
+
         }
 
 

@@ -21,34 +21,43 @@ namespace Vodamep.StatLp.Validation
 
             result.Append(_template.Header(report, validationResult));
 
-            var severities = validationResult.Errors
-                .Where(x => !_ignoreWarnings || x.Severity == FluentValidation.Severity.Error)
-                .OrderBy(x => x.Severity)
-                .GroupBy(x => x.Severity);
-
-            foreach (var severity in severities)
+            if (validationResult == null)
             {
-                result.Append(_template.HeaderSeverity(GetSeverityName(severity.Key)));
-
-                var entries = severity.Select(x => new
-                {
-                    Info = this.GetInfo(report, x.PropertyName),
-                    Message = x.ErrorMessage,
-                    Value = x.AttemptedValue?.ToString()
-                }).ToArray();
-
-                foreach (var groupedInfos in entries.OrderBy(x => x.Info).GroupBy(x => x.Info))
-                {
-                    result.Append(_template.FirstLine((groupedInfos.Key, groupedInfos.First().Message, groupedInfos.First().Value)));
-
-                    foreach (var info in groupedInfos.Skip(1))
-                    {
-                        result.Append(_template.Line((info.Message, info.Value)));
-                    }
-                }
-
-                result.Append(_template.FooterSeverity(severity.ToString()));
+                result.Append(_template.Line(("Keine Prüfung", "Keine Prüfungsresultat verfügbar.")));
             }
+            else
+            {
+
+                var severities = validationResult.Errors
+                    .Where(x => !_ignoreWarnings || x.Severity == FluentValidation.Severity.Error)
+                    .OrderBy(x => x.Severity)
+                    .GroupBy(x => x.Severity);
+
+                foreach (var severity in severities)
+                {
+                    result.Append(_template.HeaderSeverity(GetSeverityName(severity.Key)));
+
+                    var entries = severity.Select(x => new
+                    {
+                        Info = this.GetInfo(report, x.PropertyName),
+                        Message = x.ErrorMessage,
+                        Value = x.AttemptedValue?.ToString()
+                    }).ToArray();
+
+                    foreach (var groupedInfos in entries.OrderBy(x => x.Info).GroupBy(x => x.Info))
+                    {
+                        result.Append(_template.FirstLine((groupedInfos.Key, groupedInfos.First().Message, groupedInfos.First().Value)));
+
+                        foreach (var info in groupedInfos.Skip(1))
+                        {
+                            result.Append(_template.Line((info.Message, info.Value)));
+                        }
+                    }
+
+                    result.Append(_template.FooterSeverity(severity.ToString()));
+                }
+            }
+
             return result.ToString();
         }
 
