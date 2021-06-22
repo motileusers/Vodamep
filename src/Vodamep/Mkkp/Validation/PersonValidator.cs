@@ -10,20 +10,20 @@ namespace Vodamep.Mkkp.Validation
     {
         public PersonValidator()
         {
-            this.RuleFor(x => x.FamilyName).NotEmpty();
-            this.RuleFor(x => x.GivenName).NotEmpty();
+            //this.RuleFor(x => x.FamilyName).NotEmpty();
+            //this.RuleFor(x => x.GivenName).NotEmpty();
             this.RuleFor(x => x.Referrer).NotEmpty();
             this.RuleFor(x => x.HospitalDoctor).NotEmpty();
             this.RuleFor(x => x.LocalDoctor).NotEmpty();
             
             // Änderung 5.11.2018, LH
             var r = new Regex(@"^[\p{L}][-\p{L}. ]*[\p{L}.]$");
-            this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
-            this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
+            //this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
+            //this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
             this.RuleFor(x => x.HospitalDoctor).Matches(r).Unless(x => string.IsNullOrEmpty(x.HospitalDoctor));
             this.RuleFor(x => x.LocalDoctor).Matches(r).Unless(x => string.IsNullOrEmpty(x.LocalDoctor));
 
-            this.Include(new PersonBirthdayValidator());
+            //this.Include(new PersonBirthdayValidator());
 
             this.RuleFor(x => x.Insurance).NotEmpty();
             this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<InsuranceCodeProvider>());

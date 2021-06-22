@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Mkkp.Model;
@@ -47,6 +48,8 @@ namespace Vodamep.Mkkp.Validation
                 .WithMessage(Validationmessages.FirstDateInMonth);
 
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(@"^[\p{L}][-\p{L}. ]*[\p{L}.]$", -1, -1, -1, -1));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(new DateTime(1900, 01, 01)));
 
             this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r, r.FromD, r.ToD));
 

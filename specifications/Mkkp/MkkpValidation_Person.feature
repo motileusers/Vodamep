@@ -9,16 +9,16 @@ Szenario: Es wurde ein ungültiger Ort angegeben.
 
 Szenario: Das Geburtsdatum darf nicht in der Zukunft liegen.
     Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '2058-04-30' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Geburtsdatum' darf nicht in der Zukunft liegen.'
+    Dann enthält das Validierungsergebnis den Fehler ''Geburtsdatum' von Klient 'Peter Gruber' darf nicht in der Zukunft liegen.'
 
 #todo: >30 Jahre <heute
 Szenario: Das Geburtsdatum darf nicht vor 1900 liegen.
     Angenommen die Eigenschaft 'birthday' von 'Person' ist auf '1899-12-31' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Geburtsdatum' muss grösser oder gleich .*'
+    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Geburtsdatum' von Klient 'Peter Gruber' muss grösser oder gleich .*'
 
 Szenario: PersonId ist nicht eindeutig.
     Angenommen der Id einer Person ist nicht eindeutig
-    Dann enthält das Validierungsergebnis den Fehler 'Der Id ist nicht eindeutig.'
+    Dann enthält das Validierungsergebnis den Fehler 'Der Id von Klient 'Peter Gruber' ist nicht eindeutig.'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
@@ -36,7 +36,14 @@ Beispiele:
     | hospital_doctor       | Betreuender Arzt (Krankenhaus)                |
     | local_doctor          | Betreuender Arzt (Niedergelassener Bereich)   |
 
-
+Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
+    Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
+    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' darf nicht leer sein.'
+Beispiele:
+    | Name                  | Bezeichnung                                   |
+    | family_name           | Familienname                                  |
+    | given_name            | Vorname                                       |
+ 
 Szenariogrundriss: Eine Eigenschaft vom Report mit einem ungültigen Wert gesetzt.
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
@@ -70,7 +77,7 @@ Beispiele:
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
     Angenommen die Datums-Eigenschaft '<Name>' von 'Person' hat eine Uhrzeit gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient 'Peter Gruber' darf keine Uhrzeit beinhalten.'
 Beispiele:
     | Name     | Bezeichnung  |
     | birthday | Geburtsdatum |
