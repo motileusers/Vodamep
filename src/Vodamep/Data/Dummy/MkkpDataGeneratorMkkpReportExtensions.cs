@@ -22,7 +22,7 @@ namespace Vodamep.Data.Dummy
 
         public static Staff AddDummyStaff(this MkkpReport report, bool useRandomValues)
         {
-            var s = MkkpDataGenerator.Instance.CreateStaff(report, useRandomValues);
+            var s = MkkpDataGenerator.Instance.CreateStaff(report, null, useRandomValues);
 
             report.Staffs.Add(s);
             return s;

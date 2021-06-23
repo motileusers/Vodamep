@@ -99,9 +99,9 @@ namespace Vodamep.Data.Dummy
                 yield return CreatePerson((i + 1).ToString());
         }
 
-        public Staff CreateStaff(MkkpReport report, bool useRandomValues)
+        public Staff CreateStaff(MkkpReport report, string id,  bool useRandomValues)
         {
-            var id = (_id++).ToString();
+            id = string.IsNullOrWhiteSpace(id) ? (_id++).ToString() : id;
 
             var staff = new Staff
             {
@@ -116,7 +116,7 @@ namespace Vodamep.Data.Dummy
         public IEnumerable<Staff> CreateStaffs(MkkpReport report, int count, bool useRandomValues)
         {
             for (var i = 0; i < count; i++)
-                yield return CreateStaff(report, useRandomValues);
+                yield return CreateStaff(report, (i+1).ToString(), useRandomValues);
         }
         public TravelTime CreateTravelTimes(MkkpReport report)
         {

@@ -23,6 +23,7 @@ namespace Vodamep.Mkkp.Validation
             _dict.Add(nameof(Activity), "Aktivität");
             _dict.Add(nameof(Staff), "Mitarbeiter");
 
+            _dict.Add(nameof(Person), "Klient");
             _dict.Add(nameof(Person.Id), "ID");
             _dict.Add(nameof(Person.FamilyName), "Familienname");
             _dict.Add(nameof(Person.GivenName), "Vorname");
