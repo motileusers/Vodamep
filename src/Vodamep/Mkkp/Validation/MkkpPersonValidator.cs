@@ -28,11 +28,11 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.LocalDoctor).Matches(r).Unless(x => string.IsNullOrEmpty(x.LocalDoctor)).WithMessage(x => Validationmessages.ReportBasePropertyInvalidFormat(x.GetDisplayName()));
 
             this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<InsuranceCodeProvider>());
-
+         
             this.RuleFor(x => $"{x.Postcode} {x.City}")
                 .SetValidator(new CodeValidator<Postcode_CityProvider>())
                 .Unless(x => string.IsNullOrEmpty(x.City) || string.IsNullOrEmpty(x.Postcode))
-                .WithMessage(Validationmessages.InvalidPostCode_City);
+                .WithMessage(x => Validationmessages.ReportBaseInvalidPostCodeCity(x.GetDisplayName()));
 
             this.RuleFor(x => x.OtherReferrer).NotEmpty()
                 .When(y => y.Referrer == Referrer.OtherReferrer)

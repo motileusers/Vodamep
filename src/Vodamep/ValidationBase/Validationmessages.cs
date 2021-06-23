@@ -32,7 +32,9 @@ namespace Vodamep.ValidationBase
         public static string LastDateInMonth => "'{PropertyName}' muss der letzte Tag des Monats sein.";
         public static string FirstDateInMonth => "'{PropertyName}' muss der erste Tag des Monats sein.";
         public static string InvalidCode => "Für '{PropertyName}' ist '{PropertyValue}' kein gültiger Code.";
+        public static string ReportBaseInvalidCode (string client) => $"Für '{{PropertyName}}' von Klient '{client}' ist '{{PropertyValue}}' kein gültiger Code.";
         public static string InvalidPostCode_City => "'{PropertyValue}' ist kein gültiger Ort.";
+        public static string ReportBaseInvalidPostCodeCity (string client) => "'{PropertyValue}' ist kein gültiger Ort von Klient 'Peter Gruber'.";
         public static string ReportBaseReferrerIsOtherRefererrerThenOtherReferrerMustBeSet (string client) => $"Wenn der Zuweiser von Klient '{client}' ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.";
         public static string DoubledDiagnosisGroups (string client) => $"Es dürfen keine doppelten Diagnosegruppen für Klient '{client}' vorhanden sein.";
         public static string OnlyONePalliativeDiagnosisGroup (string client) => $"Es darf nur eine Palliativ Diagnose Gruppe für Klient '{client}' vorhanden sein.";
