@@ -4,21 +4,21 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.ValidationBase
 {
-    internal class PersonNameValidator : AbstractValidator<INamedPerson>
+    internal class StaffNameValidator : AbstractValidator<IStaff>
     {
-        public PersonNameValidator(string localizedPerson, string nameRegex,int minLengthGivenName, int maxLengthGivenName, int minLengthFamilyName, int maxLengthFamilyName)
+        public StaffNameValidator(string propertyName, string nameRegex, int minLengthGivenName, int maxLengthGivenName, int minLengthFamilyName, int maxLengthFamilyName)
         {
-            this.RuleFor(x => x.FamilyName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
-            this.RuleFor(x => x.GivenName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
+            this.RuleFor(x => x.FamilyName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(propertyName, x.Id));
+            this.RuleFor(x => x.GivenName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty( propertyName, x.Id));
 
             var r = new Regex(nameRegex);
             this.RuleFor(x => x.FamilyName)
                 .Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName))
-                .WithMessage(x => Validationmessages.ReportBasePropertyInvalidFormat( localizedPerson, x.GetDisplayName()));
+                .WithMessage(x => Validationmessages.ReportBasePropertyInvalidFormat(propertyName, x.GetDisplayName()));
 
             this.RuleFor(x => x.GivenName)
                 .Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName))
-                .WithMessage(x => Validationmessages.ReportBasePropertyInvalidFormat(localizedPerson, x.GetDisplayName()));
+                .WithMessage(x => Validationmessages.ReportBasePropertyInvalidFormat(propertyName, x.GetDisplayName()));
 
             if (minLengthGivenName > 0)
             {

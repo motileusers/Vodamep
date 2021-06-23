@@ -4,7 +4,7 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.ValidationBase
 {
-    internal class CountryValidator : AbstractValidator<INamedPerson>
+    internal class CountryValidator : AbstractValidator<ICountryPerson>
     {
         public CountryValidator()
         {

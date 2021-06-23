@@ -12,13 +12,15 @@ namespace Vodamep.Tb.Validation
 
     internal class TbReportValidator : AbstractValidator<TbReport>
     {
+        private static readonly DisplayNameResolver DisplayNameResolver;
+
         static TbReportValidator()
         {
             var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
             if (isGerman)
             {
-                var loc = new DisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
+                DisplayNameResolver = new DisplayNameResolver();
+                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => DisplayNameResolver.GetDisplayName(memberInfo?.Name);
             }
         }
         public TbReportValidator()
@@ -30,7 +32,7 @@ namespace Vodamep.Tb.Validation
             var earliestBirthday = new DateTime(1890, 01, 01);
             var nameRegex = "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$";
             this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(earliestBirthday));
-            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex, 2, 30, 2, 50));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(DisplayNameResolver.GetDisplayName(nameof(Person)), nameRegex, 2, 30, 2, 50));
             this.RuleForEach(report => report.Persons).SetValidator(new TbPersonValidator());
             this.RuleForEach(report => report.Persons).SetValidator(x => new UniqePersonValidatorWithClientId(x.Persons));
             this.RuleForEach(report => report.Persons).SetValidator(x => new PersonHasOnlyOneActivtyValidator(x.Activities));

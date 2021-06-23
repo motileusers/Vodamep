@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Mkkp.Model;
@@ -10,13 +11,14 @@ namespace Vodamep.Mkkp.Validation
 {
     internal class MkkpReportValidator : AbstractValidator<MkkpReport>
     {
+        private static readonly MkkpDisplayNameResolver DisplayNameResolver;
         static MkkpReportValidator()
         {
             var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
             if (isGerman)
             {
-                var loc = new MkkpDisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
+                DisplayNameResolver = new MkkpDisplayNameResolver();
+                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => DisplayNameResolver.GetDisplayName(memberInfo?.Name);
             }
         }
         public MkkpReportValidator()
@@ -46,7 +48,9 @@ namespace Vodamep.Mkkp.Validation
                 .Unless(x => x.From == null)
                 .WithMessage(Validationmessages.FirstDateInMonth);
 
-            this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(new MkkpPersonValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(DisplayNameResolver.GetDisplayName(nameof(Person)), @"^[\p{L}][-\p{L}. ]*[\p{L}.]$", -1, -1, -1, -1));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(new DateTime(1900, 01, 01)));
 
             this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r, r.FromD, r.ToD));
 

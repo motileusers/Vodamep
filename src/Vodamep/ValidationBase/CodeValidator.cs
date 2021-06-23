@@ -12,6 +12,12 @@ namespace Vodamep.ValidationBase
 
         }
 
+        public CodeValidator(string client)
+            : base(Validationmessages.ReportBaseInvalidCode (client))
+        {
+
+        }
+
         protected override bool IsValid(PropertyValidatorContext context)
         {
 

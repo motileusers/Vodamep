@@ -11,13 +11,15 @@ namespace Vodamep.Mohi.Validation
 
     internal class MohiReportValidator : AbstractValidator<MohiReport>
     {
+        private static readonly DisplayNameResolver DisplayNameResolver;
+
         static MohiReportValidator()
         {
             var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
             if (isGerman)
             {
-                var loc = new DisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
+                DisplayNameResolver = new DisplayNameResolver();
+                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => DisplayNameResolver.GetDisplayName(memberInfo?.Name);
             }
         }
         public MohiReportValidator()
@@ -31,7 +33,7 @@ namespace Vodamep.Mohi.Validation
             var earliestBirthday = new DateTime(1890, 01, 01);
             var nameRegex = "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$";
             this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(earliestBirthday));
-            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(nameRegex, 2, 30, 2, 50));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(DisplayNameResolver.GetDisplayName(nameof(Person)), nameRegex, 2, 30, 2, 50));
             this.RuleForEach(report => report.Persons).SetValidator(new MohiPersonValidator());
             this.RuleForEach(report => report.Persons).SetValidator(x => new PersonHasOnlyOneActivtyValidator(x.Activities));
 
