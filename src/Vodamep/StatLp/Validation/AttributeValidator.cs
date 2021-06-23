@@ -10,7 +10,7 @@ namespace Vodamep.StatLp.Validation
 
     internal class AttributeValidator : AbstractValidator<Attribute>
     {
-        private static readonly DisplayNameResolver DisplayNameResolver = new DisplayNameResolver();
+        private static readonly DisplayNameResolver displayNameResolver = new DisplayNameResolver();
 
         public AttributeValidator(StatLpReport parentReport)
         {
@@ -30,7 +30,7 @@ namespace Vodamep.StatLp.Validation
 
                 return true;
 
-            }).WithName(DisplayNameResolver.GetDisplayName(nameof(Attribute)))
+            }).WithName(displayNameResolver.GetDisplayName(nameof(Attribute)))
               .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
 
 
@@ -57,7 +57,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(DisplayNameResolver.GetDisplayName(x.AttributeType.ToString()), x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithString(displayNameResolver.GetDisplayName(x.AttributeType.ToString()), x.PersonId));
 
             this.RuleFor(x => x)
                 .Must((attribute, personId) =>
@@ -80,8 +80,8 @@ namespace Vodamep.StatLp.Validation
 
                 })
                 .WithMessage(x => Validationmessages.StatLpReportAttributeWrongValue(
-                   DisplayNameResolver.GetDisplayName(x.AttributeType.ToString()),
-                    DisplayNameResolver.GetDisplayName(x.Value)));
+                   displayNameResolver.GetDisplayName(x.AttributeType.ToString()),
+                    displayNameResolver.GetDisplayName(x.Value)));
 
         }
     }

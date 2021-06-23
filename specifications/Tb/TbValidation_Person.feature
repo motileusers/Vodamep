@@ -33,7 +33,7 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 # Regex "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$"
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
 	Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' weist ein ungültiges Format auf.'
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Person '1' weist ein ungültiges Format auf.'
 
 	Beispiele:
 		| Name        | Bezeichnung  | Wert |
