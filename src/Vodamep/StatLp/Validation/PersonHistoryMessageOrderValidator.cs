@@ -13,12 +13,18 @@ namespace Vodamep.StatLp.Validation
         private DisplayNameResolver displayNameResolver = new DisplayNameResolver();
 
 
+
+        /// <summary>
+        /// Prüfung der Reihenfolge und Datumsabhängikeiten von Aufnahmen, Entlassungen, Attributen, ...
+        /// </summary>
         public PersonHistoryMessageOrderValidator()
         {
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
                 var sentReport = x.StatLpReport;
 
+
+                // Fehlende Meldungen in der Historie ermitteln
                 var futureMessages = x.StatLpReports.Where(y => y.FromD >= x.StatLpReport.FromD).OrderBy(y => y.FromD);
                 var nextFutureMessage = futureMessages.FirstOrDefault();
                 var historyMessages = x.StatLpReports.Where(y => y.FromD <= x.StatLpReport.FromD)
@@ -36,101 +42,9 @@ namespace Vodamep.StatLp.Validation
                     }
                 }
 
-                var personHistories = new List<PersonHistory>();
 
-                foreach (var person in sentReport.Persons)
-                {
-                    if (person.Id == "1097070658")
-                    {
-                    }
-
-                    var personHistory = new PersonHistory();
-                    personHistory.PersonId = person.Id;
-
-                    var admissions = new List<Admission>();
-                    var stays = new List<Stay>();
-                    var leavings = new List<Leaving>();
-                    var attributes = new List<Model.Attribute>();
-
-                    // Wir sammeln alle Aufnahmen, Aufnahmen und Enlassungen pro Person und sortieren nach Aufnahmedatum
-                    foreach (var existingReport in x.StatLpReports.OrderBy(sl => sl.FromD))
-                    {
-                        admissions.AddRange(existingReport.Admissions.Where(ad => ad.PersonId == person.Id));
-                        stays.AddRange(existingReport.Stays.Where(ad => ad.PersonId == person.Id));
-                        leavings.AddRange(existingReport.Leavings.Where(ad => ad.PersonId == person.Id));
-                        attributes.AddRange(existingReport.Attributes.Where(ad => ad.PersonId == person.Id));
-                    }
-
-                    personHistory.Admissions.AddRange(admissions.OrderByDescending(st => st.ValidD));
-                    personHistory.Stays.AddRange(stays.OrderByDescending(st => st.FromD));
-                    personHistory.Leavings.AddRange(leavings.OrderByDescending(st => st.ValidD));
-                    personHistory.Attributes.AddRange(attributes.OrderByDescending(st => st.FromD));
-
-                    personHistories.Add(personHistory);
-                }
-
-
-                // Personengeschichten erzeugen
-                foreach (PersonHistory personHistory in personHistories)
-                {
-                    DateTime currentDate = sentReport.ToD;
-
-                    // Monatsübergreifende Aufenthalte erzeugen
-                    while (true)
-                    {
-                        StayInfo stayInfo = GetStayInfo(currentDate, personHistory, sentReport);
-
-                        if (stayInfo == null)
-                            // Kein weiterer Stay mehr
-                            break;
-                        else
-                        {
-                            // Alles ok, hinzufügen
-                            personHistory.StayInfos.Add(stayInfo);
-
-                            // Nächsten Stay
-                            currentDate = stayInfo.From.AddDays(-1);
-
-                        }
-
-
-                        // Sicherheitsbreak
-                        if (personHistory.StayInfos.Count > 1000)
-                            throw new Exception("Problem im Loop");
-                    }
-
-
-                    // Aufenthalte verketten, damit auf den vorherigen Aufenthalt zugegriffen werden kann
-                    // Zusatzinformationen ermitteln
-                    for (int i = 0; i < personHistory.StayInfos.Count; i++)
-                    {
-                        StayInfo currentStay = personHistory.StayInfos[i];
-
-                        AddAdmissionsToStayInfo(currentStay, personHistory, sentReport);
-                        AddLeavingsToStayInfo(currentStay, personHistory, sentReport);
-
-                        // Wenn ein vorheriger Aufenthalt existiert
-                        // = nächster in der Liste
-                        if (i < personHistory.StayInfos.Count - 1)
-                        {
-                            // Nur beim letzten nicht
-                            StayInfo previousStay = personHistory.StayInfos[i + 1];
-                            currentStay.PreviousStay = previousStay;
-                        }
-                    }
-
-                    // Vorherigen Aufenthalt zuweisen
-                    for (int i = 0; i < personHistory.StayInfos.Count; i++)
-                    {
-                        if (i > 0)
-                        {
-                            StayInfo currentStay = personHistory.StayInfos[i];
-                            currentStay.NextStay = personHistory.StayInfos[i - 1];
-                        }
-
-                    }
-                }
-
+                // Personengeschichten mit monatsübergreifende Aufenthalte erzeugen
+                List<PersonHistory> personHistories = CreatePersonHistories(x.StatLpReport, x.StatLpReports);
 
 
 
@@ -271,133 +185,120 @@ namespace Vodamep.StatLp.Validation
                     }
                 }
 
+            });
+        }
 
 
 
-                return;
+        /// <summary>
+        /// Objekt mit Personengeschichten erstellen
+        /// </summary>
+        private List<PersonHistory> CreatePersonHistories(StatLpReport sentReport, IEnumerable<StatLpReport> existingReports)
+        {
+            List<PersonHistory> personHistories = new List<PersonHistory>();
 
+            // Wir schauen nur die Personen aus dem aktuellen Report an
+            foreach (var person in sentReport.Persons)
+            {
+                var personHistory = new PersonHistory();
+                personHistory.PersonId = person.Id;
 
-                // Wir prüfen die Personengeschichte pro Person
-                foreach (PersonHistory personHistory in personHistories)
+                var admissions = new List<Admission>();
+                var stays = new List<Stay>();
+                var leavings = new List<Leaving>();
+                var attributes = new List<Model.Attribute>();
+
+                // Wir sammeln alle Aufnahmen, Aufnahmen und Enlassungen pro Person und sortieren nach Aufnahmedatum
+                foreach (var existingReport in existingReports.OrderBy(sl => sl.FromD))
                 {
+                    admissions.AddRange(existingReport.Admissions.Where(ad => ad.PersonId == person.Id));
+                    stays.AddRange(existingReport.Stays.Where(ad => ad.PersonId == person.Id));
+                    leavings.AddRange(existingReport.Leavings.Where(ad => ad.PersonId == person.Id));
+                    attributes.AddRange(existingReport.Attributes.Where(ad => ad.PersonId == person.Id));
+                }
 
-                    // Zuerst schauen wir uns die Aufnahmen, in der aktuellen Meldung an
-                    Admission sentMessageAdmission = sentReport.Admissions.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
-                    Stay sentMessageStay = sentReport.Stays.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
-                    Leaving sentMessageLeaving = sentReport.Leavings.FirstOrDefault(a => a.PersonId == personHistory.PersonId);
+                personHistory.Admissions.AddRange(admissions.OrderByDescending(st => st.ValidD));
+                personHistory.Stays.AddRange(stays.OrderByDescending(st => st.FromD));
+                personHistory.Leavings.AddRange(leavings.OrderByDescending(st => st.ValidD));
+                personHistory.Attributes.AddRange(attributes.OrderByDescending(st => st.FromD));
+
+                personHistories.Add(personHistory);
+            }
+
+            CreateMonthlyStays(personHistories, sentReport);
 
 
-                    Admission admission = null;
-                    Leaving leaving = null;
+            return personHistories;
+        }
 
-                    if (sentMessageStay != null)
+
+
+        /// <summary>
+        /// Monatsübergreifende Aufenhalte erzeugen
+        /// </summary>
+        private void CreateMonthlyStays(List<PersonHistory> personHistories, StatLpReport sentReport)
+        {
+            // Monatsübergreifende Aufenthalte erzeugen
+            foreach (PersonHistory personHistory in personHistories)
+            {
+                DateTime currentDate = sentReport.ToD;
+
+                while (true)
+                {
+                    // Liefert eine monatsübergreifenden Aufenthalt
+                    StayInfo stayInfo = GetStayInfo(currentDate, personHistory, sentReport);
+
+                    if (stayInfo == null)
+                        // Kein weiterer Stay mehr
+                        break;
+                    else
                     {
-                        // Die Aufnahme erfolgte in diesem Monat
-                        if (sentMessageAdmission != null &&
-                            sentMessageAdmission.ValidD == sentMessageStay.FromD)
-                        {
-                            admission = sentMessageAdmission;
-                        }
+                        // Alles ok, hinzufügen
+                        personHistory.StayInfos.Add(stayInfo);
 
-                        // Ganzen Aufenhaltszeitraum für den letzten Aufenthalt ermitteln
-                        StayInfo stayInfo = GetStayInfo(sentMessageStay.ToD, personHistory, sentReport);
-
-                        if (stayInfo != null)
-                        {
-                            if (sentMessageLeaving != null && sentMessageLeaving.ValidD == stayInfo.To)
-                            {
-                                leaving = sentMessageLeaving;
-                            }
-
-                            if (leaving == null)
-                            {
-                                leaving = personHistory.Leavings.FirstOrDefault(l => l.ValidD == stayInfo.To);
-                            }
-                        }
-
-                        if (admission == null && stayInfo != null)
-                        {
-                            // Wir suchen die letzte Admission, vor dem eigentlichen Aufenthaltstart
-                            List<Admission> admissions = personHistory.Admissions.OrderBy(a => a.ValidD).ToList();
-                            foreach (Admission currentAdmission in admissions)
-                            {
-                                if (currentAdmission.ValidD == stayInfo.From)
-                                {
-                                    // Das Aufnahmedatum entspricht dem Stay, akuteller Ansatz,
-                                    // für alle neuen, ab jetzt gemeldeten Nachrichten
-                                    admission = currentAdmission;
-                                }
-
-                            }
-                        }
-
-                        // Doppelte Aufnahmen
-                        //if (sentMessageAdmission != null && personHistory.Admissions.Any())
-                        //{
-                        //    ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                        //            Validationmessages.StatLpReportAlreadyExistingAdmission(
-                        //                personHistory.PersonId,
-                        //                personHistory.Admissions.First().ValidD.ToShortDateString()
-                        //            )));
-
-                        //}
-
-
-
-                        // Erneute Aufnahmen
-                        if (sentMessageAdmission != null)
-                        {
-                            if (personHistory.PersonId == "1097070658")
-                            {
-                            }
-
-
-                            StayInfo previousEnduringStay = GetStayInfo(stayInfo.From.AddDays(-1), personHistory, sentReport);
-
-                            if (previousEnduringStay != null && sentMessageAdmission.ValidD > previousEnduringStay.To)
-                            {
-                                Leaving leavingResentMessage = sentMessageLeaving;
-
-                                if (leavingResentMessage == null || leavingResentMessage.ValidD != previousEnduringStay.To)
-                                {
-                                    leavingResentMessage = personHistory.Leavings.FirstOrDefault(l => l.ValidD == previousEnduringStay.To);
-                                }
-
-                                if (leavingResentMessage == null)
-                                {
-                                    // fehlende Aufnahme
-                                    ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                                        Validationmessages.StatLpReportNoLeavingWhenAdmissionIsResent(
-                                            personHistory.PersonId,
-                                            sentMessageAdmission.ValidD.ToShortDateString()
-                                        )));
-                                }
-                            }
-
-                        }
-
-                        if (admission == null)
-                        {
-                            // Leermeldungen ignorieren
-                            if ((sentMessageAdmission != null || personHistory.Admissions.Any()) ||
-                                (sentMessageStay != null || personHistory.Stays.Any()) ||
-                                (sentMessageLeaving != null || personHistory.Leavings.Any()))
-                            {
-                                DateTime date = stayInfo != null ? stayInfo.From :
-                                    sentMessageStay != null ? sentMessageStay.FromD : DateTime.MinValue;
-
-                                // Fehlende Aufnahme
-                                ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                                    Validationmessages.StatLpReportNoAdmission(
-                                        personHistory.PersonId,
-                                        date.ToShortDateString()
-                                    )));
-                            }
-                        }
+                        // Nächsten Stay
+                        currentDate = stayInfo.From.AddDays(-1);
 
                     }
+
+                    // Sicherheitsbreak
+                    if (personHistory.StayInfos.Count > 1000)
+                        throw new Exception("Problem im Loop");
                 }
-            });
+
+
+                // Aufenthalte verketten, damit auf den vorherigen Aufenthalt zugegriffen werden kann
+                // Zusatzinformationen ermitteln
+                for (int i = 0; i < personHistory.StayInfos.Count; i++)
+                {
+                    StayInfo currentStay = personHistory.StayInfos[i];
+
+                    AddAdmissionsToStayInfo(currentStay, personHistory, sentReport);
+                    AddLeavingsToStayInfo(currentStay, personHistory, sentReport);
+
+                    // Wenn ein vorheriger Aufenthalt existiert
+                    // = nächster in der Liste
+                    if (i < personHistory.StayInfos.Count - 1)
+                    {
+                        // Nur beim letzten nicht
+                        StayInfo previousStay = personHistory.StayInfos[i + 1];
+                        currentStay.PreviousStay = previousStay;
+                    }
+                }
+
+                // Vorherigen Aufenthalt zuweisen
+                for (int i = 0; i < personHistory.StayInfos.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        StayInfo currentStay = personHistory.StayInfos[i];
+                        currentStay.NextStay = personHistory.StayInfos[i - 1];
+                    }
+
+                }
+            }
+
+
         }
 
 
