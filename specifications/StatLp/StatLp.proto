@@ -111,8 +111,8 @@ message Attribute {
 enum AttributeType {
   UNDEFINED_ATTRIBUTE = 0;
   ADMISSION_TYPE = 1;                       // 41 Aufnahmeart
-  CAREALLOWANCE = 2;                        // 05 Bezieht Pflegegeld, 06 Einstufung nach Pflegegeld Gesetz
-  CAREALLOWANCEARGE = 3;                    // 42 Pflegeeinstufung nach Arge
+  CARE_ALLOWANCE = 2;                        // 05 Bezieht Pflegegeld, 06 Einstufung nach Pflegegeld Gesetz
+  CARE_ALLOWANCE_ARGE = 3;                    // 42 Pflegeeinstufung nach Arge
   FINANCE = 4;                              // 43 Finanzierung Selbstzahler/Sozialhilfe
 }
 

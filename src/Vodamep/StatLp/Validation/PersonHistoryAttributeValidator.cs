@@ -28,31 +28,6 @@ namespace Vodamep.StatLp.Validation
                         ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeMultipleChanged(group.PersonId, group.FromD.ToShortDateString(), group.AttributeType.ToString()));
                     }
                 }
-
-
-
-                // Letzte Nachricht suchen
-                var lastMessage = a.StatLpReports.Where(b => b.FromD <= a.StatLpReport.FromD).OrderByDescending(y => y.FromD).FirstOrDefault();
-
-                if (lastMessage == null)
-                {
-                    return;
-                }
-
-                //attributes must not be resend
-                foreach (var sendMessageAttribute in sendMessage.Attributes)
-                {
-                    var lastMessageAttribute = lastMessage.Attributes.FirstOrDefault(c =>
-                        sendMessageAttribute.PersonId == c.PersonId && sendMessageAttribute.AttributeType == c.AttributeType);
-
-                    if (lastMessageAttribute != null && sendMessageAttribute.Value == lastMessageAttribute.Value)
-                    {
-                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAttributeAlreadySent(displayNameResolver.GetDisplayName(sendMessageAttribute.AttributeType.ToString()),
-                            sendMessageAttribute.PersonId,
-                            displayNameResolver.GetDisplayName(sendMessageAttribute.Value),
-                            lastMessageAttribute.FromD.ToShortDateString()));
-                    }
-                }
             });
         }
     }

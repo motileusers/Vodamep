@@ -12,5 +12,9 @@ namespace Vodamep.StatLp.Validation
         public List<Stay> Stays { get; private set; } = new List<Stay>();
 
         public List<Leaving> Leavings { get; private set; } = new List<Leaving>();
+
+        public List<StayInfo> StayInfos { get; private set; } = new List<StayInfo>();
+
+        public List<Attribute> Attributes { get; private set; } = new List<Attribute>();
     }
 }

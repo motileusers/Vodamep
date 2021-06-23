@@ -16,10 +16,23 @@ namespace Vodamep.StatLp.Validation
         {
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
 
-            this.RuleFor(x => x.From)
-                .Must(x => parentReport.From <= x && x <= parentReport.To)
-                .WithName(DisplayNameResolver.GetDisplayName(nameof(Attribute)))
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
+            this.RuleFor(x => x.FromD).Must(x =>
+            {
+                if (x < parentReport.FromD)
+                {
+                    return false;
+                }
+
+                if (x > parentReport.ToD)
+                {
+                    return false;
+                }
+
+                return true;
+
+            }).WithName(DisplayNameResolver.GetDisplayName(nameof(Attribute)))
+              .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
+
 
             this.RuleFor(x => x.PersonId)
                 .Must((attribute, personId) =>
@@ -55,9 +68,9 @@ namespace Vodamep.StatLp.Validation
                             return false;
                         case AttributeType.AdmissionType:
                             return Enum.TryParse(attribute.Value, out AdmissionType admissionType);
-                        case AttributeType.Careallowance:
+                        case AttributeType.CareAllowance:
                             return Enum.TryParse(attribute.Value, out CareAllowance careAllowance);
-                        case AttributeType.Careallowancearge:
+                        case AttributeType.CareAllowanceArge:
                             return Enum.TryParse(attribute.Value, out CareAllowanceArge careAllowanceArge);
                         case AttributeType.Finance:
                             return Enum.TryParse(attribute.Value, out Finance finance);

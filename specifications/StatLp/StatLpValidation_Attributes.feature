@@ -21,7 +21,7 @@ Szenario: Von darf keine Zeit beinhalten
 # - innerhalb der Connexia Logik
 
 Szenario: Pflegegeld ist undefiniert
-	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'Careallowance' gesetzt
+	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'CareAllowance' gesetzt
 	Angenommen die Eigenschaft 'value' von 'Attribute' ist auf 'UndefinedAllowance' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Pflegestufe' von Klient '1' darf nicht leer sein.'
 
@@ -37,21 +37,21 @@ Szenariogrundriss: Attributewert stimmt mit AttributTyp zusammen
 		| AdmissionType     | Covid19RespiteAt          |
 		| AdmissionType     | GeriatricRemobilizationAt |
 		| AdmissionType     | CareTransitionAt          |
-		| Careallowance     | L1                        |
-		| Careallowance     | L2                        |
-		| Careallowance     | L3                        |
-		| Careallowance     | L4                        |
-		| Careallowance     | L5                        |
-		| Careallowance     | L6                        |
-		| Careallowance     | L7                        |
-		| Careallowancearge | L0Ar                      |
-		| Careallowancearge | L1Ar                      |
-		| Careallowancearge | L2Ar                      |
-		| Careallowancearge | L3Ar                      |
-		| Careallowancearge | L4Ar                      |
-		| Careallowancearge | L5Ar                      |
-		| Careallowancearge | L6Ar                      |
-		| Careallowancearge | L7Ar                      |
+		| CareAllowance     | L1                        |
+		| CareAllowance     | L2                        |
+		| CareAllowance     | L3                        |
+		| CareAllowance     | L4                        |
+		| CareAllowance     | L5                        |
+		| CareAllowance     | L6                        |
+		| CareAllowance     | L7                        |
+		| CareAllowanceArge | L0Ar                      |
+		| CareAllowanceArge | L1Ar                      |
+		| CareAllowanceArge | L2Ar                      |
+		| CareAllowanceArge | L3Ar                      |
+		| CareAllowanceArge | L4Ar                      |
+		| CareAllowanceArge | L5Ar                      |
+		| CareAllowanceArge | L6Ar                      |
+		| CareAllowanceArge | L7Ar                      |
 		| Finance           | SelfFi                    |
 		| Finance           | SocialAssistanceFi        |
 		| Finance           | SocialAssistanceClaimFi   |
@@ -63,12 +63,12 @@ Szenariogrundriss: Attributewert stimmt nicht mit AttributTyp zusammen
 
 	Beispiele:
 		| AttributeType     | Wert                      | Fehler                                                                                                                                   |
-		| Careallowance     | ContinuousAt              | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Daueraufnahme' gesetzt werden.                               |
-		| Careallowance     | HolidayAt                 | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Urlaub von der Pflege' gesetzt werden.                       |
-		| Careallowance     | TransitionalAt            | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Übergangspflege' gesetzt werden.                             |
-		| Careallowance     | Covid19RespiteAt          | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'COVID-19 Entlastungspflege' gesetzt werden.                  |
-		| Careallowance     | GeriatricRemobilizationAt | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Geriatrische Remobilisation' gesetzt werden.                 |
-		| Careallowance     | CareTransitionAt          | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Überleitungspflege' gesetzt werden.                          |
+		| CareAllowance     | ContinuousAt              | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Daueraufnahme' gesetzt werden.                               |
+		| CareAllowance     | HolidayAt                 | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Urlaub von der Pflege' gesetzt werden.                       |
+		| CareAllowance     | TransitionalAt            | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Übergangspflege' gesetzt werden.                             |
+		| CareAllowance     | Covid19RespiteAt          | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'COVID-19 Entlastungspflege' gesetzt werden.                  |
+		| CareAllowance     | GeriatricRemobilizationAt | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Geriatrische Remobilisation' gesetzt werden.                 |
+		| CareAllowance     | CareTransitionAt          | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Überleitungspflege' gesetzt werden.                          |
 		| AdmissionType     | L1                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 1' gesetzt werden.                               |
 		| AdmissionType     | L2                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 2' gesetzt werden.                               |
 		| AdmissionType     | L3                        | Der Wert des Attributs mit dem Typen 'Aufnahmeart' kann nicht auf den Wert 'Stufe 3' gesetzt werden.                               |
@@ -84,9 +84,9 @@ Szenariogrundriss: Attributewert stimmt nicht mit AttributTyp zusammen
 		| Finance           | L5Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 6' gesetzt werden.                              |
 		| Finance           | L6Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 7' gesetzt werden.                              |
 		| Finance           | L7Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 8' gesetzt werden.                              |
-		| Careallowancearge | SelfFi                    | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Selbst/Angehörige 100 %' gesetzt werden.                |
-		| Careallowancearge | SocialAssistanceFi        | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherung' gesetzt werden.                       |
-		| Careallowancearge | SocialAssistanceClaimFi   | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherungsantrag in Bearbeitung' gesetzt werden. |
+		| CareAllowanceArge | SelfFi                    | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Selbst/Angehörige 100 %' gesetzt werden.                |
+		| CareAllowanceArge | SocialAssistanceFi        | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherung' gesetzt werden.                       |
+		| CareAllowanceArge | SocialAssistanceClaimFi   | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherungsantrag in Bearbeitung' gesetzt werden. |
 
 Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
     Angenommen das Attribut '<Name>' fehlt
@@ -94,8 +94,8 @@ Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
 Beispiele:
     | Name              | Bezeichnung        |
     | AdmissionType     | Aufnahmeart        |
-    | Careallowance     | Pflegestufe        |
-    | Careallowancearge | Pflegestufe (Arge) |
+    | CareAllowance     | Pflegestufe        |
+    | CareAllowanceArge | Pflegestufe (Arge) |
     | Finance           | Finanzierung       |
 
 Szenario: Mehrfache Attribute

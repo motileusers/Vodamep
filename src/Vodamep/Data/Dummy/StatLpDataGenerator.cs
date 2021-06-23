@@ -123,7 +123,7 @@ namespace Vodamep.Data.Dummy
                 SocialChanges = { SocialChange.MissingMealsSc },
                 SocialChangeOther = "",
                 Country = "AT",
-                Gender = (Gender)GetRandomEnum(typeof(Gender)),
+                Gender = Gender.MaleGe,
             };
 
             if (valid != null)
@@ -170,14 +170,14 @@ namespace Vodamep.Data.Dummy
             var careAllowanceAttribute = new Attribute();
             careAllowanceAttribute.FromD = admission.ValidD;
             careAllowanceAttribute.PersonId = admission.PersonId;
-            careAllowanceAttribute.AttributeType = AttributeType.Careallowance;
+            careAllowanceAttribute.AttributeType = AttributeType.CareAllowance;
             careAllowanceAttribute.Value = CareAllowance.L1.ToString();
             attributes.Add(careAllowanceAttribute);
 
             var careAllowanceArgeAttribute = new Attribute();
             careAllowanceArgeAttribute.FromD = admission.ValidD;
             careAllowanceArgeAttribute.PersonId = admission.PersonId;
-            careAllowanceArgeAttribute.AttributeType = AttributeType.Careallowancearge;
+            careAllowanceArgeAttribute.AttributeType = AttributeType.CareAllowanceArge;
             careAllowanceArgeAttribute.Value = CareAllowanceArge.L1Ar.ToString();
             attributes.Add(careAllowanceArgeAttribute);
 
