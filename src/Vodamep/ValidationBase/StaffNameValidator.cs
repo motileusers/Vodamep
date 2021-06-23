@@ -8,8 +8,8 @@ namespace Vodamep.ValidationBase
     {
         public StaffNameValidator(string propertyName, string nameRegex, int minLengthGivenName, int maxLengthGivenName, int minLengthFamilyName, int maxLengthFamilyName)
         {
-            this.RuleFor(x => x.FamilyName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty2(propertyName, x.Id));
-            this.RuleFor(x => x.GivenName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty2( propertyName, x.Id));
+            this.RuleFor(x => x.FamilyName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(propertyName, x.Id));
+            this.RuleFor(x => x.GivenName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty( propertyName, x.Id));
 
             var r = new Regex(nameRegex);
             this.RuleFor(x => x.FamilyName)
