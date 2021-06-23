@@ -33,10 +33,10 @@ namespace Vodamep.ValidationBase
         public static string FirstDateInMonth => "'{PropertyName}' muss der erste Tag des Monats sein.";
         public static string InvalidCode => "Für '{PropertyName}' ist '{PropertyValue}' kein gültiger Code.";
         public static string InvalidPostCode_City => "'{PropertyValue}' ist kein gültiger Ort.";
-        public static string ReferrerIsOtherRefererreThenOtherReferrerMustBeSet => "Wenn der Zuweiser ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.";
-        public static string DoubledDiagnosisGroups => "Es dürfen keine doppelten Diagnosegruppen vorhanden sein.";
-        public static string OnlyONePalliativeDiagnosisGroup => "Es darf nur eine Palliativ Diagnose Gruppe vorhanden sein.";
-        public static string AtLeastOneDiagnosisGroup => "Es muss mindestens eine Diagnosegruppe vorhanden sein.";
+        public static string ReportBaseReferrerIsOtherRefererrerThenOtherReferrerMustBeSet (string client) => $"Wenn der Zuweiser von Klient '{client}' ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.";
+        public static string DoubledDiagnosisGroups (string client) => $"Es dürfen keine doppelten Diagnosegruppen für Klient '{client}' vorhanden sein.";
+        public static string OnlyONePalliativeDiagnosisGroup (string client) => $"Es darf nur eine Palliativ Diagnose Gruppe für Klient '{client}' vorhanden sein.";
+        public static string AtLeastOneDiagnosisGroup (string client) => $"Es muss mindestens eine Diagnosegruppe für Klient '{client}' vorhanden sein.";
         public static string ReportBaseMinutesMustBeGreater0 (string propertyName, string clientId) => $"{propertyName} von Klient '{clientId}' muss größer 0 sein.";
         public static string ReportBaseStepWidthWrong (string propertyName, string clientId, int nrOfMinutes) => $"{propertyName} von Klient '{clientId}' darf nur in {nrOfMinutes} Minuten Schritten eingegeben werden.";
         public static string MaxSumOfMinutesPerStaffMemberIs12Hours => "Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht überschreiten.";

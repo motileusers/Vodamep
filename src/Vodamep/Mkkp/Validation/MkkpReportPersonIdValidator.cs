@@ -19,7 +19,7 @@ namespace Vodamep.Mkkp.Validation
                     {
                         var item = list.Where(x => x.Id == id.Key).First();
                         var index = list.IndexOf(item);
-                        ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Persons)}[{index}]", Validationmessages.IdIsNotUnique));
+                        ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Persons)}[{index}]", Validationmessages.ReportBaseIdIsNotUnique(id.Key)));
                     }
                 });
 

@@ -18,31 +18,23 @@ Szenario: Das Geburtsdatum darf nicht vor 1900 liegen.
 
 Szenario: PersonId ist nicht eindeutig.
     Angenommen der Id einer Person ist nicht eindeutig
-    Dann enthält das Validierungsergebnis den Fehler 'Der Id von Klient 'Peter Gruber' ist nicht eindeutig.'
+    Dann enthält das Validierungsergebnis den Fehler 'Die Id von Klient '1' ist nicht eindeutig.'
 
-Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
+Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt 1
     Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '<NewName>' darf nicht leer sein.'
 Beispiele:
-    | Name                  | Bezeichnung                                   |
-    | family_name           | Familienname                                  |
-    | given_name            | Vorname                                       |
-    | birthday              | Geburtsdatum                                  |
-    | insurance             | Versicherung                                  |
-    | postcode              | Plz                                           |
-    | city                  | Ort                                           |
-    | gender                | Geschlecht                                    |    
-    | referrer              | Zuweiser                                      |
-    | hospital_doctor       | Betreuender Arzt (Krankenhaus)                |
-    | local_doctor          | Betreuender Arzt (Niedergelassener Bereich)   |
-
-Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
-    Angenommen die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' darf nicht leer sein.'
-Beispiele:
-    | Name                  | Bezeichnung                                   |
-    | family_name           | Familienname                                  |
-    | given_name            | Vorname                                       |
+    | Name                  | Bezeichnung                                   | NewName       |
+    | birthday              | Geburtsdatum                                  | Peter Gruber  |
+    | family_name           | Familienname                                  | 1             |
+    | given_name            | Vorname                                       | 1             |
+    | insurance             | Versicherung                                  | Peter Gruber  |
+    | postcode              | Plz                                           | Peter Gruber  |
+    | city                  | Ort                                           | Peter Gruber  |
+    | gender                | Geschlecht                                    | Peter Gruber  |
+    | referrer              | Zuweiser                                      | Peter Gruber  |
+    | hospital_doctor       | Betreuender Arzt (Krankenhaus)                | Peter Gruber  |
+    | local_doctor          | Betreuender Arzt (Niedergelassener Bereich)   | Peter Gruber  |
  
 Szenariogrundriss: Eine Eigenschaft vom Report mit einem ungültigen Wert gesetzt.
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
@@ -54,13 +46,13 @@ Beispiele:
 
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' weist ein ungültiges Format auf.'
+    Dann enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '<NewName>' weist ein ungültiges Format auf.'
 Beispiele: 
-    | Name              | Bezeichnung                                   | Wert |
-    | family_name       | Familienname                                  | t@st |
-    | given_name        | Vorname                                       | t@st |
-    | hospital_doctor   | Betreuender Arzt (Krankenhaus)                | t@st |
-    | local_doctor      | Betreuender Arzt (Niedergelassener Bereich)   | t@st |
+    | Name              | Bezeichnung                                   | Wert | NewName      |
+    | family_name       | Familienname                                  | t@st | Peter t@st   |
+    | given_name        | Vorname                                       | t@st | t@st Gruber  |
+    | hospital_doctor   | Betreuender Arzt (Krankenhaus)                | t@st | Peter Gruber |
+    | local_doctor      | Betreuender Arzt (Niedergelassener Bereich)   | t@st | Peter Gruber |
 
 	
 Szenariogrundriss: Der Name einer Person enthält ein spezielles, aber gültiges Zeichen
@@ -85,35 +77,35 @@ Beispiele:
 Szenario: Der Zuweiser ist 'Anderer', dann muss 'Anderer Zuweiser' befüllt sein
     Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'OtherReferrer' gesetzt
     Und die Eigenschaft 'other_referrer' von 'Person' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Wenn der Zuweiser ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Wenn der Zuweiser von Klient 'Peter Gruber' ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.'
 
 Szenario: Zuweiser ist undefiniert
     Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'UndefinedReferrer' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Zuweiser' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''Zuweiser' von Klient 'Peter Gruber' darf nicht leer sein.'
 
 Szenario: Geschlecht ist undefiniert
     Angenommen die Eigenschaft 'gender' von 'Person' ist auf 'UndefinedGender' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Geschlecht' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''Geschlecht' von Klient 'Peter Gruber' darf nicht leer sein.'
 
 Szenario: Pflegegeld ist undefiniert
     Angenommen die Eigenschaft 'care_allowance' von 'Person' ist auf 'UndefinedAllowance' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' von Klient 'Peter Gruber' darf nicht leer sein.'
 
 Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
     Angenommen die Diagnose(n) ist auf 'GeneticDisease, GeneticDisease' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen für Klient 'Peter Gruber' vorhanden sein.'
 
 Szenario: Es muss mindestens eine Diagnosegruppe vorhanden sein
     Angenommen die Diagnose(n) ist auf '' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe für Klient 'Peter Gruber' vorhanden sein.'
 
 Szenario: Es muss mindestens eine Diagnosegruppe vorhanden sein 2
     Angenommen die Diagnose(n) ist auf 'UndefinedDiagnosisGroup' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe für Klient 'Peter Gruber' vorhanden sein.'
 
 Szenariogrundriss: Es darf nur eine Pallativ Diagnosegruppe vorhanden sein
     Angenommen die Diagnose(n) ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Es darf nur eine Palliativ Diagnose Gruppe vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Es darf nur eine Palliativ Diagnose Gruppe für Klient 'Peter Gruber' vorhanden sein.'
 Beispiele: 
     | Wert                              |
     | PalliativeCare1, PalliativeCare2  |

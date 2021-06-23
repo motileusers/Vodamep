@@ -67,7 +67,7 @@ Beispiele:
 Szenario: Der Zuweiser ist 'Anderer', dann muss 'Anderer Zuweiser' befüllt sein
     Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'OtherReferrer' gesetzt
     Und die Eigenschaft 'other_referrer' von 'Person' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Wenn der Zuweiser ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Wenn der Zuweiser von Klient '1' ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.'
     
 Szenario: Zuweiser ist undefiniert
     Angenommen die Eigenschaft 'referrer' von 'Person' ist auf 'UndefinedReferrer' gesetzt
@@ -83,8 +83,8 @@ Szenario: Pflegegeld ist undefiniert
 
 Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
     Angenommen die Diagnose(n) ist auf 'AffectiveDisorder, AffectiveDisorder' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Es dürfen keine doppelten Diagnosegruppen für Klient '1' vorhanden sein.'
 
 Szenario: Es muss mindestens eine Diagnosegruppe vorhanden sein
     Angenommen die Diagnose(n) ist auf '' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Es muss mindestens eine Diagnosegruppe für Klient '1' vorhanden sein.'
