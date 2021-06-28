@@ -35,9 +35,9 @@ namespace Vodamep.Data.Dummy
             return s;
         }
 
-        public static TravelTime AddDummyTravelTime(this MkkpReport report)
+        public static TravelTime AddDummyTravelTime(this MkkpReport report, DateTime date)
         {
-            var tt = MkkpDataGenerator.Instance.CreateTravelTimes(report);
+            var tt = MkkpDataGenerator.Instance.CreateTravelTimes(report, date);
             report.TravelTimes.Add(tt);
             return tt;
         }

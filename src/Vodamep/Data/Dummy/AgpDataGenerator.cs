@@ -46,7 +46,7 @@ namespace Vodamep.Data.Dummy
 
             report.AddDummyPersons(persons);
             report.AddDummyStaffs(staffs, useRandomValues);
-            report.AddDummyTravelTime();
+            report.AddDummyTravelTime(from);
 
             if (addActivities)
                 report.AddDummyActivities();
@@ -172,12 +172,12 @@ namespace Vodamep.Data.Dummy
                 yield return CreateStaff(report, useRandomValues);
         }
 
-        public TravelTime CreateTravelTimes (AgpReport report)
+        public TravelTime CreateTravelTimes (AgpReport report, DateTime from)
         {
             var travelTime = new TravelTime
             {
                 Id = "0",
-                DateD = DateTime.Now,
+                DateD = from,
                 Minutes = 125,
                 StaffId = report.Staffs.First().Id,
             };

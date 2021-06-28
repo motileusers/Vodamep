@@ -38,9 +38,9 @@ namespace Vodamep.StatLp.Validation
                             case AttributeType.AdmissionType:
                                 this.CheckAdmissionType(attribute, allMessages.GetRange(i + 1, allMessages.Count - i - 1), ctx);
                                 break;
-                            case AttributeType.Careallowance:
+                            case AttributeType.CareAllowance:
                                 break;
-                            case AttributeType.Careallowancearge:
+                            case AttributeType.CareAllowanceArge:
                                 break;
                             case AttributeType.Finance:
                                 break;

@@ -55,8 +55,8 @@ namespace Vodamep.StatLp.Validation
 
             //enums
             _dict.Add(nameof(AttributeType.AdmissionType), "Aufnahmeart");
-            _dict.Add(nameof(AttributeType.Careallowance), "Pflegestufe");
-            _dict.Add(nameof(AttributeType.Careallowancearge), "Pflegestufe Arge");
+            _dict.Add(nameof(AttributeType.CareAllowance), "Pflegestufe");
+            _dict.Add(nameof(AttributeType.CareAllowanceArge), "Pflegestufe Arge");
             _dict.Add(nameof(AttributeType.Finance), "Finanzierung");
 
             _dict.Add(nameof(Finance.SelfFi), "Selbst/Angehörige 100 %");

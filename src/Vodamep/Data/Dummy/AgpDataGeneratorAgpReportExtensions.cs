@@ -36,9 +36,9 @@ namespace Vodamep.Data.Dummy
             return s;
         }
 
-        public static TravelTime AddDummyTravelTime (this AgpReport report)
+        public static TravelTime AddDummyTravelTime (this AgpReport report, DateTime from)
         {
-            var tt = AgpDataGenerator.Instance.CreateTravelTimes(report);
+            var tt = AgpDataGenerator.Instance.CreateTravelTimes(report, from);
             report.TravelTimes.Add(tt);
             return tt;
         }

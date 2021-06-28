@@ -67,7 +67,7 @@ Beispiele:
 
 Szenario: Summe TravelTimes darf 5 Stunden nicht überschreiten
     Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '305' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Summe Reisezeiten von Mitarbeiter Peter Gruber darf 5 Stunden nicht überschreiten.'
+    Dann enthält das Validierungsergebnis den Fehler 'Summe Reisezeiten von Mitarbeiter Peter Gruber am 01.05.2021 darf 5 Stunden nicht überschreiten.'
 
 Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
     Angenommen es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen

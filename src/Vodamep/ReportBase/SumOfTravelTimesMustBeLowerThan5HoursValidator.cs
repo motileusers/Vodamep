@@ -17,15 +17,27 @@ namespace Vodamep.ReportBase
             this.RuleFor(x => x)
                 .Custom((report, ctx) =>
                 {
-                    foreach (var staff in report.Staffs)
+                    var staffs = report.Staffs;
+                    var travelTimes = report.TravelTimes;
+
+                    var tavelTimesPerStaffId = travelTimes.GroupBy(y => y.StaffId)
+                        .Select((group) => new { Key = group.Key, Items = group.ToList() });
+
+                    foreach (var travelTimeStaffId in tavelTimesPerStaffId)
                     {
-                        var travelTimesPerStaffMember = report.TravelTimes.Where(t => t.StaffId == staff.Id);
+                        var travelTimesPerStaffIdAndDate = travelTimeStaffId.Items.GroupBy(z => z.DateD)
+                            .Select(group => new { Date = group.Key, Items = group.ToList() });
 
-                        var sumOfMinutes = travelTimesPerStaffMember.Sum(x => x.Minutes);
-
-                        if (sumOfMinutes > maxNoOfMinutes)
+                        foreach (var tt in travelTimesPerStaffIdAndDate)
                         {
-                            ctx.AddFailure(new ValidationFailure(propertyName, Validationmessages.MaxSumOfMinutesTravelTimesIs10Hours(this.GetStaff(staff.Id, report))));
+                            var sumOfMinutes = tt.Items.Sum(x => x.Minutes);
+
+                            if (sumOfMinutes > maxNoOfMinutes)
+                            {
+                                var staff = staffs.FirstOrDefault(x => x.Id == travelTimeStaffId.Key);
+
+                                ctx.AddFailure(new ValidationFailure(propertyName, Validationmessages.MaxSumOfMinutesTravelTimesIs10Hours(staff.GetDisplayName() , tt.Date.ToShortDateString())));
+                            }
                         }
                     }
                 });
