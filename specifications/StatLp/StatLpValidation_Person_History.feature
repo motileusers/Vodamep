@@ -20,7 +20,7 @@ Szenario: Gesamter Aufenthalt korrekt in einer Meldung
 	Angenommen Gesendete Meldung '1' enthält eine 'Leaving' von Person 1 vom '31.12.2020'
 	Dann enthält das History Validierungsergebnis keine Fehler
 
-# OK
+# OKDie 
 Szenario: Gesamter Aufenthalt korrekt in 3 Meldungen
 	Angenommen Existierende Meldung '1' gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung '1' enthält eine 'Admission' von Person 1 vom '01.12.2020'
@@ -142,7 +142,7 @@ Szenario: Gleiche Aufnahmeart
 	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'CareAllowance' mit dem Wert 'L2' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Aufnahmeart' von Klient '1' am '01.12.2020' auf 'Daueraufnahme' wurde bereits mit der Meldung am '01.01.2021' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Aufnahmeart' von Klient '1' am '01.01.2021' auf 'Daueraufnahme' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
 # OK
@@ -158,7 +158,7 @@ Szenario: Gleiche Pflegestufe
 	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'CareAllowance' mit dem Wert 'L1' mit Datum '01.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe' von Klient '1' am '01.12.2020' auf 'Stufe 1' wurde bereits mit der Meldung am '01.01.2021' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe' von Klient '1' am '01.01.2021' auf 'Stufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
 # OK
@@ -174,7 +174,7 @@ Szenario: Gleiche Pflegestufe Arge
 	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'CareAllowance' mit dem Wert 'L2' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'CareAllowanceArge' mit dem Wert 'L0Ar' mit Datum '01.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe Arge' von Klient '1' am '01.12.2020' auf 'Stufe 1' wurde bereits mit der Meldung am '01.01.2021' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe Arge' von Klient '1' am '01.01.2021' auf 'Stufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
 # OK
@@ -190,7 +190,7 @@ Szenario: Gleiche Finanzierung
 	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'CareAllowanceArge' mit dem Wert 'L2Ar' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Finanzierung' von Klient '1' am '01.12.2020' auf 'Selbst/Angehörige 100 %' wurde bereits mit der Meldung am '01.01.2021' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Finanzierung' von Klient '1' am '01.01.2021' auf 'Selbst/Angehörige 100 %' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
 # OK
