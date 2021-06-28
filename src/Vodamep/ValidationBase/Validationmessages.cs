@@ -42,6 +42,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseMinutesMustBeGreater0 (string propertyName, string clientId) => $"{propertyName} von Klient '{clientId}' muss größer 0 sein.";
         public static string ReportBaseStepWidthWrong (string propertyName, string clientId, int nrOfMinutes) => $"{propertyName} von Klient '{clientId}' darf nur in {nrOfMinutes} Minuten Schritten eingegeben werden.";
         public static string MaxSumOfMinutesPerStaffMemberIs12Hours => "Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht überschreiten.";
+        public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours (string date) => $"Die Summe der Leistungsminuten des Mitarbeiters am '{date}' darf 12 Stunden nicht überschreiten.";
         public static string MaxSumOfMinutesTravelTimesIs10Hours (string staff) => $"Summe Reisezeiten von Mitarbeiter {staff} darf 5 Stunden nicht überschreiten.";
         public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeiten pro Tag erlaubt.";
         public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed (string personId) => $"Innerhalb einer Aktivität von Klient '{personId}' dürfen keine doppelten Leistungstypen vorhanden sein.";

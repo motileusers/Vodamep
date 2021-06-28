@@ -68,9 +68,9 @@ namespace Vodamep.StatLp.Validation
                             return false;
                         case AttributeType.AdmissionType:
                             return Enum.TryParse(attribute.Value, out AdmissionType admissionType);
-                        case AttributeType.CareAllowance:
+                        case AttributeType.Careallowance:
                             return Enum.TryParse(attribute.Value, out CareAllowance careAllowance);
-                        case AttributeType.CareAllowanceArge:
+                        case AttributeType.Careallowancearge:
                             return Enum.TryParse(attribute.Value, out CareAllowanceArge careAllowanceArge);
                         case AttributeType.Finance:
                             return Enum.TryParse(attribute.Value, out Finance finance);

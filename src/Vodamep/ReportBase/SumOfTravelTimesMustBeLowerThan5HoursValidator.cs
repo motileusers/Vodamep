@@ -19,9 +19,9 @@ namespace Vodamep.ReportBase
                 {
                     foreach (var staff in report.Staffs)
                     {
-                        var travelTimes = report.TravelTimes.Where(t => t.StaffId == staff.Id);
+                        var travelTimesPerStaffMember = report.TravelTimes.Where(t => t.StaffId == staff.Id);
 
-                        var sumOfMinutes = travelTimes.Sum(x => x.Minutes);
+                        var sumOfMinutes = travelTimesPerStaffMember.Sum(x => x.Minutes);
 
                         if (sumOfMinutes > maxNoOfMinutes)
                         {

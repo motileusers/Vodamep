@@ -26,13 +26,19 @@ namespace Vodamep.Mkkp.Validation
 
                     foreach (var activityByStaffId in activitiesByStaffId)
                     {
-                        var sumOfMinutes = activityByStaffId.Items.Sum(x => x.Minutes);
+                        var activitiesPeStaffIdAndDate = activityByStaffId.Items.GroupBy(z => z.DateD)
+                            .Select(group => new {Date = group.Key, Items = group.ToList()});
 
-                        if (sumOfMinutes > maxNoOfMinutes)
+                        foreach (var ac in activitiesPeStaffIdAndDate)
                         {
-                            var staff = staffs.Where(x => x.Id == activityByStaffId.Key).FirstOrDefault();
+                            var sumOfMinutes = ac.Items.Sum(x => x.Minutes);
 
-                            ctx.AddFailure(new ValidationFailure(nameof(MkkpReport.Activities), $"{staff?.FamilyName} {staff?.GivenName}: {Validationmessages.MaxSumOfMinutesPerStaffMemberIs12Hours}"));
+                            if (sumOfMinutes > maxNoOfMinutes)
+                            {
+                                var staff = staffs.FirstOrDefault(x => x.Id == activityByStaffId.Key);
+
+                                ctx.AddFailure(new ValidationFailure(nameof(MkkpReport.Activities), $"{staff?.FamilyName} {staff?.GivenName}: {Validationmessages.ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours(ac.Date.ToShortDateString())}"));
+                            }
                         }
                     }
 

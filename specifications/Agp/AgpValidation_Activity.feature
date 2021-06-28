@@ -53,7 +53,8 @@ Beispiele:
 Szenario: Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht überschreiten
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '725' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht überschreiten.'
+    Und die Fehlermeldung lautet: 'Gruber Peter: Die Summe der Leistungsminuten des Mitarbeiters am '01.05.2021' darf 12 Stunden nicht überschreiten.'
+
 
 Szenariogrundriss: TravelTime Werte müssen > 0 sein
     Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '<Wert>' gesetzt
