@@ -43,7 +43,8 @@ namespace Vodamep.StatLp.Validation
                 }
 
 
-                // Personengeschichten mit monatsübergreifende Aufenthalte erzeugen
+
+                // Personengeschichten mit monatsübergreifenden Aufenthalten erzeugen
                 List<PersonHistory> personHistories = CreatePersonHistories(x.StatLpReport, x.StatLpReports);
 
 
@@ -116,8 +117,8 @@ namespace Vodamep.StatLp.Validation
                                         ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAttributeAlreadySent(displayNameResolver.GetDisplayName(currentAttribute.AttributeType.ToString()),
                                             currentAttribute.PersonId,
                                             displayNameResolver.GetDisplayName(currentAttribute.Value),
-                                            currentAttribute.FromD.ToShortDateString(),
-                                            lastAttribute.FromD.ToShortDateString()));
+                                            lastAttribute.FromD.ToShortDateString(),
+                                            currentAttribute.FromD.ToShortDateString()));
                                     }
 
                                     lastValues[currentAttribute.AttributeType] = currentAttribute;
@@ -145,7 +146,9 @@ namespace Vodamep.StatLp.Validation
                                                                         .FirstOrDefault();
 
                             // Dann brauchen wir eine evtl. Enlassung aus dem Vormonat
-                            Leaving previousLeaving = previousReport.Leavings.Where(l => l.ValidD == previousStay.ToD).FirstOrDefault();
+                            Leaving previousLeaving = previousReport.Leavings.Where(l => l.ValidD == previousStay.ToD &&
+                                                                                         l.PersonId == previousStay.PersonId)
+                                                                             .FirstOrDefault();
 
                             if (firstStayInNextMonth == null)
                             {
@@ -163,7 +166,9 @@ namespace Vodamep.StatLp.Validation
                             }
 
                             // Dann brauchen wir eine evtl. Neuaufnahme vom Folgemonat
-                            Admission nextAdmission = sentReport.Admissions.Where(l => l.ValidD == firstStayInNextMonth.FromD).FirstOrDefault();
+                            Admission nextAdmission = sentReport.Admissions.Where(l => l.ValidD == firstStayInNextMonth.FromD &&
+                                                                                       l.PersonId == previousStay.PersonId)
+                                                                           .FirstOrDefault();
                             if (firstStayInNextMonth != null &&
                                 nextAdmission != null)
                             {
@@ -313,7 +318,7 @@ namespace Vodamep.StatLp.Validation
 
             List<Stay> staysToSearch = new List<Stay>();
 
-            staysToSearch.AddRange(sentReport?.Stays);
+            staysToSearch.AddRange(sentReport?.Stays.Where(x => x.PersonId == personHistory.PersonId));
             staysToSearch.AddRange(personHistory.Stays);
 
             // Alle Aufenthalte, die vor dem dem Start Datum lagen
