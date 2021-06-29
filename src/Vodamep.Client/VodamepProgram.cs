@@ -57,16 +57,26 @@ namespace Vodamep.Client
                 case ListSources.Insurances:
                     provider = InsuranceCodeProvider.Instance;
                     break;
+
                 case ListSources.CountryCodes:
                     provider = CountryCodeProvider.Instance;
                     break;
+
                 case ListSources.Postcode_City:
-                    // todo
-                    provider = Vodamep.Data.Postcode_CityProvider.Instance;
+                    if (args.Type == ReportBase.ReportType.Hkpv)
+                    {
+                        provider = Vodamep.Data.Hkpv.Postcode_CityProvider.Instance;
+                    }
+                    else
+                    {
+                        provider = Vodamep.Data.Postcode_CityProvider.Instance;
+                    }
                     break;
+
                 case ListSources.Qualifications:
                     provider = QualificationCodeProvider.Instance;
                     break;
+
                 default:
                     HandleFailure($"Source '{args.Source}' not implemented.");
                     return;
