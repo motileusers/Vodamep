@@ -26,8 +26,6 @@ namespace Vodamep.Agp.Validation
             this.RuleFor(x => x.Date).NotEmpty()
                 .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Date)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
 
-            var name = displayNameResolver.GetDisplayName(nameof(Activity.Date));
-
             this.RuleFor(x => x.DateD)
                 .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
                     x.PersonId, from, to, x.Date));
@@ -48,16 +46,6 @@ namespace Vodamep.Agp.Validation
             });
 
             this.RuleFor(x => x.PlaceOfAction).NotEmpty();
-
-            //this.RuleFor(x => x.Minutes).GreaterThan(0);
-            //this.RuleFor(x => x.Minutes)
-            //    .Custom((minute, ctx) =>
-            //    {
-            //        if (minute > 0 && minute % 5 != 0)
-            //        {
-            //            ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.ReportBaseStepWidthWrong));
-            //        }
-            //    });
 
             this.RuleFor(x => x).SetValidator(x => new ActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(Activity.Minutes)), x.PersonId));
 

@@ -40,8 +40,7 @@ namespace Vodamep.Agp.Validation
                     foreach (var id in idPersons.Except(idActivities))
                     {
                         var item = persons.Where(x => x.Id == id).First();
-                        ctx.AddFailure(new ValidationFailure(nameof(Staff), Validationmessages.ReportBaseWithoutActivity(displayNameResolver.GetDisplayName(nameof(Person)), id)));
-
+                        ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseWithoutActivity(displayNameResolver.GetDisplayName(nameof(Person)), id)));
                     }
 
                     foreach (var activity in activities)
