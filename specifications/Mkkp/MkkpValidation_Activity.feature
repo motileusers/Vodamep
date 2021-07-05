@@ -109,11 +109,11 @@ Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
 
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons
     Angenommen die Eigenschaft 'person_id' von 'Activity' ist auf '-1' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Keine Person.'
+    Dann enthält das escapte Validierungsergebnis den Fehler 'Eine Aktivität mit der ID '1' ist keiner vorhandenen Person (ID '-1') zugeordnet.'
 
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Mitarbeiter
     Angenommen die Eigenschaft 'staff_id' von 'Activity' ist auf '-1' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Kein Mitarbeiter.'
+    Dann enthält das escapte Validierungsergebnis den Fehler 'Eine Aktivität mit der ID '1' ist keinem vorhandenen Mitarbeiter (ID '-1') zugeordnet.'
 
 Szenario: Eine Person ohne Aktivität.
     Angenommen zu einer Person sind keine Aktivitäten dokumentiert

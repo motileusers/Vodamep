@@ -13,6 +13,8 @@ namespace Vodamep.Agp.Validation
     {
         public AgpReportStaffIdValidator()
         {
+            AgpDisplayNameResolver displayNameResolver = new AgpDisplayNameResolver();
+
             this.RuleFor(x => x.Staffs)
                 .Custom((list, ctx) =>
                 {
@@ -41,8 +43,7 @@ namespace Vodamep.Agp.Validation
                     {
                         var item = staffs.Where(x => x.Id == id).First();
                         var index = staffs.IndexOf(item);
-                        ctx.AddFailure(new ValidationFailure($"{nameof(AgpReport.Staffs)}[{index}]", Validationmessages.WithoutActivity));
-
+                        ctx.AddFailure(new ValidationFailure(nameof(Staff), Validationmessages.ReportBaseWithoutActivity(displayNameResolver.GetDisplayName(nameof(Staff)), id)));
                     }
 
                     foreach (var id in idActivities.Except(idStaffs))
@@ -53,7 +54,7 @@ namespace Vodamep.Agp.Validation
                     foreach (var activity in activities)
                     {
                         if (!idStaffs.Contains(activity.StaffId))
-                            ctx.AddFailure(new ValidationFailure($"{nameof(AgpReport.Activities)}[{activity.Id}]", Validationmessages.WithoutStaff));
+                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivitWithoutStaff(activity.Id, activity.StaffId)));
                     }
                 });
 

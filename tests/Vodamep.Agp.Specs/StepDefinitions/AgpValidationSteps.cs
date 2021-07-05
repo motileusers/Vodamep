@@ -263,6 +263,14 @@ namespace Vodamep.Specs.StepDefinitions
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
 
+        [Then(@"enthält das escapte Validierungsergebnis den Fehler '(.*)'")]
+        public void ThenTheResultContainsAnErrorRegex(string message)
+        {
+            var pattern = new Regex(Regex.Escape(message), RegexOptions.IgnoreCase);
+
+            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
+        }
+
         private void AddDummyActivity(string personId, string staffId)
         {
             var random = new Random();
@@ -273,7 +281,7 @@ namespace Vodamep.Specs.StepDefinitions
 
             var minutes = random.Next(1,100) * 5;
           
-            var activity = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };
+            var activity = new Activity() {Id = "1", Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };
             activity.Entries.Add(new[] { ActivityType.Clearing, ActivityType.ContactPartner, ActivityType.GuidancePartner });
 
             this.Report.Activities.Add(activity);
