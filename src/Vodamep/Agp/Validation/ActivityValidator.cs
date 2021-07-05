@@ -14,23 +14,24 @@ namespace Vodamep.Agp.Validation
         {
             var displayNameResolver = new AgpDisplayNameResolver();
 
-            this.RuleFor(x => x.Date).NotEmpty();
-            this.RuleFor(x => x.Date).SetValidator(new TimestampWithOutTimeValidator()).Unless(x => x.Date == null);
+            this.RuleFor(x => x.PersonId).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithParentProperty(displayNameResolver.GetDisplayName(nameof(x.PersonId)), displayNameResolver.GetDisplayName(nameof(Activity))));
 
-            if (from != DateTime.MinValue)
-            {
-                this.RuleFor(x => x.DateD).GreaterThanOrEqualTo(from).Unless(x => x.Date == null);
-            }
-            if (to > from)
-            {
-                this.RuleFor(x => x.DateD).LessThanOrEqualTo(to).Unless(x => x.Date == null);
-            }
+            this.RuleFor(x => x.StaffId).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.StaffId)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+            this.RuleFor(x => x.PlaceOfAction).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.PlaceOfAction)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+            this.RuleFor(x => x.Entries).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Entries)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+            this.RuleFor(x => x.Date).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Date)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
 
-            this.RuleFor(x => x.PersonId).NotEmpty();
+            var name = displayNameResolver.GetDisplayName(nameof(Activity.Date));
 
-            this.RuleFor(x => x.StaffId).NotEmpty();
+            this.RuleFor(x => x.DateD)
+                .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
+                    x.PersonId, from, to, x.Date));
 
-            this.RuleFor(x => x.Entries).NotEmpty();
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
                 var entries = x.Entries;
@@ -61,6 +62,5 @@ namespace Vodamep.Agp.Validation
             this.RuleFor(x => x).SetValidator(x => new ActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(Activity.Minutes)), x.PersonId));
 
         }
-
     }
 }

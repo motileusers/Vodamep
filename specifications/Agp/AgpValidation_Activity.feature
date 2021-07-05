@@ -1,25 +1,28 @@
 ﻿#language: de-DE
 Funktionalität: Agp - Validierung der gemeldeten Aktivitäten der Datenmeldung
 
+Szenario: Pesonen ID ist nicht gesetzt
+    Angenommen die Eigenschaft 'person_id' von 'Activity' ist nicht gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Personen-ID' von Aktivität darf nicht leer sein.'
+
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Aktivität von Klient '1' darf nicht leer sein.'
 Beispiele:
     | Name              | Bezeichnung     |
     | date              | Datum           |
-    | person_id         | Personen-ID     |
     | staff_id          | Mitarbeiter-ID  |
 
 Szenario: Leistungszeit muss > 0 sein 
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist nicht gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Leistungszeit von Klient '1' muss größer 0 sein.'
 
-Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
-    Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
-Beispiele:
-    | Name | Bezeichnung |
-    | date | Datum       |
+#Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
+#    Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
+#    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
+#Beispiele:
+#    | Name | Bezeichnung |
+#    | date | Datum       |
 
 Szenariogrundriss: Minuten Werte müssen > 0 sein
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
@@ -89,15 +92,15 @@ Szenario: Doppelte Leistungen innerhalb einer Aktivität
 
 Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt
-   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' darf nicht leer sein.'
+   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' von Aktivität von Klient '1' darf nicht leer sein.'
 
 Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
     Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2058-09-29' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss kleiner oder gleich (.*) sein'
+    Dann enthält das Validierungsergebnis den Fehler 'Datum' einer Aktivität von Klient '1' muss innerhalb des Meldungszeitraums liegen.'
     
 Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
     Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2008-04-30' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss grösser oder gleich (.*) sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Datum' einer Aktivität von Klient '1' muss innerhalb des Meldungszeitraums liegen.'
 
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons
     Angenommen die Eigenschaft 'person_id' von 'Activity' ist auf '-1' gesetzt
