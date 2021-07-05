@@ -31,7 +31,7 @@ namespace Vodamep.Specs.StepDefinitions
             var loc = new MkkpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
-            var date = DateTime.Today.AddMonths(-1);
+            var date = new DateTime(2021, 05, 01);
             this.Report = MkkpDataGenerator.Instance.CreateMkkpReport("", date.Year, date.Month, 1, 1, false, false);
 
             this.AddDummyActivity(Report.Persons[0].Id, Report.Staffs[0].Id);

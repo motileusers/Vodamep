@@ -30,7 +30,7 @@ namespace Vodamep.Specs.StepDefinitions
             var loc = new AgpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
-            var date = DateTime.Today.AddMonths(-1);
+            var date = new DateTime(2021, 05, 01);
             this.Report = AgpDataGenerator.Instance.CreateAgpReport("", date.Year, date.Month, 1, 1,false, false);
             this.AddDummyActivity(this.Report.Persons[0].Id, this.Report.Staffs[0].Id);
         }
