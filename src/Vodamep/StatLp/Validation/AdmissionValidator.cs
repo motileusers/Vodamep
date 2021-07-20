@@ -31,7 +31,7 @@ namespace Vodamep.StatLp.Validation
                 .Must((person, country) => CountryCodeProvider.Instance.IsValid(country))
                 .Unless(x => string.IsNullOrEmpty(x.Country))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.Country)))
-                .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseInvalidValue(this.GetPersonName(x.PersonId, report)));
 
             this.RuleFor(x => x.Valid).SetValidator(new TimestampWithOutTimeValidator());
 
@@ -54,7 +54,7 @@ namespace Vodamep.StatLp.Validation
                         {
                             return admission.PriorAdmissionD <= admission.ValidD;
                         })
-                        .WithMessage(x => Validationmessages.AdmissionDateMustBeLessThanValid(x.PersonId, x.ValidD));
+                        .WithMessage(x => Validationmessages.AdmissionDateMustBeLessThanValid(this.GetPersonName(x.PersonId, report), x.ValidD));
 
                     // Aufnahmedatum <> Gültigkeitsdatum der Aufnahme
                     this.RuleFor(x => x.PriorAdmission)
@@ -63,7 +63,7 @@ namespace Vodamep.StatLp.Validation
                             return admission.PriorAdmissionD == admission.ValidD;
                         })
                         .WithSeverity(Severity.Warning)
-                        .WithMessage(x => Validationmessages.AdmissionDifferentToValid(x.PersonId, x.ValidD));
+                        .WithMessage(x => Validationmessages.AdmissionDifferentToValid(this.GetPersonName(x.PersonId, report), x.ValidD));
 
                 });
 
@@ -78,10 +78,23 @@ namespace Vodamep.StatLp.Validation
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
 
-            this.RuleFor(x => x.HousingTypeBeforeAdmission).NotEmpty();
-            this.RuleFor(x => x.MainAttendanceRelation).NotEmpty();
-            this.RuleFor(x => x.MainAttendanceCloseness).NotEmpty();
-            this.RuleFor(x => x.HousingReason).NotEmpty();
+            this.RuleFor(x => x.HousingTypeBeforeAdmission).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
+            this.RuleFor(x => x.MainAttendanceRelation).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
+            this.RuleFor(x => x.MainAttendanceCloseness).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
+
+            this.RuleFor(x => x)
+                .Must((x) =>
+                {
+                    // Vor diesem Datum war nicht immer gewährleistet, dass dieser Wert befüllt ist
+                    if (x.ValidD >= new DateTime(2011, 01, 01))
+                    {
+                        if (x.HousingReason == HousingReason.UndefinedHr) 
+                            return false;
+                    }
+
+                    return true;
+                })
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
 
 
 
@@ -90,35 +103,35 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.OtherHousingType).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.OtherHousingType))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.OtherHousingType)))
-                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
             this.RuleFor(x => x.PersonalChangeOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.PersonalChangeOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.PersonalChangeOther)))
-                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
             this.RuleFor(x => x.SocialChangeOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.SocialChangeOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.SocialChangeOther)))
-                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
             this.RuleFor(x => x.HousingReasonOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.HousingReasonOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
-                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
             this.RuleFor(x => x.OtherHousingType).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.OtherHousingType)))
-                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
             this.RuleFor(x => x.PersonalChangeOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.PersonalChangeOther)))
-                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
             this.RuleFor(x => x.SocialChangeOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.SocialChangeOther)))
-                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
             this.RuleFor(x => x.HousingReasonOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
-                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
 
             this.RuleFor(x => x)
@@ -133,7 +146,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.EmptyPostCodeAdmission(x.ValidD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.EmptyPostCodeAdmission(x.ValidD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
 
             this.RuleFor(x => x)
@@ -154,7 +167,7 @@ namespace Vodamep.StatLp.Validation
 
                     return result;
                 })
-                .WithMessage(x => Validationmessages.WrongPostCodeAdmission(x.ValidD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.WrongPostCodeAdmission(x.ValidD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
 
             this.RuleFor(x => x.PersonalChanges).NotEmpty().Unless(x => !string.IsNullOrEmpty(x.PersonalChangeOther))
@@ -194,6 +207,19 @@ namespace Vodamep.StatLp.Validation
                 .Must((admission, ctx) => !(admission.HousingReason == HousingReason.OtherHr &&
                                             string.IsNullOrEmpty(admission.HousingReasonOther)))
                 .WithMessage(Validationmessages.TextAreaEnterAValue);
+        }
+
+
+        private string GetPersonName(string id, StatLpReport report)
+        {
+            Person person = report.Persons.Where(x => x.Id == id).FirstOrDefault();
+            if (person != null)
+            {
+                return person.GetDisplayName();
+            }
+
+            return "Unbekannt";
+
         }
 
 

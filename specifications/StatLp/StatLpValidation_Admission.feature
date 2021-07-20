@@ -3,15 +3,18 @@ Funktionalität: StatLp - Validierung der gemeldeten Aufnahmen einer Datenmeldun
 
 Szenario: Das Gültigkeitdatum der Aufnahme muss im aktuellen Monat liegen
 	Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2000-01-01' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Das Aufnahmedatum von Person '1' muss kleinergleich dem Gültigkeitsdatum'
+	Dann enthält das Validierungsergebnis den Fehler 'Das Aufnahmedatum von'
+	Und enthält das Validierungsergebnis den Fehler 'muss kleinergleich dem Gültigkeitsdatum'
 
 Szenario: Das Gültigkeitdatum der Aufnahme unterscheidet sich vom Aufnahmedatum
 	Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2021-02-02' gesetzt
-	Dann enthält das Validierungsergebnis die Warnung 'Das Aufnahmedatum von Person '1' unterscheidet sich'
+	Dann enthält das Validierungsergebnis die Warnung 'Das Aufnahmedatum von'
+	Und enthält das Validierungsergebnis die Warnung 'unterscheidet sich'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
-	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>''
+	Und  enthält das Validierungsergebnis den Fehler 'darf nicht leer sein.'
 
 	Beispiele:
 		| Name                          | Bezeichnung                                    |
@@ -26,7 +29,7 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von Klient 1.'
+	Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von'
 
 	Beispiele:
 		| Name                  | Bezeichnung                                | Wert |
@@ -41,7 +44,7 @@ Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 
 Szenariogrundriss: Die Textfelder enthalten zu lange Werte
 	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von Klient 1.'
+	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von'
 
 	Beispiele:
 		| Name                  | Bezeichnung                                | Wert                                                                                                   |
@@ -64,15 +67,24 @@ Szenariogrundriss: Die Textfelder enthalten gültige Werte
 Szenariogrundriss: Ungültiger Ort / Plz
 	Angenommen die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
 	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnahme vom 01.02.2021 von Klient 1.'
+	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnahme vom 01.02.2021 von'
 
 	Beispiele:
 		| Field1        | Field2    | Value1 | Value2    |
 		| last_postcode | last_city | 0349   | Feldkirch |
+
+Szenariogrundriss: Leerer Ort / Plz
+	Angenommen die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
+	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'Keine Angabe von Ort/Plz bei Aufnahme vom 01.02.2021 von'
+
+	Beispiele:
+		| Field1        | Field2    | Value1 | Value2    |
 		| last_postcode | last_city | 0349   |           |
 		| last_postcode | last_city |        | Feldkirch |
 		| last_postcode | last_city |        | Feldkirch |
 		| last_postcode | last_city |        |           |
+
 
 # vor 2019 wird PLZ / Ort nicht geprüft, da konnte alles gesendet werden
 Szenariogrundriss: Gültiger Ort / Plz
@@ -154,7 +166,8 @@ Szenario: Eine Admission enthält eine Person, die nicht in der Personenliste is
 
 Szenario: Eine Aufnahme muss im aktuellen Monat liegen
 	Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2000-01-01' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Das Aufnahmedatum von Person '1' muss kleinergleich dem Gültigkeitsdatum'
+	Dann enthält das Validierungsergebnis den Fehler 'Das Aufnahmedatum von'
+	Und enthält das Validierungsergebnis den Fehler 'muss kleinergleich dem Gültigkeitsdatum'
 
 Szenario: Valid darf keine Zeit beinhalten
 	Angenommen die Datums-Eigenschaft 'valid' von 'Admission' hat eine Uhrzeit gesetzt
@@ -162,7 +175,8 @@ Szenario: Valid darf keine Zeit beinhalten
 
 Szenariogrundriss: Das Land einer Aufnahme enthält einen ungültigen Wert
 	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' hat einen ungülitgen Wert'
+	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von '
+	Und enthält das Validierungsergebnis den Fehler 'hat einen ungültigen Wert'
 
 	Beispiele:
 		| Name    | Bezeichnung | Wert |
