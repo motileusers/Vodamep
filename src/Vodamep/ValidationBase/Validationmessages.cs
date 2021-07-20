@@ -34,7 +34,7 @@ namespace Vodamep.ValidationBase
         public static string InvalidCode => "Für '{PropertyName}' ist '{PropertyValue}' kein gültiger Code.";
         public static string ReportBaseInvalidCode (string client) => $"Für '{{PropertyName}}' von Klient '{client}' ist '{{PropertyValue}}' kein gültiger Code.";
         public static string InvalidPostCode_City => "'{PropertyValue}' ist kein gültiger Ort.";
-        public static string ReportBaseInvalidPostCodeCity (string client) => "'{PropertyValue}' ist kein gültiger Ort von Klient 'Peter Gruber'.";
+        public static string ReportBaseInvalidPostCodeCity (string client) => $"'{{PropertyValue}}' ist kein gültiger Ort von Klient '{client}'.";
         public static string ReportBaseReferrerIsOtherRefererrerThenOtherReferrerMustBeSet (string client) => $"Wenn der Zuweiser von Klient '{client}' ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.";
         public static string DoubledDiagnosisGroups (string client) => $"Es dürfen keine doppelten Diagnosegruppen für Klient '{client}' vorhanden sein.";
         public static string OnlyONePalliativeDiagnosisGroup (string client) => $"Es darf nur eine Palliativ Diagnose Gruppe für Klient '{client}' vorhanden sein.";
@@ -51,6 +51,7 @@ namespace Vodamep.ValidationBase
         public static string InvalidInstitutionNumber => "Ungültige Einrichtungsnummer.";
         public static string InvalidValueAdmission(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";
         public static string TextTooLongAdmission(string date, string personId) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";
+        public static string EmptyPostCodeAdmission(string date, string personId) => $"Keine Angabe von Ort/Plz bei Aufnahme vom {date} von Klient {personId}.";
         public static string WrongPostCodeAdmission(string date, string personId) => $"Ungültige Kombination Ort/Plz bei Aufnahme vom {date} von Klient {personId}.";
         public static string NoDoubledValuesAreAllowed => $"Doppelte Angaben bei '{{PropertyName}}'";
         public static string ItemNotValid => "Keine gültige Angabe bei '{PropertyName}'";

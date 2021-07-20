@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Google.Protobuf.Collections;
@@ -30,6 +31,34 @@ namespace Vodamep.Data.Dummy
         {
 
         }
+
+
+        public StatLpReport CreateStandardAdmissionMessage(DateTime validFrom, DateTime validTo, string personId, DateTime admissionDate)
+        {
+            StatLpReport report = StatLpDataGenerator.Instance.CreateEmptyStatLpReport();
+
+            report.FromD = validFrom;
+            report.ToD = validTo;
+
+            int personIndex = Convert.ToInt32(personId);
+
+            var person = report.Persons.FirstOrDefault(x => x.Id == personId.ToString()) ?? report.AddDummyPerson(personIndex, false);
+
+            var admission = StatLpDataGenerator.Instance.CreateAdmission(personId.ToString(), admissionDate);
+            report.Admissions.Add(admission);
+
+            IEnumerable<Attribute> attributes = StatLpDataGenerator.Instance.CreateAttributesForSingleAdmission(admission);
+            report.Attributes.AddRange(attributes);
+
+            var stay = StatLpDataGenerator.Instance.CreateStay(personId, admissionDate, report.ToD);
+            report.Stays.Add(stay);
+
+            return report;
+        }
+
+
+
+
 
         public StatLpReport CreateStatLpReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
         {
@@ -102,7 +131,7 @@ namespace Vodamep.Data.Dummy
                 yield return CreatePerson(i + 1, true);
         }
 
-        public Admission CreateAdmission(string personId, Timestamp valid = null, bool randomValues = true)
+        public Admission CreateAdmission(string personId, Nullable<DateTime> valid = null, bool randomValues = true)
         {
 
             var admission = new Admission()
@@ -127,16 +156,16 @@ namespace Vodamep.Data.Dummy
             };
 
             if (valid != null)
-                admission.Valid = valid;
-
-            if (valid != null)
-                admission.PriorAdmission = valid;
+            {
+                admission.ValidD = valid.Value;
+                admission.PriorAdmissionD = valid.Value;
+            }
 
             return admission;
 
         }
 
-        public IEnumerable<Admission> CreateAdmissions(IEnumerable<Person> persons, Timestamp reportFrom, bool randomValues = true)
+        public IEnumerable<Admission> CreateAdmissions(IEnumerable<Person> persons, Nullable<DateTime> reportFrom, bool randomValues = true)
         {
             foreach (var person in persons)
             {
@@ -211,6 +240,14 @@ namespace Vodamep.Data.Dummy
 
             return stay;
         }
+
+        public Stay CreateStay(string personId, DateTime from, DateTime to)
+        {
+            var stay = CreateStay(personId, from);
+            stay.ToD = to;
+            return stay;
+        }
+
 
         public IEnumerable<Leaving> CreateLeavings(IEnumerable<Person> persons, DateTime valid)
         {

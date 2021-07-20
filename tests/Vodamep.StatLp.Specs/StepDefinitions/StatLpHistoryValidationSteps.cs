@@ -177,7 +177,7 @@ namespace Vodamep.Specs.StepDefinitions
 
         private Admission CreateAdmission(Stay stay)
         {
-            return StatLpDataGenerator.Instance.CreateAdmission(stay.PersonId, stay.From, false);
+            return StatLpDataGenerator.Instance.CreateAdmission(stay.PersonId, stay.FromD, false);
         }
 
         private Leaving CreateLeaving(Stay stay)
@@ -412,7 +412,7 @@ namespace Vodamep.Specs.StepDefinitions
             switch (itemType)
             {
                 case nameof(Admission):
-                    var admission = StatLpDataGenerator.Instance.CreateAdmission(personId.ToString(), DateTime.Parse(date, new CultureInfo("de-DE")).AsTimestamp());
+                    var admission = StatLpDataGenerator.Instance.CreateAdmission(personId.ToString(), DateTime.Parse(date, new CultureInfo("de-DE")));
                     report.Admissions.Add(admission);
                     break;
 
@@ -477,7 +477,7 @@ namespace Vodamep.Specs.StepDefinitions
                 message.SetDefault(name);
         }
 
-        private void GivenMessageIsAStandardAdmissionMessage(int reportIndex, string validFrom, string validTo, string itemType, int personNumber, string admissionDate)
+        public void GivenMessageIsAStandardAdmissionMessage(int reportIndex, string validFrom, string validTo, string itemType, int personNumber, string admissionDate)
         {
             var report = this.GetReportAndCreateNonExisting(reportIndex);
 

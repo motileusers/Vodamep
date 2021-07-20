@@ -51,6 +51,18 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
 
+        [Given(@"Eine Meldung gilt vom (.*) bis (.*) und ist eine Standard Meldung und enthält eine Aufnahme von Person (.*) vom (.*)")]
+        public void GivenMessageIsAStandardAdmissionMessage(string validFromString, string validToString, string personId, string admissionDateString)
+        {
+            DateTime validFrom = DateTime.Parse(validFromString, new CultureInfo("de-DE"));
+            DateTime validTo = DateTime.Parse(validToString, new CultureInfo("de-DE"));
+            DateTime admissionDate = DateTime.Parse(admissionDateString, new CultureInfo("de-DE"));
+
+            this.Report = StatLpDataGenerator.Instance.CreateStandardAdmissionMessage(validFrom, validTo, personId, admissionDate);
+        }
+
+
+
         [Given(@"eine Meldung ist korrekt befüllt")]
         public void GivenAValidReport()
         {

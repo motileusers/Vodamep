@@ -20,7 +20,7 @@ namespace Vodamep.StatLp.Validation
             // {"1234", new DateTime(2008, 01, 01) },
         };
 
-        public AdmissionValidator(StatLpReport parentReport)
+        public AdmissionValidator(StatLpReport report)
         {
 
             this.RuleFor(x => x.Gender).NotEmpty();
@@ -74,7 +74,7 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.PersonId)
                 .Must((admission, personId) =>
                 {
-                    return parentReport.Persons.Any(y => y.Id == personId);
+                    return report.Persons.Any(y => y.Id == personId);
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
 
@@ -90,37 +90,72 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.OtherHousingType).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.OtherHousingType))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.OtherHousingType)))
-                .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.PersonalChangeOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.PersonalChangeOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.PersonalChangeOther)))
-                .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.SocialChangeOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.SocialChangeOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.SocialChangeOther)))
-                .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.HousingReasonOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.HousingReasonOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
-                .WithMessage(x => Validationmessages.InvalidValueAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.InvalidValueAdmission(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.OtherHousingType).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.OtherHousingType)))
-                .WithMessage(x => Validationmessages.TextTooLongAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.PersonalChangeOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.PersonalChangeOther)))
-                .WithMessage(x => Validationmessages.TextTooLongAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.SocialChangeOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.SocialChangeOther)))
-                .WithMessage(x => Validationmessages.TextTooLongAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.HousingReasonOther).MaximumLength(100)
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
-                .WithMessage(x => Validationmessages.TextTooLongAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
+                .WithMessage(x => Validationmessages.TextTooLongAdmission(report.FromD.ToShortDateString(), x.PersonId));
 
-            this.RuleFor(x => new { x.LastPostcode, x.LastCity }).Must(x => Postcode_CityProvider.Instance.IsValid($"{x.LastPostcode} {x.LastCity}")).WithMessage(x => Validationmessages.WrongPostCodeAdmission(parentReport.FromD.ToShortDateString(), x.PersonId));
+
+            this.RuleFor(x => x)
+                .Must((x) =>
+                {
+                    // Ort / PLZ dürfen nie leer sein
+                    if (String.IsNullOrWhiteSpace(x.LastPostcode) ||
+                        String.IsNullOrWhiteSpace(x.LastCity))
+                    {
+                        return false;
+                    }
+
+                    return true;
+                })
+                .WithMessage(x => Validationmessages.EmptyPostCodeAdmission(x.ValidD.ToShortDateString(), x.PersonId));
+
+
+            this.RuleFor(x => x)
+                .Must((x) =>
+                {
+                    bool result = true;
+
+                    // Erst ab 2019 wurden von allen díe Gemeinde Kennzahlen übermittelt
+                    // Davor war nicht sichergestellt, dass in PLZ/Ort ein definiertes Wertepaar enthält
+                    if (x.ValidD >= new DateTime(2019, 01, 01))
+                    {
+                        if (!String.IsNullOrWhiteSpace(x.LastPostcode) &&
+                            !String.IsNullOrWhiteSpace(x.LastCity))
+                        {
+                            result = Postcode_CityProvider.Instance.IsValid($"{x.LastPostcode} {x.LastCity}");
+                        }
+                    }
+
+                    return result;
+                })
+                .WithMessage(x => Validationmessages.WrongPostCodeAdmission(x.ValidD.ToShortDateString(), x.PersonId));
+
 
             this.RuleFor(x => x.PersonalChanges).NotEmpty().Unless(x => !string.IsNullOrEmpty(x.PersonalChangeOther))
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.PersonalChangeOther)))

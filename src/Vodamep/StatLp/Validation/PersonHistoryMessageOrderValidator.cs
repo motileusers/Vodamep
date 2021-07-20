@@ -165,25 +165,29 @@ namespace Vodamep.StatLp.Validation
                                 }
                             }
 
-                            // Dann brauchen wir eine evtl. Neuaufnahme vom Folgemonat
-                            Admission nextAdmission = sentReport.Admissions.Where(l => l.ValidD == firstStayInNextMonth.FromD &&
+
+
+                            if (firstStayInNextMonth != null)
+                            {
+                                // Dann brauchen wir auch eine evtl. Neuaufnahme vom Folgemonat
+                                Admission nextAdmission = sentReport.Admissions.Where(l => l.ValidD == firstStayInNextMonth.FromD &&
                                                                                        l.PersonId == previousStay.PersonId)
                                                                            .FirstOrDefault();
-                            if (firstStayInNextMonth != null &&
-                                nextAdmission != null)
-                            {
-                                // Wenn es einen Aufenthalt im Folgemonat gibt, dann muss jedoch sichergestellt sein,
-                                // dass es keine Neuaufnahme ist.
-                                // Denn wenn die Person im nächsten Monat neu aufgenommen worden ist, hätte der Aufenthalt im
-                                // Vormonat ebenso abgeschlossen werden müssen.
-
-                                if (previousLeaving == null)
+                                if (nextAdmission != null)
                                 {
-                                    ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                                    Validationmessages.StatLpReportNoLeaving(
-                                        previousStay.PersonId,
-                                        previousStay.ToD.ToShortDateString()
-                                    )));
+                                    // Wenn es einen Aufenthalt im Folgemonat gibt, dann muss jedoch sichergestellt sein,
+                                    // dass es keine Neuaufnahme ist.
+                                    // Denn wenn die Person im nächsten Monat neu aufgenommen worden ist, hätte der Aufenthalt im
+                                    // Vormonat ebenso abgeschlossen werden müssen.
+
+                                    if (previousLeaving == null)
+                                    {
+                                        ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
+                                        Validationmessages.StatLpReportNoLeaving(
+                                            previousStay.PersonId,
+                                            previousStay.ToD.ToShortDateString()
+                                        )));
+                                    }
                                 }
                             }
                         }

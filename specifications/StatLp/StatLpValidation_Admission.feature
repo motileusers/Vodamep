@@ -9,8 +9,6 @@ Szenario: Das Gültigkeitdatum der Aufnahme unterscheidet sich vom Aufnahmedatum
 	Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2021-02-02' gesetzt
 	Dann enthält das Validierungsergebnis die Warnung 'Das Aufnahmedatum von Person '1' unterscheidet sich'
 
-
-
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
@@ -76,15 +74,18 @@ Szenariogrundriss: Ungültiger Ort / Plz
 		| last_postcode | last_city |        | Feldkirch |
 		| last_postcode | last_city |        |           |
 
+# vor 2019 wird PLZ / Ort nicht geprüft, da konnte alles gesendet werden
 Szenariogrundriss: Gültiger Ort / Plz
-	Angenommen die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
-	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
+	Angenommen Eine Meldung gilt vom <MeldungVon> bis <MeldungBis> und ist eine Standard Meldung und enthält eine Aufnahme von Person 1 vom <Aufnahme>
+	Angenommen die Eigenschaft 'last_postcode' von 'Admission' ist auf '<PLZ>' gesetzt
+	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Ort>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 	Beispiele:
-		| Field1        | Field2    | Value1 | Value2    |
-		| last_postcode | last_city | 6800   | Feldkirch |
-		| last_postcode | last_city | 0000   | Anderer   |
+		| PLZ  | Ort       | MeldungVon | MeldungBis | Aufnahme   |
+		| 6800 | Feldkirch | 01.12.2019 | 31.12.2019 | 31.12.2019 |
+		| 0000 | Anderer   | 01.12.2019 | 31.12.2019 | 31.12.2019 |
+		| 9999 | ABCEDEF   | 01.12.2018 | 31.12.2018 | 31.12.2018 |
 
 Szenariogrundriss: Die Auflistung enthalten ungültige Werte
 	Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert1>' gesetzt
