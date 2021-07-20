@@ -82,13 +82,13 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.MainAttendanceRelation).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
             this.RuleFor(x => x.MainAttendanceCloseness).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
 
-            this.RuleFor(x => x)
+            this.RuleFor(x => x.HousingReason)
                 .Must((x) =>
                 {
                     // Vor diesem Datum war nicht immer gewährleistet, dass dieser Wert befüllt ist
-                    if (x.ValidD >= new DateTime(2011, 01, 01))
+                    if (report.FromD >= new DateTime(2011, 01, 01))
                     {
-                        if (x.HousingReason == HousingReason.UndefinedHr) 
+                        if (x == HousingReason.UndefinedHr) 
                             return false;
                     }
 
