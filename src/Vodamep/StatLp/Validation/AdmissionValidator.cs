@@ -219,7 +219,6 @@ namespace Vodamep.StatLp.Validation
             }
 
             return "Unbekannt";
-
         }
 
 

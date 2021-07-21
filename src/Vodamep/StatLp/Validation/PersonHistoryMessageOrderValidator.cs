@@ -97,6 +97,95 @@ namespace Vodamep.StatLp.Validation
                         }
 
 
+
+                        // Dauer von Aufenthalten
+
+                        if (checkAttributes)
+                        {
+                            // Alle Aufnahmetypen im Aufenthalt, der Aufenthalt startet immer mit einem Aufenthaltstyp Attribut
+                            List<Model.Attribute> admissionTypeAttributes = stayInfo.Attributes.Where(c => c.AttributeType == AttributeType.AdmissionType).OrderByDescending(a => a.FromD).ToList();
+
+                            foreach (Model.Attribute currentAdmissionTypeAttribute in admissionTypeAttributes)
+                            {
+                                // Das nächste Aufnahme Attribut liegt nach dem aktuellen
+                                Model.Attribute nextAdmissionTypeAttribute = admissionTypeAttributes.Where(e => e.FromD > currentAdmissionTypeAttribute.FromD).FirstOrDefault();
+
+
+                                DateTime startDate = currentAdmissionTypeAttribute.FromD;
+                                AdmissionType admissionType = (AdmissionType)Enum.Parse(typeof(AdmissionType), currentAdmissionTypeAttribute.Value);
+
+                                // Das Ende ist entweder der nächste Aufenthaltstyp oder der das Ende des Aufenthalts
+                                DateTime endDate;
+                                if (nextAdmissionTypeAttribute != null)
+                                {
+                                    endDate = nextAdmissionTypeAttribute.FromD;
+                                }
+                                else
+                                {
+                                    endDate = stayInfo.To;
+                                }
+
+
+                                TimeSpan span = endDate - startDate;
+
+                                switch (admissionType)
+                                {
+                                    case AdmissionType.HolidayAt:
+                                        if (span.TotalDays > 42)
+                                        {
+                                            ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
+                                                Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(this.GetPersonName(currentAdmissionTypeAttribute.PersonId, personHistory),
+                                                    displayNameResolver.GetDisplayName(admissionType.ToString()),
+                                                    $"mehr als 42 Tage")));
+                                        }
+                                        break;
+
+                                    case AdmissionType.TransitionalAt:
+                                        if (span.TotalDays > 365)
+                                        {
+                                            ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
+                                                Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(this.GetPersonName(currentAdmissionTypeAttribute.PersonId, personHistory),
+                                                    displayNameResolver.GetDisplayName(admissionType.ToString()),
+                                                    $"mehr als 365 Tage")));
+                                        }
+                                        break;
+                                }
+
+                            }
+                        }
+
+
+
+
+                        // Wechsel von Aufnahmearten prüfen
+
+                        if (checkAttributes)
+                        {
+                            // Alle Aufnahmetypen im Aufenthalt
+                            List<Model.Attribute> admissionTypeAttributes = stayInfo.Attributes.Where(c => c.AttributeType == AttributeType.AdmissionType).OrderBy(a => a.FromD).ToList();
+
+                            foreach (Model.Attribute currentAdmissionTypeAttribute in admissionTypeAttributes)
+                            {
+                                // Das Aufnahme Attribut, das vor dem aktuellen lag
+                                Model.Attribute lastAdmissionTypeAttribute = admissionTypeAttributes.Where(e => e.FromD < currentAdmissionTypeAttribute.FromD).FirstOrDefault();
+
+                                if (lastAdmissionTypeAttribute != null)
+                                {
+                                    AdmissionType sentAdmissionType = (AdmissionType)Enum.Parse(typeof(AdmissionType), currentAdmissionTypeAttribute.Value);
+                                    AdmissionType lastAdmissionType = (AdmissionType)Enum.Parse(typeof(AdmissionType), lastAdmissionTypeAttribute.Value);
+
+                                    // Kein Wechsel von Dauer auf Urlaub / Übergang
+                                    if (lastAdmissionType == AdmissionType.ContinuousAt &&
+                                        (sentAdmissionType == AdmissionType.HolidayAt ||
+                                         sentAdmissionType == AdmissionType.TransitionalAt))
+                                    {
+                                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeNoChangeFromLongTimeCarePossible(this.GetPersonName(currentAdmissionTypeAttribute.PersonId, personHistory), displayNameResolver.GetDisplayName(currentAdmissionTypeAttribute.Value)));
+                                    }
+                                }
+                            }
+                        }
+
+
                         // Gleiche Attribut-Meldungen innerhalb eines Aufenthalts
 
                         if (checkAttributes)
@@ -139,7 +228,7 @@ namespace Vodamep.StatLp.Validation
                         {
                             // Der Aufenthalt in der vorherigen Meldung dauert genau bis num Monatsende
                             // Es konnte also im Vormonat nicht geprüft werden, ob eine Enlasstung notwendig gewesen wäre
-                            
+
                             // Wir ermittlen also in der Meldung des nächsten Monats, ob ein nachfolgender Aufenthalt vorhanden ist
                             Stay firstStayInNextMonth = sentReport.Stays.Where(f => f.PersonId == previousStay.PersonId)
                                                                         .OrderBy(f => f.ToD)
@@ -198,6 +287,16 @@ namespace Vodamep.StatLp.Validation
         }
 
 
+        private string GetPersonName(string id, PersonHistory personHistory)
+        {
+            if (personHistory.Person != null)
+            {
+                return personHistory.Person.GetDisplayName();
+            }
+
+            return "Unbekannt";
+        }
+
 
         /// <summary>
         /// Objekt mit Personengeschichten erstellen
@@ -230,6 +329,7 @@ namespace Vodamep.StatLp.Validation
                 personHistory.Stays.AddRange(stays.OrderByDescending(st => st.FromD));
                 personHistory.Leavings.AddRange(leavings.OrderByDescending(st => st.ValidD));
                 personHistory.Attributes.AddRange(attributes.OrderByDescending(st => st.FromD));
+                personHistory.Person = person;
 
                 personHistories.Add(personHistory);
             }
