@@ -1,11 +1,15 @@
 ﻿// Wohnform vor der Aufnahme
 
 UNDEFINED_AL;;
-HOME_LIVING_ALONE_AL;zu Hause lebend alleine;                   
-HOME_LIVING_NOT_ALONE_AL;zu Hause lebend nicht alleine;               
-AMBULATORY_SUPERVISED_FLAT_AL;ambulant betreute (Senioren/Wohnung);          
-SUPERVISED_FLAT_AL;betreute Wohngemeinschaften;                     
-NURSING_HOME_AL;Pflegeheim nach Pflegeheimgesetz;                        
-OTHER_ATTENDED_HOUSING_AL;Sonstige betreute Wohnform;              
-OTHER_AL;Sonstige;                               
-NO_DISCHARGELOCATION_AL;keine Angabe;                
+HOME_LIVING_ALONE_AL;zu Hause lebend alleine;
+HOME_LIVING_NOT_ALONE_AL;zu Hause lebend nicht alleine;
+AMBULATORY_SUPERVISED_FLAT_AL;Ambulant betreute Wohnung;
+SUPERVISED_FLAT_AL;Betreute Wohngemeinschaften;
+NURSING_HOME_AL;Pflegeheim nach Pflegeheimgesetz;
+INSTITUTION_SOCIAL_PSYCHIATRY_AL;Einrichtung der Sozialpsychiatrie;
+INSTITUTION_ADDICTION_SUPPORT_AL;Einrichtung der Suchthilfe;
+INSTITUTION_HANDICAPPED_SUPPORT_AL;Einrichtung der Behindertenhilfe;
+INSTITUTION_HOMELESS_SUPPORT_AL;Einrichtung der Wohnungslosenhilfe;
+OTHER_ATTENDED_HOUSING_AL;Sonstige betreute Wohnform;
+OTHER_AL;Sonstige;
+NO_DISCHARGELOCATION_AL;Keine Angabe;

@@ -1,9 +1,14 @@
 ﻿// Inanspruchnahme anderer Dienste
 
 UNDEFINED_SV;;
-HOME_CARE_SV;Hauskrankenpflege;                   
-MOBILE_CARE_SV;Mobiler Hilfsdienst;         
-HOME_MEAL_SV;Mahlzeitendienst;           
-MEDICAL_THERAPEUTIC_SV;Medizinisch-therapeutische Dienste; 
-PRIVATE_CARE_24_HOUR_SV;Private bezahlte Pflege (24 Stunden Betreuung);        
-PRIVATE_CARE_HOURLY_SV;Private bezahlte Pflege (stundenweise);         
+HOME_CARE_SV;Hauskrankenpflege;
+DAY_CARE_SV;Tagesbetreuung;
+MOBILE_CARE_SV;Mobiler Hilfsdienst;
+HOME_MEAL_SV;Mahlzeitendienst;
+SOCIAL_PSYCHIATRY_SV;Sozialpsychiatrie;
+ADDICTION_SUPPORT_SV;Suchthilfe;
+HANDICAPPED_SUPPORT_SV;Behindertenhilfe;
+HOMELESS_SUPPORT_SV;Wohnungslosenhilfe;
+MEDICAL_THERAPEUTIC_SV;Medizinisch-therapeutische Dienste;
+PRIVATE_CARE_24_HOUR_SV;Private bezahlte Pflege (24 Stunden Betreuung);
+PRIVATE_CARE_HOURLY_SV;Private bezahlte Pflege (stundenweise);

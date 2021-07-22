@@ -111,8 +111,8 @@ message Attribute {
 enum AttributeType {
   UNDEFINED_ATTRIBUTE = 0;
   ADMISSION_TYPE = 1;                       // 41 Aufnahmeart
-  CARE_ALLOWANCE = 2;                        // 05 Bezieht Pflegegeld, 06 Einstufung nach Pflegegeld Gesetz
-  CARE_ALLOWANCE_ARGE = 3;                    // 42 Pflegeeinstufung nach Arge
+  CARE_ALLOWANCE = 2;                       // 05 Bezieht Pflegegeld, 06 Einstufung nach Pflegegeld Gesetz
+  CARE_ALLOWANCE_ARGE = 3;                  // 42 Pflegeeinstufung nach Arge
   FINANCE = 4;                              // 43 Finanzierung Selbstzahler/Sozialhilfe
 }
 
@@ -145,18 +145,24 @@ enum PersonalChange {
   INCREASED_ASSITANCE_NEED_PC = 3;           // Erhöhter Betreuungsbedarf
   NURSING_NEED_PHYSICAL_PC = 4;              // Gestiegener Pflegebedarf körperlich
   NURSING_NEED_MENTAL_PC = 5;                // Gestiegener Pflegebedarf psychisch
-  NEGLECT_RISK_PC = 6;                       // Verstärkte Verwahrlosungsgefahr
+  NURSING_NEED_ADDICTION_PC = 6;             // Gestiegener Pflegebedarf (Suchterkrankung);
+  NEGLECT_RISK_PC = 7;                       // Verstärkte Verwahrlosungsgefahr
 }
 
 // 24 Inanspruchnahme anderer Dienste
 enum Service {
   UNDEFINED_SV = 0;
   HOME_CARE_SV = 1;                          // Hauskrankenpflege
-  MOBILE_CARE_SV = 2;                        // Mobiler Hilfsdienst
-  HOME_MEAL_SV = 3;                          // Mahlzeitendienst
-  MEDICAL_THERAPEUTIC_SV = 4;                // Medizinisch-therapeutische Dienste
-  PRIVATE_CARE_24_HOUR_SV = 5;               // Private bezahlte Pflege (24 Stunden Betreuung)
-  PRIVATE_CARE_HOURLY_SV = 6;                // Private bezahlte Pflege (stundenweise)
+  DAY_CARE_SV = 2;                           // Tagesbetreuung       
+  MOBILE_CARE_SV = 3;                        // Mobiler Hilfsdienst
+  HOME_MEAL_SV = 4;                          // Mahlzeitendienst
+  SOCIAL_PSYCHIATRY_SV = 5;                  // Sozialpsychiatrie
+  ADDICTION_SUPPORT_SV = 6;                  // Suchthilfe
+  HANDICAPPED_SUPPORT_SV = 7;                // Behindertenhilfe
+  HOMELESS_SUPPORT_SV = 8;                   // Wohnungslosenhilfe
+  MEDICAL_THERAPEUTIC_SV = 9;                // Medizinisch-therapeutische Dienste
+  PRIVATE_CARE_24_HOUR_SV = 10;              // Private bezahlte Pflege (24 Stunden Betreuung)
+  PRIVATE_CARE_HOURLY_SV = 11;               // Private bezahlte Pflege (stundenweise)
 }
 
 // 54 Entlassung
@@ -172,14 +178,18 @@ enum DischargeReason {
 // 53 Entlassung wohin
 enum DischargeLocation {
   UNDEFINED_DC = 0;
-  HOME_LIVING_ALONE_DC = 1;                  // nach Hause lebend alleine
-  HOME_LIVING_NOT_ALONE_DC = 2;              // nach Hause lebend nicht alleine
-  AMBULATORY_SUPERVISED_FLAT_DC = 3;         // ambulant betreute (Senioren/Wohnung)
-  SUPERVISED_FLAT_DC = 4;                    // betreute Wohngemeinschaften
-  NURSING_HOME_DC = 5;                       // Pflegeheim nach Pflegeheimgesetz
-  OTHER_ATTENDED_HOUSING_DC = 6;             // Sonstige betreute Wohnform
-  OTHER_DC = 7;                              // Sonstige
-  NO_DC = 8;                                 // keine Angabe
+  HOME_LIVING_ALONE_DC = 1;                   // nach Hause lebend alleine
+  HOME_LIVING_NOT_ALONE_DC = 2;               // nach Hause lebend nicht alleine
+  AMBULATORY_SUPERVISED_FLAT_DC = 3;          // Ambulant betreute Wohnung
+  SUPERVISED_FLAT_DC = 4;                     // Betreute Wohngemeinschaften
+  NURSING_HOME_DC = 5;                        // Pflegeheim nach Pflegeheimgesetz
+  INSTITUTION_SOCIAL_PSYCHIATRY_DC = 6;       // Einrichtung der Sozialpsychiatrie
+  INSTITUTION_ADDICTION_SUPPORT_DC = 7;       // Einrichtung der Suchthilfe
+  INSTITUTION_HANDICAPPED_SUPPORT_DC = 8;     // Einrichtung der Behindertenhilfe
+  INSTITUTION_HOMELESS_SUPPORT_DC = 9;        // Einrichtung der Wohnungslosenhilfe
+  OTHER_ATTENDED_HOUSING_DC = 10;             // Sonstige betreute Wohnform
+  OTHER_DC = 11;                              // Sonstige
+  NO_DC = 12;                                 // Keine Angabe
 }
 
 // 51 Abgang Art
@@ -224,12 +234,16 @@ enum AdmissionLocation {
   UNDEFINED_AL = 0;
   HOME_LIVING_ALONE_AL = 1;                    // zu Hause lebend alleine
   HOME_LIVING_NOT_ALONE_AL = 2;                // zu Hause lebend nicht alleine
-  AMBULATORY_SUPERVISED_FLAT_AL = 3;           // ambulant betreute (Senioren/Wohnung)
-  SUPERVISED_FLAT_AL = 4;                      // betreute Wohngemeinschaften
+  AMBULATORY_SUPERVISED_FLAT_AL = 3;           // Ambulant betreute Wohnung
+  SUPERVISED_FLAT_AL = 4;                      // Betreute Wohngemeinschaften
   NURSING_HOME_AL = 5;                         // Pflegeheim nach Pflegeheimgesetz
-  OTHER_ATTENDED_HOUSING_AL = 6;               // Sonstige betreute Wohnform
-  OTHER_AL = 7;                                // Sonstige
-  NO_DISCHARGELOCATION_AL = 8;                 // keine Angabe
+  INSTITUTION_SOCIAL_PSYCHIATRY_AL = 6;        // Einrichtung der Sozialpsychiatrie
+  INSTITUTION_ADDICTION_SUPPORT_AL = 7;        // Einrichtung der Suchthilfe
+  INSTITUTION_HANDICAPPED_SUPPORT_AL = 8;      // Einrichtung der Behindertenhilfe
+  INSTITUTION_HOMELESS_SUPPORT_AL = 9;         // Einrichtung der Wohnungslosenhilfe
+  OTHER_ATTENDED_HOUSING_AL = 10;              // Sonstige betreute Wohnform
+  OTHER_AL = 11;                               // Sonstige
+  NO_DISCHARGELOCATION_AL = 12;                // Keine Angabe
 }
 
 
