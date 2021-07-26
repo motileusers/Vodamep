@@ -2,11 +2,11 @@
 Funktionalität: StatLp - Validierung der gemeldeten Entlassungen einer Datenmeldung
 
 Szenario: das Entlassungsdatum muss gesetzt sein
-	 Angenommen die Eigenschaft 'valid' von 'Leaving' ist nicht gesetzt
+	 Angenommen die Eigenschaft 'leaving_date' von 'Leaving' ist nicht gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '1' muss im aktuellen Monat liegen.'
 
 Szenario: das Entlassungsdatum muss im aktuellen Monat liegen
-     Angenommen die Eigenschaft 'valid' von 'Leaving' ist auf '2000-01-01' gesetzt
+     Angenommen die Eigenschaft 'leaving_date' von 'Leaving' ist auf '2000-01-01' gesetzt
      Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '1' muss im aktuellen Monat liegen.'
 
 Szenariogrundriss: Pflichtfelder

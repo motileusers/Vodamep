@@ -133,20 +133,30 @@ namespace Vodamep.StatLp.Validation
                                     case AdmissionType.HolidayAt:
                                         if (span.TotalDays > 42)
                                         {
-                                            ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
+                                            ValidationFailure f = new ValidationFailure(nameof(StatLpReport.FromD),
                                                 Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(this.GetPersonName(currentAdmissionTypeAttribute.PersonId, personHistory),
                                                     displayNameResolver.GetDisplayName(admissionType.ToString()),
-                                                    $"mehr als 42 Tage")));
+                                                    $"mehr als 42 Tage"))
+                                            {
+                                                Severity = Severity.Warning
+                                            };
+
+                                            ctx.AddFailure(f);
                                         }
                                         break;
 
                                     case AdmissionType.TransitionalAt:
                                         if (span.TotalDays > 365)
                                         {
-                                            ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
+                                            ValidationFailure f = new ValidationFailure(nameof(StatLpReport.FromD),
                                                 Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(this.GetPersonName(currentAdmissionTypeAttribute.PersonId, personHistory),
                                                     displayNameResolver.GetDisplayName(admissionType.ToString()),
-                                                    $"mehr als 365 Tage")));
+                                                    $"mehr als 365 Tage"))
+                                            {
+                                                Severity = Severity.Warning
+                                            };
+
+                                            ctx.AddFailure(f);
                                         }
                                         break;
                                 }
@@ -235,7 +245,7 @@ namespace Vodamep.StatLp.Validation
                                                                         .FirstOrDefault();
 
                             // Dann brauchen wir eine evtl. Enlassung aus dem Vormonat
-                            Leaving previousLeaving = previousReport.Leavings.Where(l => l.ValidD == previousStay.ToD &&
+                            Leaving previousLeaving = previousReport.Leavings.Where(l => l.LeavingDateD == previousStay.ToD &&
                                                                                          l.PersonId == previousStay.PersonId)
                                                                              .FirstOrDefault();
 
@@ -259,7 +269,7 @@ namespace Vodamep.StatLp.Validation
                             if (firstStayInNextMonth != null)
                             {
                                 // Dann brauchen wir auch eine evtl. Neuaufnahme vom Folgemonat
-                                Admission nextAdmission = sentReport.Admissions.Where(l => l.ValidD == firstStayInNextMonth.FromD &&
+                                Admission nextAdmission = sentReport.Admissions.Where(l => l.AdmissionDateD == firstStayInNextMonth.FromD &&
                                                                                        l.PersonId == previousStay.PersonId)
                                                                            .FirstOrDefault();
                                 if (nextAdmission != null)
@@ -325,9 +335,9 @@ namespace Vodamep.StatLp.Validation
                     attributes.AddRange(existingReport.Attributes.Where(ad => ad.PersonId == person.Id));
                 }
 
-                personHistory.Admissions.AddRange(admissions.OrderByDescending(st => st.ValidD));
+                personHistory.Admissions.AddRange(admissions.OrderByDescending(st => st.AdmissionDateD));
                 personHistory.Stays.AddRange(stays.OrderByDescending(st => st.FromD));
-                personHistory.Leavings.AddRange(leavings.OrderByDescending(st => st.ValidD));
+                personHistory.Leavings.AddRange(leavings.OrderByDescending(st => st.LeavingDateD));
                 personHistory.Attributes.AddRange(attributes.OrderByDescending(st => st.FromD));
                 personHistory.Person = person;
 
@@ -529,12 +539,12 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddAdmissionsToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
-            stayInfo.Admissions.AddRange(sentReport.Admissions.Where(x => x.ValidD >= stayInfo.From &&
-                                                                          x.ValidD <= stayInfo.To &&
+            stayInfo.Admissions.AddRange(sentReport.Admissions.Where(x => x.AdmissionDateD >= stayInfo.From &&
+                                                                          x.AdmissionDateD <= stayInfo.To &&
                                                                           x.PersonId == personHistory.PersonId));
 
-            stayInfo.Admissions.AddRange(personHistory.Admissions.Where(x => x.ValidD >= stayInfo.From &&
-                                                                             x.ValidD <= stayInfo.To));
+            stayInfo.Admissions.AddRange(personHistory.Admissions.Where(x => x.AdmissionDateD >= stayInfo.From &&
+                                                                             x.AdmissionDateD <= stayInfo.To));
         }
 
 
@@ -558,12 +568,12 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddLeavingsToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
-            stayInfo.Leavings.AddRange(sentReport.Leavings.Where(x => x.ValidD >= stayInfo.From &&
-                                                                      x.ValidD <= stayInfo.To &&
+            stayInfo.Leavings.AddRange(sentReport.Leavings.Where(x => x.LeavingDateD >= stayInfo.From &&
+                                                                      x.LeavingDateD <= stayInfo.To &&
                                                                       x.PersonId == personHistory.PersonId));
 
-            stayInfo.Leavings.AddRange(personHistory.Leavings.Where(x => x.ValidD >= stayInfo.From &&
-                                                                         x.ValidD <= stayInfo.To));
+            stayInfo.Leavings.AddRange(personHistory.Leavings.Where(x => x.LeavingDateD >= stayInfo.From &&
+                                                                         x.LeavingDateD <= stayInfo.To));
         }
 
         /// <summary>
@@ -571,12 +581,12 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddActualAdmissionToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
-            stayInfo.Admission = sentReport.Admissions.Where(x => x.ValidD == stayInfo.From &&
+            stayInfo.Admission = sentReport.Admissions.Where(x => x.AdmissionDateD == stayInfo.From &&
                                                                   x.PersonId == personHistory.PersonId)
                                                       .FirstOrDefault();
 
             if (stayInfo.Admission == null)
-                stayInfo.Admission = personHistory.Admissions.Where(x => x.ValidD == stayInfo.From).FirstOrDefault();
+                stayInfo.Admission = personHistory.Admissions.Where(x => x.AdmissionDateD == stayInfo.From).FirstOrDefault();
 
         }
 
@@ -586,12 +596,12 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddActualLeavingToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
-            stayInfo.Leaving = sentReport.Leavings.Where(x => x.ValidD == stayInfo.To &&
+            stayInfo.Leaving = sentReport.Leavings.Where(x => x.LeavingDateD == stayInfo.To &&
                                                               x.PersonId == personHistory.PersonId)
                                                   .FirstOrDefault();
 
             if (stayInfo.Leaving == null)
-                stayInfo.Leaving = personHistory.Leavings.Where(x => x.ValidD == stayInfo.To).FirstOrDefault();
+                stayInfo.Leaving = personHistory.Leavings.Where(x => x.LeavingDateD == stayInfo.To).FirstOrDefault();
 
         }
 

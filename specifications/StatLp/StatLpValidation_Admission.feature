@@ -1,14 +1,14 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Aufnahmen einer Datenmeldung
 
-Szenario: Das Gültigkeitdatum der Aufnahme muss im aktuellen Monat liegen
-	Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2000-01-01' gesetzt
+Szenario: Das Aufnahmedatum muss im aktuellen Monat liegen
+	Angenommen die Eigenschaft 'admission_date' von 'Admission' ist auf '2000-01-01' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Das Aufnahmedatum von'
 	Und enthält das Validierungsergebnis den Fehler 'muss kleinergleich dem Gültigkeitsdatum'
 
-Szenario: Das Gültigkeitdatum der Aufnahme unterscheidet sich vom Aufnahmedatum
-	Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2021-02-02' gesetzt
-	Dann enthält das Validierungsergebnis die Warnung 'Das Aufnahmedatum von'
+Szenario: Das ursprüngliche Aufnahmedatum unterscheidet sich vom Aufnahmedatum
+	Angenommen die Eigenschaft 'admission_date' von 'Admission' ist auf '2021-02-02' gesetzt
+	Dann enthält das Validierungsergebnis die Warnung 'Das ursprüngliche Aufnahmedatum von'
 	Und enthält das Validierungsergebnis die Warnung 'unterscheidet sich'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
@@ -18,8 +18,8 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 
 	Beispiele:
 		| Name                          | Bezeichnung                                    |
-		| valid                         | Gültigkeitsdatum der Aufnahme                  |
-		| prior_admission               | Aufnahmedatum                                  |
+		| admission_date                | Aufnahmedatum                                  |
+		| origin_admission_date         | Ursprüngliches Aufnahmedatum                   |
 		| housing_type_before_admission | Wohnsituation vor der Aufnahme                 |
 		| main_attendance_relation      | Verwandtschaftsverhältnis Hauptbetreuungspers. |
 		| main_attendance_closeness     | Räumliche Nähe Hauptbetreuungsperson           |
@@ -84,7 +84,6 @@ Szenariogrundriss: Leerer Ort / Plz
 		| last_postcode | last_city |        | Feldkirch |
 		| last_postcode | last_city |        | Feldkirch |
 		| last_postcode | last_city |        |           |
-
 
 # vor 2019 wird PLZ / Ort nicht geprüft, da konnte alles gesendet werden
 Szenariogrundriss: Gültiger Ort / Plz
@@ -165,13 +164,13 @@ Szenario: Eine Admission enthält eine Person, die nicht in der Personenliste is
 	Dann enthält das Validierungsergebnis den Fehler 'Person '2' ist nicht in der Personenliste vorhanden.'
 
 Szenario: Eine Aufnahme muss im aktuellen Monat liegen
-	Angenommen die Eigenschaft 'valid' von 'Admission' ist auf '2000-01-01' gesetzt
+	Angenommen die Eigenschaft 'admission_date' von 'Admission' ist auf '2000-01-01' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Das Aufnahmedatum von'
 	Und enthält das Validierungsergebnis den Fehler 'muss kleinergleich dem Gültigkeitsdatum'
 
 Szenario: Valid darf keine Zeit beinhalten
-	Angenommen die Datums-Eigenschaft 'valid' von 'Admission' hat eine Uhrzeit gesetzt
-	Dann enthält das Validierungsergebnis den Fehler ''Gültigkeitsdatum der Aufnahme' darf keine Uhrzeit beinhalten.'
+	Angenommen die Datums-Eigenschaft 'admission_date' von 'Admission' hat eine Uhrzeit gesetzt
+	Dann enthält das Validierungsergebnis den Fehler ''Aufnahmedatum' darf keine Uhrzeit beinhalten.'
 
 Szenariogrundriss: Das Land einer Aufnahme enthält einen ungültigen Wert
 	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt

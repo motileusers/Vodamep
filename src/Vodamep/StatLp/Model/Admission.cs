@@ -4,9 +4,9 @@ namespace Vodamep.StatLp.Model
 {
     public partial class Admission
     {
-        public DateTime ValidD { get => this.Valid.AsDate(); set => this.Valid = value.AsTimestamp(); }
+        public DateTime AdmissionDateD { get => this.AdmissionDate.AsDate(); set => this.AdmissionDate = value.AsTimestamp(); }
 
-        public DateTime PriorAdmissionD { get => this.PriorAdmission.AsDate(); set => this.PriorAdmission = value.AsTimestamp(); }
+        public DateTime OriginAdmissionDateD { get => this.OriginAdmissionDate.AsDate(); set => this.OriginAdmissionDate = value.AsTimestamp(); }
 
     }
 }

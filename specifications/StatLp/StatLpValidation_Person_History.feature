@@ -268,8 +268,9 @@ Szenario: Urlaub von der Pflege maximal 42 Tage 2
 	Angenommen Gesendete Meldung '2' gilt vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung '2' von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '15.01.2021'
-	Dann enthält das escapte History Validierungsergebnis den Fehler 'wurde der Zeitraum für die Aufnahmeart 'Urlaub von der Pflege' überschritten (mehr als 42 Tage).'
-	Und enthält das History Validierungsergebnis genau einen Fehler
+	Dann enthält das escapte History Validierungsergebnis die Warnung 'wurde der Zeitraum für die Aufnahmeart 'Urlaub von der Pflege' überschritten (mehr als 42 Tage).'
+	Und enthält das History Validierungsergebnis genau eine Warnung
+	Und enthält das History Validierungsergebnis keine Fehler
 
 # OK
 Szenario: Übergangspflege maximal 365 Tage 1
@@ -319,8 +320,9 @@ Szenario: Übergangspflege maximal 365 Tage 2
 	Angenommen Existierende Meldung '12' enthält einen Aufenthalt von Person 1 vom '01.11.2020' bis '30.11.2020'
 	Angenommen Gesendete Meldung '13' gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung '13' enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
-	Dann enthält das escapte History Validierungsergebnis den Fehler 'wurde der Zeitraum für die Aufnahmeart 'Übergangspflege' überschritten (mehr als 365 Tage).'
-	Und enthält das History Validierungsergebnis genau einen Fehler
+	Dann enthält das escapte History Validierungsergebnis die Warnung 'wurde der Zeitraum für die Aufnahmeart 'Übergangspflege' überschritten (mehr als 365 Tage).'
+	Und enthält das History Validierungsergebnis genau eine Warnung
+	Und enthält das History Validierungsergebnis keine Fehler
 
 # Änderung an den Personendaten
 # OK

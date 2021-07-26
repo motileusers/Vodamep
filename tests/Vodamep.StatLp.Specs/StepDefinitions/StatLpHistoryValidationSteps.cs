@@ -315,6 +315,13 @@ namespace Vodamep.Specs.StepDefinitions
             Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Error).Select(x => x.ErrorMessage).Distinct());
         }
 
+        [Then(@"*enthält das History Validierungsergebnis genau eine Warnung")]
+        public void ThenTheResultContainsOneWarning()
+        {
+            Assert.True(this.Result.IsValid);
+            Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Warning).Select(x => x.ErrorMessage).Distinct());
+        }
+
         [Then(@"enthält das History Validierungsergebnis keine Fehler")]
         public void ThenTheResultContainsNoError()
         {
@@ -328,6 +335,14 @@ namespace Vodamep.Specs.StepDefinitions
             var pattern = new Regex(Regex.Escape(message), RegexOptions.IgnoreCase);
 
             Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
+        }
+
+        [Then(@"enthält das escapte History Validierungsergebnis die Warnung '(.*)'")]
+        public void ThenTheEscapedResultContainsAWarningRegex(string message)
+        {
+            var pattern = new Regex(Regex.Escape(message), RegexOptions.IgnoreCase);
+
+            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Warning && pattern.IsMatch(x.ErrorMessage)));
         }
 
         [Then(@"enthält das History Validierungsergebnis den Fehler '(.*)'")]

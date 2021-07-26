@@ -157,8 +157,8 @@ namespace Vodamep.Data.Dummy
 
             if (valid != null)
             {
-                admission.ValidD = valid.Value;
-                admission.PriorAdmissionD = valid.Value;
+                admission.AdmissionDateD = valid.Value;
+                admission.OriginAdmissionDateD = valid.Value;
             }
 
             return admission;
@@ -191,27 +191,27 @@ namespace Vodamep.Data.Dummy
 
             var admissionTypeAttribute = new Attribute();
             admissionTypeAttribute.PersonId = admission.PersonId;
-            admissionTypeAttribute.FromD = admission.ValidD;
+            admissionTypeAttribute.FromD = admission.AdmissionDateD;
             admissionTypeAttribute.AttributeType = AttributeType.AdmissionType;
             admissionTypeAttribute.Value = AdmissionType.ContinuousAt.ToString();
             attributes.Add(admissionTypeAttribute);
 
             var careAllowanceAttribute = new Attribute();
-            careAllowanceAttribute.FromD = admission.ValidD;
+            careAllowanceAttribute.FromD = admission.AdmissionDateD;
             careAllowanceAttribute.PersonId = admission.PersonId;
             careAllowanceAttribute.AttributeType = AttributeType.CareAllowance;
             careAllowanceAttribute.Value = CareAllowance.L1.ToString();
             attributes.Add(careAllowanceAttribute);
 
             var careAllowanceArgeAttribute = new Attribute();
-            careAllowanceArgeAttribute.FromD = admission.ValidD;
+            careAllowanceArgeAttribute.FromD = admission.AdmissionDateD;
             careAllowanceArgeAttribute.PersonId = admission.PersonId;
             careAllowanceArgeAttribute.AttributeType = AttributeType.CareAllowanceArge;
             careAllowanceArgeAttribute.Value = CareAllowanceArge.L1Ar.ToString();
             attributes.Add(careAllowanceArgeAttribute);
 
             var financeAttribute = new Attribute();
-            financeAttribute.FromD = admission.ValidD;
+            financeAttribute.FromD = admission.AdmissionDateD;
             financeAttribute.PersonId = admission.PersonId;
             financeAttribute.AttributeType = AttributeType.Finance;
             financeAttribute.Value = Finance.SelfFi.ToString();
@@ -265,7 +265,7 @@ namespace Vodamep.Data.Dummy
                 LeavingReason = LeavingReason.DischargeLr,
                 DischargeLocation = DischargeLocation.HomeLivingAloneDc,
                 DischargeReason = DischargeReason.OwnDesireDr,
-                ValidD = valid,
+                LeavingDateD = valid,
             };
 
             return stay;

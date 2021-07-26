@@ -23,10 +23,10 @@ namespace Vodamep.StatLp.Validation
                     {
                         // Alle Attribute für diese Aufnahme
                         List<Attribute> attributesForAddmission = x.Attributes.Where(att => att.PersonId == admission.PersonId &&
-                                                                                            admission.ValidD == att.FromD &&
+                                                                                            admission.AdmissionDateD == att.FromD &&
                                                                                             att.AttributeType != AttributeType.UndefinedAttribute).ToList();
 
-                        if (admission.ValidD > System.DateTime.MinValue)
+                        if (admission.AdmissionDateD > System.DateTime.MinValue)
                         {
 
                             // Alle Attributtypen prüfen
@@ -40,7 +40,7 @@ namespace Vodamep.StatLp.Validation
                                     ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.Admissions),
                                         Validationmessages.StatLpReportAttributeMissing(
                                             admission.PersonId,
-                                            admission.ValidD.ToShortDateString(),
+                                            admission.AdmissionDateD.ToShortDateString(),
                                             DisplayNameResolver.GetDisplayName(attributeType.ToString()))));
                                 }
                                 else if (attributeCount > 1)
@@ -48,7 +48,7 @@ namespace Vodamep.StatLp.Validation
                                     ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.Admissions),
                                         Validationmessages.StatLpReportMultipleAttribute(
                                             admission.PersonId,
-                                            admission.ValidD.ToShortDateString(),
+                                            admission.AdmissionDateD.ToShortDateString(),
                                             DisplayNameResolver.GetDisplayName(attributeType.ToString()))));
 
                                 }

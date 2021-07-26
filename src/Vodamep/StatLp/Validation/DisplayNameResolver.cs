@@ -30,9 +30,9 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
 
             _dict.Add(nameof(Admission), "Die Aufnahme");
-            _dict.Add(nameof(Admission.Valid), "Gültigkeitsdatum der Aufnahme");
-            _dict.Add(nameof(Admission.ValidD), "Gültigkeitsdatum der Aufnahme");
-            _dict.Add(nameof(Admission.PriorAdmission), "Aufnahmedatum");
+            _dict.Add(nameof(Admission.AdmissionDate), "Aufnahmedatum");
+            _dict.Add(nameof(Admission.AdmissionDateD), "Aufnahmedatum");
+            _dict.Add(nameof(Admission.OriginAdmissionDate), "Ursprüngliches Aufnahmedatum");
             _dict.Add(nameof(Admission.Gender), "Geschlecht");
             _dict.Add(nameof(Admission.Country), "Land");
             _dict.Add(nameof(Admission.HousingTypeBeforeAdmission), "Wohnsituation vor der Aufnahme");
@@ -49,7 +49,8 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(Stay), "Ein Aufenthalt");
             
             _dict.Add(nameof(Leaving), "Die Entlassung");
-            _dict.Add(nameof(Leaving.LeavingReason), "Abgangart");
+            _dict.Add(nameof(Leaving.LeavingDateD), "Abgangsdatum");
+            _dict.Add(nameof(Leaving.LeavingReason), "Abgangsart");
             _dict.Add(nameof(Leaving.DischargeLocationOther), "Sonstige Lebens-/Betreuungssituation");
             _dict.Add(nameof(Leaving.DischargeReasonOther), "Entlassung Grund");
 

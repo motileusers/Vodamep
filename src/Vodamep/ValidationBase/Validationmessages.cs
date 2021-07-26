@@ -93,7 +93,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
         public static string ReportBaseItemMustBeInCurrentMonth (string personId) => $"{{PropertyName}} von Person '{personId}' muss im aktuellen Monat liegen.";
         public static string AdmissionDateMustBeLessThanValid(string personId, DateTime from) => $"Das Aufnahmedatum von Person '{personId}' muss kleinergleich dem Gültigkeitsdatum ({from.ToShortDateString()}) sein.";
-        public static string AdmissionDifferentToValid(string personId, DateTime from) => $"Das Aufnahmedatum von Person '{personId}' unterscheidet sich vom Gültigkeitsdatum der Aufnahme ({from.ToShortDateString()}).";
+        public static string AdmissionDifferentToValid(string personId, DateTime from) => $"Das ursprüngliche Aufnahmedatum von Person '{personId}' unterscheidet sich vom Aufnahmedatum ({from.ToShortDateString()}).";
         public static string StatLpReportAttributeMissing(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde keine '{attributeType}' gesendet.";
         public static string StatLpReportMultipleAttribute(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde '{attributeType}' mehrfach gesendet.";
         public static string StatLpReportEveryPersonMustBeInAStay(string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";

@@ -17,7 +17,6 @@ namespace Vodamep.StatLp.Validation
         private Dictionary<string, DateTime> institutionAdmissionValid = new Dictionary<string, DateTime>()
         {
             {"0*", new DateTime(1995, 01, 01) },
-            // {"1234", new DateTime(2008, 01, 01) },
         };
 
         public AdmissionValidator(StatLpReport report)
@@ -33,37 +32,45 @@ namespace Vodamep.StatLp.Validation
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.Country)))
                 .WithMessage(x => Validationmessages.ReportBaseInvalidValue(this.GetPersonName(x.PersonId, report)));
 
-            this.RuleFor(x => x.Valid).SetValidator(new TimestampWithOutTimeValidator());
+            this.RuleFor(x => x.AdmissionDate).SetValidator(new TimestampWithOutTimeValidator());
 
 
 
             // Gültigkeitsdatum
 
-            this.RuleFor(x => x.ValidD)
+            this.RuleFor(x => x.AdmissionDateD)
                 .NotEmpty()
                 .DependentRules(() =>
                 {
                     // Aufnahmedatum
 
                     // Nicht leer
-                    this.RuleFor(x => x.PriorAdmission).NotEmpty();
+                    this.RuleFor(x => x.OriginAdmissionDate).NotEmpty();
 
                     // Aufnahmedatum größer als das Gültigkeitsdatum der Aufname
-                    this.RuleFor(x => x.PriorAdmission)
+                    this.RuleFor(x => x.OriginAdmissionDate)
                         .Must((admission, personId) =>
                         {
-                            return admission.PriorAdmissionD <= admission.ValidD;
+                            if (admission.OriginAdmissionDate != null &&
+                                admission.AdmissionDate != null)
+                                return admission.OriginAdmissionDate <= admission.AdmissionDate;
+
+                            return true;
                         })
-                        .WithMessage(x => Validationmessages.AdmissionDateMustBeLessThanValid(this.GetPersonName(x.PersonId, report), x.ValidD));
+                        .WithMessage(x => Validationmessages.AdmissionDateMustBeLessThanValid(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
 
                     // Aufnahmedatum <> Gültigkeitsdatum der Aufnahme
-                    this.RuleFor(x => x.PriorAdmission)
+                    this.RuleFor(x => x.OriginAdmissionDate)
                         .Must((admission, personId) =>
                         {
-                            return admission.PriorAdmissionD == admission.ValidD;
+                            if (admission.OriginAdmissionDate != null &&
+                                admission.AdmissionDate != null)
+                                return admission.OriginAdmissionDate == admission.AdmissionDate;
+
+                            return true;
                         })
                         .WithSeverity(Severity.Warning)
-                        .WithMessage(x => Validationmessages.AdmissionDifferentToValid(this.GetPersonName(x.PersonId, report), x.ValidD));
+                        .WithMessage(x => Validationmessages.AdmissionDifferentToValid(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
 
                 });
 
@@ -88,7 +95,7 @@ namespace Vodamep.StatLp.Validation
                     // Vor diesem Datum war nicht immer gewährleistet, dass dieser Wert befüllt ist
                     if (report.FromD >= new DateTime(2011, 01, 01))
                     {
-                        if (x == HousingReason.UndefinedHr) 
+                        if (x == HousingReason.UndefinedHr)
                             return false;
                     }
 
@@ -146,7 +153,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.EmptyPostCodeAdmission(x.ValidD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.EmptyPostCodeAdmission(x.AdmissionDateD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
 
             this.RuleFor(x => x)
@@ -156,7 +163,7 @@ namespace Vodamep.StatLp.Validation
 
                     // Erst ab 2019 wurden von allen díe Gemeinde Kennzahlen übermittelt
                     // Davor war nicht sichergestellt, dass in PLZ/Ort ein definiertes Wertepaar enthält
-                    if (x.ValidD >= new DateTime(2019, 01, 01))
+                    if (x.AdmissionDateD >= new DateTime(2019, 01, 01))
                     {
                         if (!String.IsNullOrWhiteSpace(x.LastPostcode) &&
                             !String.IsNullOrWhiteSpace(x.LastCity))
@@ -167,7 +174,7 @@ namespace Vodamep.StatLp.Validation
 
                     return result;
                 })
-                .WithMessage(x => Validationmessages.WrongPostCodeAdmission(x.ValidD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.WrongPostCodeAdmission(x.AdmissionDateD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
 
             this.RuleFor(x => x.PersonalChanges).NotEmpty().Unless(x => !string.IsNullOrEmpty(x.PersonalChangeOther))

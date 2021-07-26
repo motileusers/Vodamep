@@ -4,6 +4,6 @@ namespace Vodamep.StatLp.Model
 {
     public partial class Leaving
     {
-        public DateTime ValidD { get => this.Valid.AsDate(); set => this.Valid = value.AsTimestamp(); }
+        public DateTime LeavingDateD { get => this.LeavingDate.AsDate(); set => this.LeavingDate = value.AsTimestamp(); }
     }
 }
