@@ -41,18 +41,16 @@ message Person {
 // Leistungen pro Typ in Minuten
 message Activity {
     google.protobuf.Timestamp date = 1;
-    string case_manager_id = 2;        
-    ActivityType activity_type = 3;
-    float minutes  = 4;
+    ActivityType activity_type = 2;
+    float minutes  = 3;
 }
 
 // Leistungen pro Klient und Typ in Minuten
 message ClientActivity {
     google.protobuf.Timestamp date = 1;
-    string case_manager_id = 2;        
-    string person_id = 3;      
-    ClientActivityType activity_type = 4;
-    float minutes  = 5;
+    string person_id = 2;      
+    ClientActivityType activity_type = 3;
+    float minutes  = 4;
 }
 
 // Bezieht Pflegegeld

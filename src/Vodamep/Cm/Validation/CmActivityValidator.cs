@@ -8,9 +8,17 @@ namespace Vodamep.Cm.Validation
     {
         public CmActivityValidator(CmReport report)
         {
-            this.RuleFor(x => x.ActivityType).NotEmpty().WithMessage(x => Validationmessages.ReportBaseActivityNoCategory(x.PersonId, x.Date.ToDateTime().ToShortDateString()));
-            this.RuleFor(x => x.Date).Must(x => x >= report.From && x <= report.To).WithMessage(x => Validationmessages.ReportBaseActivityWrongDate(x.PersonId, x.Date.ToDateTime().ToShortDateString()));
-            this.RuleFor(x => x).SetValidator(x => new ActivityTimeValidator (x.DateD, 1, 10000));
+            this.RuleFor(x => x.ActivityType).NotEmpty().WithMessage(x => Validationmessages.ReportBaseActivityNoCategory(x.Date.ToDateTime().ToShortDateString()));
+            this.RuleFor(x => x.Date).Must(x => x >= report.From && x <= report.To).WithMessage(x => Validationmessages.ReportBaseActivityWrongDate(x.Date.ToDateTime().ToShortDateString()));
+
+            this.RuleFor(x => x.Time)
+                .GreaterThanOrEqualTo(1)
+                .WithMessage(x => Validationmessages.ReportBaseActivityWrongValue(x.DateD.ToShortDateString(), $"< {1}"));
+
+            this.RuleFor(x => x.Time)
+                .LessThanOrEqualTo(1000)
+                .WithMessage(x => Validationmessages.ReportBaseActivityWrongValue(x.DateD.ToShortDateString(), $"> {10000}"));
+
         }
     }
 }

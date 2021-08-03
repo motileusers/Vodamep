@@ -84,18 +84,6 @@ enum AdmissionType {
   DAY_CARE_GERONTO_AT = 2;                   // Tagesbetreuung (gerontopsych. Schwerpunkt)                  
 }
 
-// Wohnform vor der Aufnahme
-enum AdmissionLocation {
-  UNDEFINED_AL = 0;
-  HOME_LIVING_ALONE_AL = 1;                    // zu Hause lebend alleine
-  HOME_LIVING_NOT_ALONE_AL = 2;                // zu Hause lebend nicht alleine
-  AMBULATORY_SUPERVISED_FLAT_AL = 3;           // ambulant betreute (Senioren/Wohnung)
-  SUPERVISED_FLAT_AL = 4;                      // betreute Wohngemeinschaften
-  NURSING_HOME_AL = 5;                         // Pflegeheim nach Pflegeheimgesetz
-  OTHER_ATTENDED_HOUSING_AL = 6;               // Sonstige betreute Wohnform
-  OTHER_AL = 7;                                // Sonstige
-  NO_DISCHARGELOCATION_AL = 8;                 // keine Angabe
-}
 
 // Räumliche Nähe Hauptbetreuungsperson
 enum MainAttendanceCloseness {

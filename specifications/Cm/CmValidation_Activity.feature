@@ -10,10 +10,10 @@ Szenariogrundriss: Ungültige Werte bei der Leistung
 
 	Beispiele:
 		| Name          | Nummer | Wert         | Fehler																								    |
-		| minutes       | 1      | 0            | Bei der Leistung von Person '1' am 02.02.2021 wurde ein Wert < 1 angegeben.								|
-		| minutes       | 1      | 10001        | Bei der Leistung von Person '1' am 02.02.2021 wurde ein Wert > 10000 angegeben.							|
-		| activity_type | 1      | UndefinedCt  | Bei der Leistung von Person '1' am 02.02.2021 wurde keine Kategorie angegeben.							|
-		| date          | 1      | 2058-04-30   | Bei der Leistung von Person '1' am 30.04.2058 wurde ein Datum außerhalb des Meldungszeitraums angegeben.	|
+		| minutes       | 1      | 0            | Bei der Leistung am 02.02.2021 wurde ein Wert < 1 angegeben.								|
+		| minutes       | 1      | 10001        | Bei der Leistung am 02.02.2021 wurde ein Wert > 10000 angegeben.							|
+		| activity_type | 1      | UndefinedCt  | Bei der Leistung am 02.02.2021 wurde keine Kategorie angegeben.							|
+		| date          | 1      | 2058-04-30   | Bei der Leistung am 30.04.2058 wurde ein Datum außerhalb des Meldungszeitraums angegeben.	|
 	
 # Werte > 0 und <= 10.000
 # Connexia Source NumberValidationUtility.ValidateDecimalPlace
