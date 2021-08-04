@@ -37,6 +37,11 @@ message Stay {
 
     google.protobuf.Timestamp from = 2;
     google.protobuf.Timestamp to = 3;
+
+    bool is_admission = 4;        // Sollte eine Aufnahme für diesen Aufenthalt vorhanden sein?
+    bool is_leaving = 5;          // Sollte eine Enlassung für diesen Aufenthalt vorhanden sein
+
+
 }
 
 // Aufnahme Daten
