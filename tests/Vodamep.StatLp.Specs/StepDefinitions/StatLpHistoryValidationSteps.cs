@@ -185,37 +185,37 @@ namespace Vodamep.Specs.StepDefinitions
             return StatLpDataGenerator.Instance.CreateLeaving(stay.PersonId, stay.FromD);
         }
 
-        [Given(@"Gesendete Meldung '(.*)' gilt vom '(.*)' bis '(.*)'")]
+        [Given(@"Gesendete Meldung (.*) gilt vom '(.*)' bis '(.*)'")]
         public void GivenSentReportIsValidFromTo(int reportNumber, string dateFrom, string dateTo)
         {
             this.GivenReportIsValidFromTo(-1, dateFrom, dateTo);
         }
 
-        [Given(@"Existierende Meldung '(.*)' gilt vom '(.*)' bis '(.*)'")]
+        [Given(@"Existierende Meldung (.*) gilt vom '(.*)' bis '(.*)'")]
         public void GivenExistingReportIsValidFromTo(int reportNumber, string dateFrom, string dateTo)
         {
             this.GivenReportIsValidFromTo(reportNumber - 1, dateFrom, dateTo);
         }
 
-        [Given(@"Gesendete Meldung '(.*)' von Person (.*) enthält das Attribut '(.*)' mit dem Wert '(.*)' mit Datum '(.*)'")]
+        [Given(@"Gesendete Meldung (.*) von Person (.*) enthält das Attribut '(.*)' mit dem Wert '(.*)' mit Datum '(.*)'")]
         public void GivenSentPersonPropertyIsSetTo(int reportNumber, string personId, string attributeType, string value, string date)
         {
             this.GivenPersonPropertyIsSetTo(-1, personId, attributeType, value, date);
         }
 
-        [Given(@"Existierende Meldung '(.*)' von Person (.*) enthält das Attribut '(.*)' mit dem Wert '(.*)' mit Datum '(.*)'")]
+        [Given(@"Existierende Meldung (.*) von Person (.*) enthält das Attribut '(.*)' mit dem Wert '(.*)' mit Datum '(.*)'")]
         public void GivenExistingPersonPropertyIsSetTo(int reportNumber, string personId, string attributeType, string value, string date)
         {
             this.GivenPersonPropertyIsSetTo(reportNumber - 1, personId, attributeType, value, date);
         }
 
-        [Given(@"Gesendete Meldung '(.*)' enthält eine '(.*)' von Person (.*) vom '(.*)'")]
+        [Given(@"Gesendete Meldung (.*) enthält eine '(.*)' von Person (.*) vom '(.*)'")]
         public void GivenSentPropertyContainsItem(int reportNumber, string itemType, int personId, string date)
         {
             this.GivenPropertyContainsItem(-1, itemType, personId, date);
         }
 
-        [Given(@"Existierende Meldung '(.*)' enthält eine '(.*)' von Person (.*) vom '(.*)'")]
+        [Given(@"Existierende Meldung (.*) enthält eine '(.*)' von Person (.*) vom '(.*)'")]
         public void GivenExistingPropertyContainsItem(int reportNumber, string itemType, int personId, string date)
         {
             this.GivenPropertyContainsItem(reportNumber - 1, itemType, personId, date);
@@ -223,38 +223,38 @@ namespace Vodamep.Specs.StepDefinitions
 
 
 
-        [Given(@"Existierende Meldung '(.*)' enthält Standard Attribute von Person (.*) vom '(.*)'")]
+        [Given(@"Existierende Meldung (.*) enthält Standard Attribute von Person (.*) vom '(.*)'")]
         public void GivenExistingContainsStandardAttributesForPerson(int reportNumber, string personId, string date)
         {
             this.GivenContainsStandardAttributesForPerson(reportNumber - 1, personId, date);
         }
 
-        [Given(@"Gesendete Meldung '(.*)' enthält Standard Attribute von Person (.*) vom '(.*)'")]
+        [Given(@"Gesendete Meldung (.*) enthält Standard Attribute von Person (.*) vom '(.*)'")]
         public void GivenSentContainsStandardAttributesForPerson(int reportNumber, string personId, string date)
         {
             this.GivenContainsStandardAttributesForPerson(-1, personId, date);
         }
 
 
-        [Given(@"Gesendete Meldung '(.*)' enthält einen Aufenthalt von Person (.*) vom '(.*)' bis '(.*)'")]
+        [Given(@"Gesendete Meldung (.*) enthält einen Aufenthalt von Person (.*) vom '(.*)' bis '(.*)'")]
         public void GivenSentPropertyContainsStay(int reportNumber, string personId, string @from, string to)
         {
             this.GivenPropertyContainsStay(-1, personId, from, to);
         }
 
-        [Given(@"Existierende Meldung '(.*)' enthält einen Aufenthalt von Person (.*) vom '(.*)' bis '(.*)'")]
+        [Given(@"Existierende Meldung (.*) enthält einen Aufenthalt von Person (.*) vom '(.*)' bis '(.*)'")]
         public void GivenExistingPropertyContainsStay(int reportNumber, string personId, string @from, string to)
         {
             this.GivenPropertyContainsStay(reportNumber - 1, personId, from, to);
         }
 
-        [Given(@"Gesendete Meldung '(.*)': die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
+        [Given(@"Gesendete Meldung (.*): die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
         public void GivenSentMessageThePropertyIsSetTo(int reportNumber, string name, string type, string value)
         {
             this.GivenPropertyIsSetTo(-1, name, type, value);
         }
 
-        [Given(@"Existierende Meldung '(.*)': die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
+        [Given(@"Existierende Meldung (.*): die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
         public void GivenExistingMessageThePropertyIsSetTo(int reportNumber, string name, string type, string value)
         {
             this.GivenPropertyIsSetTo(reportNumber - 1, name, type, value);
@@ -290,7 +290,7 @@ namespace Vodamep.Specs.StepDefinitions
             GivenListIsIsEmpty(-1, type);
         }
 
-        [Given(@"Existierende Meldung '(.*)': die Liste '(.*)' ist leer")]
+        [Given(@"Existierende Meldung (.*): die Liste '(.*)' ist leer")]
         public void GivenTheListIsEmpty(int reportNumber, string type)
         {
             GivenListIsIsEmpty(reportNumber - 1, type);
