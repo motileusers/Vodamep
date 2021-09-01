@@ -109,6 +109,8 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(AdmissionType.Covid19RespiteAt), "COVID-19 Entlastungspflege");
             _dict.Add(nameof(AdmissionType.GeriatricRemobilizationAt), "Geriatrische Remobilisation");
             _dict.Add(nameof(AdmissionType.CareTransitionAt), "Überleitungspflege");
+            _dict.Add(nameof(AdmissionType.TrialAt), "Probe");
+            _dict.Add(nameof(AdmissionType.CrisisInterventionAt), "Krisenintervention");
         }
 
         public string GetDisplayName(string name)

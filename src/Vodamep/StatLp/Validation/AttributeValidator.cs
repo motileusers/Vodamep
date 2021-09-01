@@ -12,18 +12,18 @@ namespace Vodamep.StatLp.Validation
     {
         private static readonly DisplayNameResolver displayNameResolver = new DisplayNameResolver();
 
-        public AttributeValidator(StatLpReport parentReport)
+        public AttributeValidator(StatLpReport report)
         {
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
 
             this.RuleFor(x => x.FromD).Must(x =>
             {
-                if (x < parentReport.FromD)
+                if (x < report.FromD)
                 {
                     return false;
                 }
 
-                if (x > parentReport.ToD)
+                if (x > report.ToD)
                 {
                     return false;
                 }
@@ -31,13 +31,13 @@ namespace Vodamep.StatLp.Validation
                 return true;
 
             }).WithName(displayNameResolver.GetDisplayName(nameof(Attribute)))
-              .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
+              .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
 
 
             this.RuleFor(x => x.PersonId)
                 .Must((attribute, personId) =>
                 {
-                    return parentReport.Persons.Any(y => y.Id == personId);
+                    return report.Persons.Any(y => y.Id == personId);
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
 
@@ -48,8 +48,8 @@ namespace Vodamep.StatLp.Validation
 
                     if (string.IsNullOrWhiteSpace(value) ||
                         value == AdmissionType.UndefinedAt.ToString() ||
-                        value == CareAllowance.UndefinedAllowance.ToString() || 
-                        value == CareAllowanceArge.UndefinedAr.ToString() || 
+                        value == CareAllowance.UndefinedAllowance.ToString() ||
+                        value == CareAllowanceArge.UndefinedAr.ToString() ||
                         value == Finance.UndefinedFi.ToString())
                     {
                         return false;
@@ -57,7 +57,49 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithString(displayNameResolver.GetDisplayName(x.AttributeType.ToString()), x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithString(displayNameResolver.GetDisplayName(x.AttributeType.ToString()), report.GetPersonName(x.PersonId)));
+
+
+            // Ungültige Aufnahmeart 'Probe'
+            this.RuleFor(x => x)
+                .Must((attribute) =>
+                {
+                    if (attribute.AttributeType == AttributeType.AdmissionType)
+                    {
+                        var value = attribute.Value;
+
+                        if (value == AdmissionType.TrialAt.ToString() &&
+                            report.FromD > new DateTime(2014, 08, 01))
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                })
+                .WithMessage(x => Validationmessages.StatLpReportInvalidAdmissionType(report.GetPersonName(x.PersonId), displayNameResolver.GetDisplayName(x.Value), x.FromD.ToShortDateString()));
+
+
+            // Ungültige Aufnahmeart 'Krisenintervention'
+            this.RuleFor(x => x)
+                .Must((attribute) =>
+                {
+                    if (attribute.AttributeType == AttributeType.AdmissionType)
+                    {
+                        var value = attribute.Value;
+
+                        if (value == AdmissionType.CrisisInterventionAt.ToString() &&
+                            report.FromD > new DateTime(2019, 11, 30))
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                })
+                .WithMessage(x => Validationmessages.StatLpReportInvalidAdmissionType(report.GetPersonName(x.PersonId), displayNameResolver.GetDisplayName(x.Value), x.FromD.ToShortDateString()));
+
+
 
             this.RuleFor(x => x)
                 .Must((attribute, personId) =>

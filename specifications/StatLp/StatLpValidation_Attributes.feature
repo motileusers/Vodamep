@@ -7,11 +7,25 @@ Szenario: Ein Attribut enthält eine Person, die nicht in der Personenliste ist
 
 Szenario: Ein Attribut muss im aktuellen Monat liegen
 	Angenommen die Eigenschaft 'from' von 'Attribute' ist auf '2000-01-01' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Attribute von Person '1' muss im aktuellen Monat liegen.'
+	Dann enthält das Validierungsergebnis den Fehler 'muss im aktuellen Monat liegen.'
 
 Szenario: Von darf keine Zeit beinhalten
 	Angenommen die Datums-Eigenschaft 'from' von 'Attribute' hat eine Uhrzeit gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''Von' darf keine Uhrzeit beinhalten.'
+
+Szenario: Ungülige Aufnahmeart Krisenintervention
+	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'AdmissionType' gesetzt
+	Angenommen die Eigenschaft 'value' von 'Attribute' ist auf 'CrisisInterventionAt' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'bei der Aufnahme vom'
+	Und enthält das Validierungsergebnis den Fehler 'ist nicht mehr erlaubt.'
+    Und enthält das Validierungsergebnis genau einen Fehler
+
+Szenario: Ungülige Aufnahmeart Probe
+	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'AdmissionType' gesetzt
+	Angenommen die Eigenschaft 'value' von 'Attribute' ist auf 'TrialAt' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'bei der Aufnahme vom'
+	Und enthält das Validierungsergebnis den Fehler 'ist nicht mehr erlaubt.'
+    Und enthält das Validierungsergebnis genau einen Fehler
 
 # Todo => der Validator bekommt ein Enum (von Gerhard geliefert) im Konstruktor, hier abfragen
 # Attribute CAREALLOWANCEARGE darf nur L0_AR sein, wenn es sich um Altersheim handelt
@@ -23,7 +37,8 @@ Szenario: Von darf keine Zeit beinhalten
 Szenario: Pflegegeld ist undefiniert
 	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'CareAllowance' gesetzt
 	Angenommen die Eigenschaft 'value' von 'Attribute' ist auf 'UndefinedAllowance' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Pflegestufe' von Klient '1' darf nicht leer sein.'
+	Dann enthält das Validierungsergebnis den Fehler 'Pflegestufe'
+	Und enthält das Validierungsergebnis den Fehler 'darf nicht leer sein.'
 
 Szenariogrundriss: Attributewert stimmt mit AttributTyp zusammen
 	Angenommen das Attribut mit dem  Typ '<AttributeType>' ist auf den Wert '<Wert>' gesetzt

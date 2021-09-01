@@ -327,4 +327,6 @@ enum AdmissionType {
   COVID19_RESPITE_AT = 4;               // COVID-19 Entlastungspflege
   GERIATRIC_REMOBILIZATION_AT = 5;      // Geriatrische Remobilisation
   CARE_TRANSITION_AT = 6;               // Überleitungspflege
+  TRIAL_AT = 7;                         // Probe (nicht mehr aktuell)
+  CRISIS_INTERVENTION_AT = 8;           // Krisenintervention (nicht mehr aktuell)
 }

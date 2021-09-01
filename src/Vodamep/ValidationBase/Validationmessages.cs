@@ -111,6 +111,7 @@ namespace Vodamep.ValidationBase
         public static string StatLpReportMultipleAdmissions (string clientId, string datefrom, string dateto) => $"Für den Aufenthalt von Klient '{clientId}' vom '{datefrom}' bis '{dateto}' wurden mehrere Aufnahmen gesendet.";
         public static string StatLpReportNoAdmission(string clientId, string date) => $"Vor dem Aufenthalt von Klient '{clientId}' am '{date}' wurden keine Aufnahmedaten gesendet.";
         public static string StatLpReportNoLeaving (string clientId, string date) => $"Zum Aufenthaltsende von Klient '{clientId}' am '{date}' wurden keine Entlassungsdaten gesendet.";
+        public static string StatLpReportInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
 
 
         public static string GetRange(DateTime minDate, DateTime maxDate)

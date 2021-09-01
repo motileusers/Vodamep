@@ -19,6 +19,20 @@ namespace Vodamep.StatLp.Model
 
         IList<IPerson> IReport.Persons => this.Persons.Select(x => x as IPerson).ToList();
 
+        public string GetPersonName(string id)
+        {
+            string client = id;
+
+            var person = this.Persons.FirstOrDefault(p => p.Id == id);
+
+            if (person != null)
+            {
+                client = $"{person.GivenName} {person.FamilyName}";
+            }
+
+            return client;
+        }
+
         public static StatLpReport ReadFile(string file)
         {
             var report = new StatLpReportSerializer().DeserializeFile(file);
