@@ -8,9 +8,9 @@ using Vodamep.StatLp.Model;
 
 namespace Vodamep.StatLp.Validation
 {
-    internal class StatLpReportHistoryValidator : AbstractValidator<StatLpReportHistory>
+    internal class StatLpHistoryValidator : AbstractValidator<StatLpReportHistory>
     {
-        static StatLpReportHistoryValidator()
+        static StatLpHistoryValidator()
         {
             var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
             if (isGerman)
@@ -29,11 +29,9 @@ namespace Vodamep.StatLp.Validation
         }
 
 
-        public StatLpReportHistoryValidator()
+        public StatLpHistoryValidator()
         {
-            this.RuleFor(x => x).SetValidator(new PersonHistoryPersonValidator());
-            this.RuleFor(x => x).SetValidator(new PersonHistoryMessageOrderValidator());
-            this.RuleFor(x => x).SetValidator(new PersonHistoryAttributeValidator());
+            this.RuleFor(x => x).SetValidator(new PersonHistoryValidator());
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<StatLpReportHistory> context, CancellationToken cancellation = default(CancellationToken))

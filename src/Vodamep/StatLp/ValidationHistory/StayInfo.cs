@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
+using Vodamep.StatLp.Model;
 
-namespace Vodamep.StatLp.Model
+namespace Vodamep.StatLp.Validation
 {
 
     /// <summary>
     /// Information zu einem Aufenthalt, meldungsübergreifend, über mehrere Monate
     /// </summary>
-    public class StayInfo
+    internal class StayInfo
     {
 
-        public DateTime From { get; set; }
+        public System.DateTime From { get; set; }
 
-        public DateTime To { get; set; }
+        public System.DateTime To { get; set; }
 
         /// <summary>
         /// Zugehörige Aufnahme, muss eigentlich immer vorhanden sein
         /// </summary>
         public Admission Admission { get; set; }
-
 
         /// <summary>
         /// Liste mit Aufnahmen, falls mehrere vorhanden sind (Fehler)
@@ -36,12 +35,10 @@ namespace Vodamep.StatLp.Model
         /// </summary>
         public List<Leaving> Leavings { get; set; } = new List<Leaving>();
 
-
         /// <summary>
         /// Liste mit Attributen, die ein in den Stays gesendet wurden
         /// </summary>
         public List<Attribute> Attributes { get; set; } = new List<Attribute>();
-
 
         /// <summary>
         /// Aufenthalt, der zeilich vor diesem lag

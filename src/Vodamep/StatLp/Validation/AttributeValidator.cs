@@ -77,7 +77,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.StatLpReportInvalidAdmissionType(report.GetPersonName(x.PersonId), displayNameResolver.GetDisplayName(x.Value), x.FromD.ToShortDateString()));
+                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), displayNameResolver.GetDisplayName(x.Value), x.FromD.ToShortDateString()));
 
 
             // Ungültige Aufnahmeart 'Krisenintervention'
@@ -97,7 +97,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.StatLpReportInvalidAdmissionType(report.GetPersonName(x.PersonId), displayNameResolver.GetDisplayName(x.Value), x.FromD.ToShortDateString()));
+                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), displayNameResolver.GetDisplayName(x.Value), x.FromD.ToShortDateString()));
 
 
 
@@ -121,7 +121,7 @@ namespace Vodamep.StatLp.Validation
                     }
 
                 })
-                .WithMessage(x => Validationmessages.StatLpReportAttributeWrongValue(
+                .WithMessage(x => Validationmessages.StatLpAttributeWrongValue(
                    displayNameResolver.GetDisplayName(x.AttributeType.ToString()),
                     displayNameResolver.GetDisplayName(x.Value)));
 

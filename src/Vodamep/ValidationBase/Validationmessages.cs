@@ -95,23 +95,27 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseActivityMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
         public static string ReportBaseActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
         public static string ReportBaseItemMustBeInCurrentMonth (string personId) => $"{{PropertyName}} von Person '{personId}' muss im aktuellen Monat liegen.";
-        public static string AdmissionDateMustBeLessThanValid(string personId, DateTime from) => $"Das Aufnahmedatum von Person '{personId}' muss kleinergleich dem Gültigkeitsdatum ({from.ToShortDateString()}) sein.";
-        public static string AdmissionDifferentToValid(string personId, DateTime from) => $"Das ursprüngliche Aufnahmedatum von Person '{personId}' unterscheidet sich vom Aufnahmedatum ({from.ToShortDateString()}).";
-        public static string StatLpReportAttributeMissing(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde keine '{attributeType}' gesendet.";
-        public static string StatLpReportMultipleAttribute(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde '{attributeType}' mehrfach gesendet.";
-        public static string StatLpReportEveryPersonMustBeInAStay(string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
-        public static string StatLpReportLeavingReasonMustnotBeEmpty (string personId) => $"Beim Abgang von Klient '{personId}' muss eine Abgang Art angegeben werden.";
-        public static string StatLpReportPersonHistoryMissingReports (string date1, string date2) => $"Die Meldungen für den Zeitraum {date1} bis {date2} wurden noch nicht übermittelt.";
-        public static string StatLpReportPersonHistoryAttributeAlreadySent (string attributeType, string clientName, string attributeValue, string dateCurrent, string dateLast) => $"Die Änderung von '{attributeType}' von Klient '{clientName}' am '{dateCurrent}' auf '{attributeValue}' wurde bereits mit der Meldung am '{dateLast}' gesendet.";
-        public static string StatLpReportPersonHistoryAdmissionAttributeMultipleChanged (string clientName,  string date, string attributeType) => $"Die Eigenschaft {attributeType} von Klient {clientName} am {date} wurde mehrfach am gleichen Tag geändert.";
-        public static string StatLpReportPersonHistoryAdmissionAttributeNoChangeFromLongTimeCarePossible (string clientName,  string newAdmissionTypeValue) => $"Bei Klient '{clientName}' ist kein Wechsel von einer Daueraufname auf '{newAdmissionTypeValue}' möglich.";
-        public static string StatLpReportPersonPeriodForAdmissionTooLong (string clientName, string admissionType, string maxPersiod) => $"Bei Klient '{clientName}' wurde der Zeitraum für die Aufnahmeart '{admissionType}' überschritten ({maxPersiod}).";
-        public static string StatLpReportPersonHistoryGenderAttributeChanged (string propertyName, string clientId, string date) => $"Unterschied bei '{propertyName}' von Klient {clientId} bei Meldung vom {date}.";
-        public static string StatLpReportAttributeWrongValue (string attributeName, string value) => $"Der Wert des Attributs mit dem Typen '{attributeName}' kann nicht auf den Wert '{value}' gesetzt werden.";
-        public static string StatLpReportMultipleAdmissions (string clientName, string datefrom, string dateto) => $"Für den Aufenthalt von Klient '{clientName}' vom '{datefrom}' bis '{dateto}' wurden mehrere Aufnahmen gesendet.";
-        public static string StatLpReportNoAdmission(string clientName, string date) => $"Vor dem Aufenthalt von Klient '{clientName}' am '{date}' wurden keine Aufnahmedaten gesendet.";
-        public static string StatLpReportNoLeaving (string clientName, string date) => $"Zum Aufenthaltsende von Klient '{clientName}' am '{date}' wurden keine Entlassungsdaten gesendet.";
-        public static string StatLpReportInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
+        
+        public static string StatLpAdmissionDateMustBeLessThanValid(string personId, DateTime from) => $"Das Aufnahmedatum von Person '{personId}' muss kleinergleich dem Gültigkeitsdatum ({from.ToShortDateString()}) sein.";
+        public static string StatLpAdmissionDifferentToValid(string personId, DateTime from) => $"Das ursprüngliche Aufnahmedatum von Person '{personId}' unterscheidet sich vom Aufnahmedatum ({from.ToShortDateString()}).";
+        public static string StatLpAdmissionAttributeMissing(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde keine '{attributeType}' gesendet.";
+        public static string StatLpAdmissionMultipleAttribute(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde '{attributeType}' mehrfach gesendet.";
+        
+        public static string StatLpStayEveryPersonMustBeInAStay(string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
+        public static string StatLpLeavingReasonMustnotBeEmpty (string personId) => $"Beim Abgang von Klient '{personId}' muss eine Abgang Art angegeben werden.";
+        public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
+        public static string StatLpAttributeMultipleChanged(string clientName, string date, string attributeType) => $"Die Eigenschaft {attributeType} von Klient {clientName} am {date} wurde mehrfach am gleichen Tag geändert.";
+        public static string StatLpAttributeWrongValue(string attributeName, string value) => $"Der Wert des Attributs mit dem Typen '{attributeName}' kann nicht auf den Wert '{value}' gesetzt werden.";
+
+
+        public static string StatLpHistoryMissingReports (string date1, string date2) => $"Die Meldungen für den Zeitraum {date1} bis {date2} wurden noch nicht übermittelt.";
+        public static string StatLpHistoryAttributeAlreadySent (string attributeType, string clientName, string attributeValue, string dateCurrent, string dateLast) => $"Die Änderung von '{attributeType}' von Klient '{clientName}' am '{dateCurrent}' auf '{attributeValue}' wurde bereits mit der Meldung am '{dateLast}' gesendet.";
+        public static string StatLpHistoryNoChangeFromLongTimeCarePossible (string clientName,  string newAdmissionTypeValue) => $"Bei Klient '{clientName}' ist kein Wechsel von einer Daueraufname auf '{newAdmissionTypeValue}' möglich.";
+        public static string StatLpHistoryPeriodForAdmissionTooLong (string clientName, string admissionType, string maxPersiod) => $"Bei Klient '{clientName}' wurde der Zeitraum für die Aufnahmeart '{admissionType}' überschritten ({maxPersiod}).";
+        public static string StatLpHistoryPersonChanged (string propertyName, string clientName, string date) => $"Unterschied bei '{propertyName}' von Klient '{clientName}' bei Meldung vom {date}.";
+        public static string StatLpHistoryMultipleAdmissions (string clientName, string datefrom, string dateto) => $"Für den Aufenthalt von Klient '{clientName}' vom '{datefrom}' bis '{dateto}' wurden mehrere Aufnahmen gesendet.";
+        public static string StatLpHistoryNoAdmission(string clientName, string date) => $"Vor dem Aufenthalt von Klient '{clientName}' am '{date}' wurden keine Aufnahmedaten gesendet.";
+        public static string StatLpHistoryNoLeaving (string clientName, string date) => $"Zum Aufenthaltsende von Klient '{clientName}' am '{date}' wurden keine Entlassungsdaten gesendet.";
 
 
         public static string GetRange(DateTime minDate, DateTime maxDate)

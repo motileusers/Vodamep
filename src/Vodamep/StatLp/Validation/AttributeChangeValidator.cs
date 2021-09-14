@@ -7,15 +7,15 @@ using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Validation
 {
-    internal class PersonHistoryAttributeValidator : AbstractValidator<StatLpReportHistory>
+    internal class AttributeChangeValidator : AbstractValidator<StatLpReport>
     {
         private static DisplayNameResolver displayNameResolver = new DisplayNameResolver();
 
-        public PersonHistoryAttributeValidator()
+        public AttributeChangeValidator()
         {
             this.RuleFor(x => x).Custom((a, ctx) =>
             {
-                var sentMessage = a.StatLpReport;
+                var sentMessage = a;
 
 
                 var groupedAttributes = sentMessage.Attributes.GroupBy(x => (x.PersonId, x.FromD, x.AttributeType))
@@ -25,7 +25,7 @@ namespace Vodamep.StatLp.Validation
                 {
                     if (group.Count > 1)
                     {
-                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeMultipleChanged(sentMessage.GetPersonName(group.PersonId), group.FromD.ToShortDateString(), group.AttributeType.ToString()));
+                        ctx.AddFailure(Validationmessages.StatLpAttributeMultipleChanged(sentMessage.GetPersonName(group.PersonId), group.FromD.ToShortDateString(), group.AttributeType.ToString()));
                     }
                 }
             });

@@ -57,7 +57,7 @@ namespace Vodamep.StatLp.Validation
 
                             return true;
                         })
-                        .WithMessage(x => Validationmessages.AdmissionDateMustBeLessThanValid(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
+                        .WithMessage(x => Validationmessages.StatLpAdmissionDateMustBeLessThanValid(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
 
                     // Aufnahmedatum <> Gültigkeitsdatum der Aufnahme
                     this.RuleFor(x => x.OriginAdmissionDate)
@@ -70,7 +70,7 @@ namespace Vodamep.StatLp.Validation
                             return true;
                         })
                         .WithSeverity(Severity.Warning)
-                        .WithMessage(x => Validationmessages.AdmissionDifferentToValid(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
+                        .WithMessage(x => Validationmessages.StatLpAdmissionDifferentToValid(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
 
                 });
 

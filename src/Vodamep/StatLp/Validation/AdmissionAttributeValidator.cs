@@ -9,11 +9,11 @@ using Vodamep.ValidationBase;
 namespace Vodamep.StatLp.Validation
 {
 
-    internal class AttributeReportValidator : AbstractValidator<StatLpReport>
+    internal class AdmissionAttributeValidator : AbstractValidator<StatLpReport>
     {
         private static readonly DisplayNameResolver DisplayNameResolver = new DisplayNameResolver();
 
-        public AttributeReportValidator()
+        public AdmissionAttributeValidator()
         {
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
@@ -30,15 +30,14 @@ namespace Vodamep.StatLp.Validation
                         {
 
                             // Alle Attributtypen prüfen
-                            foreach (AttributeType attributeType in ((AttributeType[])System.Enum.GetValues(typeof(AttributeType))).Where(at =>
-                                                                        at != AttributeType.UndefinedAttribute))
+                            foreach (AttributeType attributeType in ((AttributeType[])System.Enum.GetValues(typeof(AttributeType))).Where(at => at != AttributeType.UndefinedAttribute))
                             {
                                 int attributeCount = attributesForAddmission.Count(a => a.AttributeType == attributeType);
 
                                 if (attributeCount <= 0)
                                 {
                                     ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.Admissions),
-                                        Validationmessages.StatLpReportAttributeMissing(
+                                        Validationmessages.StatLpAdmissionAttributeMissing(
                                             admission.PersonId,
                                             admission.AdmissionDateD.ToShortDateString(),
                                             DisplayNameResolver.GetDisplayName(attributeType.ToString()))));
@@ -46,7 +45,7 @@ namespace Vodamep.StatLp.Validation
                                 else if (attributeCount > 1)
                                 {
                                     ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.Admissions),
-                                        Validationmessages.StatLpReportMultipleAttribute(
+                                        Validationmessages.StatLpAdmissionMultipleAttribute(
                                             admission.PersonId,
                                             admission.AdmissionDateD.ToShortDateString(),
                                             DisplayNameResolver.GetDisplayName(attributeType.ToString()))));

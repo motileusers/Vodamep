@@ -344,7 +344,7 @@ Szenario: Änderung bei Geschlecht
 	Angenommen Gesendete Meldung 1 gilt vom 01.01.2021 bis 31.01.2021 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 01.01.2021
 	Angenommen Gesendete Meldung 1 enthält Standard Attribute von Person 1 vom '01.01.2021'
 	Angenommen Gesendete Meldung 1: die Eigenschaft 'gender' von 'Admission' ist auf 'FemaleGe' gesetzt
-	Dann enthält das History Validierungsergebnis den Fehler 'Unterschied bei 'Geschlecht' von Klient 1 bei Meldung vom 01.01.2021.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Unterschied bei 'Geschlecht' von Klient '(.*)' bei Meldung vom 01.01.2021.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
 Szenario: Änderung bei Geburtsdatum
@@ -356,6 +356,6 @@ Szenario: Änderung bei Geburtsdatum
 	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2: die Eigenschaft 'birthday' von 'Person' ist auf '01.01.1934' gesetzt
-	Dann enthält das History Validierungsergebnis den Fehler 'Unterschied bei 'Geburtsdatum' von Klient 1 bei Meldung vom 01.01.2021'
+	Dann enthält das History Validierungsergebnis den Fehler 'Unterschied bei 'Geburtsdatum' von Klient '(.*)' bei Meldung vom 01.01.2021'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 

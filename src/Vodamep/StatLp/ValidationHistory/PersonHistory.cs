@@ -20,6 +20,8 @@ namespace Vodamep.StatLp.Validation
 
         public List<Attribute> Attributes { get; private set; } = new List<Attribute>();
 
+        public List<PersonInfo> PersonInfos { get; private set; } = new List<PersonInfo>();
+
         public Person Person { get; set; }
 
         public bool IsFromSentReport { get; set; }

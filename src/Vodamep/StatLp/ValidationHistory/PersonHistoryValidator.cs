@@ -8,7 +8,7 @@ using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Validation
 {
-    internal class PersonHistoryMessageOrderValidator : AbstractValidator<StatLpReportHistory>
+    internal class PersonHistoryValidator : AbstractValidator<StatLpReportHistory>
     {
         private DisplayNameResolver displayNameResolver = new DisplayNameResolver();
 
@@ -17,7 +17,7 @@ namespace Vodamep.StatLp.Validation
         /// <summary>
         /// Prüfung der Reihenfolge und Datumsabhängikeiten von Aufnahmen, Entlassungen, Attributen, ...
         /// </summary>
-        public PersonHistoryMessageOrderValidator()
+        public PersonHistoryValidator()
         {
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
@@ -35,7 +35,7 @@ namespace Vodamep.StatLp.Validation
                     if (sentReport.FromD.AddMonths(-1) > previousReport.FromD)
                     {
                         ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                            Validationmessages.StatLpReportPersonHistoryMissingReports(
+                            Validationmessages.StatLpHistoryMissingReports(
                                 previousReport.ToD.AddDays(1).ToShortDateString(),
                                 sentReport.FromD.AddDays(-1).ToShortDateString())));
                     }
@@ -55,6 +55,43 @@ namespace Vodamep.StatLp.Validation
                 foreach (PersonHistory personHistory in historiesFromSentReport)
                 {
 
+                    // Durchgängiges Geburtsdatum prüfen
+                    DateTime birthday = personHistory.Person.BirthdayD;
+                    foreach (PersonInfo personInfo in personHistory.PersonInfos)
+                    {
+                        if (personInfo.Person.BirthdayD != birthday)
+                        {
+                            ctx.AddFailure(nameof(Person.BirthdayD),
+                                Validationmessages.StatLpHistoryPersonChanged(
+                                    displayNameResolver.GetDisplayName(nameof(Person.BirthdayD)), personHistory.GetPersonName(),
+                                    sentReport.FromD.ToShortDateString()));
+                        }
+                    }
+
+
+                    // Durchgängiges Geschlecht prüfen
+                    // Admission im gesendeten Report suchen
+                    Admission lastAdmissionFromCurrentReport = sentReport.Admissions.Where(a => a.AdmissionDateD >= sentReport.FromD &&
+                                                                                                a.PersonId == personHistory.Person.Id)
+                                                                                    .OrderByDescending(a => a.AdmissionDateD)
+                                                                                    .FirstOrDefault();
+                    if (lastAdmissionFromCurrentReport != null)
+                    {
+                        Gender gender = lastAdmissionFromCurrentReport.Gender;
+                        foreach (Admission admission in personHistory.Admissions.OrderByDescending(a => a.AdmissionDateD))
+                        {
+                            if (admission.Gender != gender)
+                            {
+                                ctx.AddFailure(nameof(Admission.Gender),
+                                    Validationmessages.StatLpHistoryPersonChanged(
+                                        displayNameResolver.GetDisplayName(nameof(Admission.Gender)), personHistory.GetPersonName(),
+                                        sentReport.FromD.ToShortDateString())); ;
+                            }
+                        }
+                    }
+
+
+
                     foreach (StayInfo stayInfo in personHistory.StayInfos)
                     {
                         // Die Attribute werden nicht geprüft, wenn es gröbere Probleme im 
@@ -65,7 +102,7 @@ namespace Vodamep.StatLp.Validation
                         if (stayInfo.Admissions.Count > 1)
                         {
                             ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                                    Validationmessages.StatLpReportMultipleAdmissions(
+                                    Validationmessages.StatLpHistoryMultipleAdmissions(
                                         personHistory.GetPersonName(),
                                         stayInfo.From.ToShortDateString(),
                                         stayInfo.To.ToShortDateString()
@@ -78,7 +115,7 @@ namespace Vodamep.StatLp.Validation
                         if (stayInfo.Admission == null)
                         {
                             ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                                Validationmessages.StatLpReportNoAdmission(
+                                Validationmessages.StatLpHistoryNoAdmission(
                                     personHistory.GetPersonName(),
                                     stayInfo.From.ToShortDateString()
                                 )));
@@ -92,7 +129,7 @@ namespace Vodamep.StatLp.Validation
                             {
                                 // fehlende Aufnahme
                                 ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                                    Validationmessages.StatLpReportNoLeaving(
+                                    Validationmessages.StatLpHistoryNoLeaving(
                                         personHistory.GetPersonName(),
                                         stayInfo.To.ToShortDateString()
                                     )));
@@ -136,7 +173,7 @@ namespace Vodamep.StatLp.Validation
                                         if (span.TotalDays > 42)
                                         {
                                             ValidationFailure f = new ValidationFailure(nameof(StatLpReport.FromD),
-                                                Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(personHistory.GetPersonName(),
+                                                Validationmessages.StatLpHistoryPeriodForAdmissionTooLong(personHistory.GetPersonName(),
                                                     displayNameResolver.GetDisplayName(admissionType.ToString()),
                                                     $"mehr als 42 Tage"))
                                             {
@@ -151,7 +188,7 @@ namespace Vodamep.StatLp.Validation
                                         if (span.TotalDays > 365)
                                         {
                                             ValidationFailure f = new ValidationFailure(nameof(StatLpReport.FromD),
-                                                Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(personHistory.GetPersonName(),
+                                                Validationmessages.StatLpHistoryPeriodForAdmissionTooLong(personHistory.GetPersonName(),
                                                     displayNameResolver.GetDisplayName(admissionType.ToString()),
                                                     $"mehr als 365 Tage"))
                                             {
@@ -189,7 +226,7 @@ namespace Vodamep.StatLp.Validation
                                         (sentAdmissionType == AdmissionType.HolidayAt ||
                                          sentAdmissionType == AdmissionType.TransitionalAt))
                                     {
-                                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeNoChangeFromLongTimeCarePossible(personHistory.GetPersonName(), displayNameResolver.GetDisplayName(currentAdmissionTypeAttribute.Value)));
+                                        ctx.AddFailure(Validationmessages.StatLpHistoryNoChangeFromLongTimeCarePossible(personHistory.GetPersonName(), displayNameResolver.GetDisplayName(currentAdmissionTypeAttribute.Value)));
                                     }
                                 }
                             }
@@ -213,7 +250,7 @@ namespace Vodamep.StatLp.Validation
                                     Model.Attribute lastAttribute = lastValues[currentAttribute.AttributeType];
                                     if (lastAttribute.Value == currentAttribute.Value)
                                     {
-                                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAttributeAlreadySent(displayNameResolver.GetDisplayName(currentAttribute.AttributeType.ToString()),
+                                        ctx.AddFailure(Validationmessages.StatLpHistoryAttributeAlreadySent(displayNameResolver.GetDisplayName(currentAttribute.AttributeType.ToString()),
                                             personHistory.GetPersonName(),
                                             displayNameResolver.GetDisplayName(currentAttribute.Value),
                                             lastAttribute.FromD.ToShortDateString(),
@@ -281,7 +318,7 @@ namespace Vodamep.StatLp.Validation
                                     // hätte der Aufenthalt vom Vormonat abgeschlossen werden müssen
 
                                     ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                                    Validationmessages.StatLpReportNoLeaving(
+                                    Validationmessages.StatLpHistoryNoLeaving(
                                         historyFromPreviousStay?.GetPersonName(),
                                         previousStay.ToD.ToShortDateString()
                                     )));
@@ -306,7 +343,7 @@ namespace Vodamep.StatLp.Validation
                                     if (previousLeaving == null)
                                     {
                                         ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                                        Validationmessages.StatLpReportNoLeaving(
+                                        Validationmessages.StatLpHistoryNoLeaving(
                                             historyFromPreviousStay?.GetPersonName(),
                                             previousStay.ToD.ToShortDateString()
                                         )));
@@ -338,6 +375,7 @@ namespace Vodamep.StatLp.Validation
                 personHistory.ClearingId = sentPerson.ClearingId;
                 personHistory.AddPersonId(sentReport.SourceSystemId, sentPerson.Id);
                 personHistory.IsFromSentReport = true;
+                personHistory.Person = sentPerson;
 
 
                 // Wir sammeln alle Aufnahmen, Aufnahmen und Enlassungen pro Person und sortieren nach Aufnahmedatum
@@ -359,6 +397,7 @@ namespace Vodamep.StatLp.Validation
             // Für die gesendeten Personen wird die Historie sowieso geprüft
             // Für die Personen, die nur im vorherigen Report waren (und nicht im gesendeten)
             // wird der Abschluss der Vormeldung geprüft
+            // Die History wird gekennzeichnet mit: IsFromSentReport = false
 
             StatLpReport previousReport = existingReports.OrderByDescending(sl => sl.FromD).FirstOrDefault();
             if (previousReport != null)
@@ -370,7 +409,8 @@ namespace Vodamep.StatLp.Validation
                         var personHistory = new PersonHistory();
                         personHistory.ClearingId = existingPerson.ClearingId;
                         personHistory.AddPersonId(previousReport.SourceSystemId, existingPerson.Id);
-                        personHistory.IsFromSentReport = true;
+                        personHistory.IsFromSentReport = false;
+                        personHistory.Person = existingPerson;
 
                         // Wir sammeln alle Aufnahmen, Aufnahmen und Enlassungen pro Person und sortieren nach Aufnahmedatum
                         foreach (StatLpReport existingReport in existingReports.OrderBy(sl => sl.FromD))
@@ -419,7 +459,6 @@ namespace Vodamep.StatLp.Validation
         {
             // Evtl. neue Personen ID merken
             personHistory.AddPersonId(report.SourceSystemId, person.Id);
-            personHistory.Person = person;
 
             // Alle Daten zur Person in der History speichern
             foreach (KeyValuePair<string, string> personIdValue in personHistory.PersonIdDictionary)
@@ -428,6 +467,12 @@ namespace Vodamep.StatLp.Validation
                 personHistory.Stays.AddRange(report.Stays.Where(x => x.PersonId == personIdValue.Value));
                 personHistory.Leavings.AddRange(report.Leavings.Where(x => x.PersonId == personIdValue.Value));
                 personHistory.Attributes.AddRange(report.Attributes.Where(x => x.PersonId == personIdValue.Value));
+
+                Person personFromReport = report.Persons.Where(x => x.Id == personIdValue.Value).FirstOrDefault();
+                if (personFromReport != null)
+                {
+                    personHistory.PersonInfos.Add(new PersonInfo() { Person = personFromReport, Report = report });
+                }
             }
         }
 

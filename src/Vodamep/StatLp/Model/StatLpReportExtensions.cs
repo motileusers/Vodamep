@@ -30,7 +30,7 @@ namespace Vodamep.StatLp.Model
 
         public static StatLpReportValidationResult Validate(this StatLpReport report) => (StatLpReportValidationResult)new StatLpReportValidator().Validate(report);
 
-        public static StatLpReportValidationResult ValidateHistory(this StatLpReport report, List<StatLpReport> existingReports, List<IdMapping> existingIdMappings) => (StatLpReportValidationResult)new StatLpReportHistoryValidator().Validate(new StatLpReportHistory { StatLpReport = report, StatLpReports = existingReports, ExistingIdMappings = existingIdMappings });
+        public static StatLpReportValidationResult ValidateHistory(this StatLpReport report, List<StatLpReport> existingReports, List<IdMapping> existingIdMappings) => (StatLpReportValidationResult)new StatLpHistoryValidator().Validate(new StatLpReportHistory { StatLpReport = report, StatLpReports = existingReports, ExistingIdMappings = existingIdMappings });
 
         public static string ValidateToText(this StatLpReport report, bool ignoreWarnings) => new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
 

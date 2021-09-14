@@ -27,7 +27,7 @@ namespace Vodamep.StatLp.Validation
                     {
                         var item = persons.First(x => x.Id == id);
                         var index = persons.IndexOf(item);
-                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]", Validationmessages.StatLpReportEveryPersonMustBeInAStay(id)));
+                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]", Validationmessages.StatLpStayEveryPersonMustBeInAStay(id)));
 
                     }
                 });

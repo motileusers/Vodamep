@@ -18,7 +18,7 @@ namespace Vodamep.StatLp.Validation
     /// Eine automatisches Mapping unterstützt die Funktion. 
     ///   Anhand von Name und Geburtsdatum des Klienten können die Daten automatisch gemappt werden.
     /// </remarks>
-    public class IdMapper
+    internal class IdMapper
     {
 
         public void Map(StatLpReportHistory history)
