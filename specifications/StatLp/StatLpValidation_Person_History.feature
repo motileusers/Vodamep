@@ -17,7 +17,7 @@ Szenario: ID Mapping mit vorhandenen IDs
 	Dann enthält das History Validierungsergebnis keine Fehler
 
 
-Szenario: ID Mapping anhand des Geburtsdatums
+Szenario: ID Mapping anhand des Namens und Geburtsdatums
 	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
 	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
 	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
@@ -33,7 +33,6 @@ Szenario: ID Mapping anhand des Geburtsdatums
 
 
 
-# OK
 Szenario: Performance bei großem Datenvolumen
     Angenommen Im Meldungsbereich für eine Einrichtung befinden sich monatliche Meldungen vom '01.01.2007' bis '31.12.2020'
     Angenommen Im Meldungsbereich für eine Einrichtung befinden sich Meldungen von 100 Klienten
@@ -43,7 +42,6 @@ Szenario: Performance bei großem Datenvolumen
     Dann dauert die Validierung aller Meldungen nicht länger als 5 Sekunden
 
 # Korrekte Meldungsreihenfolgen
-# OK
 Szenario: Gesamter Aufenthalt korrekt in einer Meldung
 	Angenommen Gesendete Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2020'
@@ -52,7 +50,6 @@ Szenario: Gesamter Aufenthalt korrekt in einer Meldung
 	Angenommen Gesendete Meldung 1 enthält eine 'Leaving' von Person 1 vom '31.12.2020'
 	Dann enthält das History Validierungsergebnis keine Fehler
 
-# OKDie 
 Szenario: Gesamter Aufenthalt korrekt in 3 Meldungen
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2020'
@@ -66,7 +63,6 @@ Szenario: Gesamter Aufenthalt korrekt in 3 Meldungen
 	Dann enthält das History Validierungsergebnis keine Fehler
 
 # Fehlende Meldungen
-# OK
 Szenario: Fehlende Monatsmeldungen mit Leermeldungen
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung 2 gilt vom '01.03.2021' bis '31.03.2021'
@@ -84,7 +80,6 @@ Szenario: Nachgesendete Monatsmeldungen zwischen zwei Monaten mit Leermeldungen
 	Dann enthält das History Validierungsergebnis keine Fehler
 
 # Inkorrekte Meldungsreihenfolgen
-# OK
 Szenario: Doppelte Aufnahme
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2020'
@@ -94,41 +89,33 @@ Szenario: Doppelte Aufnahme
 	Angenommen Existierende Meldung 1 enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Für den Aufenthalt von Klient'
-	Dann enthält das History Validierungsergebnis den Fehler 'wurden mehrere Aufnahmen gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Für den Aufenthalt von Klient '(.*)' wurden mehrere Aufnahmen gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Fehlende Aufnahme vor Aufenthalt
 	Angenommen Gesendete Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung 1 enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung 1 enthält Standard Attribute von Person 1 vom '01.12.2020'
-	Dann enthält das History Validierungsergebnis den Fehler 'Vor dem Aufenthalt von Klient'
-	Dann enthält das History Validierungsergebnis den Fehler 'am '01.12.2020' wurden keine Aufnahmedaten gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Vor dem Aufenthalt von Klient '(.*)' am '01.12.2020' wurden keine Aufnahmedaten gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Fehlende Entlassung, wenn Aufenthalt nicht bis zum Ende des Monats dauert
 	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 01.12.2020
 	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '01.12.2020'
 	Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021 und ist eine Standard Meldung und enthält einen Aufenthalt
 	Angenommen Gesendete Meldung 3 gilt vom '01.02.2021' bis '28.02.2021'
 	Angenommen Gesendete Meldung 3 enthält einen Aufenthalt von Person 1 vom '01.02.2021' bis '16.02.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient'
-	Dann enthält das History Validierungsergebnis den Fehler 'am '16.02.2021' wurden keine Entlassungsdaten gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient '(.*)' am '16.02.2021' wurden keine Entlassungsdaten gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Fehlende Entlassung, weil Person im nächsten Monat nicht mehr aufscheint, sie hätte entlassen werden müssen
 	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
 	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
 	Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021 und ist eine Standard Meldung und enthält einen Aufenthalt
 	Angenommen Gesendete Meldung 3 gilt vom '01.02.2021' bis '28.02.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient'
-	Dann enthält das History Validierungsergebnis den Fehler 'am '31.01.2021' wurden keine Entlassungsdaten gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient '(.*)' am '31.01.2021' wurden keine Entlassungsdaten gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Erneute Aufnahme mit fehlender Entlassung
    	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
 	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
@@ -137,11 +124,9 @@ Szenario: Erneute Aufnahme mit fehlender Entlassung
 	Angenommen Gesendete Meldung 3 enthält eine 'Admission' von Person 1 vom '01.02.2021'
 	Angenommen Gesendete Meldung 3 enthält Standard Attribute von Person 1 vom '01.02.2021'
 	Angenommen Gesendete Meldung 3 enthält einen Aufenthalt von Person 1 vom '01.02.2021' bis '28.02.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient'
-	Dann enthält das History Validierungsergebnis den Fehler 'am '31.01.2021' wurden keine Entlassungsdaten gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient '(.*)' am '31.01.2021' wurden keine Entlassungsdaten gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Aufenthalt von Mitte Monat bis Mitte Monat
 	Angenommen Existierende Meldung 1 gilt vom '01.10.2016' bis '31.10.2016'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '04.10.2016'
@@ -166,7 +151,6 @@ Szenario: Aufenthalt von Mitte Monat bis Mitte Monat
 
 
 # Gleiche Attribute
-# OK
 Szenario: Gleiche Aufnahmeart
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2020'
@@ -179,10 +163,9 @@ Szenario: Gleiche Aufnahmeart
 	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'CareAllowance' mit dem Wert 'L2' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Aufnahmeart' von Klient '1' am '01.01.2021' auf 'Daueraufnahme' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Aufnahmeart' von Klient '(.*)' am '01.01.2021' auf 'Daueraufnahme' wurde bereits mit der Meldung am '01.12.2020' gesendet.' 
     Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Gleiche Pflegestufe
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2020'
@@ -195,10 +178,9 @@ Szenario: Gleiche Pflegestufe
 	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'CareAllowance' mit dem Wert 'L1' mit Datum '01.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe' von Klient '1' am '01.01.2021' auf 'Stufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe' von Klient '(.*)' am '01.01.2021' auf 'Stufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Gleiche Pflegestufe Arge
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2020'
@@ -211,10 +193,9 @@ Szenario: Gleiche Pflegestufe Arge
 	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'CareAllowance' mit dem Wert 'L2' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'CareAllowanceArge' mit dem Wert 'L0Ar' mit Datum '01.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe Arge' von Klient '1' am '01.01.2021' auf 'Stufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Pflegestufe Arge' von Klient '(.*)' am '01.01.2021' auf 'Stufe 1' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Gleiche Finanzierung
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2020'
@@ -227,10 +208,9 @@ Szenario: Gleiche Finanzierung
 	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'CareAllowanceArge' mit dem Wert 'L2Ar' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'Finance' mit dem Wert 'SelfFi' mit Datum '01.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Finanzierung' von Klient '1' am '01.01.2021' auf 'Selbst/Angehörige 100 %' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Änderung von 'Finanzierung' von Klient '(.*)' am '01.01.2021' auf 'Selbst/Angehörige 100 %' wurde bereits mit der Meldung am '01.12.2020' gesendet.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Mehrere Aufnahmearten am gleichen Tag
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'TransitionalAt' mit Datum '01.12.2020'
@@ -243,11 +223,10 @@ Szenario: Mehrere Aufnahmearten am gleichen Tag
 	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.01.2021'
 	Angenommen Gesendete Meldung 2 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'CareTransitionAt' mit Datum '01.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Die Eigenschaft AdmissionType von Klient 1 am 01.01.2021 wurde mehrfach am gleichen Tag geändert.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Die Eigenschaft AdmissionType von (.*) am 01.01.2021 wurde mehrfach am gleichen Tag geändert.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
 # Änderung Aufnahmeart
-# OK
 Szenario: Keine Änderung von DauerAufnahme auf Urlaub
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2020'
@@ -262,7 +241,6 @@ Szenario: Keine Änderung von DauerAufnahme auf Urlaub
 	Dann enthält das History Validierungsergebnis den Fehler 'ist kein Wechsel von einer Daueraufname auf 'Urlaub von der Pflege' möglich.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Keine Änderung von DauerAufnahme auf Übergangspflege
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'ContinuousAt' mit Datum '01.12.2020'
@@ -278,7 +256,6 @@ Szenario: Keine Änderung von DauerAufnahme auf Übergangspflege
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
 # Zeitlich limitierte Aufnahmearten
-# OK
 Szenario: Urlaub von der Pflege maximal 42 Tage 1
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'HolidayAt' mit Datum '01.12.2020'
@@ -293,7 +270,6 @@ Szenario: Urlaub von der Pflege maximal 42 Tage 1
 	Angenommen Gesendete Meldung 2 enthält eine 'Leaving' von Person 1 vom '31.01.2021'
 	Dann enthält das History Validierungsergebnis keine Fehler
 
-# OK
 Szenario: Urlaub von der Pflege maximal 42 Tage 2
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'HolidayAt' mit Datum '01.12.2020'
@@ -309,7 +285,6 @@ Szenario: Urlaub von der Pflege maximal 42 Tage 2
 	Und enthält das History Validierungsergebnis genau eine Warnung
 	Und enthält das History Validierungsergebnis keine Fehler
 
-# OK
 Szenario: Übergangspflege maximal 365 Tage 1
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 von Person 1 enthält das Attribut 'AdmissionType' mit dem Wert 'TransitionalAt' mit Datum '01.12.2020'
@@ -324,7 +299,6 @@ Szenario: Übergangspflege maximal 365 Tage 1
 	Angenommen Gesendete Meldung 2 enthält eine 'Leaving' von Person 1 vom '31.01.2021'
 	Dann enthält das History Validierungsergebnis keine Fehler
 
-# OK
 Szenario: Übergangspflege maximal 365 Tage 2
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2019' bis '31.12.2019'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2019'
@@ -362,7 +336,6 @@ Szenario: Übergangspflege maximal 365 Tage 2
 	Und enthält das History Validierungsergebnis keine Fehler
 
 # Änderung an den Personendaten
-# OK
 Szenario: Änderung bei Geschlecht
 	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
 	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
@@ -374,7 +347,6 @@ Szenario: Änderung bei Geschlecht
 	Dann enthält das History Validierungsergebnis den Fehler 'Unterschied bei 'Geschlecht' von Klient 1 bei Meldung vom 01.01.2021.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
-# OK
 Szenario: Änderung bei Geburtsdatum
 	Angenommen Existierende Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Existierende Meldung 1 enthält eine 'Admission' von Person 1 vom '01.12.2020'

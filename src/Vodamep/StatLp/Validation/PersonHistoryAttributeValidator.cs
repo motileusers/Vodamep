@@ -15,17 +15,17 @@ namespace Vodamep.StatLp.Validation
         {
             this.RuleFor(x => x).Custom((a, ctx) =>
             {
-                var sendMessage = a.StatLpReport;
+                var sentMessage = a.StatLpReport;
 
 
-                var groupedAttributes = sendMessage.Attributes.GroupBy(x => (x.PersonId, x.FromD, x.AttributeType))
+                var groupedAttributes = sentMessage.Attributes.GroupBy(x => (x.PersonId, x.FromD, x.AttributeType))
                                                     .Select(g => (g.Key.PersonId, g.Key.FromD, g.Key.AttributeType, Count: g.Count()));
 
                 foreach (var group in groupedAttributes)
                 {
                     if (group.Count > 1)
                     {
-                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeMultipleChanged(group.PersonId, group.FromD.ToShortDateString(), group.AttributeType.ToString()));
+                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeMultipleChanged(sentMessage.GetPersonName(group.PersonId), group.FromD.ToShortDateString(), group.AttributeType.ToString()));
                     }
                 }
             });

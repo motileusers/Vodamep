@@ -43,6 +43,8 @@ namespace Vodamep.StatLp.Validation
 
 
 
+
+
                 // Personengeschichten mit monatsübergreifenden Aufenthalten erzeugen
                 Dictionary<string, PersonHistory> personHistoryDictionary = CreatePersonHistories(sentReport, x.StatLpReports);
 
@@ -52,6 +54,7 @@ namespace Vodamep.StatLp.Validation
                 List<PersonHistory> historiesFromSentReport = personHistoryDictionary.Values.Where(h => h.IsFromSentReport == true).ToList();
                 foreach (PersonHistory personHistory in historiesFromSentReport)
                 {
+
                     foreach (StayInfo stayInfo in personHistory.StayInfos)
                     {
                         // Die Attribute werden nicht geprüft, wenn es gröbere Probleme im 
@@ -95,7 +98,6 @@ namespace Vodamep.StatLp.Validation
                                     )));
                             }
                         }
-
 
 
                         // Dauer von Aufenthalten
@@ -165,8 +167,6 @@ namespace Vodamep.StatLp.Validation
                         }
 
 
-
-
                         // Wechsel von Aufnahmearten prüfen
 
                         if (checkAttributes)
@@ -214,7 +214,7 @@ namespace Vodamep.StatLp.Validation
                                     if (lastAttribute.Value == currentAttribute.Value)
                                     {
                                         ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAttributeAlreadySent(displayNameResolver.GetDisplayName(currentAttribute.AttributeType.ToString()),
-                                            currentAttribute.PersonId,
+                                            personHistory.GetPersonName(),
                                             displayNameResolver.GetDisplayName(currentAttribute.Value),
                                             lastAttribute.FromD.ToShortDateString(),
                                             currentAttribute.FromD.ToShortDateString()));
@@ -316,6 +316,9 @@ namespace Vodamep.StatLp.Validation
                         }
                     }
                 }
+
+
+
 
             });
         }
@@ -421,10 +424,10 @@ namespace Vodamep.StatLp.Validation
             // Alle Daten zur Person in der History speichern
             foreach (KeyValuePair<string, string> personIdValue in personHistory.PersonIdDictionary)
             {
-                personHistory.Admissions.AddRange(report.Admissions.Where(ad => ad.PersonId == personIdValue.Value));
-                personHistory.Stays.AddRange(report.Stays.Where(ad => ad.PersonId == personIdValue.Value));
-                personHistory.Leavings.AddRange(report.Leavings.Where(ad => ad.PersonId == personIdValue.Value));
-                personHistory.Attributes.AddRange(report.Attributes.Where(ad => ad.PersonId == personIdValue.Value));
+                personHistory.Admissions.AddRange(report.Admissions.Where(x => x.PersonId == personIdValue.Value));
+                personHistory.Stays.AddRange(report.Stays.Where(x => x.PersonId == personIdValue.Value));
+                personHistory.Leavings.AddRange(report.Leavings.Where(x => x.PersonId == personIdValue.Value));
+                personHistory.Attributes.AddRange(report.Attributes.Where(x => x.PersonId == personIdValue.Value));
             }
         }
 
