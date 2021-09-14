@@ -5,7 +5,10 @@ namespace Vodamep.StatLp.Validation
 {
     internal class PersonHistory
     {
-        public string PersonId { get; set; }
+
+        public string ClearingId { get; set; }
+
+        public Dictionary<string, string> PersonIdDictionary { get; set; } = new Dictionary<string, string>();
 
         public List<Admission> Admissions { get; private set; } = new List<Admission>();
 
@@ -18,5 +21,23 @@ namespace Vodamep.StatLp.Validation
         public List<Attribute> Attributes { get; private set; } = new List<Attribute>();
 
         public Person Person { get; set; }
+
+        public bool IsFromSentReport { get; set; }
+
+
+
+        public string GetPersonName()
+        {
+            return this.Person?.GivenName + " " + this.Person?.FamilyName;
+        }
+
+
+        public void AddPersonId(string sourceSystemId, string id)
+        {
+            if (!this.PersonIdDictionary.ContainsKey(sourceSystemId))
+                this.PersonIdDictionary.Add(sourceSystemId, id);
+            else
+                this.PersonIdDictionary[sourceSystemId] = id;
+        }
     }
 }

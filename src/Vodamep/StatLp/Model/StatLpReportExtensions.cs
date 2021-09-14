@@ -29,8 +29,8 @@ namespace Vodamep.StatLp.Model
         public static Task<SendResult> Send(this StatLpReport report, Uri address, string username, string password) => new ReportSendClient(address).Send(report, username, password);
 
         public static StatLpReportValidationResult Validate(this StatLpReport report) => (StatLpReportValidationResult)new StatLpReportValidator().Validate(report);
-      
-        public static StatLpReportValidationResult ValidateHistory(this StatLpReport report, List<StatLpReport> existingReports) => (StatLpReportValidationResult)new StatLpReportHistoryValidator().Validate(new StatLpReportHistory {StatLpReport = report, StatLpReports = existingReports});
+
+        public static StatLpReportValidationResult ValidateHistory(this StatLpReport report, List<StatLpReport> existingReports, List<IdMapping> existingIdMappings) => (StatLpReportValidationResult)new StatLpReportHistoryValidator().Validate(new StatLpReportHistory { StatLpReport = report, StatLpReports = existingReports, ExistingIdMappings = existingIdMappings });
 
         public static string ValidateToText(this StatLpReport report, bool ignoreWarnings) => new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
 
@@ -45,12 +45,12 @@ namespace Vodamep.StatLp.Model
                 To = report.To
             };
 
-            result.Admissions.AddRange(report.Admissions.OrderBy(x => x.PersonId));            
+            result.Admissions.AddRange(report.Admissions.OrderBy(x => x.PersonId));
             result.Attributes.AddRange(report.Attributes.OrderBy(x => x.PersonId));
             result.Leavings.AddRange(report.Leavings.OrderBy(x => x.PersonId));
             result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
             result.Stays.AddRange(report.Stays.OrderBy(x => x.PersonId));
-           
+
             return result;
         }
 

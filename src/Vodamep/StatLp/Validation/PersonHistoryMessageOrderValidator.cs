@@ -25,19 +25,18 @@ namespace Vodamep.StatLp.Validation
 
 
                 // Fehlende Meldungen in der Historie ermitteln
-                var futureMessages = x.StatLpReports.Where(y => y.FromD >= x.StatLpReport.FromD).OrderBy(y => y.FromD);
-                var nextFutureMessage = futureMessages.FirstOrDefault();
-                var historyMessages = x.StatLpReports.Where(y => y.FromD <= x.StatLpReport.FromD)
-                    .OrderByDescending(y => y.FromD);
-                var lastHistoryMessage = historyMessages.FirstOrDefault();
+                List<StatLpReport> nextReports = x.StatLpReports.Where(y => y.FromD >= sentReport.FromD).OrderBy(y => y.FromD).ToList();
+                StatLpReport nextReport = nextReports.FirstOrDefault();
+                List<StatLpReport> previousReports = x.StatLpReports.Where(y => y.FromD <= sentReport.FromD).OrderByDescending(y => y.FromD).ToList();
+                StatLpReport previousReport = previousReports.FirstOrDefault();
 
-                if (lastHistoryMessage != null && nextFutureMessage == null)
+                if (previousReport != null && nextReport == null)
                 {
-                    if (sentReport.FromD.AddMonths(-1) > lastHistoryMessage.FromD)
+                    if (sentReport.FromD.AddMonths(-1) > previousReport.FromD)
                     {
                         ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                             Validationmessages.StatLpReportPersonHistoryMissingReports(
-                                lastHistoryMessage.ToD.AddDays(1).ToShortDateString(),
+                                previousReport.ToD.AddDays(1).ToShortDateString(),
                                 sentReport.FromD.AddDays(-1).ToShortDateString())));
                     }
                 }
@@ -45,16 +44,17 @@ namespace Vodamep.StatLp.Validation
 
 
                 // Personengeschichten mit monatsübergreifenden Aufenthalten erzeugen
-                List<PersonHistory> personHistories = CreatePersonHistories(x.StatLpReport, x.StatLpReports);
+                Dictionary<string, PersonHistory> personHistoryDictionary = CreatePersonHistories(sentReport, x.StatLpReports);
 
 
 
                 // Personengeschichte prüfen
-                foreach (PersonHistory personHistory in personHistories)
+                List<PersonHistory> historiesFromSentReport = personHistoryDictionary.Values.Where(h => h.IsFromSentReport == true).ToList();
+                foreach (PersonHistory personHistory in historiesFromSentReport)
                 {
                     foreach (StayInfo stayInfo in personHistory.StayInfos)
                     {
-                        // Die Attribute werden nicht geprüft, wenn es gröberer Probleme im 
+                        // Die Attribute werden nicht geprüft, wenn es gröbere Probleme im 
                         // Meldungsaufbau gibt. Da gibt's dann nur zu viele verwirrende Fehlermeldungen
                         bool checkAttributes = true;
 
@@ -63,10 +63,10 @@ namespace Vodamep.StatLp.Validation
                         {
                             ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                                     Validationmessages.StatLpReportMultipleAdmissions(
-                                        personHistory.PersonId,
+                                        personHistory.GetPersonName(),
                                         stayInfo.From.ToShortDateString(),
                                         stayInfo.To.ToShortDateString()
-                                    )));
+                                    ))); ;
 
                             checkAttributes = false;
                         }
@@ -76,7 +76,7 @@ namespace Vodamep.StatLp.Validation
                         {
                             ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                                 Validationmessages.StatLpReportNoAdmission(
-                                    personHistory.PersonId,
+                                    personHistory.GetPersonName(),
                                     stayInfo.From.ToShortDateString()
                                 )));
                         }
@@ -90,7 +90,7 @@ namespace Vodamep.StatLp.Validation
                                 // fehlende Aufnahme
                                 ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                                     Validationmessages.StatLpReportNoLeaving(
-                                        personHistory.PersonId,
+                                        personHistory.GetPersonName(),
                                         stayInfo.To.ToShortDateString()
                                     )));
                             }
@@ -134,7 +134,7 @@ namespace Vodamep.StatLp.Validation
                                         if (span.TotalDays > 42)
                                         {
                                             ValidationFailure f = new ValidationFailure(nameof(StatLpReport.FromD),
-                                                Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(this.GetPersonName(currentAdmissionTypeAttribute.PersonId, personHistory),
+                                                Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(personHistory.GetPersonName(),
                                                     displayNameResolver.GetDisplayName(admissionType.ToString()),
                                                     $"mehr als 42 Tage"))
                                             {
@@ -149,7 +149,7 @@ namespace Vodamep.StatLp.Validation
                                         if (span.TotalDays > 365)
                                         {
                                             ValidationFailure f = new ValidationFailure(nameof(StatLpReport.FromD),
-                                                Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(this.GetPersonName(currentAdmissionTypeAttribute.PersonId, personHistory),
+                                                Validationmessages.StatLpReportPersonPeriodForAdmissionTooLong(personHistory.GetPersonName(),
                                                     displayNameResolver.GetDisplayName(admissionType.ToString()),
                                                     $"mehr als 365 Tage"))
                                             {
@@ -189,7 +189,7 @@ namespace Vodamep.StatLp.Validation
                                         (sentAdmissionType == AdmissionType.HolidayAt ||
                                          sentAdmissionType == AdmissionType.TransitionalAt))
                                     {
-                                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeNoChangeFromLongTimeCarePossible(this.GetPersonName(currentAdmissionTypeAttribute.PersonId, personHistory), displayNameResolver.GetDisplayName(currentAdmissionTypeAttribute.Value)));
+                                        ctx.AddFailure(Validationmessages.StatLpReportPersonHistoryAdmissionAttributeNoChangeFromLongTimeCarePossible(personHistory.GetPersonName(), displayNameResolver.GetDisplayName(currentAdmissionTypeAttribute.Value)));
                                     }
                                 }
                             }
@@ -229,18 +229,42 @@ namespace Vodamep.StatLp.Validation
 
 
                 // Die letzte Meldung (vor der akutell gesendeten) wird noch speziell geprüft
-                StatLpReport previousReport = historyMessages.FirstOrDefault();
                 if (previousReport != null)
                 {
                     foreach (Stay previousStay in previousReport.Stays)
                     {
                         if (previousStay.ToD.IsLastDateInMonth())
                         {
+                            // History der Person, vom vorherigem Report (vor dem gesendeten) im nächsten (dem akutellen) ermitteln
+                            // todo: das machen wir alles, nur um auf die Id vom nächsten Report zu kommen
+                            // evtl. eigenes Dictionary, oben?
+                            PersonHistory historyFromPreviousStay = null;
+
+                            foreach (PersonHistory personHistory in personHistoryDictionary.Values)
+                            {
+                                foreach (KeyValuePair<string, string> keyValuePair in personHistory.PersonIdDictionary)
+                                {
+                                    if (keyValuePair.Key == previousReport.SourceSystemId &&
+                                        keyValuePair.Value == previousStay.PersonId)
+                                    {
+                                        historyFromPreviousStay = personHistory;
+                                    }
+                                }
+                            }
+
+                            // Id im akutellen Report
+                            string idFromSentReport = historyFromPreviousStay.PersonIdDictionary[sentReport.SourceSystemId];
+
+
+
+
+
+
                             // Der Aufenthalt in der vorherigen Meldung dauert genau bis num Monatsende
                             // Es konnte also im Vormonat nicht geprüft werden, ob eine Enlasstung notwendig gewesen wäre
 
                             // Wir ermittlen also in der Meldung des nächsten Monats, ob ein nachfolgender Aufenthalt vorhanden ist
-                            Stay firstStayInNextMonth = sentReport.Stays.Where(f => f.PersonId == previousStay.PersonId)
+                            Stay firstStayInNextMonth = sentReport.Stays.Where(f => f.PersonId == idFromSentReport)
                                                                         .OrderBy(f => f.ToD)
                                                                         .FirstOrDefault();
 
@@ -258,7 +282,7 @@ namespace Vodamep.StatLp.Validation
 
                                     ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                                     Validationmessages.StatLpReportNoLeaving(
-                                        previousStay.PersonId,
+                                        historyFromPreviousStay?.GetPersonName(),
                                         previousStay.ToD.ToShortDateString()
                                     )));
                                 }
@@ -270,7 +294,7 @@ namespace Vodamep.StatLp.Validation
                             {
                                 // Dann brauchen wir auch eine evtl. Neuaufnahme vom Folgemonat
                                 Admission nextAdmission = sentReport.Admissions.Where(l => l.AdmissionDateD == firstStayInNextMonth.FromD &&
-                                                                                       l.PersonId == previousStay.PersonId)
+                                                                                       l.PersonId == idFromSentReport)
                                                                            .FirstOrDefault();
                                 if (nextAdmission != null)
                                 {
@@ -283,7 +307,7 @@ namespace Vodamep.StatLp.Validation
                                     {
                                         ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
                                         Validationmessages.StatLpReportNoLeaving(
-                                            previousStay.PersonId,
+                                            historyFromPreviousStay?.GetPersonName(),
                                             previousStay.ToD.ToShortDateString()
                                         )));
                                     }
@@ -297,57 +321,111 @@ namespace Vodamep.StatLp.Validation
         }
 
 
-        private string GetPersonName(string id, PersonHistory personHistory)
-        {
-            if (personHistory.Person != null)
-            {
-                return personHistory.Person.GetDisplayName();
-            }
-
-            return "Unbekannt";
-        }
-
-
         /// <summary>
         /// Objekt mit Personengeschichten erstellen
         /// </summary>
-        private List<PersonHistory> CreatePersonHistories(StatLpReport sentReport, IEnumerable<StatLpReport> existingReports)
+        private Dictionary<string, PersonHistory> CreatePersonHistories(StatLpReport sentReport, IEnumerable<StatLpReport> existingReports)
         {
-            List<PersonHistory> personHistories = new List<PersonHistory>();
+            Dictionary<string, PersonHistory> personHistories = new Dictionary<string, PersonHistory>();
 
-            // Wir schauen nur die Personen aus dem aktuellen Report an
-            foreach (var person in sentReport.Persons)
+            // Liste mit Personen aus dem gesendeten und vorherigen Report
+            foreach (Person sentPerson in sentReport.Persons)
             {
                 var personHistory = new PersonHistory();
-                personHistory.PersonId = person.Id;
+                personHistory.ClearingId = sentPerson.ClearingId;
+                personHistory.AddPersonId(sentReport.SourceSystemId, sentPerson.Id);
+                personHistory.IsFromSentReport = true;
 
-                var admissions = new List<Admission>();
-                var stays = new List<Stay>();
-                var leavings = new List<Leaving>();
-                var attributes = new List<Model.Attribute>();
 
                 // Wir sammeln alle Aufnahmen, Aufnahmen und Enlassungen pro Person und sortieren nach Aufnahmedatum
-                foreach (var existingReport in existingReports.OrderBy(sl => sl.FromD))
+                foreach (StatLpReport existingReport in existingReports.OrderBy(sl => sl.FromD))
                 {
-                    admissions.AddRange(existingReport.Admissions.Where(ad => ad.PersonId == person.Id));
-                    stays.AddRange(existingReport.Stays.Where(ad => ad.PersonId == person.Id));
-                    leavings.AddRange(existingReport.Leavings.Where(ad => ad.PersonId == person.Id));
-                    attributes.AddRange(existingReport.Attributes.Where(ad => ad.PersonId == person.Id));
+                    // Für das Personen ID Mapping zwischen den Reports holen wir uns die Person aus dem Report
+                    Person existingPerson = existingReport.Persons.Where(x => x.ClearingId == sentPerson.ClearingId).FirstOrDefault();
+
+                    AddDataToPersonHistory(existingPerson, personHistory, existingReport);
                 }
 
-                personHistory.Admissions.AddRange(admissions.OrderByDescending(st => st.AdmissionDateD));
-                personHistory.Stays.AddRange(stays.OrderByDescending(st => st.FromD));
-                personHistory.Leavings.AddRange(leavings.OrderByDescending(st => st.LeavingDateD));
-                personHistory.Attributes.AddRange(attributes.OrderByDescending(st => st.FromD));
-                personHistory.Person = person;
+                // Sortieren der Daten in der History
+                SortHistory(personHistory);
 
-                personHistories.Add(personHistory);
+                personHistories.Add(personHistory.ClearingId, personHistory);
             }
 
-            CreateMonthlyStays(personHistories, sentReport);
 
+            // Für die gesendeten Personen wird die Historie sowieso geprüft
+            // Für die Personen, die nur im vorherigen Report waren (und nicht im gesendeten)
+            // wird der Abschluss der Vormeldung geprüft
+
+            StatLpReport previousReport = existingReports.OrderByDescending(sl => sl.FromD).FirstOrDefault();
+            if (previousReport != null)
+            {
+                foreach (Person existingPerson in previousReport.Persons)
+                {
+                    if (!personHistories.ContainsKey(existingPerson.ClearingId))
+                    {
+                        var personHistory = new PersonHistory();
+                        personHistory.ClearingId = existingPerson.ClearingId;
+                        personHistory.AddPersonId(previousReport.SourceSystemId, existingPerson.Id);
+                        personHistory.IsFromSentReport = true;
+
+                        // Wir sammeln alle Aufnahmen, Aufnahmen und Enlassungen pro Person und sortieren nach Aufnahmedatum
+                        foreach (StatLpReport existingReport in existingReports.OrderBy(sl => sl.FromD))
+                        {
+                            AddDataToPersonHistory(existingPerson, personHistory, existingReport);
+                        }
+
+                        // Sortieren der Daten in der History
+                        SortHistory(personHistory);
+
+                        personHistories.Add(personHistory.ClearingId, personHistory);
+                    }
+                }
+            }
+
+            CreateMonthlyStays(personHistories.Values.ToList(), sentReport);
 
             return personHistories;
+        }
+
+
+        private void SortHistory(PersonHistory history)
+        {
+
+            // todo: kann man vermutlich schöner lösen
+            PersonHistory temp = new PersonHistory();
+
+            temp.Admissions.AddRange(history.Admissions.OrderByDescending(st => st.AdmissionDateD));
+            temp.Stays.AddRange(history.Stays.OrderByDescending(st => st.FromD));
+            temp.Leavings.AddRange(history.Leavings.OrderByDescending(st => st.LeavingDateD));
+            temp.Attributes.AddRange(history.Attributes.OrderByDescending(st => st.FromD));
+
+            history.Admissions.Clear();
+            history.Stays.Clear();
+            history.Leavings.Clear();
+            history.Attributes.Clear();
+
+            history.Admissions.AddRange(temp.Admissions);
+            history.Stays.AddRange(temp.Stays);
+            history.Leavings.AddRange(temp.Leavings);
+            history.Attributes.AddRange(temp.Attributes);
+        }
+
+
+        private void AddDataToPersonHistory(Person person, PersonHistory personHistory, StatLpReport report)
+        {
+            // Evtl. neue Personen ID merken
+            personHistory.AddPersonId(report.SourceSystemId, person.Id);
+            personHistory.Person = person;
+
+            // Alle Daten zur Person in der History speichern
+            foreach (KeyValuePair<string, string> personIdValue in personHistory.PersonIdDictionary)
+            {
+                personHistory.Admissions.AddRange(report.Admissions.Where(ad => ad.PersonId == personIdValue.Value));
+                personHistory.Stays.AddRange(report.Stays.Where(ad => ad.PersonId == personIdValue.Value));
+                personHistory.Leavings.AddRange(report.Leavings.Where(ad => ad.PersonId == personIdValue.Value));
+                personHistory.Attributes.AddRange(report.Attributes.Where(ad => ad.PersonId == personIdValue.Value));
+            }
         }
 
 
@@ -430,12 +508,15 @@ namespace Vodamep.StatLp.Validation
         {
             StayInfo result = null;
 
-            List<Stay> staysToSearch = new List<Stay>();
+            // Das ist die ID, die im gesendeten Report verwendet wird
+            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
 
-            staysToSearch.AddRange(sentReport?.Stays.Where(x => x.PersonId == personHistory.PersonId));
+
+            // Alle Aufenthalte einer Person ermitteln, die vor dem dem Start Datum lagen
+            List<Stay> staysToSearch = new List<Stay>();
+            staysToSearch.AddRange(sentReport?.Stays.Where(x => x.PersonId == idFromSentReport));
             staysToSearch.AddRange(personHistory.Stays);
 
-            // Alle Aufenthalte, die vor dem dem Start Datum lagen
             List<Stay> tempStays = staysToSearch.Where(x => x.ToD <= startDate)
                                                 .OrderByDescending(x => x.FromD)
                                                 .ToList();
@@ -525,9 +606,6 @@ namespace Vodamep.StatLp.Validation
             }
 
 
-
-
-
             return result;
         }
 
@@ -539,9 +617,11 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddAdmissionsToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
+            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+
             stayInfo.Admissions.AddRange(sentReport.Admissions.Where(x => x.AdmissionDateD >= stayInfo.From &&
                                                                           x.AdmissionDateD <= stayInfo.To &&
-                                                                          x.PersonId == personHistory.PersonId));
+                                                                          x.PersonId == idFromSentReport));
 
             stayInfo.Admissions.AddRange(personHistory.Admissions.Where(x => x.AdmissionDateD >= stayInfo.From &&
                                                                              x.AdmissionDateD <= stayInfo.To));
@@ -553,9 +633,11 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddAttributesToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
+            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+
             stayInfo.Attributes.AddRange(sentReport.Attributes.Where(x => x.FromD >= stayInfo.From &&
                                                                           x.FromD <= stayInfo.To &&
-                                                                          x.PersonId == personHistory.PersonId));
+                                                                          x.PersonId == idFromSentReport));
 
             stayInfo.Attributes.AddRange(personHistory.Attributes.Where(x => x.FromD >= stayInfo.From &&
                                                                              x.FromD <= stayInfo.To));
@@ -568,9 +650,11 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddLeavingsToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
+            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+
             stayInfo.Leavings.AddRange(sentReport.Leavings.Where(x => x.LeavingDateD >= stayInfo.From &&
                                                                       x.LeavingDateD <= stayInfo.To &&
-                                                                      x.PersonId == personHistory.PersonId));
+                                                                      x.PersonId == idFromSentReport));
 
             stayInfo.Leavings.AddRange(personHistory.Leavings.Where(x => x.LeavingDateD >= stayInfo.From &&
                                                                          x.LeavingDateD <= stayInfo.To));
@@ -581,8 +665,10 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddActualAdmissionToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
+            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+
             stayInfo.Admission = sentReport.Admissions.Where(x => x.AdmissionDateD == stayInfo.From &&
-                                                                  x.PersonId == personHistory.PersonId)
+                                                                  x.PersonId == idFromSentReport)
                                                       .FirstOrDefault();
 
             if (stayInfo.Admission == null)
@@ -596,8 +682,10 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddActualLeavingToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
+            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+
             stayInfo.Leaving = sentReport.Leavings.Where(x => x.LeavingDateD == stayInfo.To &&
-                                                              x.PersonId == personHistory.PersonId)
+                                                              x.PersonId == idFromSentReport)
                                                   .FirstOrDefault();
 
             if (stayInfo.Leaving == null)

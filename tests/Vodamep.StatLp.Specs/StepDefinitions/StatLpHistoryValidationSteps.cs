@@ -39,6 +39,8 @@ namespace Vodamep.Specs.StepDefinitions
 
         public StatLpReport SentReport { get; private set; }
         public List<StatLpReport> ExistingReports { get; private set; }
+        public List<IdMapping> ExistingIdMappings { get; set; }
+
 
         public StatLpReportValidationResult Result
         {
@@ -46,7 +48,7 @@ namespace Vodamep.Specs.StepDefinitions
             {
                 if (_result == null)
                 {
-                    _result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports);
+                    _result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports, this.ExistingIdMappings);
 
                     foreach (var error in SentReport.Validate().Errors)
                     {
@@ -185,6 +187,28 @@ namespace Vodamep.Specs.StepDefinitions
             return StatLpDataGenerator.Instance.CreateLeaving(stay.PersonId, stay.FromD);
         }
 
+
+
+        [Given(@"Die History enthält ein Mapping mit Id '(.*)' von Personen ID '(.*)' und System '(.*)'")]
+        public void GivenMappingIsPresent(string clearingId, string id, string sourceSystemId)
+        {
+            if (this.ExistingIdMappings == null)
+                this.ExistingIdMappings = new List<IdMapping>();
+
+            IdMapping mapping = new IdMapping()
+            {
+                ClearingId = clearingId,
+                Id = id,
+                SourceSystemId = sourceSystemId
+            };
+
+            this.ExistingIdMappings.Add(mapping);
+        }
+
+
+
+
+
         [Given(@"Gesendete Meldung (.*) gilt vom '(.*)' bis '(.*)'")]
         public void GivenSentReportIsValidFromTo(int reportNumber, string dateFrom, string dateTo)
         {
@@ -266,6 +290,7 @@ namespace Vodamep.Specs.StepDefinitions
             GivenMessageIsAStandardAdmissionMessage(reportNumber - 1, validFrom, validTo, itemType, personNumber, admissionDate);
         }
 
+
         [Given(@"Existierende Meldung (.*) gilt vom (.*) bis (.*) und ist eine Standard Meldung und enthält einen Aufenthalt")]
         public void GivenExistingMessageIsAStandardStayMessage(int reportNumber, string validFrom, string validTo)
         {
@@ -302,7 +327,7 @@ namespace Vodamep.Specs.StepDefinitions
             var stopWatch = new Stopwatch();
 
             stopWatch.Start();
-            var result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports);
+            var result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports, this.ExistingIdMappings);
             stopWatch.Stop();
 
             Assert.True(seconds >= stopWatch.Elapsed.Seconds);

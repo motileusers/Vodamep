@@ -102,6 +102,11 @@ namespace Vodamep.Client
                 validateReports.Add(report);
             }
 
+            // todo: Clearing aus der DB auslesen
+            List<IdMapping> existingIdMappings = new List<IdMapping>();
+
+
+
             validateReports = validateReports.OrderBy(x => x.FromD).ToList();
 
             foreach (StatLpReport report in validateReports)
@@ -113,7 +118,7 @@ namespace Vodamep.Client
 
                 if (previousReports.Count > 0)
                 {
-                    var result = report.ValidateHistory(previousReports);
+                    var result = report.ValidateHistory(previousReports, existingIdMappings);
 
                     message = formatter.Format(report, result);
 

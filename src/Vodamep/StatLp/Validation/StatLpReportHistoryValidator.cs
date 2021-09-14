@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.StatLp.Model;
@@ -18,10 +19,19 @@ namespace Vodamep.StatLp.Validation
                 ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
             }
         }
+
+        protected override bool PreValidate(ValidationContext<StatLpReportHistory> context, ValidationResult result)
+        {
+            IdMapper mapper = new IdMapper();
+            mapper.Map(context.InstanceToValidate);
+
+            return base.PreValidate(context, result);
+        }
+
+
         public StatLpReportHistoryValidator()
         {
             this.RuleFor(x => x).SetValidator(new PersonHistoryPersonValidator());
-
             this.RuleFor(x => x).SetValidator(new PersonHistoryMessageOrderValidator());
             this.RuleFor(x => x).SetValidator(new PersonHistoryAttributeValidator());
         }

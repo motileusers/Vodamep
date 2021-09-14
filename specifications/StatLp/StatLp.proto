@@ -7,13 +7,14 @@ option csharp_namespace = "Vodamep.StatLp.Model";
 
 message StatLpReport {   
     Institution institution = 1;   
-    google.protobuf.Timestamp from = 2;
-    google.protobuf.Timestamp to = 3;
-    repeated Person persons = 4; 
-    repeated Stay stays = 5;
-    repeated Attribute attributes = 6;
-    repeated Admission admissions = 7;
-    repeated Leaving leavings= 8;
+    string source_system_id = 2;           // System ID, die für das Mapping der Personen IDs verwendet wird. Wird von connexia ausgegeben.
+    google.protobuf.Timestamp from = 3;
+    google.protobuf.Timestamp to = 4;
+    repeated Person persons = 5; 
+    repeated Stay stays = 6;
+    repeated Attribute attributes = 7;
+    repeated Admission admissions = 8;
+    repeated Leaving leavings= 9;
 }
 
 // Einrichtung

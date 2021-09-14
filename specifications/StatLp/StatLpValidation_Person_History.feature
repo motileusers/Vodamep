@@ -1,6 +1,38 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung der gemeldeten Personen Geschichte einer Datenmeldung
 
+
+
+
+Szenario: ID Mapping mit vorhandenen IDs
+	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
+	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
+	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
+	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+	Angenommen Gesendete Meldung 2: die Eigenschaft 'source_system_id' von 'StatLpReport' ist auf 'System2' gesetzt
+	Angenommen Gesendete Meldung 2: die Eigenschaft 'id' von 'Person' ist auf '99' gesetzt
+	Angenommen Gesendete Meldung 1: die Eigenschaft 'person_id' von 'Stay' ist auf '99' gesetzt
+	Angenommen Die History enthält ein Mapping mit Id '1234' von Personen ID '1' und System 'System1'
+	Angenommen Die History enthält ein Mapping mit Id '1234' von Personen ID '99' und System 'System2'
+	Dann enthält das History Validierungsergebnis keine Fehler
+
+
+Szenario: ID Mapping anhand des Geburtsdatums
+	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
+	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
+	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
+	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+	Angenommen Gesendete Meldung 2: die Eigenschaft 'source_system_id' von 'StatLpReport' ist auf 'System2' gesetzt
+	Angenommen Gesendete Meldung 2: die Eigenschaft 'id' von 'Person' ist auf '99' gesetzt
+	Angenommen Gesendete Meldung 1: die Eigenschaft 'person_id' von 'Stay' ist auf '99' gesetzt
+	Dann enthält das History Validierungsergebnis keine Fehler
+
+
+
+
+
+
+
 # OK
 Szenario: Performance bei großem Datenvolumen
     Angenommen Im Meldungsbereich für eine Einrichtung befinden sich monatliche Meldungen vom '01.01.2007' bis '31.12.2020'
@@ -62,7 +94,8 @@ Szenario: Doppelte Aufnahme
 	Angenommen Existierende Meldung 1 enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Für den Aufenthalt von Klient '1' vom '01.12.2020' bis '31.01.2021' wurden mehrere Aufnahmen gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Für den Aufenthalt von Klient'
+	Dann enthält das History Validierungsergebnis den Fehler 'wurden mehrere Aufnahmen gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
 # OK
@@ -70,7 +103,8 @@ Szenario: Fehlende Aufnahme vor Aufenthalt
 	Angenommen Gesendete Meldung 1 gilt vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung 1 enthält einen Aufenthalt von Person 1 vom '01.12.2020' bis '31.12.2020'
 	Angenommen Gesendete Meldung 1 enthält Standard Attribute von Person 1 vom '01.12.2020'
-	Dann enthält das History Validierungsergebnis den Fehler 'Vor dem Aufenthalt von Klient '1' am '01.12.2020' wurden keine Aufnahmedaten gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Vor dem Aufenthalt von Klient'
+	Dann enthält das History Validierungsergebnis den Fehler 'am '01.12.2020' wurden keine Aufnahmedaten gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
 # OK
@@ -80,16 +114,18 @@ Szenario: Fehlende Entlassung, wenn Aufenthalt nicht bis zum Ende des Monats dau
 	Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021 und ist eine Standard Meldung und enthält einen Aufenthalt
 	Angenommen Gesendete Meldung 3 gilt vom '01.02.2021' bis '28.02.2021'
 	Angenommen Gesendete Meldung 3 enthält einen Aufenthalt von Person 1 vom '01.02.2021' bis '16.02.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient '1' am '16.02.2021' wurden keine Entlassungsdaten gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient'
+	Dann enthält das History Validierungsergebnis den Fehler 'am '16.02.2021' wurden keine Entlassungsdaten gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
-# ??? Was machen wir hier, es werden nur die Personen im aktuellen Report geprüft
+# OK
 Szenario: Fehlende Entlassung, weil Person im nächsten Monat nicht mehr aufscheint, sie hätte entlassen werden müssen
 	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
 	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
 	Angenommen Existierende Meldung 2 gilt vom 01.01.2021 bis 31.01.2021 und ist eine Standard Meldung und enthält einen Aufenthalt
 	Angenommen Gesendete Meldung 3 gilt vom '01.02.2021' bis '28.02.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient '1' am '31.01.2021' wurden keine Entlassungsdaten gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient'
+	Dann enthält das History Validierungsergebnis den Fehler 'am '31.01.2021' wurden keine Entlassungsdaten gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
 # OK
@@ -101,7 +137,8 @@ Szenario: Erneute Aufnahme mit fehlender Entlassung
 	Angenommen Gesendete Meldung 3 enthält eine 'Admission' von Person 1 vom '01.02.2021'
 	Angenommen Gesendete Meldung 3 enthält Standard Attribute von Person 1 vom '01.02.2021'
 	Angenommen Gesendete Meldung 3 enthält einen Aufenthalt von Person 1 vom '01.02.2021' bis '28.02.2021'
-	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient '1' am '31.01.2021' wurden keine Entlassungsdaten gesendet.'
+	Dann enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient'
+	Dann enthält das History Validierungsergebnis den Fehler 'am '31.01.2021' wurden keine Entlassungsdaten gesendet.'
     Und enthält das History Validierungsergebnis genau einen Fehler
 
 # OK

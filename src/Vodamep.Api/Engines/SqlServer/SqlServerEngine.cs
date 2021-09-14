@@ -16,8 +16,7 @@ namespace Vodamep.Api.Engines.SqlServer
         private bool _dbUpdateDone = false;
         private AuthContext _authContext;
 
-        public SqlServerEngine(SqlServerEngineConfiguration configuration, DbUpdater dbUpdater,
-            ILogger<SqlServerEngine> logger)
+        public SqlServerEngine(SqlServerEngineConfiguration configuration, DbUpdater dbUpdater, ILogger<SqlServerEngine> logger)
         {
             _connectionString = configuration.ConnectionString;
             _dbUpdater = dbUpdater;
@@ -92,8 +91,7 @@ namespace Vodamep.Api.Engines.SqlServer
             }
         }
 
-        private void SaveReport(SqlConnection connection, IReport report, ReportInfo info, int institutionId,
-            string state)
+        private void SaveReport(SqlConnection connection, IReport report, ReportInfo info, int institutionId, string state)
         {
             using (var ms = report.WriteToStream(asJson: false, compressed: true))
             {
