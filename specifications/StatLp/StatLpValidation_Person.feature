@@ -46,6 +46,6 @@ Beispiele:
     | given_name       | Vorname        | abcdefghij abcdefghij abcdefghij x  |
     | given_name       | Vorname        | x                                   |
 
-Szenario: die Liste enthält eine Person, die nicht in mindestens einem stay ist
+Szenario: Die Liste enthält eine Person, die nicht in mindestens einem stay ist
     Angenommen es gibt eine weitere Person
-    Dann enthält das Validierungsergebnis den Fehler 'Die Person '2' wird in keinem Aufenthalt erwähnt.'
+    Dann enthält das Validierungsergebnis den Fehler 'Die Person '(.*)' wird in keinem Aufenthalt erwähnt.'

@@ -11,10 +11,10 @@ Szenario: das Entlassungsdatum muss im aktuellen Monat liegen
 
 Szenariogrundriss: Pflichtfelder
     Angenommen die Eigenschaft '<Name>' von 'Leaving' ist nicht gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler '<Fehler>'
+    Dann enthält das Validierungsergebnis den Fehler '<Fehler>'
 Beispiele:
     | Name           | Fehler |
-    | leaving_reason | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.   | 
+    | leaving_reason | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.   | 
 
 Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung
 	Angenommen die Eigenschaft 'leaving_reason' von 'Leaving' ist auf '<leaving_reason>' gesetzt
@@ -51,12 +51,12 @@ Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
 		| DischargeLr    |                       |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.			|
 		| DischargeLr    | DeathNursingHomeDl	 |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.					|
 		| DischargeLr    |                       | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.			|
- 		|                |                       |                    |                          |                     |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.												|	
-		|                | DeathNursingHomeDl	 |                    |                          |                     |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.												|
-		|                |                       | HomeLivingAloneDc  |                          |                     |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.												|
-		|                |                       |                    |                          | EndShortTermCareDr  |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.												|
-		|                |                       |                    | abc                      |                     |                        | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.												|
-		|                |                       |                    |                          |                     | abc                    | Beim Abgang von Klient '1' muss eine Abgang Art angegeben werden.												|
+ 		|                |                       |                    |                          |                     |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|	
+		|                | DeathNursingHomeDl	 |                    |                          |                     |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
+		|                |                       | HomeLivingAloneDc  |                          |                     |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
+		|                |                       |                    |                          | EndShortTermCareDr  |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
+		|                |                       |                    | abc                      |                     |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
+		|                |                       |                    |                          |                     | abc                    | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
 		
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
     Angenommen die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt

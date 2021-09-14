@@ -11,7 +11,7 @@ namespace Vodamep.StatLp.Validation
 
         public LeavingValidator(StatLpReport report)
         {
-            this.RuleFor(x => x.LeavingReason).NotEmpty().WithMessage(x => Validationmessages.StatLpLeavingReasonMustnotBeEmpty(x.PersonId));
+            this.RuleFor(x => x.LeavingReason).NotEmpty().WithMessage(x => Validationmessages.StatLpLeavingReasonMustnotBeEmpty(report.GetPersonName(x.PersonId)));
            
             this.RuleFor(x => x.DeathLocation).NotEmpty()
                 .Unless(x => x.LeavingReason != LeavingReason.DeceasedLr)

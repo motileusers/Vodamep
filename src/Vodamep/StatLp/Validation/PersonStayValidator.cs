@@ -17,6 +17,8 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => new Tuple<IList<Person>, IEnumerable<Stay>>(x.Persons, x.Stays))
                 .Custom((a, ctx) =>
                 {
+                    StatLpReport report = ctx.InstanceToValidate as StatLpReport;
+
                     var persons = a.Item1;
                     var stays = a.Item2;
 
@@ -27,7 +29,7 @@ namespace Vodamep.StatLp.Validation
                     {
                         var item = persons.First(x => x.Id == id);
                         var index = persons.IndexOf(item);
-                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]", Validationmessages.StatLpStayEveryPersonMustBeInAStay(id)));
+                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]", Validationmessages.StatLpStayEveryPersonMustBeInAStay(report.GetPersonName(id))));
 
                     }
                 });

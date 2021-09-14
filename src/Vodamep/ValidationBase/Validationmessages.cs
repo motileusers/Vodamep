@@ -102,7 +102,7 @@ namespace Vodamep.ValidationBase
         public static string StatLpAdmissionMultipleAttribute(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde '{attributeType}' mehrfach gesendet.";
         
         public static string StatLpStayEveryPersonMustBeInAStay(string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
-        public static string StatLpLeavingReasonMustnotBeEmpty (string personId) => $"Beim Abgang von Klient '{personId}' muss eine Abgang Art angegeben werden.";
+        public static string StatLpLeavingReasonMustnotBeEmpty (string clientName) => $"Beim Abgang von Klient '{clientName}' muss eine Abgang Art angegeben werden.";
         public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
         public static string StatLpAttributeMultipleChanged(string clientName, string date, string attributeType) => $"Die Eigenschaft {attributeType} von Klient {clientName} am {date} wurde mehrfach am gleichen Tag geändert.";
         public static string StatLpAttributeWrongValue(string attributeName, string value) => $"Der Wert des Attributs mit dem Typen '{attributeName}' kann nicht auf den Wert '{value}' gesetzt werden.";
