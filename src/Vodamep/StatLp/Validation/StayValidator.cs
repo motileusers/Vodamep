@@ -9,7 +9,7 @@ namespace Vodamep.StatLp.Validation
     {
         private DisplayNameResolver displayNameResolver = new DisplayNameResolver();
 
-        public StayValidator(StatLpReport parentReport)
+        public StayValidator(StatLpReport report)
         {
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
             this.RuleFor(x => x.To).SetValidator(new TimestampWithOutTimeValidator());
@@ -19,12 +19,12 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.FromD).Must(x =>
             {
-                if (x < parentReport.FromD)
+                if (x < report.FromD)
                 {
                     return false;
                 }
 
-                if (x > parentReport.ToD)
+                if (x > report.ToD)
                 {
                     return false;
                 }
@@ -32,16 +32,16 @@ namespace Vodamep.StatLp.Validation
                 return true;
 
             }).WithName(displayNameResolver.GetDisplayName(nameof(Stay)))
-              .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
+              .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
 
             this.RuleFor(x => x.ToD).Must(x =>
             {
-                if (x < parentReport.FromD)
+                if (x < report.FromD)
                 {
                     return false;
                 }
 
-                if (x > parentReport.ToD)
+                if (x > report.ToD)
                 {
                     return false;
                 }
@@ -49,13 +49,13 @@ namespace Vodamep.StatLp.Validation
                 return true;
 
             }).WithName(displayNameResolver.GetDisplayName(nameof(Stay)))
-              .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
+              .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
 
 
             this.RuleFor(x => x.PersonId)
                 .Must((stay, personId) =>
                 {
-                    return parentReport.Persons.Any(y => y.Id == personId);
+                    return report.Persons.Any(y => y.Id == personId);
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
         }

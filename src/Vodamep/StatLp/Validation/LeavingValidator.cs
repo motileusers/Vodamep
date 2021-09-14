@@ -21,7 +21,7 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.LeavingDate)
                 .Must(x => report.From <= x && x <= report.To)
                 .WithName(displayNameResolver.GetDisplayName(nameof(Leaving)))
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
 
             this.RuleFor(x => x).Must(x =>
             {

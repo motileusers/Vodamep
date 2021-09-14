@@ -15,7 +15,7 @@ Beispiele:
 
 Szenariogrundriss: Ein Stay muss im aktuellen Monat liegenn
     Angenommen die Eigenschaft '<Name>' von 'Stay' ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Ein Aufenthalt von Person '1' muss im aktuellen Monat liegen.'
+    Dann enthält das Validierungsergebnis den Fehler 'Ein Aufenthalt von Person '(.*)' muss im aktuellen Monat liegen.'
 Beispiele:
     | Name     | Wert       |
     | from     | 2000-01-01 |

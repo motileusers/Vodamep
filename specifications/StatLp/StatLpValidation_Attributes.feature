@@ -105,7 +105,7 @@ Szenariogrundriss: Attributewert stimmt nicht mit AttributTyp zusammen
 
 Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
     Angenommen das Attribut '<Name>' fehlt
-    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '1' am 01.02.2021 wurde keine '<Bezeichnung>' gesendet.'
+    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '(.*)' am 01.02.2021 wurde keine '<Bezeichnung>' gesendet.'
 Beispiele:
     | Name              | Bezeichnung        |
     | AdmissionType     | Aufnahmeart        |
@@ -115,4 +115,4 @@ Beispiele:
 
 Szenario: Mehrfache Attribute
     Angenommen enthält das zusätzliche Attribut der Person '1' mit dem  Typ 'AdmissionType' und dem Wert 'ContinuousAt'
-    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '1' am 01.02.2021 wurde 'Aufnahmeart' mehrfach gesendet.'
+    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '(.*)' am 01.02.2021 wurde 'Aufnahmeart' mehrfach gesendet.'

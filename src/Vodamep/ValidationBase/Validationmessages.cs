@@ -13,7 +13,7 @@ namespace Vodamep.ValidationBase
         public static string TraineeMustNotContain06To10(Staff staff) => $"'{staff?.FamilyName} {staff?.GivenName} ({staff?.Id})' darf als Auszubildende/r keine medizinischen Leistungen (6-10) dokumentieren.";
         public static string IdIsNotUnique => "Der Id ist nicht eindeutig.";
         public static string IdIsMissing(string id) => $"Der Id '{id}' fehlt.";
-        public static string WithoutEntry(string e, string person, string staff, string date) => $"Kein Eintrag '{e}': bei '{person}', von '{staff}', am '{date}'.";
+        public static string WithoutEntry(string e, string clientName, string staff, string date) => $"Kein Eintrag '{e}': bei '{clientName}', von '{staff}', am '{date}'.";
         public static string WithoutActivity => $"Keine Aktivitäten.";
         public static string ReportBaseWithoutActivity (string clientOrStaff, string name) => $"Keine Aktivitäten für {clientOrStaff} '{name}' dokumentiert.";
         public static string ReportBaseActivityWithoutPerson (string activityId, string personId) => $"Eine Aktivität mit der ID '{activityId}' ist keiner vorhandenen Person (ID '{personId}') zugeordnet.";
@@ -49,10 +49,6 @@ namespace Vodamep.ValidationBase
         public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed (string personId) => $"Innerhalb einer Aktivität von Klient '{personId}' dürfen keine doppelten Leistungstypen vorhanden sein.";
         public static string WithinAnActivityTheValuesAreNotAllowedInCombination(string client, string activityType1, string activityType2) => $"Innerhalb einer Aktivität von Klient '{client}' dürfen nicht gleichzeitg die Leistungstypen '{activityType1}' und '{activityType2}' vorhanden sein.";
         public static string InvalidInstitutionNumber => "Ungültige Einrichtungsnummer.";
-        public static string InvalidValueAdmission(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";
-        public static string TextTooLongAdmission(string date, string personId) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {personId}.";
-        public static string EmptyPostCodeAdmission(string date, string personId) => $"Keine Angabe von Ort/Plz bei Aufnahme vom {date} von Klient {personId}.";
-        public static string WrongPostCodeAdmission(string date, string personId) => $"Ungültige Kombination Ort/Plz bei Aufnahme vom {date} von Klient {personId}.";
         public static string NoDoubledValuesAreAllowed => $"Doppelte Angaben bei '{{PropertyName}}'";
         public static string ItemNotValid => "Keine gültige Angabe bei '{PropertyName}'";
         public static string TextAreaEnterAValue => "Bei '{PropertyName}' im Textfeld bitte einen Wert angegeben.";
@@ -93,15 +89,25 @@ namespace Vodamep.ValidationBase
         public static string ReportBasePersonActivityWrongDate(string personId, string date) => $"Bei der Leistung von Person '{personId}' am {date} wurde ein Datum außerhalb des Meldungszeitraums angegeben.";
         public static string ReportBaseClientActivityUnknownPerson(string date) => $"Unbekannter Klient bei Leistung am {date}.";
         public static string ReportBaseActivityMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
-        public static string ReportBaseActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
-        public static string ReportBaseItemMustBeInCurrentMonth (string personId) => $"{{PropertyName}} von Person '{personId}' muss im aktuellen Monat liegen.";
+        public static string MohiActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
+        public static string ReportBaseItemMustBeInCurrentMonth (string clientName) => $"{{PropertyName}} von Person '{clientName}' muss im aktuellen Monat liegen.";
+
+
+
+
+
+
+        public static string StatLpAdmissionInvalidValueAdmission(string date, string clientName) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {clientName}.";
+        public static string StatLpAdmissionTextTooLong(string date, string clientName) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {clientName}.";
+        public static string StatLpAdmissionEmptyPostCode(string date, string clientName) => $"Keine Angabe von Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
+        public static string StatLpAdmissionWrongPostCode(string date, string clientName) => $"Ungültige Kombination Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
+
+        public static string StatLpAdmissionDateMustBeLessThanValid(string clientName, DateTime from) => $"Das Aufnahmedatum von Person '{clientName}' muss kleinergleich dem Gültigkeitsdatum ({from.ToShortDateString()}) sein.";
+        public static string StatLpAdmissionDifferentToValid(string clientName, DateTime from) => $"Das ursprüngliche Aufnahmedatum von Person '{clientName}' unterscheidet sich vom Aufnahmedatum ({from.ToShortDateString()}).";
+        public static string StatLpAdmissionAttributeMissing(string clientName, string date, string attributeType) => $"Vor der Aufnahme von Klient '{clientName}' am {date} wurde keine '{attributeType}' gesendet.";
+        public static string StatLpAdmissionMultipleAttribute(string clientName, string date, string attributeType) => $"Vor der Aufnahme von Klient '{clientName}' am {date} wurde '{attributeType}' mehrfach gesendet.";
         
-        public static string StatLpAdmissionDateMustBeLessThanValid(string personId, DateTime from) => $"Das Aufnahmedatum von Person '{personId}' muss kleinergleich dem Gültigkeitsdatum ({from.ToShortDateString()}) sein.";
-        public static string StatLpAdmissionDifferentToValid(string personId, DateTime from) => $"Das ursprüngliche Aufnahmedatum von Person '{personId}' unterscheidet sich vom Aufnahmedatum ({from.ToShortDateString()}).";
-        public static string StatLpAdmissionAttributeMissing(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde keine '{attributeType}' gesendet.";
-        public static string StatLpAdmissionMultipleAttribute(string personId, string date, string attributeType) => $"Vor der Aufnahme von Klient '{personId}' am {date} wurde '{attributeType}' mehrfach gesendet.";
-        
-        public static string StatLpStayEveryPersonMustBeInAStay(string personId) => $"Die Person '{personId}' wird in keinem Aufenthalt erwähnt.";
+        public static string StatLpStayEveryPersonMustBeInAStay(string clientName) => $"Die Person '{clientName}' wird in keinem Aufenthalt erwähnt.";
         public static string StatLpLeavingReasonMustnotBeEmpty (string clientName) => $"Beim Abgang von Klient '{clientName}' muss eine Abgang Art angegeben werden.";
         public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
         public static string StatLpAttributeMultipleChanged(string clientName, string date, string attributeType) => $"Die Eigenschaft {attributeType} von Klient {clientName} am {date} wurde mehrfach am gleichen Tag geändert.";
