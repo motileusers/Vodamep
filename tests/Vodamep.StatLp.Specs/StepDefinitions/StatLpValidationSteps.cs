@@ -245,7 +245,7 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"es gibt eine weitere Person")]
         public void GivenThereIsAnotherPerson()
         {
-            var p = this.Report.AddDummyPerson();
+            var p = this.Report.AddDummyPerson(2);
         }
 
         [Given(@"Bis ist vor Von bei einem Stay")]
