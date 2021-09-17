@@ -42,7 +42,8 @@ namespace Vodamep.StatLp.Model
             {
                 Institution = report.Institution,
                 From = report.From,
-                To = report.To
+                To = report.To,
+                SourceSystemId = report.SourceSystemId
             };
 
             result.Admissions.AddRange(report.Admissions.OrderBy(x => x.PersonId));
