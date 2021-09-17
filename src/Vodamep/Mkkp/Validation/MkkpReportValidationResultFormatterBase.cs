@@ -65,7 +65,7 @@ namespace Vodamep.Mkkp.Validation
             if (report.Persons.Count > index && index >= 0)
             {
                 var e = report.Persons[index];
-                //return $"Person: {e.FamilyName} {e.GivenName}";
+                return $"Person: {e.FamilyName} {e.GivenName}";
             }
 
             return string.Empty;
@@ -99,8 +99,7 @@ namespace Vodamep.Mkkp.Validation
             if (e == null)
                 return string.Empty;
 
-            //return $"{e.FamilyName} {e.GivenName}";
-            return "";
+            return $"{e.FamilyName} {e.GivenName}";
         }
 
         private string GetNameOfStaffById(MkkpReport report, string id)

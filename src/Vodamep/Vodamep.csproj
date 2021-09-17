@@ -12,9 +12,11 @@
     <PackageIcon></PackageIcon>
     <RepositoryUrl>https://bitbucket.org/team_connexia/vodamep.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.7.0-beta</Version>
+    <Version>1.13.0-beta</Version>
     <Product>Vorarlberger Datenmeldung Pflege</Product>
-    <PackageReleaseNotes>MKKP + AGP</PackageReleaseNotes>
+    <PackageReleaseNotes>AB + MH + TB + CM</PackageReleaseNotes>
+    <AssemblyVersion>1.13.0.0</AssemblyVersion>
+    <FileVersion>1.13.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,13 +39,15 @@
   
   <ItemGroup>
     <Compile Include="..\..\specifications\Agp\Apg.g.cs" Link="Agp\Model\Apg.g.cs" />
+    <Compile Include="..\..\specifications\Cm\Cm.g.cs" Link="Cm\Model\Cm.g.cs" />
     <Compile Include="..\..\specifications\Hkpv\Hkpv.g.cs" Link="Hkpv\Model\Hkpv.g.cs" />
     <Compile Include="..\..\specifications\Mkkp\Mkkp.g.cs" Link="Mkkp\Model\Mkkp.g.cs" />
-    <EmbeddedResource Include="..\..\specifications\Datasets\postcode_cities.csv" Link="Data\postcode_cities.csv" />
+    <Compile Include="..\..\specifications\Mohi\Mohi.g.cs" Link="Mohi\Model\Mohi.g.cs" />
+    <Compile Include="..\..\specifications\StatLp\StatLp.g.cs" Link="StatLp\Model\StatLp.g.cs" />
+    <Compile Include="..\..\specifications\Tb\Tb.g.cs" Link="Tb\Model\Tb.g.cs" />
     <EmbeddedResource Include="..\..\specifications\Datasets\german-iso-3166.csv" Link="Data\german-iso-3166.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\insurances.csv" Link="Data\insurances.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\qualifications.csv" Link="Data\qualifications.csv" />
-    <None Include="..\..\specifications\Agp\Apg.proto" Link="Agp\Model\Apg.proto" />
     <EmbeddedResource Include="..\..\specifications\Datasets\Agp\activitytypes.csv" Link="Data\Agp\activitytypes.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\Agp\diagnosisgroups.csv" Link="Data\Agp\diagnosisgroups.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\Mkkp\activitytypes.csv" Link="Data\Mkkp\activitytypes.csv" />
@@ -52,20 +56,48 @@
     <EmbeddedResource Include="..\..\specifications\Datasets\Agp\referrer.csv" Link="Data\Agp\referrer.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\Agp\places_of_action.csv" Link="Data\Agp\places_of_action.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\Mkkp\places_of_action.csv" Link="Data\Mkkp\places_of_action.csv" />
+    <None Include="..\..\specifications\Agp\Apg.proto" Link="Agp\Model\Apg.proto" />
+    <None Include="..\..\specifications\Cm\Cm.proto" Link="Cm\Model\Cm.proto" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\Hkpv\postcode_cities.csv" Link="Data\Hkpv\postcode_cities.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\postcode_cities.csv" Link="Data\postcode_cities.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\care_allowance.csv" Link="Data\StatLp\care_allowance.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\care_allowance_arge.csv" Link="Data\StatLp\care_allowance_arge.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\admission_type.csv" Link="Data\StatLp\admission_type.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\death_location.csv" Link="Data\StatLp\death_location.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\discharge_location.csv" Link="Data\StatLp\discharge_location.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\discharge_reason.csv" Link="Data\StatLp\discharge_reason.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\finance.csv" Link="Data\StatLp\finance.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\housing_reason.csv" Link="Data\StatLp\housing_reason.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\leaving_reason.csv" Link="Data\StatLp\leaving_reason.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\main_attendance_relation.csv" Link="Data\StatLp\main_attendance_relation.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\personal_change.csv" Link="Data\StatLp\personal_change.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\service.csv" Link="Data\StatLp\service.csv" />
+    <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\social_change.csv" Link="Data\StatLp\social_change.csv" />
+    <None Include="..\..\specifications\Datasets\admission_location.csv" Link="Data\StatLp\admission_location.csv" />
+    <None Include="..\..\specifications\Datasets\Cm\activity_type.csv" Link="Data\Cm\activity_type.csv" />
+    <None Include="..\..\specifications\Datasets\Cm\client_activity_type.csv" Link="Data\Cm\client_activity_type.csv" />
+    <None Include="..\..\specifications\Datasets\gender.csv" Link="Data\gender.csv" />
+    <None Include="..\..\specifications\Datasets\main_attendance_closeness.csv" Link="Data\StatLp\main_attendance_closeness.csv" />
+    <None Include="..\..\specifications\Datasets\Mohi\service.csv" Link="Data\Mohi\service.csv" />
+    <None Include="..\..\specifications\Datasets\Tb\admission_type.csv" Link="Data\Tb\admission_type.csv" />
+    <None Include="..\..\specifications\Datasets\Tb\service.csv" Link="Data\Tb\service.csv" />
     <None Include="..\..\specifications\Hkpv\Hkpv.proto" Link="Hkpv\Model\Hkpv.proto" />
     <None Include="..\..\specifications\Mkkp\Mkkp.proto" Link="Mkkp\Model\Mkkp.proto" />
+    <None Include="..\..\specifications\Mohi\Mohi.proto" Link="Mohi\Model\Mohi.proto" />
+    <None Include="..\..\specifications\StatLp\StatLp.proto" Link="StatLp\Model\StatLp.proto" />
+    <None Include="..\..\specifications\Tb\Tb.proto" Link="Tb\Model\Tb.proto" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.1" />
-    <PackageReference Include="Google.Protobuf" Version="3.11.2" />
+    <PackageReference Include="Google.Protobuf" Version="3.17.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mohi\Model\" />
-    <Folder Include="Mohi\Validation\" />
-    <Folder Include="ValidationBase\" />
+    <Folder Include="Data\Cm\" />
+    <Folder Include="Data\Mohi\" />
+    <Folder Include="Data\Tb\" />
   </ItemGroup>
 
 </Project>

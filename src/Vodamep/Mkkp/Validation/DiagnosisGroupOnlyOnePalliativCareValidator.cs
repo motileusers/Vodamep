@@ -10,9 +10,11 @@ namespace Vodamep.Mkkp.Validation
     {
         public DiagnosisGroupOnlyOnePalliativCareValidator()
         {
-            RuleFor(x => x.Diagnoses)
-                .Custom((list, ctx) =>
+            RuleFor(x => x)
+                .Custom((y, ctx) =>
                 {
+                    var list = y.Diagnoses;
+
                     var palliativeItemsCount = list.Count(x => x == DiagnosisGroup.PalliativeCare1 ||
                                                                x == DiagnosisGroup.PalliativeCare2 ||
                                                                x == DiagnosisGroup.PalliativeCare3 ||
@@ -21,7 +23,7 @@ namespace Vodamep.Mkkp.Validation
                     if (palliativeItemsCount > 1)
                     { 
                         ctx.AddFailure(new ValidationFailure(nameof(Person.Diagnoses),
-                            Validationmessages.OnlyONePalliativeDiagnosisGroup));
+                            Validationmessages.OnlyONePalliativeDiagnosisGroup (y.GetDisplayName())));
                     }
                 });
         }

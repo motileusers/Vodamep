@@ -1,0 +1,113 @@
+syntax = "proto3";
+package Vodamep.Tb;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Vodamep.Tb.Model";
+
+message TbReport {   
+    Institution institution = 1;   
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    repeated Person persons = 5;         
+    repeated Activity activities = 6;     
+}
+
+// Einrichtung
+message Institution {
+    string id = 1;
+    string name = 2;    
+}
+
+
+// Personen, die im Zeitraum eine Leistung bezogen haben
+message Person {
+    string id = 1;
+
+    string family_name = 2;
+    string given_name = 3;
+
+    google.protobuf.Timestamp birthday = 4;
+    Gender gender = 5;
+
+    string postcode = 6;				                        // postcode und city müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
+    string city = 7;                                       
+
+    string country = 8;                                         // Land aus german-iso-3166.csv
+
+    AdmissionType admission_type = 9;                           // Aufnahmeart
+
+    CareAllowance care_allowance = 10;                          // Bezieht Pflegegeld
+
+    MainAttendanceCloseness main_attendance_closeness = 11;     // Räumliche Nähe Hauptbetreuungsperson
+
+    repeated Service services = 12;                             // Inanspruchnahme anderer Dienste
+}
+
+// Leistungen pro Klient pro Monat in Stunden
+message Activity {
+    string person_id = 1;        
+    float hours_per_month  = 2;
+}
+
+// Pflegegeld
+enum CareAllowance {
+  UNDEFINED_ALLOWANCE = 0;
+  L1 = 1;
+  L2 = 2;
+  L3 = 3;
+  L4 = 4;
+  L5 = 5;
+  L6 = 6;
+  L7 = 7;	
+  ANY = 9;              // Pflegegeld ja, Stufe unbekannt
+  UNKNOWN = 88;         // Keine Angabe, unbekannt ob ja oder nein
+  IN_PROGRESS = 90;     // In Bearbeitung
+  NONE = 99;            // Kein Pflegegeld
+}
+
+
+// Geschlecht, nach neuer Definition
+enum Gender {
+  UNDEFINED_GE = 0;
+  MALE_GE = 1;
+  FEMALE_GE = 2;
+  DIVERS_GE = 3;
+  INTER_GE = 4;
+  OPEN_GE = 5;
+}
+
+// Aufnahmeart
+enum AdmissionType {
+  UNDEFINED_AT = 0;
+  DAY_CARE_AT = 1;                           // Tagesbetreuung
+  DAY_CARE_GERONTO_AT = 2;                   // Tagesbetreuung (gerontopsych. Schwerpunkt)                  
+}
+
+
+// Räumliche Nähe Hauptbetreuungsperson
+enum MainAttendanceCloseness {
+  UNDEFINED_MC = 0;
+  SAME_FLAT_MC = 1;                            // in der gleichen Wohnung
+  SAME_HOUSE_OTHER_FLAT_MC = 2;                // im gleichen Haus aber in einer anderen Wohnung
+  UP_TO_30_MIN_MC = 3;                         // bis zu 30 Minuten
+  OVER_TO_30_MIN_MC = 4;                       // über 30 Minuten
+  NO_MAINATTENDANCE_MC = 5;                    // keine Hauptbetreuungsperson
+  NO_MAINATTENDANCECLOSENESS_MC = 6;           // keine Angabe
+}
+
+// Inanspruchnahme anderer Dienste
+enum Service {
+  UNDEFINED_SV = 0;
+  HOME_CARE_SV = 1;                          // Hauskrankenpflege
+  MOBILE_CARE_SV = 2;                        // Mobiler Hilfsdienst
+  HOME_MEAL_SV = 3;                          // Mahlzeitendienst
+  MEDICAL_THERAPEUTIC_SV = 4;                // Medizinisch-therapeutische Dienste
+  PRIVATE_CARE_24_HOUR_SV = 5;               // Private bezahlte Pflege (24 Stunden Betreuung)
+  PRIVATE_CARE_HOURLY_SV = 6;                // Private bezahlte Pflege (stundenweise)
+}
+
+/*
+Dokumentation zu Protobuf: https://developers.google.com/protocol-buffers/
+Online generator z.B. :https://protogen.marcgravell.com/
+*/ 

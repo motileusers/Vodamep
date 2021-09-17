@@ -12,6 +12,8 @@ namespace Vodamep.Mkkp.Validation
     {
         public MkkpReportStaffIdValidator()
         {
+            MkkpDisplayNameResolver displayNameResolver = new MkkpDisplayNameResolver();
+
             this.RuleFor(x => x.Staffs)
                 .Custom((list, ctx) =>
                 {
@@ -40,7 +42,7 @@ namespace Vodamep.Mkkp.Validation
                     {
                         var item = staffs.Where(x => x.Id == id).First();
                         var index = staffs.IndexOf(item);
-                        ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Staffs)}[{index}]", Validationmessages.WithoutActivity));
+                        ctx.AddFailure(new ValidationFailure(nameof(Staff), Validationmessages.ReportBaseWithoutActivity(displayNameResolver.GetDisplayName(nameof(Staff)), item.GetDisplayName())));
 
                     }
 
@@ -52,7 +54,7 @@ namespace Vodamep.Mkkp.Validation
                     foreach (var activity in activities)
                     {
                         if (!idStaffs.Contains(activity.StaffId))
-                            ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Activities)}[{activity.Id}]", Validationmessages.WithoutStaff));
+                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivitWithoutStaff(activity.Id, activity.StaffId)));
                     }
                 });
 

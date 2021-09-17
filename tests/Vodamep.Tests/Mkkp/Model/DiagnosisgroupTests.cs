@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Vodamep.Data.MkkpCodeProvider;
+using Vodamep.Data.Mkkp;
 using Vodamep.Mkkp.Model;
 using Xunit;
 

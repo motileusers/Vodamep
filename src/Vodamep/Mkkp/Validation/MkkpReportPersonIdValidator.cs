@@ -12,6 +12,8 @@ namespace Vodamep.Mkkp.Validation
     {
         public MkkpReportPersonIdValidator()
         {
+            MkkpDisplayNameResolver displayNameResolver = new MkkpDisplayNameResolver();
+
             this.RuleFor(x => x.Persons)
                 .Custom((list, ctx) =>
                 {
@@ -19,7 +21,7 @@ namespace Vodamep.Mkkp.Validation
                     {
                         var item = list.Where(x => x.Id == id.Key).First();
                         var index = list.IndexOf(item);
-                        ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Persons)}[{index}]", Validationmessages.IdIsNotUnique));
+                        ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Persons)}[{index}]", Validationmessages.ReportBaseIdIsNotUnique(id.Key)));
                     }
                 });
 
@@ -40,13 +42,13 @@ namespace Vodamep.Mkkp.Validation
                             continue;
 
                         var index = persons.IndexOf(item);
-                        ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Persons)}[{index}]", Validationmessages.WithoutActivity));
+                        ctx.AddFailure(new ValidationFailure(nameof(Staff), Validationmessages.ReportBaseWithoutActivity(displayNameResolver.GetDisplayName(nameof(Person)), item.GetDisplayName())));
                     }
 
                     foreach (var activity in activities)
                     {
                         if (!idPersons.Contains(activity.PersonId))
-                            ctx.AddFailure(new ValidationFailure($"{nameof(MkkpReport.Activities)}[{activity.Id}]", Validationmessages.WithoutPerson));
+                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivityWithoutPerson(activity.Id, activity.PersonId)));
                     }
 
                 });

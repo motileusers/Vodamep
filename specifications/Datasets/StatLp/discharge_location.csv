@@ -1,0 +1,16 @@
+﻿// Entlassung wohin
+
+UNDEFINED_DC;;
+HOME_LIVING_ALONE_DC;nach Hause lebend alleine;
+HOME_LIVING_NOT_ALONE_DC;nach Hause lebend nicht alleine;
+AMBULATORY_SUPERVISED_FLAT_DC;Ambulant betreute Wohnung;
+SUPERVISED_FLAT_DC;Betreute Wohngemeinschaften;
+NURSING_HOME_DC;Pflegeheim nach Pflegeheimgesetz;
+INSTITUTION_SOCIAL_PSYCHIATRY_DC;Einrichtung der Sozialpsychiatrie;
+INSTITUTION_ADDICTION_SUPPORT_DC;Einrichtung der Suchthilfe;
+INSTITUTION_HANDICAPPED_SUPPORT_DC;Einrichtung der Behindertenhilfe;
+INSTITUTION_HOMELESS_SUPPORT_DC;Einrichtung der Wohnungslosenhilfe;
+OTHER_ATTENDED_HOUSING_DC;Sonstige betreute Wohnform;
+OTHER_DC;Sonstige;
+NO_DC;keine Angabe;
+ 

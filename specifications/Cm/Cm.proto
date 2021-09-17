@@ -1,0 +1,115 @@
+syntax = "proto3";
+package Vodamep.Cm;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Vodamep.Cm.Model";
+
+message CmReport {   
+    Institution institution = 1;   
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    repeated Person persons = 5;         
+    repeated Activity activities = 6;     
+    repeated ClientActivity client_activities = 7;     
+}
+
+// Einrichtung
+message Institution {
+    string id = 1;
+    string name = 2;    
+}
+
+// Personen, die im Zeitraum eine Leistung bezogen haben
+message Person {
+    string id = 1;        
+
+    string family_name = 2;
+    string given_name = 3;
+
+    google.protobuf.Timestamp birthday = 4;
+    Gender gender = 5;
+
+    string postcode = 6;				                        // postcode und city müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
+    string city = 7;                                       
+
+    string country = 8;                                         // Land aus german-iso-3166.csv
+
+    CareAllowance care_allowance = 9;                           // Bezieht Pflegegeld
+}
+
+// Leistungen pro Typ in Minuten
+message Activity {
+    google.protobuf.Timestamp date = 1;
+    ActivityType activity_type = 2;
+    float minutes  = 3;
+}
+
+// Leistungen pro Klient und Typ in Minuten
+message ClientActivity {
+    google.protobuf.Timestamp date = 1;
+    string person_id = 2;      
+    ClientActivityType activity_type = 3;
+    float minutes  = 4;
+}
+
+// Bezieht Pflegegeld
+enum CareAllowance {
+  UNDEFINED_ALLOWANCE = 0;
+  L1 = 1;
+  L2 = 2;
+  L3 = 3;
+  L4 = 4;
+  L5 = 5;
+  L6 = 6;
+  L7 = 7;	
+  ANY = 9;              // Pflegegeld ja, Stufe unbekannt
+  UNKNOWN = 88;         // Keine Angabe, unbekannt ob ja oder nein
+  IN_PROGRESS = 90;     // In Bearbeitung
+  NONE = 99;            // Kein Pflegegeld
+}
+
+
+// Geschlecht, nach neuer Definition
+enum Gender {
+    UNDEFINED_GE = 0;
+    MALE_GE = 1;
+    FEMALE_GE = 2;
+    DIVERS_GE = 3;
+    INTER_GE = 4;
+    OPEN_GE = 5;
+}
+
+// Leistungstypen (klienten-bezogen)
+enum ClientActivityType {
+    UNDEFINED_CA = 0;                            
+    ASSESSMENT_CA = 1;                            // Assessment
+    OBJECTIVES_PLANNING_CA = 2;                   // Zielvereinbarung und Hilfeplanung
+    IMPLEMENTATION_LINKING_CA = 3;                // Durchführung und Linking 
+    MONITORING_CA = 4;                            // Monitoring 
+    CONCLUSION_EVALUATION_CA = 5;                 // Abschluss und Evaluation  
+}
+
+
+// Leistungstypen (nicht klienten-bezogen)
+enum ActivityType {
+    UNDEFINED_CT = 0;                            
+    BRIEFING_CT = 1;                              // Informationsgespräch
+    CLEARING_INTAKE_CT = 2;                       // Clearing/Intake 
+    NURSING_HOME_ADDMISSION_CT = 3;               // Pflegeheimaufnahme 
+    PREVENTIVE_CONTACT_CT = 4;                    // Präventive Kontaktaufnahme 
+    NETWORKING_LOCAL_CT = 5;                      // Vernetzungsarbeit lokal/regional  
+    NETWORKING_FEDERAL_CT = 6;                    // Vernetzungsarbeit landesweit       
+    ORGANISATION_CT = 7;                          // Organisation
+    EDUCATION_CT = 8;                             // Weiterbildung 
+}
+
+
+
+
+
+
+/*
+Dokumentation zu Protobuf: https://developers.google.com/protocol-buffers/
+Online generator z.B. :https://protogen.marcgravell.com/
+*/ 

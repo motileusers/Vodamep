@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Vodamep.Data;
+using Vodamep.Data.Hkpv;
 using Vodamep.Hkpv.Model;
 using Vodamep.Legacy.Reader;
 
@@ -164,13 +165,13 @@ namespace Vodamep.Legacy
                 // z.b. 690060 Möggers
                 // entweder nur die ersten vier Zeichen verwenden, oder die PLZ anhand des Ortsnames ermitteln
 
-                if (Postcode_CityProvider.Instance.IsValid($"{plz.Substring(0, 4)} {ort}"))
+                if (Data.Hkpv.Postcode_CityProvider.Instance.IsValid($"{plz.Substring(0, 4)} {ort}"))
                 {
                     plz = plz.Substring(0, 4);
                 }
                 else
                 {
-                    var plz2 = Postcode_CityProvider.Instance.GetCSV().Where(x => x.EndsWith($" {ort};")).FirstOrDefault();
+                    var plz2 = Data.Hkpv.Postcode_CityProvider.Instance.GetCSV().Where(x => x.EndsWith($" {ort};")).FirstOrDefault();
                     if (!string.IsNullOrEmpty(plz2))
                         plz = plz2;
                 }

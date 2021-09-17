@@ -10,7 +10,7 @@ namespace Vodamep.Client
         Postcode_City,
         Qualifications,
     }
-    public class ListArgs
+    public class ListArgs : ArgsBase
     {  
         [ArgRequired, ArgPosition(1)]
         public ListSources Source { get; set; }

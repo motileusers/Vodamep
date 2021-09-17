@@ -3,6 +3,7 @@ using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 using Vodamep.Agp.Model;
+using Vodamep.ReportBase;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Agp.Validation
@@ -11,48 +12,43 @@ namespace Vodamep.Agp.Validation
     {
         public ActivityValidator(DateTime from, DateTime to)
         {
-            this.RuleFor(x => x.Date).NotEmpty();
-            this.RuleFor(x => x.Date).SetValidator(new TimestampWithOutTimeValidator()).Unless(x => x.Date == null);
+            var displayNameResolver = new AgpDisplayNameResolver();
 
-            if (from != DateTime.MinValue)
+            this.RuleFor(x => x.PersonId).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithParentProperty(displayNameResolver.GetDisplayName(nameof(x.PersonId)), displayNameResolver.GetDisplayName(nameof(Activity))));
+
+            this.RuleFor(x => x.StaffId).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.StaffId)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+            this.RuleFor(x => x.PlaceOfAction).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.PlaceOfAction)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+            this.RuleFor(x => x.Entries).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Entries)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+            this.RuleFor(x => x.Date).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Date)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+
+            this.RuleFor(x => x.DateD)
+                .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
+                    x.PersonId, from, to, x.Date));
+
+            this.RuleFor(x => x).Custom((x, ctx) =>
             {
-                this.RuleFor(x => x.DateD).GreaterThanOrEqualTo(from).Unless(x => x.Date == null);
-            }
-            if (to > from)
-            {
-                this.RuleFor(x => x.DateD).LessThanOrEqualTo(to).Unless(x => x.Date == null);
-            }
+                var entries = x.Entries;
 
-            this.RuleFor(x => x.PersonId).NotEmpty();
-
-            this.RuleFor(x => x.StaffId).NotEmpty();
-
-            this.RuleFor(x => x.Entries).NotEmpty();
-            this.RuleFor(x => x.Entries).Custom((entries, ctx) =>
-            {
-                var query = entries.GroupBy(x => x)
-                    .Where(x => x.Count() > 1)
+                var query = entries.GroupBy(y => y)
+                    .Where(activityTypes => activityTypes.Count() > 1)
                     .Select(group => group.Key);
 
                 if (query.Any())
                 {
-                    ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.WithinAnActivityThereAreNoDoubledActivityTypesAllowed));
+                    ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.WithinAnActivityThereAreNoDoubledActivityTypesAllowed(x.PersonId)));
                 }
 
             });
 
             this.RuleFor(x => x.PlaceOfAction).NotEmpty();
 
-            this.RuleFor(x => x.Minutes).GreaterThan(0);
-            this.RuleFor(x => x.Minutes)
-                .Custom((minute, ctx) =>
-                {
-                    if (minute > 0 && minute % 5 != 0)
-                    {
-                        ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.MinutesHasToBeEnteredInFiveMinuteSteps));
-                    }
-                });
-        }
+            this.RuleFor(x => x).SetValidator(x => new ActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(Activity.Minutes)), x.PersonId));
 
+        }
     }
 }

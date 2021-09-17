@@ -1,7 +1,9 @@
-﻿namespace Vodamep.Client
+﻿using Vodamep.ReportBase;
+
+namespace Vodamep.Client
 {
     public class ArgsBase
     {
-        public Type Type { get; set; } = Type.Hkpv;
+        public ReportType Type { get; set; } = ReportType.Hkpv;
     }
 }

@@ -1,30 +1,33 @@
 ﻿#language: de-DE
 Funktionalität: Agp - Validierung der gemeldeten Aktivitäten der Datenmeldung
 
+Szenario: Pesonen ID ist nicht gesetzt
+    Angenommen die Eigenschaft 'person_id' von 'Activity' ist nicht gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Personen-ID' von Aktivität darf nicht leer sein.'
+
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Aktivität von Klient '1' darf nicht leer sein.'
 Beispiele:
     | Name              | Bezeichnung     |
     | date              | Datum           |
-    | person_id         | Personen-ID     |
     | staff_id          | Mitarbeiter-ID  |
 
 Szenario: Leistungszeit muss > 0 sein 
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+    Dann enthält das Validierungsergebnis den Fehler 'Leistungszeit von Klient '1' muss größer 0 sein.'
 
-Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
-    Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
-Beispiele:
-    | Name | Bezeichnung |
-    | date | Datum       |
+#Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
+#    Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
+#    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
+#Beispiele:
+#    | Name | Bezeichnung |
+#    | date | Datum       |
 
 Szenariogrundriss: Minuten Werte müssen > 0 sein
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Der Wert von 'Leistungszeit' muss grösser sein als '0'.'
+    Und die Fehlermeldung lautet: 'Leistungszeit von Klient '1' muss größer 0 sein.'
 Beispiele: 
     | Wert |
     | 0 |
@@ -33,7 +36,7 @@ Beispiele:
 Szenariogrundriss: Minuten  dürfen nur in 5 Minuten Schritten eingegeben werden
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Minutes dürfen nur in 5 Minuten Schritten eingegeben werden.'
+    Und die Fehlermeldung lautet: 'Leistungszeit von Klient '1' darf nur in 5 Minuten Schritten eingegeben werden.'
 Beispiele: 
     | Wert |
     | 1 |
@@ -50,10 +53,11 @@ Beispiele:
     | 10 |
     | 15 |
 
-Szenario: Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten
-    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '605' gesetzt
+Szenario: Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht überschreiten
+    Angenommen die Eigenschaft 'minutes' von 'Activity' ist auf '725' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 10 Stunden nicht überschreiten.'
+    Und die Fehlermeldung lautet: 'Gruber Peter: Die Summe der Leistungsminuten des Mitarbeiters am '01.05.2021' darf 12 Stunden nicht überschreiten.'
+
 
 Szenariogrundriss: TravelTime Werte müssen > 0 sein
     Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '<Wert>' gesetzt
@@ -66,7 +70,7 @@ Beispiele:
 
 Szenario: Summe TravelTimes darf 5 Stunden nicht überschreiten
     Angenommen die Eigenschaft 'minutes' von 'TravelTime' ist auf '305' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Summe Reisezeiten darf 5 Stunden nicht überschreiten.'
+    Dann enthält das Validierungsergebnis den Fehler 'Summe Reisezeiten von Mitarbeiter Peter Gruber am 01.05.2021 darf 5 Stunden nicht überschreiten.'
 
 Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
     Angenommen es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen
@@ -84,27 +88,28 @@ Szenario: Mehrfache Leistungstypen pro Leistung
 
 Szenario: Doppelte Leistungen innerhalb einer Aktivität
     Angenommen die Leistungstypen 'CareDocumentation,CareDocumentation' sind für eine Aktivität gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität dürfen keine doppelten Leistungstypen vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität von Klient '1' dürfen keine doppelten Leistungstypen vorhanden sein.'
 
 Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Angenommen die Leistungstypen '' sind für eine Aktivität gesetzt
-   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' darf nicht leer sein.'
+   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' von Aktivität von Klient '1' darf nicht leer sein.'
 
 Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
     Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2058-09-29' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss kleiner oder gleich (.*) sein'
+    Dann enthält das Validierungsergebnis den Fehler 'Datum' einer Aktivität von Klient '1' muss innerhalb des Meldungszeitraums liegen.'
     
 Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
     Angenommen die Eigenschaft 'date' von 'Activity' ist auf '2008-04-30' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Datum' muss grösser oder gleich (.*) sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Datum' einer Aktivität von Klient '1' muss innerhalb des Meldungszeitraums liegen.'
 
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons
     Angenommen die Eigenschaft 'person_id' von 'Activity' ist auf '-1' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Keine Person.'
+    Dann enthält das escapte Validierungsergebnis den Fehler 'Eine Aktivität mit der ID '1' ist keiner vorhandenen Person (ID '-1') zugeordnet.'
 
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Mitarbeiter
     Angenommen die Eigenschaft 'staff_id' von 'Activity' ist auf '-1' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Kein Mitarbeiter.'
+    Dann enthält das escapte Validierungsergebnis den Fehler 'Eine Aktivität mit der ID '1' ist keinem vorhandenen Mitarbeiter (ID '-1') zugeordnet.'
+
 Szenario: Eine Person ohne Aktivität.
     Angenommen zu einer Person sind keine Aktivitäten dokumentiert
     Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'

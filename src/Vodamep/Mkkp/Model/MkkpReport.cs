@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using Google.Protobuf;
 using Vodamep.ReportBase;
 
 namespace Vodamep.Mkkp.Model
 {
-    public partial class MkkpReport : IReportBase
+    public partial class MkkpReport : ITravelTimeReport
     {
-        public string ReportType => "Mkkp";
+        public ReportType ReportType => ReportType.Mkkp;
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
         public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }
 
-        IInstitution IReportBase.Institution => this.Institution;
+        IInstitution IReport.Institution => this.Institution;
+
+        IList<IPerson> IReport.Persons => this.Persons.Select(x => x as IPerson).ToList();
+        
+        IList<IStaff> ITravelTimeReport.Staffs  => this.Staffs.Select(x => x as IStaff).ToList();
+        IList<ITravelTime> ITravelTimeReport.TravelTimes  => this.TravelTimes.Select(x => x as ITravelTime).ToList();
 
         public static MkkpReport ReadFile(string file)
         {

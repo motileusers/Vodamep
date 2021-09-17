@@ -7,20 +7,21 @@ Szenario: StaffId ist nicht eindeutig.
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen die Eigenschaft '<Name>' von '<Art>' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Mitarbeiter '<Staff>' darf nicht leer sein.'
+
 Beispiele:
-    | Name          | Bezeichnung         | Art          |    
-    | id            | ID                  | Staff        |
-    | family_name   | Familienname        | Staff        |
-    | given_name    | Vorname             | Staff        |
+    | Name          | Bezeichnung         | Art          | Staff        |   
+    | id            | ID                  | Staff        | Peter Gruber |
+    | family_name   | Familienname        | Staff        | 1            |
+    | given_name    | Vorname             | Staff        | 1            |
 
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
     Angenommen die Eigenschaft '<Name>' von '<Art>' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' weist ein ungültiges Format auf.'
+    Und die Fehlermeldung lautet: ''<Bezeichnung>' von Mitarbeiter '<FullName>' weist ein ungültiges Format auf.'
 Beispiele: 
-    | Name        | Bezeichnung  | Art   | Wert |
-    | family_name | Familienname | Staff | t@st |
-    | given_name  | Vorname      | Staff | abc% |
+    | Name        | Bezeichnung  | Art   | Wert | FullName      |    
+    | family_name | Familienname | Staff | t@st | Peter t@st    |
+    | given_name  | Vorname      | Staff | abc% | abc% Gruber   |
 
 

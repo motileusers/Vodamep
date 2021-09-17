@@ -13,7 +13,7 @@ namespace Vodamep.Api.CmdQry
         public DateTime Created { get; set; }
 
 
-        public static ReportInfo Create(IReportBase report, int id, DateTime created)
+        public static ReportInfo Create(IReport report, int id, DateTime created)
         {
             return new ReportInfo
             {

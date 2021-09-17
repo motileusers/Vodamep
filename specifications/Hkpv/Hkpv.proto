@@ -99,8 +99,9 @@ enum CareAllowance {
   L6 = 6;
   L7 = 7;	
   ANY = 9;              // Pflegegeld ja, Stufe unbekannt
-  UNKNOWN = 88;         // unbekannt ob ja oder nein
-  NONE = 99;            // Keine Pflegegeld
+  UNKNOWN = 88;         // Keine Angabe, unbekannt ob ja oder nein
+  IN_PROGRESS = 90;     // In Bearbeitung
+  NONE = 99;            // Kein Pflegegeld
 }
 
 enum Gender {

@@ -100,14 +100,14 @@ namespace Vodamep.Api
 
             int.TryParse((string)context.GetRouteValue("year"), out int year);
             int.TryParse((string)context.GetRouteValue("month"), out int month);
-            var reportType = (string) context.GetRouteValue("report");
+            var reportTypeAsString = (string) context.GetRouteValue("report");
 
-            _logger?.LogInformation($"Report type from route: {reportType}");
+            _logger?.LogInformation($"Report type from route: {reportTypeAsString}");
 
             //todo legacy code
-            if (string.IsNullOrWhiteSpace(reportType))
+            if (string.IsNullOrWhiteSpace(reportTypeAsString))
             {
-                reportType = "hkpv";
+                reportTypeAsString = ReportType.Hkpv.ToString();
             }
 
             if (year < 2000 || year > DateTime.Today.Year)
@@ -124,11 +124,12 @@ namespace Vodamep.Api
 
             _logger?.LogInformation("Reading data.");
 
-            IReportBase report;
+            IReport report;
 
             try
             {
-                report = new ReportBaseHandler().GetReport(reportType, context.Request.Body);
+                var reportType = (ReportType) Enum.Parse(typeof(ReportType), reportTypeAsString, true);
+                report = new ReportFactory().Create(reportType, context.Request.Body);
             }
             catch
             {

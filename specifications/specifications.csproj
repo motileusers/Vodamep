@@ -10,7 +10,7 @@
   
   <ItemGroup>
     <None Update="Agp\AgpDiff_Report.feature">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  <Generator></Generator>
     </None>
     <None Update="Agp\AgpValidation_Report.feature">
       <Generator></Generator>
@@ -24,6 +24,15 @@
     <None Update="Agp\AgpValidation_Activity.feature">
       <Generator></Generator>
     </None>
+    <None Update="Cm\CmValidation_Report.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Cm\CmValidation_Person.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Cm\CmValidation_Activity.feature">
+      <Generator></Generator>
+    </None>
     <None Update="Hkpv\HkpvValidation_Employment.feature">
       <Generator></Generator>
     </None>
@@ -31,7 +40,7 @@
       <Generator></Generator>
     </None>
     <None Update="Mkkp\MkkpDiff_Report.feature">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+       <Generator></Generator>
     </None>
     <None Update="Mkkp\MkkpValidation_Activity.feature">
       <Generator></Generator>
@@ -45,10 +54,55 @@
     <None Update="Mkkp\MkkpValidation_Report.feature">
       <Generator></Generator>
     </None>
+    <None Update="Mohi\MohiValidation_Report.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mohi\MohiValidation_Person.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Mohi\MohiValidation_Activity.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Leaving.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Admission.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Attributes.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Person_History.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Institution.feature">
+       <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Leaving.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Person.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Person_History.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Report.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="StatLp\StatLpValidation_Stay.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Tb\TbValidation_Person.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Tb\TbValidation_Activity.feature">
+      <Generator></Generator>
+    </None>
+    <None Update="Tb\TbValidation_Report.feature">
+      <Generator></Generator>
+    </None>
   </ItemGroup>
   
-  <ItemGroup>
-    <Folder Include="Datasets\Agp\" />
-    <Folder Include="Datasets\Mkkp\" />
-  </ItemGroup>
+
 </Project>

@@ -20,24 +20,24 @@ namespace Vodamep.Data.Dummy
             return p;
         }
 
-        public static Staff AddDummyStaff(this MkkpReport report)
+        public static Staff AddDummyStaff(this MkkpReport report, bool useRandomValues)
         {
-            var s = MkkpDataGenerator.Instance.CreateStaff(report);
+            var s = MkkpDataGenerator.Instance.CreateStaff(report, null, useRandomValues);
 
             report.Staffs.Add(s);
             return s;
         }
 
-        public static Staff[] AddDummyStaffs(this MkkpReport report, int count)
+        public static Staff[] AddDummyStaffs(this MkkpReport report, int count, bool useRandomValues)
         {
-            var s = MkkpDataGenerator.Instance.CreateStaffs(report, count).ToArray();
+            var s = MkkpDataGenerator.Instance.CreateStaffs(report, count, useRandomValues).ToArray();
             report.Staffs.AddRange(s);
             return s;
         }
 
-        public static TravelTime AddDummyTravelTime(this MkkpReport report)
+        public static TravelTime AddDummyTravelTime(this MkkpReport report, DateTime date)
         {
-            var tt = MkkpDataGenerator.Instance.CreateTravelTimes(report);
+            var tt = MkkpDataGenerator.Instance.CreateTravelTimes(report, date);
             report.TravelTimes.Add(tt);
             return tt;
         }
@@ -51,7 +51,7 @@ namespace Vodamep.Data.Dummy
                 report.ToD = report.FromD.LastDateInMonth();
 
             if (report.Staffs.Count == 0)
-                report.AddDummyStaff();
+                report.AddDummyStaff(true);
 
             if (report.Persons.Count == 0)
                 report.AddDummyPerson();

@@ -1,0 +1,9 @@
+﻿// Verwandtschaftsverhältnis Hauptbetreuungspers.
+
+UNDEFINED_MR;;
+PARTNER_MR;Partner/in;
+CHILD_MR;Kind/Schwiegerkind;         
+RELATED_PERSON_MR;andere verwandte Person;    
+UNRELATED_PERSON_MR;nicht verwandte Person;    
+NO_MAIN_CARER_MR;keine Hauptbetreuungsperson; 
+NO_MAINATTENDANCERELATION_MR;keine Angabe;     

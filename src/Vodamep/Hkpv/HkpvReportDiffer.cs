@@ -40,8 +40,8 @@ namespace Vodamep.Hkpv
         private IEnumerable<DiffObject> DiffActivities(object obj1, object obj2)
         {
 
-            var activities1 = (obj1 as RepeatedField<Activity>)?.Select(x => x as IActivity<ActivityType>).ToList();
-            var activities2 = (obj2 as RepeatedField<Activity>)?.Select(x => x as IActivity<ActivityType>).ToList();
+            var activities1 = (obj1 as RepeatedField<Activity>)?.Select(x => x as IEntriesActivity<ActivityType>).ToList();
+            var activities2 = (obj2 as RepeatedField<Activity>)?.Select(x => x as IEntriesActivity<ActivityType>).ToList();
 
             var list = new List<DiffObject>
             {

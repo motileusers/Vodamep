@@ -30,7 +30,7 @@ namespace Vodamep.Data.Dummy
         }
 
 
-        public AgpReport CreateAgpReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
+        public AgpReport CreateAgpReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool useRandomValues = true, bool addActivities = true)
         {
             var report = new AgpReport()
             {
@@ -45,8 +45,8 @@ namespace Vodamep.Data.Dummy
             report.ToD = report.FromD.LastDateInMonth();
 
             report.AddDummyPersons(persons);
-            report.AddDummyStaffs(staffs);
-            report.AddDummyTravelTime();
+            report.AddDummyStaffs(staffs, useRandomValues);
+            report.AddDummyTravelTime(from);
 
             if (addActivities)
                 report.AddDummyActivities();
@@ -54,9 +54,9 @@ namespace Vodamep.Data.Dummy
             return report;
         }
 
-        public Person CreatePerson()
+        public Person CreatePerson(string id = null)
         {
-            var id = (_id++).ToString();
+            id = id ?? (_id++).ToString();
 
             var person = new Person()
             {
@@ -135,18 +135,18 @@ namespace Vodamep.Data.Dummy
         public IEnumerable<Person> CreatePersons(int count)
         {
             for (var i = 0; i < count; i++)
-                yield return CreatePerson();
+                yield return CreatePerson((i+1).ToString());
         }
 
-        public Staff CreateStaff(AgpReport report)
+        public Staff CreateStaff(AgpReport report, bool useRandomValues = true)
         {
             var id = (_id++).ToString();
 
             var staff = new Staff
             {
                 Id = id,
-                FamilyName = _familynames[_rand.Next(_familynames.Length)],
-                GivenName = _names[_rand.Next(_names.Length)],
+                FamilyName = useRandomValues ? _familynames[_rand.Next(_familynames.Length)]: _familynames[0],
+                GivenName = useRandomValues ? _names[_rand.Next(_names.Length)] : _names[0],
             };
 
             return staff;
@@ -166,18 +166,18 @@ namespace Vodamep.Data.Dummy
             return staff;
         }
 
-        public IEnumerable<Staff> CreateStaffs(AgpReport report, int count)
+        public IEnumerable<Staff> CreateStaffs(AgpReport report, int count, bool useRandomValues = true)
         {
             for (var i = 0; i < count; i++)
-                yield return CreateStaff(report);
+                yield return CreateStaff(report, useRandomValues);
         }
 
-        public TravelTime CreateTravelTimes (AgpReport report)
+        public TravelTime CreateTravelTimes (AgpReport report, DateTime from)
         {
             var travelTime = new TravelTime
             {
                 Id = "0",
-                DateD = DateTime.Now,
+                DateD = from,
                 Minutes = 125,
                 StaffId = report.Staffs.First().Id,
             };

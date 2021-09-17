@@ -1,4 +1,5 @@
-﻿# Vodamep - Client
+﻿
+# Vodamep - Client
 
 (dmc) Daten-Meldungs-Client:
 
@@ -56,5 +57,39 @@ Actions
                    Insurances
                    CountryCodes
                    Postcode_City
+
+```
+
+
+Beispiele:
+
+```
+Stammdaten auflisten
+
+PLZ/Orte - Standard Liste für alle Module, außer HKPV
+dmc List -s Postcode_City
+
+PLZ/Orte - Liste für HKPV
+dmc List -s Postcode_City -t hkpv
+
+
+
+Validierungen - StatLP
+
+Für alle Dateien
+validate -f D:\Data\C-0101*.json -t StatLp
+
+
+Validierungen Historie - nur StatLP
+
+Für eine Datei (-f) die gesamte Historie (-h)
+validatehistory -f D:\Data\C-0791-201509.json -h D:\Data\C*.* -t StatLp
+
+Für alle vorhandenen Dateien (-f) die gesamte Historie (-h) mit Wildcard 
+validatehistory -f D:\Data\C-0101*.json -h D:\Data\C-0101*.* -t StatLp
+
+
+
+
 
 ```

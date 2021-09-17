@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using FluentValidation;
-using FluentValidation.Results;
-using Vodamep.Data;
+﻿using FluentValidation;
 using Vodamep.Mkkp.Model;
 using Vodamep.ValidationBase;
 
@@ -13,15 +8,12 @@ namespace Vodamep.Mkkp.Validation
     {
         public StaffValidator()
         {
-            this.RuleFor(x => x.Id).NotEmpty();
+            MkkpDisplayNameResolver displayNameResolver = new MkkpDisplayNameResolver();
 
-            this.RuleFor(x => x.FamilyName).NotEmpty();
-            this.RuleFor(x => x.GivenName).NotEmpty();
 
-            // Änderung 5.11.2018, LH
-            var r = new Regex(@"^[\p{L}][-\p{L} ]*[\p{L}]$");
-            this.RuleFor(x => x.FamilyName).Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName));
-            this.RuleFor(x => x.GivenName).Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName));
+            this.RuleFor(x => x.Id).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Staff)), x.GetDisplayName())); ;
+
+            this.RuleFor(x => x).SetValidator(new StaffNameValidator( displayNameResolver.GetDisplayName(nameof(Staff)),@"^[\p{L}][-\p{L} ]*[\p{L}]$", -1, -1, -1, -1));
         }
     }
 }

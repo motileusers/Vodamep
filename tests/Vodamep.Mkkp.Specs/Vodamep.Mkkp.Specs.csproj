@@ -11,8 +11,8 @@
     <ProjectGuid>{E5ABF09C-5E5F-4C2B-BF80-227701E27CC2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Vodamep.Specs</RootNamespace>
-    <AssemblyName>Vodamep.Specs</AssemblyName>
+    <RootNamespace>Vodamep.Mkkp.Specs</RootNamespace>
+    <AssemblyName>Vodamep.Mkkp.Specs</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

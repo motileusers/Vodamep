@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Agp.Model;
+using Vodamep.ReportBase;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Agp.Validation
@@ -45,7 +46,7 @@ namespace Vodamep.Agp.Validation
             this.RuleFor(x => x.FromD)
                 .Must(x => x.Day == 1)
                 .Unless(x => x.From == null)
-                .WithMessage(Validationmessages.FirstDateInMOnth);
+                .WithMessage(Validationmessages.FirstDateInMonth);
 
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
 
@@ -55,7 +56,7 @@ namespace Vodamep.Agp.Validation
 
             this.RuleForEach(report => report.TravelTimes).SetValidator(r => new TravelTimeValidator());
             
-            this.Include(new SumOfTravelTimesMustBeLowerThan5HoursValidator());
+            this.Include(new SumOfTravelTimesMustBeLowerThan5HoursValidator(nameof(TravelTime)));
             this.Include(new OnlyOneTravelTimesEntryPerStaffMemberAndDayValidator());
 
             this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator());

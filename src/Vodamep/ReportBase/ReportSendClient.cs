@@ -14,7 +14,7 @@ namespace Vodamep.ReportBase
         {
             _address = address;
         }
-        public async Task<SendResult> Send(IReportBase report, string username, string password)
+        public async Task<SendResult> Send(IReport report, string username, string password)
         {
             using (var client = new HttpClient())
             using (var data = report.WriteToStream())

@@ -18,7 +18,19 @@ namespace Vodamep.Data
 
         public abstract string Unknown { get; }
 
-        public bool IsValid(string code) => _dict.ContainsKey(code ?? string.Empty);
+        public virtual bool IsValid(string code) => _dict.ContainsKey(code ?? string.Empty);
+
+        public string GetValue(string code)
+        {
+            code = code ?? string.Empty;
+
+            if (_dict.ContainsKey(code))
+            {
+                return _dict[code];
+            }
+
+            return code;
+        }
 
         private void Init()
         {

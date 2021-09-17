@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using Vodamep.Data;
+using Vodamep.Data.Hkpv;
 
 namespace Vodamep.Client
 {
@@ -23,6 +24,13 @@ namespace Vodamep.Client
         {
             HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
             handler.Validate(args);
+        }
+
+        [ArgActionMethod, ArgDescription("Prüfung der Meldungsgeschichte mehrerer Meldungen.")]
+        public void ValidateHistory(ValidateHistoryArgs args)
+        {
+            HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
+            handler.ValidateHistory(args);
         }
 
         [ArgActionMethod, ArgDescription("Meldung neu verpacken.")]
@@ -49,15 +57,26 @@ namespace Vodamep.Client
                 case ListSources.Insurances:
                     provider = InsuranceCodeProvider.Instance;
                     break;
+
                 case ListSources.CountryCodes:
                     provider = CountryCodeProvider.Instance;
                     break;
+
                 case ListSources.Postcode_City:
-                    provider = Postcode_CityProvider.Instance;
+                    if (args.Type == ReportBase.ReportType.Hkpv)
+                    {
+                        provider = Vodamep.Data.Hkpv.Postcode_CityProvider.Instance;
+                    }
+                    else
+                    {
+                        provider = Vodamep.Data.Postcode_CityProvider.Instance;
+                    }
                     break;
+
                 case ListSources.Qualifications:
                     provider = QualificationCodeProvider.Instance;
                     break;
+
                 default:
                     HandleFailure($"Source '{args.Source}' not implemented.");
                     return;
@@ -65,34 +84,6 @@ namespace Vodamep.Client
 
             foreach (var line in provider?.GetCSV())
                 Console.WriteLine(line);
-        }
-
-        private Type CheckType(string typeName)
-        {
-            Type type;
-
-
-            switch (typeName.ToLower())
-            {
-                case "agp":
-                    type = Type.Agp;
-                    break;
-
-                case "hkpv":
-                    type = Type.Hkpv;
-                    break;
-
-                case "mkkp":
-                    type = Type.Mkkp;
-                    break;
-
-                default:
-                    type = Type.Hkpv;
-                    break;
-            }
-
-
-            return type;
         }
 
         protected void HandleFailure(string message = null)

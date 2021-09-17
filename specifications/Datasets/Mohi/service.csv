@@ -1,0 +1,9 @@
+﻿// Inanspruchnahme anderer Dienste
+
+UNDEFINED_SV;;
+HOME_CARE_SV;Hauskrankenpflege;                   
+DAY_CARE_SV;Tagesbetreuung;         
+HOME_MEAL_SV;Mahlzeitendienst;           
+MEDICAL_THERAPEUTIC_SV;Medizinisch-therapeutische Dienste; 
+PRIVATE_CARE_24_HOUR_SV;Private bezahlte Pflege (24 Stunden Betreuung);        
+PRIVATE_CARE_HOURLY_SV;Private bezahlte Pflege (stundenweise);         

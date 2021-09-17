@@ -10,16 +10,18 @@ namespace Vodamep.Agp.Validation
     {
         public DiagnosisGroupIsUniqueValidator()
         {
-            RuleFor(x => x.Diagnoses)
-                .Custom((list, ctx) =>
+            RuleFor(x => x)
+                .Custom((y, ctx) =>
                 {
+                    var list = y.Diagnoses;
+
                     var duplicates = list
                         .GroupBy(x => x)
                         .Where(x => x.Count() > 1);
 
                     foreach (var entry in duplicates)
                     {
-                        ctx.AddFailure(new ValidationFailure(nameof(Person.Diagnoses), Validationmessages.DoubledDiagnosisGroups));
+                        ctx.AddFailure(new ValidationFailure(nameof(Person.Diagnoses), Validationmessages.DoubledDiagnosisGroups(y.GetDisplayName())));
                     }
                 });
         }
