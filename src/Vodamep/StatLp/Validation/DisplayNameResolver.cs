@@ -22,6 +22,8 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(StatLpReport.From), "Von");
             _dict.Add(nameof(StatLpReport.FromD), "Von");
 
+            _dict.Add(nameof(StatLpReport.SourceSystemId), "Quellsystem ID");
+
             _dict.Add(nameof(StatLpReport.Institution), "Einrichtung");
 
             _dict.Add(nameof(Person.FamilyName), "Familienname");
