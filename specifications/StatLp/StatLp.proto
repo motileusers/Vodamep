@@ -59,11 +59,11 @@ message Admission {
     google.protobuf.Timestamp admission_date = 6;               // Aufnahmedatum, wann wurde der Klient in der Einrichtung aufgenommen. Außer bei einer Erstmeldung von Klienten, wenn der Klient schon vorher in der Einrichtung war - Monatsanfang der Meldung.
                                                                 // Beispiel 1: Software 1 meldet das erste mal die Bewohner einer Einrichtung mit 31.1.2021 über die Schnittstelle.
                                                                 //             Ein Bewohner wurde jedoch ursprünglich schon am 15.10.2015 aufgenommen. 
-                                                                //             Gültigkeitsdatum: 1.1.2021 (Anfang des Monats)
+                                                                //             Aufnahmedatum: 1.1.2021 (Anfang des Monats)
                                                                 // Beispiel 2: Software 1 meldet das erste mal die Bewohner einer Einrichtung mit 31.1.2021. 
                                                                 //             Ein Bewohner wurde am 8.1.2021 aufgenommen. 
-                                                                //             Gültigkeitsdatum: 8.1.2021 (= Aufnahmedatum)
-                                                                // Beispiel 3: Software 1 meldet das zweite mal die Bewohner einer Einrichtung mit 31.1.2021. 
+                                                                //             Aufnahmedatum: 8.1.2021
+                                                                // Beispiel 3: Software 1 meldet das zweite mal die Bewohner einer Einrichtung mit 28.2.2021. 
                                                                 //             Bei allen Aufnahmen steht das eigentliche Aufnahmedatum im 'Aufnahmedatum'
 
     google.protobuf.Timestamp origin_admission_date = 7;        // Ursprüngliches Aufnahmedatum: Wann wurde der Bewohner ursprünglich in der Einrichtung aufgenommen. Siehe Gültigkeitsdatum.

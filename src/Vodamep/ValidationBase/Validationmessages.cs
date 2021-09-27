@@ -102,7 +102,7 @@ namespace Vodamep.ValidationBase
         public static string StatLpAdmissionEmptyPostCode(string date, string clientName) => $"Keine Angabe von Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
         public static string StatLpAdmissionWrongPostCode(string date, string clientName) => $"Ungültige Kombination Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
 
-        public static string StatLpAdmissionDateMustBeLessThanValid(string clientName, DateTime from) => $"Das Aufnahmedatum von Person '{clientName}' muss kleinergleich dem Gültigkeitsdatum ({from.ToShortDateString()}) sein.";
+        public static string StatLpOriginAdmissionDateMustBeLessThanAdmissionDate(string clientName, DateTime from) => $"Das ursprüngliche Aufnahmedatum von Person '{clientName}' muss kleinergleich dem Aufnahmedatum ({from.ToShortDateString()}) sein.";
         public static string StatLpAdmissionDifferentToValid(string clientName, DateTime from) => $"Das ursprüngliche Aufnahmedatum von Person '{clientName}' unterscheidet sich vom Aufnahmedatum ({from.ToShortDateString()}).";
         public static string StatLpAdmissionAttributeMissing(string clientName, string date, string attributeType) => $"Vor der Aufnahme von Klient '{clientName}' am {date} wurde keine '{attributeType}' gesendet.";
         public static string StatLpAdmissionMultipleAttribute(string clientName, string date, string attributeType) => $"Vor der Aufnahme von Klient '{clientName}' am {date} wurde '{attributeType}' mehrfach gesendet.";

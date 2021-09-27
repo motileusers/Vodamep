@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using FluentValidation;
 using Vodamep.Data;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
@@ -36,18 +36,35 @@ namespace Vodamep.StatLp.Validation
 
 
 
-            // Gültigkeitsdatum
+            // Aufnahmedatum
+
+            this.RuleFor(x => x.AdmissionDate)
+                .Must((admissionDate) =>
+                {
+                    // Muss im aktuellen Monat sein.
+                    if (admissionDate != null)
+                    {
+                        if (admissionDate < report.From ||
+                            admissionDate > report.To)
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                    
+                })
+                .WithName(displayNameResolver.GetDisplayName(nameof(Admission)))
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
+
+
 
             this.RuleFor(x => x.AdmissionDateD)
                 .NotEmpty()
                 .DependentRules(() =>
                 {
-                    // Aufnahmedatum
 
-                    // Nicht leer
-                    this.RuleFor(x => x.OriginAdmissionDate).NotEmpty();
-
-                    // Aufnahmedatum größer als das Gültigkeitsdatum der Aufname
+                    // Ursprüngliches Aufnahmedatum größer als das Aufnahmedatum
                     this.RuleFor(x => x.OriginAdmissionDate)
                         .Must((admission, personId) =>
                         {
@@ -57,21 +74,7 @@ namespace Vodamep.StatLp.Validation
 
                             return true;
                         })
-                        .WithMessage(x => Validationmessages.StatLpAdmissionDateMustBeLessThanValid(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
-
-                    // Aufnahmedatum <> Gültigkeitsdatum der Aufnahme
-                    this.RuleFor(x => x.OriginAdmissionDate)
-                        .Must((admission, personId) =>
-                        {
-                            if (admission.OriginAdmissionDate != null &&
-                                admission.AdmissionDate != null)
-                                return admission.OriginAdmissionDate == admission.AdmissionDate;
-
-                            return true;
-                        })
-                        .WithSeverity(Severity.Warning)
-                        .WithMessage(x => Validationmessages.StatLpAdmissionDifferentToValid(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
-
+                        .WithMessage(x => Validationmessages.StatLpOriginAdmissionDateMustBeLessThanAdmissionDate(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
                 });
 
 

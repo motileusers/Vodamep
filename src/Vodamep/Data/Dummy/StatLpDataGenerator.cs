@@ -133,7 +133,7 @@ namespace Vodamep.Data.Dummy
                 yield return CreatePerson(i + 1, true);
         }
 
-        public Admission CreateAdmission(string personId, Nullable<DateTime> valid = null, bool randomValues = true)
+        public Admission CreateAdmission(string personId, Nullable<DateTime> admissionDate = null)
         {
 
             var admission = new Admission()
@@ -157,21 +157,21 @@ namespace Vodamep.Data.Dummy
                 Gender = Gender.MaleGe,
             };
 
-            if (valid != null)
+            if (admissionDate != null)
             {
-                admission.AdmissionDateD = valid.Value;
-                admission.OriginAdmissionDateD = valid.Value;
+                admission.AdmissionDateD = admissionDate.Value;
+                admission.OriginAdmissionDateD = admissionDate.Value;
             }
 
             return admission;
 
         }
 
-        public IEnumerable<Admission> CreateAdmissions(IEnumerable<Person> persons, Nullable<DateTime> reportFrom, bool randomValues = true)
+        public IEnumerable<Admission> CreateAdmissions(IEnumerable<Person> persons, Nullable<DateTime> reportFrom)
         {
             foreach (var person in persons)
             {
-                yield return CreateAdmission(person.Id, reportFrom, randomValues);
+                yield return CreateAdmission(person.Id, reportFrom);
             }
         }
 

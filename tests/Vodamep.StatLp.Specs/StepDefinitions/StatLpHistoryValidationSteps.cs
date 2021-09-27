@@ -179,7 +179,7 @@ namespace Vodamep.Specs.StepDefinitions
 
         private Admission CreateAdmission(Stay stay)
         {
-            return StatLpDataGenerator.Instance.CreateAdmission(stay.PersonId, stay.FromD, false);
+            return StatLpDataGenerator.Instance.CreateAdmission(stay.PersonId, stay.FromD);
         }
 
         private Leaving CreateLeaving(Stay stay)
@@ -276,6 +276,12 @@ namespace Vodamep.Specs.StepDefinitions
         public void GivenSentMessageThePropertyIsSetTo(int reportNumber, string name, string type, string value)
         {
             this.GivenPropertyIsSetTo(-1, name, type, value);
+        }
+
+        [Given(@"Gesendete Meldung (.*): die Id von Person (.*) ist auf (.*) gesetzt")]
+        public void GivenSentMessageThePropertyIsSetTo(int reportNumber, string personId, string newPersonId)
+        {
+            this.GivenPersonIdIsSetTo(-1, personId, newPersonId);
         }
 
         [Given(@"Existierende Meldung (.*): die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
@@ -478,6 +484,33 @@ namespace Vodamep.Specs.StepDefinitions
             report.Stays.Add(stay);
         }
 
+        private void GivenPersonIdIsSetTo(int reportIndex, string personId, string newPersonId)
+        {
+            StatLpReport report = this.GetReportAndCreateNonExisting(reportIndex);
+
+            foreach (Person item in report.Persons)
+                if (item.Id == personId)
+                    item.Id = newPersonId;
+
+            foreach (Stay item in report.Stays)
+                if (item.PersonId == personId)
+                    item.PersonId = newPersonId;
+
+            foreach (Admission item in report.Admissions)
+                if (item.PersonId == personId)
+                    item.PersonId = newPersonId;
+
+            foreach (Leaving item in report.Leavings)
+                if (item.PersonId == personId)
+                    item.PersonId = newPersonId;
+
+            foreach (Attribute item in report.Attributes)
+                if (item.PersonId == personId)
+                    item.PersonId = newPersonId;
+
+        }
+
+
         private void GivenPropertyIsSetTo(int reportIndex, string name, string type, string value)
         {
             var report = this.GetReportAndCreateNonExisting(reportIndex);
@@ -492,7 +525,7 @@ namespace Vodamep.Specs.StepDefinitions
             {
                 if (!report.Admissions.Any())
                 {
-                    report.AddDummyAdmission(false);
+                    report.AddDummyAdmission();
                 }
                 message = report.Admissions[0];
             }

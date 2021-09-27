@@ -3,13 +3,7 @@ Funktionalität: StatLp - Validierung der gemeldeten Aufnahmen einer Datenmeldun
 
 Szenario: Das Aufnahmedatum muss im aktuellen Monat liegen
 	Angenommen die Eigenschaft 'admission_date' von 'Admission' ist auf '2000-01-01' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Das Aufnahmedatum von'
-	Und enthält das Validierungsergebnis den Fehler 'muss kleinergleich dem Gültigkeitsdatum'
-
-Szenario: Das ursprüngliche Aufnahmedatum unterscheidet sich vom Aufnahmedatum
-	Angenommen die Eigenschaft 'admission_date' von 'Admission' ist auf '2021-02-02' gesetzt
-	Dann enthält das Validierungsergebnis die Warnung 'Das ursprüngliche Aufnahmedatum von'
-	Und enthält das Validierungsergebnis die Warnung 'unterscheidet sich'
+	Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '(.*)' muss im aktuellen Monat liegen.'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
@@ -19,7 +13,6 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Beispiele:
 		| Name                          | Bezeichnung                                    |
 		| admission_date                | Aufnahmedatum                                  |
-		| origin_admission_date         | Ursprüngliches Aufnahmedatum                   |
 		| housing_type_before_admission | Wohnsituation vor der Aufnahme                 |
 		| main_attendance_relation      | Verwandtschaftsverhältnis Hauptbetreuungspers. |
 		| main_attendance_closeness     | Räumliche Nähe Hauptbetreuungsperson           |
@@ -162,11 +155,6 @@ Szenario: Housing Reasons: Auswahlfelder enthalten Werte, Texteintrag vorhanden
 Szenario: Eine Admission enthält eine Person, die nicht in der Personenliste ist
 	Angenommen die Eigenschaft 'person_id' von 'Admission' ist auf '2' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Person '2' ist nicht in der Personenliste vorhanden.'
-
-Szenario: Eine Aufnahme muss im aktuellen Monat liegen
-	Angenommen die Eigenschaft 'admission_date' von 'Admission' ist auf '2000-01-01' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Das Aufnahmedatum von'
-	Und enthält das Validierungsergebnis den Fehler 'muss kleinergleich dem Gültigkeitsdatum'
 
 Szenario: Valid darf keine Zeit beinhalten
 	Angenommen die Datums-Eigenschaft 'admission_date' von 'Admission' hat eine Uhrzeit gesetzt
