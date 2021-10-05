@@ -1,0 +1,11 @@
+﻿// Aufnahmearten, mit alten Aufnahmearten (zu Kompatibilitätszwecken), mit Gültigkeitsdatum bis wann
+// Header: Key,Description,ValidTo
+
+UNDEFINED_ATTRIBUTE;;
+ADMISSION_TYPE;Aufnahmeart;
+CARE_ALLOWANCE;Pflegegeld;
+CARE_ALLOWANCE_ARGE;Pflegeeinstufung Arge;
+FINANCE;Finanzierung;
+
+
+           

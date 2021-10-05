@@ -1,6 +1,6 @@
 ﻿// Einstufung nach Pflegegeld Gesetz / Pflegestufe ARGE
 
-UNDEFINED_AR = 0;
+UNDEFINED_AR;;
 L0_AR;Stufe 0;
 L1_AR;Stufe 1;
 L2_AR;Stufe 2;

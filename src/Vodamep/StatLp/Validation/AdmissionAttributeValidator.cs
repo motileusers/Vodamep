@@ -39,7 +39,7 @@ namespace Vodamep.StatLp.Validation
                                     ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.Admissions),
                                         Validationmessages.StatLpAdmissionAttributeMissing(
                                             x.GetPersonName(admission.PersonId),
-                                            admission.AdmissionDateD.ToShortDateString(),
+                                            admission.AdmissionDateD?.ToShortDateString(),
                                             DisplayNameResolver.GetDisplayName(attributeType.ToString()))));
                                 }
                                 else if (attributeCount > 1)
@@ -47,7 +47,7 @@ namespace Vodamep.StatLp.Validation
                                     ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.Admissions),
                                         Validationmessages.StatLpAdmissionMultipleAttribute(
                                             x.GetPersonName(admission.PersonId),
-                                            admission.AdmissionDateD.ToShortDateString(),
+                                            admission.AdmissionDateD?.ToShortDateString(),
                                             DisplayNameResolver.GetDisplayName(attributeType.ToString()))));
 
                                 }

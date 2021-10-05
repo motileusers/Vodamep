@@ -193,27 +193,27 @@ namespace Vodamep.Data.Dummy
 
             var admissionTypeAttribute = new Attribute();
             admissionTypeAttribute.PersonId = admission.PersonId;
-            admissionTypeAttribute.FromD = admission.AdmissionDateD;
+            admissionTypeAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
             admissionTypeAttribute.AttributeType = AttributeType.AdmissionType;
             admissionTypeAttribute.Value = AdmissionType.ContinuousAt.ToString();
             attributes.Add(admissionTypeAttribute);
 
             var careAllowanceAttribute = new Attribute();
-            careAllowanceAttribute.FromD = admission.AdmissionDateD;
+            careAllowanceAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
             careAllowanceAttribute.PersonId = admission.PersonId;
             careAllowanceAttribute.AttributeType = AttributeType.CareAllowance;
             careAllowanceAttribute.Value = CareAllowance.L1.ToString();
             attributes.Add(careAllowanceAttribute);
 
             var careAllowanceArgeAttribute = new Attribute();
-            careAllowanceArgeAttribute.FromD = admission.AdmissionDateD;
+            careAllowanceArgeAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
             careAllowanceArgeAttribute.PersonId = admission.PersonId;
             careAllowanceArgeAttribute.AttributeType = AttributeType.CareAllowanceArge;
             careAllowanceArgeAttribute.Value = CareAllowanceArge.L1Ar.ToString();
             attributes.Add(careAllowanceArgeAttribute);
 
             var financeAttribute = new Attribute();
-            financeAttribute.FromD = admission.AdmissionDateD;
+            financeAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
             financeAttribute.PersonId = admission.PersonId;
             financeAttribute.AttributeType = AttributeType.Finance;
             financeAttribute.Value = Finance.SelfFi.ToString();

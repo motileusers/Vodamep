@@ -74,7 +74,7 @@ namespace Vodamep.StatLp.Validation
 
                             return true;
                         })
-                        .WithMessage(x => Validationmessages.StatLpOriginAdmissionDateMustBeLessThanAdmissionDate(this.GetPersonName(x.PersonId, report), x.AdmissionDateD));
+                        .WithMessage(x => Validationmessages.StatLpOriginAdmissionDateMustBeLessThanAdmissionDate(this.GetPersonName(x.PersonId, report), x.AdmissionDateD?.ToShortDateString()));
                 });
 
 
@@ -156,7 +156,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.StatLpAdmissionEmptyPostCode(x.AdmissionDateD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionEmptyPostCode(x.AdmissionDateD?.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
 
             this.RuleFor(x => x)
@@ -177,7 +177,7 @@ namespace Vodamep.StatLp.Validation
 
                     return result;
                 })
-                .WithMessage(x => Validationmessages.StatLpAdmissionWrongPostCode(x.AdmissionDateD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionWrongPostCode(x.AdmissionDateD?.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
 
 
             this.RuleFor(x => x.PersonalChanges).NotEmpty().Unless(x => !string.IsNullOrEmpty(x.PersonalChangeOther))
