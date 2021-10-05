@@ -20,6 +20,14 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 		| gender                        | Geschlecht                                     |
 		| country                       | Land                                           |
 
+Szenariogrundriss: Eine Eigenschaft kann nicht gesetzt sein
+	Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
+
+	Beispiele:
+		| Name                  | Bezeichnung   |
+		| origin_admission_date | Aufnahmedatum |
+
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von'
