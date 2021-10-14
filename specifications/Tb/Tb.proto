@@ -7,8 +7,9 @@ option csharp_namespace = "Vodamep.Tb.Model";
 
 message TbReport {   
     Institution institution = 1;   
-    google.protobuf.Timestamp from = 2;
-    google.protobuf.Timestamp to = 3;
+    string source_system_id = 2;           // System ID, die für das Mapping der Personen IDs verwendet wird. Wird von connexia ausgegeben.
+    google.protobuf.Timestamp from = 3;
+    google.protobuf.Timestamp to = 4;
     repeated Person persons = 5;         
     repeated Activity activities = 6;     
 }

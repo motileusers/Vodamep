@@ -36,13 +36,13 @@ namespace Vodamep.Mohi.Model
             {
                 Institution = report.Institution,
                 From = report.From,
-                To = report.To
+                To = report.To,
+                SourceSystemId = report.SourceSystemId,
             };
 
-            //result.Activities.AddRange(report.Activities.AsSorted());
-            
-            result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));            
-            //result.Staffs.AddRange(report.Staffs.OrderBy(x => x.Id));
+            result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
+
+            result.Activities.AddRange(report.Activities.OrderBy(x => x.PersonId).ThenBy(x => x.HoursPerMonth));
 
             return result;
         }

@@ -38,13 +38,21 @@ namespace Vodamep.Cm.Model
             {
                 Institution = report.Institution,
                 From = report.From,
-                To = report.To
+                To = report.To,
+                SourceSystemId = report.SourceSystemId,
             };
 
-            //result.Activities.AddRange(report.Activities.AsSorted());
-            
-            result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));            
-            //result.Staffs.AddRange(report.Staffs.OrderBy(x => x.Id));
+            result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
+
+            result.Activities.AddRange(report.Activities.OrderBy(x => x.DateD)
+                                                        .ThenBy(x => x.ActivityType)
+                                                        .ThenBy(x => x.Minutes));
+
+            result.ClientActivities.AddRange(report.ClientActivities.OrderBy(x => x.DateD)
+                                                                    .ThenBy(x => x.PersonId)                                        
+                                                                    .ThenBy(x => x.ActivityType)
+                                                                    .ThenBy(x => x.Minutes));
+
 
             return result;
         }
