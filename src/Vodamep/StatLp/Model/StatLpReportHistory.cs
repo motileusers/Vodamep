@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Vodamep.StatLp.Validation;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Model
 {
@@ -9,6 +10,7 @@ namespace Vodamep.StatLp.Model
 
         public IEnumerable<StatLpReport> StatLpReports { get; set; }
 
-        public List<IdMapping> ExistingIdMappings { get; set; }
+        public ClearingExceptions ClearingExceptions { get; set; }
+
     }
 }

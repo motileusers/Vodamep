@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Vodamep.ReportBase;
 using Vodamep.Tb.Validation;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.Tb.Model
 {
     public static class TbReportExtensions
     {
+
         public static TbReport AddPerson(this TbReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static TbReport AddPersons(this TbReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
         public static TbReport AddActivity(this TbReport report, Activity activity) => report.InvokeAndReturn(m => m.Activities.Add(activity));
@@ -19,6 +21,8 @@ namespace Vodamep.Tb.Model
             action(m);
             return m;
         }
+
+
 
         public static Task<SendResult> Send(this TbReport report, Uri address, string username, string password) => new ReportSendClient(address).Send(report, username, password);
 

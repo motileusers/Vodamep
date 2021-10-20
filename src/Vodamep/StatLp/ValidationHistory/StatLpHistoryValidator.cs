@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.StatLp.Model;
+using System.Linq;
 
 namespace Vodamep.StatLp.Validation
 {
@@ -22,11 +23,23 @@ namespace Vodamep.StatLp.Validation
 
         protected override bool PreValidate(ValidationContext<StatLpReportHistory> context, ValidationResult result)
         {
-            IdMapper mapper = new IdMapper();
-            mapper.Map(context.InstanceToValidate);
+            this.SetClearingIds(context, result);
 
             return base.PreValidate(context, result);
         }
+
+
+        private void SetClearingIds(ValidationContext<StatLpReportHistory> context, ValidationResult result)
+        {
+            List<StatLpReport> reports = context.InstanceToValidate.StatLpReports.ToList();
+            reports.Add(context.InstanceToValidate.StatLpReport);
+
+            foreach (StatLpReport report in reports)
+            {
+                report.SetClearingIds(context.InstanceToValidate.ClearingExceptions);
+            }
+        }
+
 
 
         public StatLpHistoryValidator()

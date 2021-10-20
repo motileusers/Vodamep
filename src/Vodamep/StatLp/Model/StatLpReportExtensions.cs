@@ -4,11 +4,71 @@ using System.Linq;
 using System.Threading.Tasks;
 using Vodamep.ReportBase;
 using Vodamep.StatLp.Validation;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Model
 {
     public static class StatLpReportExtensions
     {
+
+
+        /// <summary>
+        /// Clearing IDs auf allen Personen setzen
+        /// </summary>
+        public static void SetClearingIds(this StatLpReport report, ClearingExceptions clearingData)
+        {
+
+            // Standard Id Name + Geburtsdatum
+            foreach (Person person in report.Persons)
+            {
+                person.ClearingId = ClearingIdUtiliy.CreateClearingPersonId(person.FamilyName, person.GivenName, person.BirthdayD);
+            }
+
+            if (clearingData != null)
+            {
+                clearingData?.BuildClearingDictionaries();
+
+                if (clearingData.EqualDictionary != null)
+                {
+                    // Gleichsetzung von unterschiedlichen Personen
+                    foreach (Person person in report.Persons)
+                    {
+                        if (clearingData.EqualDictionary.ContainsKey(person.ClearingId))
+                        {
+                            person.ClearingId = clearingData.EqualDictionary[person.ClearingId].ToId;
+                        }
+                    }
+                }
+
+                // Trennung von zwei Personen mit gleichem Namen und Geburtsdatum
+                if (clearingData.SplitDictionary != null)
+                {
+                    foreach (Person person in report.Persons)
+                    {
+                        string spiltId = report.SourceSystemId + "." + report.Institution?.Id + "." + person.Id;
+                        if (clearingData.SplitDictionary.ContainsKey(spiltId))
+                        {
+                            person.ClearingId = clearingData.SplitDictionary[spiltId].ToId;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Zurücksetzen aller Clearing Ids
+        /// </summary>
+        public static void ResetClearingIds(this StatLpReport report)
+        {
+            // Standard Hash anwenden, Name + Geburtsdatum
+            foreach (Person person in report.Persons)
+            {
+                person.ClearingId = "";
+            }
+        }
+
+
         public static StatLpReport AddPerson(this StatLpReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static StatLpReport AddPersons(this StatLpReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
         public static StatLpReport AddAdmission(this StatLpReport report, Admission admission) => report.InvokeAndReturn(m => m.Admissions.Add(admission));
@@ -30,7 +90,14 @@ namespace Vodamep.StatLp.Model
 
         public static StatLpReportValidationResult Validate(this StatLpReport report) => (StatLpReportValidationResult)new StatLpReportValidator().Validate(report);
 
-        public static StatLpReportValidationResult ValidateHistory(this StatLpReport report, List<StatLpReport> existingReports, List<IdMapping> existingIdMappings) => (StatLpReportValidationResult)new StatLpHistoryValidator().Validate(new StatLpReportHistory { StatLpReport = report, StatLpReports = existingReports, ExistingIdMappings = existingIdMappings });
+        public static StatLpReportValidationResult ValidateHistory(this StatLpReport report, List<StatLpReport> existingReports, ClearingExceptions clearingExceptions) => (StatLpReportValidationResult)new StatLpHistoryValidator().Validate
+            (
+            new StatLpReportHistory
+            {
+                StatLpReport = report,
+                StatLpReports = existingReports,
+                ClearingExceptions = clearingExceptions
+            });
 
         public static string ValidateToText(this StatLpReport report, bool ignoreWarnings) => new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
 

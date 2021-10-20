@@ -289,11 +289,6 @@ namespace Vodamep.StatLp.Validation
                                 }
                             }
 
-                            // Id im akutellen Report
-                            string idFromSentReport = historyFromPreviousStay.PersonIdDictionary[sentReport.SourceSystemId];
-
-
-
 
 
 
@@ -301,9 +296,16 @@ namespace Vodamep.StatLp.Validation
                             // Es konnte also im Vormonat nicht geprüft werden, ob eine Enlasstung notwendig gewesen wäre
 
                             // Wir ermittlen also in der Meldung des nächsten Monats, ob ein nachfolgender Aufenthalt vorhanden ist
-                            Stay firstStayInNextMonth = sentReport.Stays.Where(f => f.PersonId == idFromSentReport)
-                                                                        .OrderBy(f => f.ToD)
-                                                                        .FirstOrDefault();
+                            Stay firstStayInNextMonth = null;
+                            if (historyFromPreviousStay.ContainsSourceSystemPersonId(sentReport.SourceSystemId))
+                            {
+                                string idFromSentReport = historyFromPreviousStay.GetSourceSystemPersonId(sentReport.SourceSystemId);
+
+                                firstStayInNextMonth = sentReport.Stays.Where(f => f.PersonId == idFromSentReport)
+                                                                            .OrderBy(f => f.ToD)
+                                                                            .FirstOrDefault();
+                            }
+
 
                             // Dann brauchen wir eine evtl. Enlassung aus dem Vormonat
                             Leaving previousLeaving = previousReport.Leavings.Where(l => l.LeavingDateD == previousStay.ToD &&
@@ -329,34 +331,35 @@ namespace Vodamep.StatLp.Validation
 
                             if (firstStayInNextMonth != null)
                             {
-                                // Dann brauchen wir auch eine evtl. Neuaufnahme vom Folgemonat
-                                Admission nextAdmission = sentReport.Admissions.Where(l => l.AdmissionDateD == firstStayInNextMonth.FromD &&
+                                if (historyFromPreviousStay.ContainsSourceSystemPersonId(sentReport.SourceSystemId))
+                                {
+                                    string idFromSentReport = historyFromPreviousStay.GetSourceSystemPersonId(sentReport.SourceSystemId);
+
+                                    // Dann brauchen wir auch eine evtl. Neuaufnahme vom Folgemonat
+                                    Admission nextAdmission = sentReport.Admissions.Where(l => l.AdmissionDateD == firstStayInNextMonth.FromD &&
                                                                                        l.PersonId == idFromSentReport)
                                                                            .FirstOrDefault();
-                                if (nextAdmission != null)
-                                {
-                                    // Wenn es einen Aufenthalt im Folgemonat gibt, dann muss jedoch sichergestellt sein,
-                                    // dass es keine Neuaufnahme ist.
-                                    // Denn wenn die Person im nächsten Monat neu aufgenommen worden ist, hätte der Aufenthalt im
-                                    // Vormonat ebenso abgeschlossen werden müssen.
-
-                                    if (previousLeaving == null)
+                                    if (nextAdmission != null)
                                     {
-                                        ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
-                                        Validationmessages.StatLpHistoryNoLeaving(
-                                            historyFromPreviousStay?.GetPersonName(),
-                                            previousStay.ToD.ToShortDateString()
-                                        )));
+                                        // Wenn es einen Aufenthalt im Folgemonat gibt, dann muss jedoch sichergestellt sein,
+                                        // dass es keine Neuaufnahme ist.
+                                        // Denn wenn die Person im nächsten Monat neu aufgenommen worden ist, hätte der Aufenthalt im
+                                        // Vormonat ebenso abgeschlossen werden müssen.
+
+                                        if (previousLeaving == null)
+                                        {
+                                            ctx.AddFailure(new ValidationFailure(nameof(StatLpReport.FromD),
+                                            Validationmessages.StatLpHistoryNoLeaving(
+                                                historyFromPreviousStay?.GetPersonName(),
+                                                previousStay.ToD.ToShortDateString()
+                                            )));
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-
-
-
-
             });
         }
 
@@ -384,7 +387,10 @@ namespace Vodamep.StatLp.Validation
                     // Für das Personen ID Mapping zwischen den Reports holen wir uns die Person aus dem Report
                     Person existingPerson = existingReport.Persons.Where(x => x.ClearingId == sentPerson.ClearingId).FirstOrDefault();
 
-                    AddDataToPersonHistory(existingPerson, personHistory, existingReport);
+                    if (existingPerson != null)
+                    {
+                        AddDataToPersonHistory(existingPerson, personHistory, existingReport);
+                    }
                 }
 
                 // Sortieren der Daten in der History
@@ -556,13 +562,18 @@ namespace Vodamep.StatLp.Validation
         {
             StayInfo result = null;
 
-            // Das ist die ID, die im gesendeten Report verwendet wird
-            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
-
-
             // Alle Aufenthalte einer Person ermitteln, die vor dem dem Start Datum lagen
             List<Stay> staysToSearch = new List<Stay>();
-            staysToSearch.AddRange(sentReport?.Stays.Where(x => x.PersonId == idFromSentReport));
+
+            // Aufenthalte des aktuellen Monats hinzufügen
+            if (personHistory.ContainsSourceSystemPersonId(sentReport.SourceSystemId))
+            {
+                // Das ist die ID, die im gesendeten Report verwendet wird
+                string idFromSentReport = personHistory.GetSourceSystemPersonId(sentReport.SourceSystemId);
+                staysToSearch.AddRange(sentReport?.Stays.Where(x => x.PersonId == idFromSentReport));
+            }
+
+            // Aufenthalte der Vormonate hinzufügen
             staysToSearch.AddRange(personHistory.Stays);
 
             List<Stay> tempStays = staysToSearch.Where(x => x.ToD <= startDate)
@@ -665,12 +676,18 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddAdmissionsToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
-            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+            // Aufnahmen des aktuellen Monats hinzufügen
+            if (personHistory.ContainsSourceSystemPersonId(sentReport.SourceSystemId))
+            {
+                string idFromSentReport = personHistory.GetSourceSystemPersonId(sentReport.SourceSystemId);
 
-            stayInfo.Admissions.AddRange(sentReport.Admissions.Where(x => x.AdmissionDateD >= stayInfo.From &&
-                                                                          x.AdmissionDateD <= stayInfo.To &&
-                                                                          x.PersonId == idFromSentReport));
+                stayInfo.Admissions.AddRange(sentReport.Admissions.Where(x => x.AdmissionDateD >= stayInfo.From &&
+                                                                              x.AdmissionDateD <= stayInfo.To &&
+                                                                              x.PersonId == idFromSentReport));
 
+            }
+
+            // Aufnahmen der Vormonate hinzufügen
             stayInfo.Admissions.AddRange(personHistory.Admissions.Where(x => x.AdmissionDateD >= stayInfo.From &&
                                                                              x.AdmissionDateD <= stayInfo.To));
         }
@@ -681,29 +698,41 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddAttributesToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
-            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+            // Attribute des aktuellen Monats hinzufügen
+            if (personHistory.ContainsSourceSystemPersonId(sentReport.SourceSystemId))
+            {
+                string idFromSentReport = personHistory.GetSourceSystemPersonId(sentReport.SourceSystemId);
 
-            stayInfo.Attributes.AddRange(sentReport.Attributes.Where(x => x.FromD >= stayInfo.From &&
-                                                                          x.FromD <= stayInfo.To &&
-                                                                          x.PersonId == idFromSentReport));
+                stayInfo.Attributes.AddRange(sentReport.Attributes.Where(x => x.FromD >= stayInfo.From &&
+                                                                              x.FromD <= stayInfo.To &&
+                                                                              x.PersonId == idFromSentReport));
 
+            }
+
+            // Attribute der Vormonate hinzufügen
             stayInfo.Attributes.AddRange(personHistory.Attributes.Where(x => x.FromD >= stayInfo.From &&
                                                                              x.FromD <= stayInfo.To));
         }
 
 
         /// <summary>
-        /// Mögliche Entassungen für einen Stay ermitteln, im ganzen Bereich, nur zur Fehlerprüfung
+        /// Mögliche Entlassungen für einen Stay ermitteln, im ganzen Bereich, nur zur Fehlerprüfung
         /// Normalfall: 1 Stay, 1 Leaving
         /// </summary>
         private void AddLeavingsToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
-            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+            // Entlassungen des aktuellen Monats hinzufügen
+            if (personHistory.ContainsSourceSystemPersonId(sentReport.SourceSystemId))
+            {
+                string idFromSentReport = personHistory.GetSourceSystemPersonId(sentReport.SourceSystemId);
 
-            stayInfo.Leavings.AddRange(sentReport.Leavings.Where(x => x.LeavingDateD >= stayInfo.From &&
-                                                                      x.LeavingDateD <= stayInfo.To &&
-                                                                      x.PersonId == idFromSentReport));
+                stayInfo.Leavings.AddRange(sentReport.Leavings.Where(x => x.LeavingDateD >= stayInfo.From &&
+                                                                          x.LeavingDateD <= stayInfo.To &&
+                                                                          x.PersonId == idFromSentReport));
 
+            }
+
+            // Entlassungen der Vormonate hinzufügen
             stayInfo.Leavings.AddRange(personHistory.Leavings.Where(x => x.LeavingDateD >= stayInfo.From &&
                                                                          x.LeavingDateD <= stayInfo.To));
         }
@@ -713,15 +742,19 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddActualAdmissionToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
-            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+            // Aufnahme des aktuellen Monats hinzufügen
+            if (personHistory.ContainsSourceSystemPersonId(sentReport.SourceSystemId))
+            {
+                string idFromSentReport = personHistory.GetSourceSystemPersonId(sentReport.SourceSystemId);
 
-            stayInfo.Admission = sentReport.Admissions.Where(x => x.AdmissionDateD == stayInfo.From &&
-                                                                  x.PersonId == idFromSentReport)
-                                                      .FirstOrDefault();
+                stayInfo.Admission = sentReport.Admissions.Where(x => x.AdmissionDateD == stayInfo.From &&
+                                                                      x.PersonId == idFromSentReport)
+                                                          .FirstOrDefault();
+            }
 
+            // Aufnahme der Vormonate hinzufügen
             if (stayInfo.Admission == null)
                 stayInfo.Admission = personHistory.Admissions.Where(x => x.AdmissionDateD == stayInfo.From).FirstOrDefault();
-
         }
 
 
@@ -730,15 +763,20 @@ namespace Vodamep.StatLp.Validation
         /// </summary>
         private void AddActualLeavingToStayInfo(StayInfo stayInfo, PersonHistory personHistory, StatLpReport sentReport)
         {
-            string idFromSentReport = personHistory.PersonIdDictionary[sentReport.SourceSystemId];
+            // Entlassung des aktuellen Monats hinzufügen
+            if (personHistory.ContainsSourceSystemPersonId(sentReport.SourceSystemId))
+            {
+                string idFromSentReport = personHistory.GetSourceSystemPersonId(sentReport.SourceSystemId);
 
-            stayInfo.Leaving = sentReport.Leavings.Where(x => x.LeavingDateD == stayInfo.To &&
-                                                              x.PersonId == idFromSentReport)
-                                                  .FirstOrDefault();
+                stayInfo.Leaving = sentReport.Leavings.Where(x => x.LeavingDateD == stayInfo.To &&
+                                                                  x.PersonId == idFromSentReport)
+                                                      .FirstOrDefault();
 
+            }
+
+            // Entlassung der Vormonate hinzufügen
             if (stayInfo.Leaving == null)
                 stayInfo.Leaving = personHistory.Leavings.Where(x => x.LeavingDateD == stayInfo.To).FirstOrDefault();
-
         }
 
 

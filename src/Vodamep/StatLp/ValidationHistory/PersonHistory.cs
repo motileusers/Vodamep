@@ -27,6 +27,24 @@ namespace Vodamep.StatLp.Validation
         public bool IsFromSentReport { get; set; }
 
 
+        public bool ContainsSourceSystemPersonId(string sourceSystemId)
+        {
+            // Aufenthalte des aktuellen Monats hinzufügen
+            if (this.PersonIdDictionary.ContainsKey(sourceSystemId))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public string GetSourceSystemPersonId(string sourceSystemId)
+        {
+            string idFromSentReport = this.PersonIdDictionary[sourceSystemId];
+            return idFromSentReport;
+
+        }
+
 
         public string GetPersonName()
         {

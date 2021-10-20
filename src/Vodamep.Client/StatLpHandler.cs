@@ -4,6 +4,7 @@ using System.Linq;
 using Vodamep.Data.Dummy;
 using Vodamep.StatLp.Model;
 using Vodamep.StatLp.Validation;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.Client
 {
@@ -103,7 +104,7 @@ namespace Vodamep.Client
             }
 
             // todo: Clearing aus der DB auslesen
-            List<IdMapping> existingIdMappings = new List<IdMapping>();
+            ClearingExceptions clearingExceptions = new ClearingExceptions();
 
 
 
@@ -118,7 +119,7 @@ namespace Vodamep.Client
 
                 if (previousReports.Count > 0)
                 {
-                    var result = report.ValidateHistory(previousReports, existingIdMappings);
+                    var result = report.ValidateHistory(previousReports, clearingExceptions);
 
                     message = formatter.Format(report, result);
 

@@ -20,4 +20,4 @@ namespace Vodamep.StatLp.Model
                 this.Id : $"{this.GivenName} {this.FamilyName}";
         }
     }
-}
+};

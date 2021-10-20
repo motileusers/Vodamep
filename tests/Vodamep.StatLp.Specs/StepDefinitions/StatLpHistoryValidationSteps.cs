@@ -14,6 +14,7 @@ using Vodamep.StatLp.Validation;
 using Xunit;
 using Attribute = Vodamep.StatLp.Model.Attribute;
 using Enum = System.Enum;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.Specs.StepDefinitions
 {
@@ -39,7 +40,7 @@ namespace Vodamep.Specs.StepDefinitions
 
         public StatLpReport SentReport { get; private set; }
         public List<StatLpReport> ExistingReports { get; private set; }
-        public List<IdMapping> ExistingIdMappings { get; set; }
+        public ClearingExceptions ClearingExceptions { get; set; }
 
 
         public StatLpReportValidationResult Result
@@ -48,7 +49,7 @@ namespace Vodamep.Specs.StepDefinitions
             {
                 if (_result == null)
                 {
-                    _result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports, this.ExistingIdMappings);
+                    _result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports, this.ClearingExceptions);
 
                     foreach (var error in SentReport.Validate().Errors)
                     {
@@ -189,20 +190,19 @@ namespace Vodamep.Specs.StepDefinitions
 
 
 
-        [Given(@"Die History enthält ein Mapping mit Id '(.*)' von Personen ID '(.*)' und System '(.*)'")]
-        public void GivenMappingIsPresent(string clearingId, string id, string sourceSystemId)
+        [Given(@"Die History enthält ein Mapping mit Clearing-Id '(.*)' auf Clearing-Id '(.*)'")]
+        public void GivenMappingIsPresent(string from, string to)
         {
-            if (this.ExistingIdMappings == null)
-                this.ExistingIdMappings = new List<IdMapping>();
+            if (this.ClearingExceptions == null)
+                this.ClearingExceptions = new ClearingExceptions();
 
-            IdMapping mapping = new IdMapping()
+            ClearingIdEqual equalId = new ClearingIdEqual()
             {
-                ClearingId = clearingId,
-                Id = id,
-                SourceSystemId = sourceSystemId
+                FromId = from,
+                ToId = to
             };
 
-            this.ExistingIdMappings.Add(mapping);
+            this.ClearingExceptions.EqualMappings.Add(equalId);
         }
 
 
@@ -333,7 +333,7 @@ namespace Vodamep.Specs.StepDefinitions
             var stopWatch = new Stopwatch();
 
             stopWatch.Start();
-            var result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports, this.ExistingIdMappings);
+            var result = (StatLpReportValidationResult)SentReport.ValidateHistory(this.ExistingReports, this.ClearingExceptions);
             stopWatch.Stop();
 
             Assert.True(seconds >= stopWatch.Elapsed.Seconds);

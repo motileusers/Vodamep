@@ -3,37 +3,51 @@ Funktionalität: StatLp - Validierung der gemeldeten Personen Geschichte einer D
 
 
 
-
-Szenario: ID Mapping mit vorhandenen IDs
-	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
-	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
-	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
-
-	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
-	Angenommen Gesendete Meldung 2: die Eigenschaft 'source_system_id' von 'StatLpReport' ist auf 'System2' gesetzt
-	Angenommen Gesendete Meldung 2: die Eigenschaft 'id' von 'Person' ist auf '99' gesetzt
-	Angenommen Gesendete Meldung 2: die Id von Person 1 ist auf 99 gesetzt
-
-	Angenommen Die History enthält ein Mapping mit Id '1234' von Personen ID '1' und System 'System1'
-	Angenommen Die History enthält ein Mapping mit Id '1234' von Personen ID '99' und System 'System2'
-
-	Dann enthält das History Validierungsergebnis keine Fehler
-
-
-Szenario: ID Mapping anhand des Namens und Geburtsdatums
+Szenario: ID Clearing - Unterschiedliche IDs
 	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
 	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
 	
 	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
 	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+
 	Angenommen Gesendete Meldung 2: die Eigenschaft 'source_system_id' von 'StatLpReport' ist auf 'System2' gesetzt
-
 	Angenommen Gesendete Meldung 2: die Id von Person 1 ist auf 99 gesetzt
-
 	Angenommen Gesendete Meldung 1: die Eigenschaft 'person_id' von 'Stay' ist auf '99' gesetzt
 
 	Dann enthält das History Validierungsergebnis keine Fehler
 
+
+Szenario: ID Clearing Fehler - Unterschiedliche Ids mit Namen + Geburtsdatum
+	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
+	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
+	
+	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
+	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+
+	Angenommen Gesendete Meldung 2: die Eigenschaft 'given_name' von 'Person' ist auf 'Peterle' gesetzt
+	Angenommen Gesendete Meldung 2: die Eigenschaft 'source_system_id' von 'StatLpReport' ist auf 'System2' gesetzt
+	Angenommen Gesendete Meldung 2: die Id von Person 1 ist auf 99 gesetzt
+	Angenommen Gesendete Meldung 1: die Eigenschaft 'person_id' von 'Stay' ist auf '99' gesetzt
+
+	Dann enthält das History Validierungsergebnis den Fehler 'Vor dem Aufenthalt von Klient'
+	Und enthält das History Validierungsergebnis den Fehler 'Zum Aufenthaltsende von Klient'
+
+
+
+Szenario: ID Clearing - Unterschiedliche Ids mit Namen + Geburtsdatum
+	Angenommen Existierende Meldung 1 gilt vom 01.12.2020 bis 31.12.2020 und ist eine Standard Meldung und enthält eine 'Admission' von Person 1 vom 20.12.2020
+	Angenommen Existierende Meldung 1 enthält Standard Attribute von Person 1 vom '20.12.2020'
+	Angenommen Gesendete Meldung 2 gilt vom '01.01.2021' bis '31.01.2021'
+
+	Angenommen Gesendete Meldung 2 enthält einen Aufenthalt von Person 1 vom '01.01.2021' bis '31.01.2021'
+	Angenommen Gesendete Meldung 2: die Eigenschaft 'given_name' von 'Person' ist auf 'Peterle' gesetzt
+	Angenommen Gesendete Meldung 2: die Eigenschaft 'source_system_id' von 'StatLpReport' ist auf 'System2' gesetzt
+	Angenommen Gesendete Meldung 2: die Eigenschaft 'id' von 'Person' ist auf '99' gesetzt
+	Angenommen Gesendete Meldung 2: die Id von Person 1 ist auf 99 gesetzt
+
+	Angenommen Die History enthält ein Mapping mit Clearing-Id 'gruber.peterle.01011920' auf Clearing-Id 'gruber.peter.01011920'
+
+	Dann enthält das History Validierungsergebnis keine Fehler
 
 
 
@@ -355,9 +369,6 @@ Szenario: Änderung bei Geschlecht
 	Angenommen Gesendete Meldung 2: die Eigenschaft 'source_system_id' von 'StatLpReport' ist auf 'System2' gesetzt
 	Angenommen Gesendete Meldung 2: die Id von Person 1 ist auf 99 gesetzt
 
-	Angenommen Die History enthält ein Mapping mit Id '1234' von Personen ID '1' und System 'System1'
-	Angenommen Die History enthält ein Mapping mit Id '1234' von Personen ID '99' und System 'System2'
-
 	Dann enthält das History Validierungsergebnis den Fehler 'Unterschied bei 'Geschlecht' von Klient '(.*)' bei Meldung vom 01.01.2021.'
 	Und enthält das History Validierungsergebnis genau einen Fehler
 
@@ -375,8 +386,7 @@ Szenario: Änderung bei Geburtsdatum
 	Angenommen Gesendete Meldung 2: die Eigenschaft 'source_system_id' von 'StatLpReport' ist auf 'System2' gesetzt
 	Angenommen Gesendete Meldung 2: die Id von Person 1 ist auf 99 gesetzt
 
-	Angenommen Die History enthält ein Mapping mit Id '1234' von Personen ID '1' und System 'System1'
-	Angenommen Die History enthält ein Mapping mit Id '1234' von Personen ID '99' und System 'System2'
+	Angenommen Die History enthält ein Mapping mit Clearing-Id 'gruber.peter.01011934' auf Clearing-Id 'gruber.peter.01011935'
 
 	Dann enthält das History Validierungsergebnis den Fehler 'Unterschied bei 'Geburtsdatum' von Klient '(.*)' bei Meldung vom 01.01.2021'
 	Und enthält das History Validierungsergebnis genau einen Fehler

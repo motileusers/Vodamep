@@ -43,17 +43,8 @@ namespace Vodamep.Cm.Model
 
         public MemoryStream WriteToStream(bool asJson = false, bool compressed = true) => new CmReportSerializer().WriteToStream(this, asJson, compressed);
 
-        public string GetSHA256Hash()
-        {
-            using (var s = SHA256.Create())
-            {
-                var h = s.ComputeHash(this.ToByteArray());
+        public string GetSHA256Hash() => SHAHasher.GetReportHash(this.ToByteArray());
 
-                var sha256 = System.Net.WebUtility.UrlEncode(Convert.ToBase64String(h));
-
-                return sha256;
-            }
-        }
         public DiffResult Diff(CmReport report) => new CmReportDiffer().Diff(this, report);
 
         public List<DiffObject> DiffList(CmReport report) => new CmReportDiffer().DiffList(this, report);

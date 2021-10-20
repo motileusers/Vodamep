@@ -66,17 +66,8 @@ namespace Vodamep.Hkpv.Model
 
         public MemoryStream WriteToStream(bool asJson = false, bool compressed = true) => new HkpvReportSerializer().WriteToStream(this, asJson, compressed);
 
-        public string GetSHA256Hash()
-        {
-            using (var s = SHA256.Create())
-            {
-                var h = s.ComputeHash(this.ToByteArray());
+        public string GetSHA256Hash() => SHAHasher.GetReportHash(this.ToByteArray());
 
-                var sha256 = System.Net.WebUtility.UrlEncode(Convert.ToBase64String(h));
-
-                return sha256;
-            }
-        }
         public DiffResult Diff(HkpvReport report) => new HkpvReportDiffer().Diff(this, report);
 
         public List<DiffObject> DiffList(HkpvReport report) => new HkpvReportDiffer().DiffList(this, report);
