@@ -4,11 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Vodamep.Mohi.Validation;
 using Vodamep.ReportBase;
+using Vodamep.ValidationBase;
 
 namespace Vodamep.Mohi.Model
 {
     public static class MohiReportExtensions
     {
+        /// <summary>
+        /// Clearing IDs auf allen Personen setzen
+        /// </summary>
+        public static void SetClearingIds(this MohiReport report, ClearingExceptions clearingExceptions)
+        {
+            foreach (Person person in report.Persons)
+            {
+                person.ClearingId = ClearingIdUtiliy.CreateClearingId(person.FamilyName, person.GivenName, person.BirthdayD);
+                person.ClearingId = ClearingIdUtiliy.MapClearingId(clearingExceptions, person.ClearingId, report.SourceSystemId, person.Id);
+            }
+        }
+
+
         public static MohiReport AddPerson(this MohiReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static MohiReport AddPersons(this MohiReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
 

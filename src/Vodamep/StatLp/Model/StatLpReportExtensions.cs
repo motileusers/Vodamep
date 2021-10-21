@@ -11,60 +11,15 @@ namespace Vodamep.StatLp.Model
     public static class StatLpReportExtensions
     {
 
-
         /// <summary>
         /// Clearing IDs auf allen Personen setzen
         /// </summary>
-        public static void SetClearingIds(this StatLpReport report, ClearingExceptions clearingData)
+        public static void SetClearingIds(this StatLpReport report, ClearingExceptions clearingExceptions)
         {
-
-            // Standard Id Name + Geburtsdatum
             foreach (Person person in report.Persons)
             {
-                person.ClearingId = ClearingIdUtiliy.CreateClearingPersonId(person.FamilyName, person.GivenName, person.BirthdayD);
-            }
-
-            if (clearingData != null)
-            {
-                clearingData?.BuildClearingDictionaries();
-
-                if (clearingData.EqualDictionary != null)
-                {
-                    // Gleichsetzung von unterschiedlichen Personen
-                    foreach (Person person in report.Persons)
-                    {
-                        if (clearingData.EqualDictionary.ContainsKey(person.ClearingId))
-                        {
-                            person.ClearingId = clearingData.EqualDictionary[person.ClearingId].ToId;
-                        }
-                    }
-                }
-
-                // Trennung von zwei Personen mit gleichem Namen und Geburtsdatum
-                if (clearingData.SplitDictionary != null)
-                {
-                    foreach (Person person in report.Persons)
-                    {
-                        string spiltId = report.SourceSystemId + "." + report.Institution?.Id + "." + person.Id;
-                        if (clearingData.SplitDictionary.ContainsKey(spiltId))
-                        {
-                            person.ClearingId = clearingData.SplitDictionary[spiltId].ToId;
-                        }
-                    }
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Zurücksetzen aller Clearing Ids
-        /// </summary>
-        public static void ResetClearingIds(this StatLpReport report)
-        {
-            // Standard Hash anwenden, Name + Geburtsdatum
-            foreach (Person person in report.Persons)
-            {
-                person.ClearingId = "";
+                person.ClearingId = ClearingIdUtiliy.CreateClearingId(person.FamilyName, person.GivenName, person.BirthdayD);
+                person.ClearingId = ClearingIdUtiliy.MapClearingId(clearingExceptions, person.ClearingId, report.SourceSystemId, person.Id);
             }
         }
 
