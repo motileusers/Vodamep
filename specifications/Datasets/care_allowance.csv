@@ -10,5 +10,6 @@ L6;Stufe 6;
 L7;Stufe 7;	
 ANY;Pflegegeld ja, Stufe unbekannt;
 UNKNOWN;Unbekannt ob ja oder nein; 
+IN_PROGRESS;In Bearbeitung;
 NONE;Keine Pflegegeld; 
            
