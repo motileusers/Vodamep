@@ -6,6 +6,7 @@ namespace Vodamep.StatLp
     {
         public StatLpReportDiffer()
         {
+            // and this
             //this.DiffFunctions.Add(typeof(RepeatedField<Person>), this.DiffPersons);
             //this.DiffFunctions.Add(typeof(RepeatedField<Staff>), this.DiffStaffs);
             //this.DiffFunctions.Add(typeof(RepeatedField<Activity>), this.DiffActivities);
