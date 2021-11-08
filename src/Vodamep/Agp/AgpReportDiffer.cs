@@ -11,7 +11,6 @@ namespace Vodamep.Agp
 
         public AgpReportDiffer()
         {
-            // Test 2
             this.DiffFunctions.Add(typeof(RepeatedField<Person>), this.DiffPersons);
             this.DiffFunctions.Add(typeof(RepeatedField<Staff>), this.DiffStaffs);
             this.DiffFunctions.Add(typeof(RepeatedField<Activity>), this.DiffActivities);
