@@ -74,9 +74,8 @@ Szenariogrundriss: Die Textfelder enthalten zu lange Werte
 Beispiele:
     | Name                     | Bezeichnung                          | Wert                               |
     | discharge_location_other | Sonstige Lebens-/Betreuungssituation | abcdefghij abcdefghij abcdefghij x |
-    | discharge_location_other | Sonstige Lebens-/Betreuungssituation | abcdefghij abcdefghij abcdefghij x |
     | discharge_reason_other   | Entlassung Grund                     | abcdefghij abcdefghij abcdefghij x |
-    | discharge_reason_other   | Entlassung Grund                     | abcdefghij abcdefghij abcdefghij x |
+    
 
 Szenariogrundriss: Die Textfelder enthalten gültige Werte
     Angenommen die Eigenschaft '<Name1>' von 'Leaving' ist auf '<Wert1>' gesetzt

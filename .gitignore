@@ -300,3 +300,5 @@ tools/**
 
 build/
 store/
+
+*.feature.cs
