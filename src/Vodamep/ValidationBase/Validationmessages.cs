@@ -29,8 +29,11 @@ namespace Vodamep.ValidationBase
         public static string SsnNotUnique(IEnumerable<Person> p) => $"Mehrere Personen haben die selbe Versicherungsnummer {p?.FirstOrDefault()?.Ssn}: {string.Join(", ", p?.Select(x => $"{x.GivenName} {x.FamilyName}({x.Id})"))}";
         public static string DateMustnotHaveTime => "'{PropertyName}' darf keine Uhrzeit beinhalten.";
         public static string OneMonth => "Die Meldung muss genau einen Monat beinhalten.";
+        public static string SameYear => "Die Meldung darf keinen Jahreswechsel beinhalten.";
         public static string LastDateInMonth => "'{PropertyName}' muss der letzte Tag des Monats sein.";
+        public static string LastDateInYear => "'{PropertyName}' muss der letzte Tag des Jahres sein.";
         public static string FirstDateInMonth => "'{PropertyName}' muss der erste Tag des Monats sein.";
+        public static string FirstDateInYear => "'{PropertyName}' muss der erste Tag des Jahres sein.";
         public static string InvalidCode => "Für '{PropertyName}' ist '{PropertyValue}' kein gültiger Code.";
         public static string ReportBaseInvalidCode (string client) => $"Für '{{PropertyName}}' von Klient '{client}' ist '{{PropertyValue}}' kein gültiger Code.";
         public static string InvalidPostCode_City => "'{PropertyValue}' ist kein gültiger Ort.";
@@ -88,12 +91,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseClientActivityUnknownPerson(string date) => $"Unbekannter Klient bei Leistung am {date}.";
         public static string ReportBaseActivityMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
         public static string MohiActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
-        public static string ReportBaseItemMustBeInCurrentMonth (string clientName) => $"{{PropertyName}} von Person '{clientName}' muss im aktuellen Monat liegen.";
-
-
-
-
-
+        public static string ReportBaseItemMustBeInReportPeriod (string clientName) => $"{{PropertyName}} von Person '{clientName}' muss im Meldezeitraum liegen.";
 
         public static string StatLpAdmissionInvalidValueAdmission(string date, string clientName) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {clientName}.";
         public static string StatLpAdmissionTextTooLong(string date, string clientName) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {clientName}.";
@@ -106,6 +104,13 @@ namespace Vodamep.ValidationBase
         public static string StatLpAdmissionMultipleAttribute(string clientName, string date, string attributeType) => $"Vor der Aufnahme von Klient '{clientName}' am {date} wurde '{attributeType}' mehrfach gesendet.";
         
         public static string StatLpStayEveryPersonMustBeInAStay(string clientName) => $"Die Person '{clientName}' wird in keinem Aufenthalt erwähnt.";
+        public static string StatLpStayStartsAfterReportEnd(string clientName, string fromDate) => $"Der Aufenthalt am '{fromDate}' von '{clientName}' darf nicht nach dem Meldunszeitraum beginnen.";
+
+        public static string StatLpStayAheadOfPeriod(string clientName, string fromDate, string toDate) => $"Der Aufenthalt vom '{fromDate}' bis zum '{toDate}' von '{clientName}' liegt vor dem Meldunszeitraum.";
+
+        public static string StatLpStayAfterPeriod(string clientName, string fromDate, string toDate) => $"Der Aufenthalt vom '{fromDate}' bis zum '{toDate}' von '{clientName}' liegt nach dem Meldunszeitraum.";
+
+        public static string StatLpStayMustnotOverlap(string clientName) => $"Die Aufenthalte von '{clientName}' dürfen sich nicht überschneiden.";
         public static string StatLpLeavingReasonMustnotBeEmpty (string clientName) => $"Beim Abgang von Klient '{clientName}' muss eine Abgang Art angegeben werden.";
         public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
         public static string StatLpAttributeMultipleChanged(string clientName, string date, string attributeType) => $"Die Eigenschaft {attributeType} von Klient {clientName} am {date} wurde mehrfach am gleichen Tag geändert.";

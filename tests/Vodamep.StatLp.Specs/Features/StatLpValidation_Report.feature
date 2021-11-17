@@ -7,26 +7,26 @@ Szenario: Korrekt befüllt
     Dann enthält das Validierungsergebnis keine Fehler
     Und enthält das Validierungsergebnis keine Warnungen
     
-Szenario: Von-Datum muss der erste Tag des Monats sein.
+Szenario: Von-Datum muss der erste Tag des Jahres sein.
     Angenommen es ist ein 'StatLpReport'
-    Und die Eigenschaft 'from' von 'StatLpReport' ist auf '2018-04-04' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Von' muss der erste Tag des Monats sein.'
+    Und die Eigenschaft 'from' von 'StatLpReport' ist auf '2021-04-04' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Von' muss der erste Tag des Jahres sein.'
 
-Szenario: Bis-Datum muss der letzte Tag des Monats sein.
+Szenario: Bis-Datum muss der letzte Tag des Jahres sein.
     Angenommen es ist ein 'StatLpReport'
-    Und die Eigenschaft 'to' von 'StatLpReport' ist auf '2018-04-04' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Bis' muss der letzte Tag des Monats sein.'
-
-Szenario: Die Meldung muss genau einen Monat beinhalten.
-    Angenommen es ist ein 'StatLpReport'
-    Und die Eigenschaft 'from' von 'StatLpReport' ist auf '2018-03-01' gesetzt
-    Und die Eigenschaft 'to' von 'StatLpReport' ist auf '2018-04-30' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Die Meldung muss genau einen Monat beinhalten.'
+    Und die Eigenschaft 'to' von 'StatLpReport' ist auf '2021-04-04' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Bis' muss der letzte Tag des Jahres sein.'
 
 Szenario: Die Meldung darf nicht die Zukunft betreffen.
     Angenommen es ist ein 'StatLpReport'
     Und die Eigenschaft 'to' von 'StatLpReport' ist auf '2058-04-30' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Der Wert von 'Bis' muss kleiner oder gleich .*'
+
+Szenario: Die Meldung darf keinen Jahreswechsel beinhalten
+    Angenommen es ist ein 'StatLpReport'
+    Und die Eigenschaft 'from' von 'StatLpReport' ist auf '2020-01-01' gesetzt
+    Und die Eigenschaft 'to' von 'StatLpReport' ist auf '2021-12-31' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Die Meldung darf keinen Jahreswechsel beinhalten'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen es ist ein 'StatLpReport'
@@ -46,14 +46,6 @@ Beispiele:
     | Name     | Bezeichnung |
     | from     | Von         |
     | to       | Bis         |
-
-#Szenariogrundriss: Das Datum einer Entlassung in einer Meldung muss im Gültigkeitsbereich der Meldungen liegen
-#    Angenommen die Datums-Eigenschaft '<Name>' von 'StatLpReport' hat eine Uhrzeit gesetzt
-#    Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '.+' muss im aktuellen Monat liegen'
-#Beispiele:
-#    | Name     | Bezeichnung |
-#    | from     | Von         |
-#    | to       | Bis         |
 
 Szenariogrundriss: Listen sind leer
     Angenommen alle Listen sind leer

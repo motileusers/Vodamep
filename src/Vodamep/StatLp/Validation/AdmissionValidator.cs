@@ -55,7 +55,7 @@ namespace Vodamep.StatLp.Validation
                     
                 })
                 .WithName(displayNameResolver.GetDisplayName(nameof(Admission)))
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
+                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInReportPeriod(report.GetPersonName(x.PersonId)));
 
 
 

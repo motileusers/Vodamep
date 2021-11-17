@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Google.Protobuf.Collections;
-using Google.Protobuf.WellKnownTypes;
 using Vodamep.StatLp.Model;
 using Attribute = Vodamep.StatLp.Model.Attribute;
-using Enum = System.Enum;
 
 namespace Vodamep.Data.Dummy
 {
@@ -60,7 +56,7 @@ namespace Vodamep.Data.Dummy
 
 
 
-        public StatLpReport CreateStatLpReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
+        public StatLpReport CreateStatLpReport(string institutionId, int year, int persons = 100)
         {
             var report = new StatLpReport()
             {
@@ -68,15 +64,13 @@ namespace Vodamep.Data.Dummy
                 SourceSystemId = "System1"
             };
 
-            var from = year.HasValue || month.HasValue ? new DateTime(year ?? DateTime.Today.Year, month ?? DateTime.Today.Month, 1) : DateTime.Today.FirstDateInMonth().AddMonths(-1);
-
-            report.FromD = from;
-            report.ToD = report.FromD.LastDateInMonth();
+            report.FromD = new DateTime(year, 1, 1);
+            report.ToD = new DateTime(year, 12, 31);
 
             report.AddDummyPersons(persons);
             report.AddDummyAdmissions();
             report.AddDummyAttributes();
-            report.AddDummyStays(from);
+            report.AddDummyStays(new DateTime(year, 1, 15));
             report.AddDummyLeavings();
 
             return report;
@@ -191,13 +185,6 @@ namespace Vodamep.Data.Dummy
         {
             var attributes = new List<Attribute>();
 
-            var admissionTypeAttribute = new Attribute();
-            admissionTypeAttribute.PersonId = admission.PersonId;
-            admissionTypeAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
-            admissionTypeAttribute.AttributeType = AttributeType.AdmissionType;
-            admissionTypeAttribute.Value = AdmissionType.ContinuousAt.ToString();
-            attributes.Add(admissionTypeAttribute);
-
             var careAllowanceAttribute = new Attribute();
             careAllowanceAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
             careAllowanceAttribute.PersonId = admission.PersonId;
@@ -238,6 +225,7 @@ namespace Vodamep.Data.Dummy
                 PersonId = personId,
                 From = from.AsTimestamp(),
                 To = from.AddDays(10).AsTimestamp(),
+                Type = AdmissionType.ContinuousAt
             };
 
             return stay;

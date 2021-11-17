@@ -142,7 +142,7 @@ namespace Vodamep.StatLp.Validation
                         if (checkAttributes)
                         {
                             // Alle Aufnahmetypen im Aufenthalt, der Aufenthalt startet immer mit einem Aufenthaltstyp Attribut
-                            List<Model.Attribute> admissionTypeAttributes = stayInfo.Attributes.Where(c => c.AttributeType == AttributeType.AdmissionType).OrderByDescending(a => a.FromD).ToList();
+                            List<Model.Attribute> admissionTypeAttributes = new List<Model.Attribute>(); // stayInfo.Attributes.Where(c => c.AttributeType == AttributeType.AdmissionType).OrderByDescending(a => a.FromD).ToList();
 
                             foreach (Model.Attribute currentAdmissionTypeAttribute in admissionTypeAttributes)
                             {
@@ -209,7 +209,7 @@ namespace Vodamep.StatLp.Validation
                         if (checkAttributes)
                         {
                             // Alle Aufnahmetypen im Aufenthalt
-                            List<Model.Attribute> admissionTypeAttributes = stayInfo.Attributes.Where(c => c.AttributeType == AttributeType.AdmissionType).OrderBy(a => a.FromD).ToList();
+                            List<Model.Attribute> admissionTypeAttributes = new List<Model.Attribute>();// stayInfo.Attributes.Where(c => c.AttributeType == AttributeType.AdmissionType).OrderBy(a => a.FromD).ToList();
 
                             foreach (Model.Attribute currentAdmissionTypeAttribute in admissionTypeAttributes)
                             {

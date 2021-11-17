@@ -23,7 +23,6 @@ namespace Vodamep.StatLp.Model
             }
         }
 
-
         public static StatLpReport AddPerson(this StatLpReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static StatLpReport AddPersons(this StatLpReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
         public static StatLpReport AddAdmission(this StatLpReport report, Admission admission) => report.InvokeAndReturn(m => m.Admissions.Add(admission));
@@ -68,14 +67,50 @@ namespace Vodamep.StatLp.Model
                 SourceSystemId = report.SourceSystemId
             };
 
-            result.Admissions.AddRange(report.Admissions.OrderBy(x => x.PersonId));
-            result.Attributes.AddRange(report.Attributes.OrderBy(x => x.PersonId));
-            result.Leavings.AddRange(report.Leavings.OrderBy(x => x.PersonId));
+            result.Admissions.AddRange(report.Admissions.OrderBy(x => x.PersonId).ThenBy(x => x.AdmissionDate));
+            result.Attributes.AddRange(report.Attributes.OrderBy(x => x.PersonId).ThenBy(x => x.From).ThenBy(x => x.AttributeType));
+            result.Leavings.AddRange(report.Leavings.OrderBy(x => x.PersonId).ThenBy(x => x.LeavingDateD));
             result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
-            result.Stays.AddRange(report.Stays.OrderBy(x => x.PersonId));
+            result.Stays.AddRange(report.Stays.OrderBy(x => x.PersonId).ThenBy(x => x.From));
 
             return result;
         }
+
+        public static IEnumerable<(DateTime From, DateTime To, Stay[] Stays)> GetGroupedStays(this StatLpReport report, string personId)
+        {
+            var result = new List<(DateTime From, DateTime To, Stay[] Stays)>();
+
+            var stays = report.Stays.Where(x => x.PersonId == personId).OrderBy(x => x.From).ToArray();
+
+            if (stays.Length == 0)
+                yield break;
+
+            (DateTime From, DateTime To, Stay[] Stays) current = (stays[0].FromD, stays[0].ToD, new[] { stays[0] });
+
+            foreach (var stay in stays.Skip(1))
+            {
+                if (current.To.AddDays(1) == stay.FromD)
+                {
+                    current = (current.From, stay.ToD, current.Stays.Union(new[] { stay }).ToArray());
+                    continue;
+                }
+                else if (current.To.AddDays(1) < stay.FromD)
+                {
+                    yield return current;
+                    current = (stay.FromD, stay.ToD, new[] { stay });                    
+                    continue;
+                }
+                else if (current.To.AddDays(1) >= stay.FromD)
+                {
+                    throw new Exception("Die Aufenthalte dürfen sich nicht überschneiden!");
+                }
+
+                throw new Exception("Die Aufenthalte können nicht verarbeitet werden!");
+            }
+
+            yield return current;
+        }
+
 
     }
 }

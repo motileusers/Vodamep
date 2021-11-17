@@ -56,8 +56,7 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(Leaving.DischargeLocationOther), "Sonstige Lebens-/Betreuungssituation");
             _dict.Add(nameof(Leaving.DischargeReasonOther), "Entlassung Grund");
 
-            //enums
-            _dict.Add(nameof(AttributeType.AdmissionType), "Aufnahmeart");
+            //enums            
             _dict.Add(nameof(AttributeType.CareAllowance), "Pflegestufe");
             _dict.Add(nameof(AttributeType.CareAllowanceArge), "Pflegestufe Arge");
             _dict.Add(nameof(AttributeType.Finance), "Finanzierung");

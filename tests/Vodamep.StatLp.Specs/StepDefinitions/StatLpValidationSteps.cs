@@ -28,8 +28,7 @@ namespace Vodamep.Specs.StepDefinitions
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
-            var date = new DateTime(2021, 02, 01);
-            this._context.Report = StatLpDataGenerator.Instance.CreateStatLpReport("", date.Year, date.Month, 1, 1, false);
+            this._context.Report = StatLpDataGenerator.Instance.CreateStatLpReport("0001", 2021, 1);
         }
 
         private IEnumerable<IMessage> GetPropertiesByType(string type)
@@ -51,7 +50,7 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"es ist ein 'StatLpReport'")]
         public void GivenItIsAHkpvReport()
         {
-            
+
         }
 
 
@@ -211,8 +210,40 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
 
+        [Given(@"die erste Aufnahme startet am '(.+)', dauert (\d+) Tage und ist eine '(\w+)'")]
+        public void GivenTheFirstStay(string date, int days, string type)
+        {
+            this.Report.Stays.Clear();
 
+            var personId = this.Report.Persons[0].Id;            
+            var from = DateTime.Parse(date, new CultureInfo("de-DE"));
 
+            this.Report.Stays.Add(new Stay
+            {
+                PersonId = personId,
+                FromD = from,
+                ToD = from.AddDays(days),
+                Type = Enum.Parse<AdmissionType>(type)
+            });
+        }
 
+        [Given(@"es gibt eine weitere Aufnahme '(\w+)', die (\d+) Tage dauert")]
+        public void GivenAnotherStay(string type, int days) => this.GivenAnotherStayWithGap(type, days, 0);
+        
+
+        [Given(@"es gibt eine weitere Aufnahme '(\w+)', die (\d+) Tage dauert, dazwischen liegen (-?\d+) Tage")]
+        public void GivenAnotherStayWithGap(string type, int days, int gap)
+        {
+            var personId = this.Report.Persons[0].Id;
+            var from = this.Report.Stays.Where(x => x.PersonId == personId).Select(x => x.ToD).Max().AddDays(1).AddDays(gap);
+
+            this.Report.Stays.Add(new Stay
+            {
+                PersonId = personId,
+                FromD = from,
+                ToD = from.AddDays(days),
+                Type = Enum.Parse<AdmissionType>(type)
+            });
+        }
     }
 }

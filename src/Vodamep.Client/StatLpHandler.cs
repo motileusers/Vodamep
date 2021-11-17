@@ -21,13 +21,10 @@ namespace Vodamep.Client
 
         public override void PackRandom(PackRandomArgs args)
         {
-            int? year = args.Year;
-            if (year < 2000 || year > DateTime.Today.Year) year = null;
+            int year = args.Year;
+            if (year < 2000 || year > DateTime.Today.Year) year = DateTime.Today.Year;
 
-            int? month = args.Month;
-            if (month < 1 || month > 12) month = null;
-
-            var r = StatLpDataGenerator.Instance.CreateStatLpReport(args.InstitutionId, year, month, args.Persons, args.Staffs, args.AddActivities);
+            var r = StatLpDataGenerator.Instance.CreateStatLpReport(args.InstitutionId, year, args.Persons);
 
             var file = r.WriteToPath("", asJson: args.Json, compressed: !args.NoCompression);
 

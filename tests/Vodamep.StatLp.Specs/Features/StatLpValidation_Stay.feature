@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: StatLp - Validierung der gemeldeten Aufenthalte einer Datenmeldung
+Funktionalität: StatLp - Validierung Aufenthalte einer Datenmeldung
 
 Szenario: Ein Stay enthält eine Person, die nicht in der Personenliste ist
     Angenommen es ist ein 'StatLpReport'
@@ -15,15 +15,90 @@ Beispiele:
     | from          | Von           |
     | to            | Bis           |
 
-Szenariogrundriss: Ein Stay muss im aktuellen Monat liegenn
-    Angenommen es ist ein 'StatLpReport'
-    Und die Eigenschaft '<Name>' von 'Stay' ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Ein Aufenthalt von Person '(.*)' muss im aktuellen Monat liegen.'
-Beispiele:
-    | Name     | Wert       |
-    | from     | 2000-01-01 |
-    | to       | 2050-01-01 |
-
 Szenario: Bis ist nach Von
     Angenommen Bis ist vor Von bei einem Stay
     Dann enthält das Validierungsergebnis den Fehler ''Von' muss vor 'Bis' liegen.'
+
+Szenario: Von darf nicht leer sein
+    Angenommen es ist ein 'StatLpReport'
+    Und die Eigenschaft 'from' von 'Stay' ist nicht gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Von' darf nicht leer sein.'
+
+Szenario: Das Aufnahmedatum darf nicht nach dem Meldungszeitraumende liegen
+    Angenommen es ist ein 'StatLpReport'
+    Und die Eigenschaft 'to' von 'Stay' ist auf '2022-05-30' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Der Aufenthalt (.*) liegt nach dem Meldunszeitraum.'
+
+Szenario: Die Aufnahme darf nicht zur Gänze vor dem Meldezeitraum liegen
+    Angenommen die erste Aufnahme startet am '2020-05-30', dauert 10 Tage und ist eine 'HolidayAt'
+    Dann enthält das Validierungsergebnis den Fehler 'Der Aufenthalt (.*) liegt vor dem Meldunszeitraum.'
+
+Szenario: Die Aufnahme startet vor dem Meldezeitraum, dauert aber bis in den Meldezeitraum
+    Angenommen die erste Aufnahme startet am '2020-05-30', dauert 10 Tage und ist eine 'HolidayAt'
+    Und es gibt eine weitere Aufnahme 'ContinuousAt', die 400 Tage dauert
+    Dann enthält das Validierungsergebnis keine Fehler
+
+Szenario: Die Aufnahme darf nicht zur Gänze vor dem Meldezeitraum liegen auch wenn einige Zeit danach eine weiter Aufnahme folgt
+    Angenommen die erste Aufnahme startet am '2020-05-30', dauert 10 Tage und ist eine 'HolidayAt'
+    Und es gibt eine weitere Aufnahme 'ContinuousAt', die 400 Tage dauert, dazwischen liegen 14 Tage
+    Dann enthält das Validierungsergebnis den Fehler 'Der Aufenthalt (.*) liegt vor dem Meldunszeitraum.'
+
+Szenario: Aufnahmen dürfen sich nicht überschneiden
+    Angenommen die erste Aufnahme startet am '2021-05-30', dauert 10 Tage und ist eine 'HolidayAt'
+    Und es gibt eine weitere Aufnahme 'ContinuousAt', die 60 Tage dauert, dazwischen liegen -5 Tage
+    Dann enthält das Validierungsergebnis den Fehler 'Die Aufenthalte dürfen sich nicht überschneiden!'
+
+Szenario: Die maximale Aufenthaltsdauer für HolidayAt ist 42 Tage
+    Angenommen die erste Aufnahme startet am '2021-05-30', dauert 60 Tage und ist eine 'HolidayAt'    
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Die maximale Aufenthaltsdauer für TransitionalAt ist 365 Tage
+    Angenommen die erste Aufnahme startet am '2020-05-30', dauert 600 Tage und ist eine 'TransitionalAt'    
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Angrenzende Aufnahmen müssen eine unterschiedlichen AufnahmeArt haben
+    Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'HolidayAt'
+    Und es gibt eine weitere Aufnahme 'HolidayAt', die 30 Tage dauert
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Es darf keinen Wechsel von Continuous auf HolidayAt geben 
+    Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'
+    Und es gibt eine weitere Aufnahme 'HolidayAt', die 30 Tage dauert
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Es darf keinen Wechsel von Continuous auf TransitionalAt geben 
+    Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'
+    Und es gibt eine weitere Aufnahme 'TransitionalAt', die 30 Tage dauert
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Ungülige Aufnahmeart Krisenintervention
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'type' von 'Stay' ist auf 'CrisisInterventionAt' gesetzt	
+	Dann enthält das Validierungsergebnis den Fehler 'bei der Aufnahme vom'
+	Und enthält das Validierungsergebnis den Fehler 'ist nicht mehr erlaubt.'
+    Und enthält das Validierungsergebnis genau einen Fehler
+
+Szenario: Ungülige Aufnahmeart Probe
+	Angenommen es ist ein 'StatLpReport'
+    Und die Eigenschaft 'type' von 'Stay' ist auf 'TrialAt' gesetzt		
+	Dann enthält das Validierungsergebnis den Fehler 'bei der Aufnahme vom'
+	Und enthält das Validierungsergebnis den Fehler 'ist nicht mehr erlaubt.'
+    Und enthält das Validierungsergebnis genau einen Fehler
+
+Szenario: Wenn Bis null ist, kommt danach kein Aufenthalt mehr        
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Das Aufenthaltsende muss im Meldungszeitraum liegen oder am Tag danach beginnt ein neuer Aufenthalt    
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Jeder Aufenthaltsbeginn muss eine Aufnahmemeldung haben    
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Jeder Aufenthalt darf nur eine Aufnahmemeldung haben    
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Jeder Aufenthalt darf nur eine Entlassungsmeldung haben    
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+
+Szenario: Jedes Aufenthaltsende muss eine Entlassungsmeldung haben    
+    Dann enthält das Validierungsergebnis den Fehler 'xxxx'

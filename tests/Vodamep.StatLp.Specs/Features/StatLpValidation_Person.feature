@@ -1,5 +1,5 @@
 ﻿#language: de-DE
-Funktionalität: StatLp - Validierung der gemeldeten Personen einer Datenmeldung
+Funktionalität: StatLp - Validierung der Personen einer Datenmeldung
 
 Szenario: Das Geburtsdatum darf nicht in der Zukunft liegen.
     Angenommen es ist ein 'StatLpReport'

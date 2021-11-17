@@ -440,8 +440,7 @@ namespace Vodamep.Specs.StepDefinitions
         /// Standard Attribute für eine Person anlegen
         /// </summary>
         private void GivenContainsStandardAttributesForPerson(int reportNumber, string personId, string date)
-        {
-            this.GivenPersonPropertyIsSetTo(reportNumber, personId, AttributeType.AdmissionType.ToString(), AdmissionType.ContinuousAt.ToString(), date);
+        {   
             this.GivenPersonPropertyIsSetTo(reportNumber, personId, AttributeType.CareAllowance.ToString(), CareAllowance.Any.ToString(), date);
             this.GivenPersonPropertyIsSetTo(reportNumber, personId, AttributeType.CareAllowanceArge.ToString(), CareAllowanceArge.L0Ar.ToString(), date);
             this.GivenPersonPropertyIsSetTo(reportNumber, personId, AttributeType.Finance.ToString(), Finance.SelfFi.ToString(), date);

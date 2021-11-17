@@ -1,15 +1,15 @@
 ﻿#language: de-DE
-Funktionalität: StatLp - Validierung der gemeldeten Entlassungen einer Datenmeldung
+Funktionalität: StatLp - Validierung der Entlassungen der einer Datenmeldung
 
 Szenario: Das Entlassungsdatum muss gesetzt sein
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft 'leaving_date' von 'Leaving' ist nicht gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '(.*)' muss im aktuellen Monat liegen.'
+	Dann enthält das Validierungsergebnis den Fehler ''LeavingDate' darf nicht leer sein.'
 
-Szenario: Das Entlassungsdatum muss im aktuellen Monat liegen
+Szenario: Das Entlassungsdatum muss im Meldezeitraum liegen liegen
 	Angenommen es ist ein 'StatLpReport'
     Und die Eigenschaft 'leaving_date' von 'Leaving' ist auf '2000-01-01' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '(.*)' muss im aktuellen Monat liegen.'
+    Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '(.*)' muss im Meldezeitraum liegen.'
 
 Szenariogrundriss: Pflichtfelder
 	Angenommen es ist ein 'StatLpReport'
@@ -66,7 +66,7 @@ Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 	Angenommen es ist ein 'StatLpReport'
     Und die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom '01.02.2021' von Klient '1'.'
+    Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom '01.01.2021' von Klient '1'.'
 Beispiele:
 		| Name                     | Bezeichnung							| Wert |
 		| discharge_location_other | Sonstige Lebens-/Betreuungssituation	| =    |
@@ -77,7 +77,7 @@ Beispiele:
 Szenariogrundriss: Die Textfelder enthalten zu lange Werte
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom '01.02.2021' von Klient '1'.'
+	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom '01.01.2021' von Klient '1'.'
 Beispiele:
     | Name                     | Bezeichnung                          | Wert                               |
     | discharge_location_other | Sonstige Lebens-/Betreuungssituation | abcdefghij abcdefghij abcdefghij x |

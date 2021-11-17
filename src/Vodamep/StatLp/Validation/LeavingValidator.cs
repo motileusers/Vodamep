@@ -18,12 +18,15 @@ namespace Vodamep.StatLp.Validation
                 .Unless(x => x.LeavingReason == LeavingReason.UndefinedLr)
                 .WithMessage(x => Validationmessages.DeadClientNeedsDeadthLocation(x.PersonId));
 
+            this.RuleFor(x => x.LeavingDate).NotEmpty();
+
             if (report.From != null && report.To != null)
             {
                 this.RuleFor(x => x.LeavingDate)
-                    .Must(x => report.From <= x && x <= report.To)    
+                    .Must(x => report.From <= x && x <= report.To)
+                    .Unless(x => x.LeavingDate == null)
                     .WithName(displayNameResolver.GetDisplayName(nameof(Leaving)))
-                    .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
+                    .WithMessage(x => Validationmessages.ReportBaseItemMustBeInReportPeriod(report.GetPersonName(x.PersonId)));
             }
 
             this.RuleFor(x => x).Must(x =>

@@ -1,10 +1,10 @@
 ﻿#language: de-DE
-Funktionalität: StatLp - Validierung der gemeldeten Aufnahmen einer Datenmeldung
+Funktionalität: StatLp - Validierung Aufnahmen einer Datenmeldung
 
-Szenario: Das Aufnahmedatum muss im aktuellen Monat liegen
+Szenario: Das Aufnahmedatum muss im Meldezeitraum liegen
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft 'admission_date' von 'Admission' ist auf '2000-01-01' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '(.*)' muss im aktuellen Monat liegen.'
+	Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '(.*)' muss im Meldezeitraum liegen.'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Angenommen es ist ein 'StatLpReport'
@@ -34,7 +34,7 @@ Szenariogrundriss: Eine Eigenschaft kann nicht gesetzt sein
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von'
+	Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom 01.01.2021 von'
 
 	Beispiele:
 		| Name                  | Bezeichnung                                | Wert |
@@ -50,7 +50,7 @@ Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 Szenariogrundriss: Die Textfelder enthalten zu lange Werte
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von'
+	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom 01.01.2021 von'
 
 	Beispiele:
 		| Name                  | Bezeichnung                                | Wert                                                                                                   |
@@ -75,7 +75,7 @@ Szenariogrundriss: Ungültiger Ort / Plz
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
 	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnahme vom 01.02.2021 von'
+	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnahme vom 01.01.2021 von'
 
 	Beispiele:
 		| Field1        | Field2    | Value1 | Value2    |
@@ -85,7 +85,7 @@ Szenariogrundriss: Leerer Ort / Plz
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
 	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Keine Angabe von Ort/Plz bei Aufnahme vom 01.02.2021 von'
+	Dann enthält das Validierungsergebnis den Fehler 'Keine Angabe von Ort/Plz bei Aufnahme vom 01.01.2021 von'
 
 	Beispiele:
 		| Field1        | Field2    | Value1 | Value2    |
@@ -96,16 +96,17 @@ Szenariogrundriss: Leerer Ort / Plz
 
 # vor 2019 wird PLZ / Ort nicht geprüft, da konnte alles gesendet werden
 Szenariogrundriss: Gültiger Ort / Plz
-	Angenommen Eine Meldung gilt vom <MeldungVon> bis <MeldungBis> und ist eine Standard Meldung und enthält eine Aufnahme von Person 1 vom <Aufnahme>
-	Angenommen die Eigenschaft 'last_postcode' von 'Admission' ist auf '<PLZ>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und Eine Meldung gilt vom <MeldungVon> bis <MeldungBis> und ist eine Standard Meldung und enthält eine Aufnahme von Person 1 vom <Aufnahme>
+	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<PLZ>' gesetzt
 	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Ort>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 	Beispiele:
 		| PLZ  | Ort       | MeldungVon | MeldungBis | Aufnahme   |
-		| 6800 | Feldkirch | 01.12.2019 | 31.12.2019 | 31.12.2019 |
-		| 0000 | Anderer   | 01.12.2019 | 31.12.2019 | 31.12.2019 |
-		| 9999 | ABCEDEF   | 01.12.2018 | 31.12.2018 | 31.12.2018 |
+		| 6800 | Feldkirch | 01.01.2019 | 31.12.2019 | 31.12.2019 |
+		| 0000 | Anderer   | 01.01.2019 | 31.12.2019 | 31.12.2019 |
+		| 9999 | ABCEDEF   | 01.01.2018 | 31.12.2018 | 31.12.2018 |
 
 Szenariogrundriss: Die Auflistung enthalten ungültige Werte
 	Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert1>' gesetzt

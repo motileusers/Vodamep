@@ -1,5 +1,6 @@
-﻿using System.Linq;
-using FluentValidation;
+﻿using FluentValidation;
+using System;
+using System.Linq;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
 
@@ -11,46 +12,13 @@ namespace Vodamep.StatLp.Validation
 
         public StayValidator(StatLpReport report)
         {
+            this.RuleFor(x => x.From).NotEmpty();
+
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
             this.RuleFor(x => x.To).SetValidator(new TimestampWithOutTimeValidator());
 
-            this.RuleFor(x => x.To.AsDate()).GreaterThanOrEqualTo(x => x.From.AsDate()).Unless(x => x.From == null || x.To == null).WithMessage(Validationmessages.FromMustBeBeforeTo);
-
-
-            this.RuleFor(x => x.FromD).Must(x =>
-            {
-                if (x < report.FromD)
-                {
-                    return false;
-                }
-
-                if (x > report.ToD)
-                {
-                    return false;
-                }
-
-                return true;
-
-            }).WithName(displayNameResolver.GetDisplayName(nameof(Stay)))
-              .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
-
-            this.RuleFor(x => x.ToD).Must(x =>
-            {
-                if (x < report.FromD)
-                {
-                    return false;
-                }
-
-                if (x > report.ToD)
-                {
-                    return false;
-                }
-
-                return true;
-
-            }).WithName(displayNameResolver.GetDisplayName(nameof(Stay)))
-              .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
-
+            this.RuleFor(x => x.To.AsDate()).GreaterThanOrEqualTo(x => x.From.AsDate())
+                .Unless(x => x.From == null || x.To == null).WithMessage(Validationmessages.FromMustBeBeforeTo);
 
             this.RuleFor(x => x.PersonId)
                 .Must((stay, personId) =>
@@ -58,6 +26,38 @@ namespace Vodamep.StatLp.Validation
                     return report.Persons.Any(y => y.Id == personId);
                 })
                 .WithMessage(Validationmessages.PersonIsNotAvailable);
+
+
+            // Ungültige Aufnahmeart 'Probe'
+            this.RuleFor(x => new { x.Type, x.FromD })
+                .Must((a) =>
+                {
+                    if (a.Type == AdmissionType.TrialAt &&
+                        a.FromD > new DateTime(2014, 08, 01))
+                    {
+                        return false;
+                    }
+
+                    return true;
+                })
+                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{x.Type}", x.FromD.ToShortDateString()));
+
+
+            // Ungültige Aufnahmeart 'Krisenintervention'
+            this.RuleFor(x => new { x.Type, x.FromD })
+                .Must((a) =>
+                {
+                    if (a.Type == AdmissionType.CrisisInterventionAt &&
+                       a.FromD > new DateTime(2019, 11, 30))
+                    {
+                        return false;
+                    }
+
+                    return true;
+                })
+                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{x.Type}", x.FromD.ToShortDateString()));
+
+
         }
     }
 }

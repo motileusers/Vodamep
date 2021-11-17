@@ -39,9 +39,7 @@ message Stay {
     google.protobuf.Timestamp from = 2;
     google.protobuf.Timestamp to = 3;
 
-    bool is_admission = 4;        // Sollte eine Aufnahme für diesen Aufenthalt vorhanden sein?
-    bool is_leaving = 5;          // Sollte eine Enlassung für diesen Aufenthalt vorhanden sein
-
+    AdmissionType type = 4;
 
 }
 
@@ -128,8 +126,7 @@ message Attribute {
 
 // Merkmal Typen
 enum AttributeType {
-  UNDEFINED_ATTRIBUTE = 0;
-  ADMISSION_TYPE = 1;                       // 41 Aufnahmeart
+  UNDEFINED_ATTRIBUTE = 0;  
   CARE_ALLOWANCE = 2;                       // 05 Bezieht Pflegegeld, 06 Einstufung nach Pflegegeld Gesetz
   CARE_ALLOWANCE_ARGE = 3;                  // 42 Pflegeeinstufung nach Arge
   FINANCE = 4;                              // 43 Finanzierung Selbstzahler/Sozialhilfe
