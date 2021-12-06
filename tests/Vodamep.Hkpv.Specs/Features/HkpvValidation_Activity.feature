@@ -138,7 +138,8 @@ Szenario: Eine Mitarbeiterin ohne Aktivität.
     Dann enthält das Validierungsergebnis den Fehler 'Keine Aktivitäten'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
-    Angenommen die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
@@ -146,7 +147,8 @@ Beispiele:
     | date        | Datum       |
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
-    Angenommen die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Datums-Eigenschaft '<Name>' von 'Activity' hat eine Uhrzeit gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' darf keine Uhrzeit beinhalten.'
 Beispiele:
     | Name | Bezeichnung |

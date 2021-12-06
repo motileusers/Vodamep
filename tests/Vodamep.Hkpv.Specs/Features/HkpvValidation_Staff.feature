@@ -2,12 +2,14 @@
 Funktionalität: Hkpv - Validierung der gemeldeten Mitarbeiterinnen Datenmeldung
 
 Szenario: Qualifikation ist nicht gesetzt und das Jahr ist 2018.
-    Angenommen die Eigenschaft 'to' von 'HkpvReport' ist auf '2018-12-31' gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Eigenschaft 'to' von 'HkpvReport' ist auf '2018-12-31' gesetzt
 	Und die Eigenschaft 'qualification' von 'Staff' ist nicht gesetzt
  	Dann enthält das Validierungsergebnis nicht den Fehler 'Qualifikation' darf nicht leer sein.'
 
 Szenario: Qualifikation ist nicht gesetzt und das Jahr ist 2019.
-    Angenommen die Eigenschaft 'to' von 'HkpvReport' ist auf '2019-01-01' gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Eigenschaft 'to' von 'HkpvReport' ist auf '2019-01-01' gesetzt
 	Und die Eigenschaft 'qualification' von 'Staff' ist nicht gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Qualifikation' darf nicht leer sein.'
 	
@@ -16,7 +18,8 @@ Szenario: StaffId ist nicht eindeutig.
     Dann enthält das Validierungsergebnis den Fehler 'Der Id ist nicht eindeutig.'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
-    Angenommen die Eigenschaft '<Name>' von '<Art>' ist nicht gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Eigenschaft '<Name>' von '<Art>' ist nicht gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
@@ -26,7 +29,8 @@ Beispiele:
 	| qualification | Qualifikation       | Staff        |
 
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
-    Angenommen die Eigenschaft '<Name>' von '<Art>' ist auf '<Wert>' gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Eigenschaft '<Name>' von '<Art>' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: ''<Bezeichnung>' weist ein ungültiges Format auf.'
 Beispiele: 

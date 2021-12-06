@@ -116,5 +116,21 @@ namespace Vodamep.Specs
 
             Assert.NotEmpty(this._context.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
+
+        [Then(@"enthält das Validierungsergebnis nicht den Fehler '(.*)'")]
+        public void ThenTheResultDoesNotContainsEntry(string message)
+        {
+            var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            Assert.Empty(this._context.Result.Errors.Where(x => pattern.IsMatch(x.ErrorMessage)));
+        }
+
+        [Then(@"enthält das Validierungsergebnis die Warnung '(.*)'")]
+        public void ThenTheResultContainsAnWarning(string message)
+        {
+            var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            Assert.NotEmpty(this._context.Result.Errors.Where(x => x.Severity == Severity.Warning && pattern.IsMatch(x.ErrorMessage)));
+        }
     }
 }

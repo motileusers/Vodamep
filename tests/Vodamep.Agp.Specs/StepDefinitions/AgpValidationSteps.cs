@@ -20,7 +20,6 @@ namespace Vodamep.Specs.Agp.StepDefinitions
         public AgpValidationSteps(ReportContext context)            
         {
             _context = context;
-            
             _context.GetPropertiesByType = this.GetPropertiesByType;
 
             var loc = new AgpDisplayNameResolver();

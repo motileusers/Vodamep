@@ -2,6 +2,11 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Vodamep.Specs\CommonValidationSteps.cs" Link="CommonValidationSteps.cs" />
+    <Compile Include="..\Vodamep.Specs\MessageExtensions.cs" Link="MessageExtensions.cs" />
+    <Compile Include="..\Vodamep.Specs\ReportContext.cs" Link="ReportContext.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />

@@ -2,7 +2,8 @@
 Funktionalität: Hkpv - Validierung der gemeldeten Beschäftigungen
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
-    Angenommen die Eigenschaft '<Name>' von 'Employment' ist nicht gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Eigenschaft '<Name>' von 'Employment' ist nicht gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
 Beispiele:
@@ -12,7 +13,8 @@ Beispiele:
 
 
 Szenariogrundriss: Die Stundenanzahl ist zu hoch oder zu niedrig.
-    Angenommen die Eigenschaft 'hours_per_week' von 'Employment' ist auf '<Wert>' gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Eigenschaft 'hours_per_week' von 'Employment' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Die Stundenanzahl muss größer 0 und kleiner 100 sein'
 Beispiele:
     | Wert	| 
@@ -20,12 +22,14 @@ Beispiele:
     | 100	| 
 
 Szenario: Stundenanzahl ist korrekt
-    Angenommen die Eigenschaft 'hours_per_week' von 'Employment' ist auf '25' gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Eigenschaft 'hours_per_week' von 'Employment' ist auf '25' gesetzt
     Dann enthält das Validierungsergebnis nicht den Fehler 'Die Stundenanzahl muss größer 0 und kleiner 100 sein''
 
 
 Szenariogrundriss: Anstellungszeitraum ist falsch
-    Angenommen die Eigenschaft 'from' von 'Employment' ist auf '<Wert>' gesetzt
+    Angenommen es ist ein 'HkpvReport'
+    Und die Eigenschaft 'from' von 'Employment' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Das Anstellungsverhältniss von '
 Beispiele:
     | Wert			| 
