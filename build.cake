@@ -45,12 +45,12 @@ Task("Restore")
 Task("Build")
     .Does(() => 
     {	
-		Func<IFileSystemInfo, bool> exclude_legacy =
-			fileSystemInfo => !fileSystemInfo.Path.FullPath.EndsWith(".Legacy", StringComparison.OrdinalIgnoreCase) 
-				&& !fileSystemInfo.Path.FullPath.EndsWith(".Specs", StringComparison.OrdinalIgnoreCase);
+		var globSettings = new GlobberSettings {
+			Predicate = dirInfo => !dirInfo.Path.FullPath.EndsWith(".Legacy", StringComparison.OrdinalIgnoreCase) 
+				&& !dirInfo.Path.FullPath.EndsWith(".Specs", StringComparison.OrdinalIgnoreCase)	
+				};
 
-
-		var files = GetFiles("./**/*.csproj", exclude_legacy);
+		var files = GetFiles("./**/*.csproj", globSettings);
 		foreach (var file in files)
 		{
 			Information(file);
