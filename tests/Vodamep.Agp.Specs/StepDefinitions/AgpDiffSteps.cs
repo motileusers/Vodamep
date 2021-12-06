@@ -9,7 +9,7 @@ using Vodamep.Data.Dummy;
 using Vodamep.ReportBase;
 using Xunit;
 
-namespace Vodamep.Specs.StepDefinitions
+namespace Vodamep.Specs.Agp.StepDefinitions
 {
 
     [Binding]

@@ -4,7 +4,7 @@ using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Linq;
 
-namespace Vodamep.Specs.StepDefinitions
+namespace Vodamep.Specs
 {
     public static class MessageExtensions
     {
@@ -52,12 +52,16 @@ namespace Vodamep.Specs.StepDefinitions
                 case FieldType.Int32:
                 case FieldType.SInt32:
                 case FieldType.SInt64:
+                    field.Accessor.SetValue(m, int.Parse(value));
+                    break;
                 case FieldType.UInt32:
                 case FieldType.UInt64:
                 case FieldType.SFixed32:
                 case FieldType.SFixed64:
-                case FieldType.Enum:
                     field.Accessor.SetValue(m, long.Parse(value));
+                    break;
+                case FieldType.Enum:
+                    field.Accessor.SetValue(m, System.Enum.Parse(field.Accessor.Descriptor.EnumType.ClrType, value));
                     break;
                 case FieldType.Double:
                 case FieldType.Float:
@@ -78,6 +82,8 @@ namespace Vodamep.Specs.StepDefinitions
 
         public static FieldDescriptor GetField(this IMessage m, string name)
         {
+            var fields = m.Descriptor.Fields.InDeclarationOrder().Select(x => x.Name).ToList();
+
             return m.Descriptor.Fields.InDeclarationOrder().Where(x => x.Name == name).First();
         }
     }

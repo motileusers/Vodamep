@@ -16,5 +16,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Vodamep\Vodamep.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+	<Compile Include="..\Vodamep.Specs\CommonValidationSteps.cs" Link="CommonValidationSteps.cs" />
+	<Compile Include="..\Vodamep.Specs\MessageExtensions.cs" Link="MessageExtensions.cs" />
+	<Compile Include="..\Vodamep.Specs\ReportContext.cs" Link="ReportContext.cs" />
+  </ItemGroup>
   
 </Project>
