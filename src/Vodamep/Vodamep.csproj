@@ -21,7 +21,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="8.6.1" />
-		<PackageReference Include="Google.Protobuf" Version="3.17.2" />		
+		<PackageReference Include="Google.Protobuf" Version="3.17.2" />
+		<PackageReference Include="Grpc.Tools" Version="2.42.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>		
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 	</ItemGroup>
 
@@ -63,14 +67,30 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Include="..\..\specifications\Agp\Apg.g.cs" Link="Agp\Model\Apg.g.cs" />
-		<Compile Include="..\..\specifications\Cm\Cm.g.cs" Link="Cm\Model\Cm.g.cs" />
-		<Compile Include="..\..\specifications\Hkpv\Hkpv.g.cs" Link="Hkpv\Model\Hkpv.g.cs" />
-		<Compile Include="..\..\specifications\Mkkp\Mkkp.g.cs" Link="Mkkp\Model\Mkkp.g.cs" />
-		<Compile Include="..\..\specifications\Mohi\Mohi.g.cs" Link="Mohi\Model\Mohi.g.cs" />
-		<Compile Include="..\..\specifications\StatLp\StatLp.g.cs" Link="StatLp\Model\StatLp.g.cs" />
-		<Compile Include="..\..\specifications\Tb\Tb.g.cs" Link="Tb\Model\Tb.g.cs" />
+	  <Protobuf Include="..\..\specifications\Agp\Apg.proto">
+	    <Link>Agp\Model\Apg.proto</Link>
+	  </Protobuf>
+	  <Protobuf Include="..\..\specifications\Cm\Cm.proto">
+	    <Link>Cm\Model\Cm.proto</Link>
+	  </Protobuf>
+	  <Protobuf Include="..\..\specifications\Hkpv\Hkpv.proto">
+	    <Link>Hkpv\Model\Hkpv.proto</Link>
+	  </Protobuf>
+	  <Protobuf Include="..\..\specifications\Mkkp\Mkkp.proto">
+	    <Link>Mkkp\Model\Mkkp.proto</Link>
+	  </Protobuf>
+	  <Protobuf Include="..\..\specifications\Mohi\Mohi.proto">
+	    <Link>Mohi\Model\Mohi.proto</Link>
+	  </Protobuf>
+	  <Protobuf Include="..\..\specifications\StatLp\StatLp.proto">
+	    <Link>StatLp\Model\StatLp.proto</Link>
+	  </Protobuf>
+	  <Protobuf Include="..\..\specifications\Tb\Tb.proto">
+	    <Link>Tb\Model\Tb.proto</Link>
+	  </Protobuf>
 	</ItemGroup>
+
+	
 
 
 </Project>

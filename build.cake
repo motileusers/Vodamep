@@ -1,4 +1,3 @@
-#tool nuget:?package=Google.Protobuf.Tools&version=3.6.1
 #addin nuget:?package=Cake.Warp&version=0.2.0
 
 var target = Argument("target", "Default");
@@ -6,8 +5,7 @@ var configuration = "Release";
 var publishDir = MakeAbsolute(Directory("./publish")).FullPath;
 
 
-Task("Default")    
-	.IsDependentOn("Proto")
+Task("Default")
 	.IsDependentOn("Clean")
     .IsDependentOn("Restore")    
 	.IsDependentOn("Build")
@@ -21,37 +19,16 @@ Task("Publish")
 	.IsDependentOn("PublishClient")
 	.IsDependentOn("PublishApi")	
 	.IsDependentOn("PublishSpecs");
-    
-
-Task("Proto")
-    .Does(() =>
-    {
-        var executable = GetFiles("./tools/**/windows_x64/protoc.exe").First().FullPath;
-        var protoTools = System.IO.Directory.GetParent(executable).Parent.FullName;
-
-        foreach(var file in GetFiles("specifications/**/*.proto"))
-        {            
-            var protoPaths = new List<string>();
-            protoPaths.Add(protoTools);
-            protoPaths.Add(System.IO.Path.GetDirectoryName(file.FullPath));
-            
-            var argsProtoPath = string.Join(" ", protoPaths.Distinct().Select(x => string.Format("--proto_path={0}", x)));
-            var argsOut = string.Format("--csharp_out={0}", System.IO.Path.GetDirectoryName(file.FullPath));
-            var argsOpt = " --csharp_opt=file_extension=.g.cs ";
-
-            StartProcess(executable, new ProcessSettings {
-                Arguments = new ProcessArgumentBuilder()
-                    .Append(argsProtoPath)
-                    .Append(argsOut)
-                    .Append(argsOpt)
-                    .Append(file.FullPath)
-                });
-        }
-    });
 
 
 Task("Clean")
   .Does(()=>{   
+
+  // nur zum aufräumen, kann dann wieder weg
+    var oldProtoFiles = GetFiles("./specifications/**/*.g.cs");
+	DeleteFiles(oldProtoFiles);
+
+
     var directoriesToClean = GetDirectories("./**/bin/Debug")
       .Union(GetDirectories("./**/bin/Release"))     
       .Union(GetDirectories(publishDir));
