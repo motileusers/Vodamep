@@ -1,16 +1,13 @@
 ﻿using FluentValidation;
+using Google.Protobuf;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading;
-using Google.Protobuf;
-using Google.Protobuf.WellKnownTypes;
 using TechTalk.SpecFlow;
 using Vodamep.Data.Dummy;
 using Vodamep.StatLp.Model;
 using Vodamep.StatLp.Validation;
-using Xunit;
 using Attribute = Vodamep.StatLp.Model.Attribute;
 using Enum = System.Enum;
 
@@ -20,34 +17,41 @@ namespace Vodamep.Specs.StepDefinitions
     [Binding]
     public class StatLpValidationSteps
     {
+        private readonly ReportContext _context;
 
-        private StatLpReportValidationResult _result;
-
-        public StatLpValidationSteps()
+        public StatLpValidationSteps(ReportContext context)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
+            _context = context;
+            _context.GetPropertiesByType = this.GetPropertiesByType;
+            _context.Validator = new StatLpReportValidator();
 
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
             var date = new DateTime(2021, 02, 01);
-            this.Report = StatLpDataGenerator.Instance.CreateStatLpReport("", date.Year, date.Month, 1, 1, false);
+            this._context.Report = StatLpDataGenerator.Instance.CreateStatLpReport("", date.Year, date.Month, 1, 1, false);
         }
 
-        public StatLpReport Report { get; private set; }
-
-        public StatLpReportValidationResult Result
+        private IEnumerable<IMessage> GetPropertiesByType(string type)
         {
-            get
+            return type switch
             {
-                if (_result == null)
-                {
-                    _result = (StatLpReportValidationResult)Report.Validate();
-                }
+                nameof(Person) => new[] { this.Report.Persons[0] },
+                nameof(Admission) => new[] { this.Report.Admissions[0] },
+                nameof(Leaving) => this.Report.Leavings,
+                nameof(Attribute) => this.Report.Attributes,
+                nameof(Stay) => this.Report.Stays,
+                nameof(Institution) => new[] { this.Report.Institution },
+                _ => Array.Empty<IMessage>(),
+            };
+        }
 
-                return _result;
-            }
+        public StatLpReport Report => _context.Report as StatLpReport;
+
+        [Given(@"es ist ein 'StatLpReport'")]
+        public void GivenItIsAHkpvReport()
+        {
+            
         }
 
 
@@ -58,39 +62,7 @@ namespace Vodamep.Specs.StepDefinitions
             DateTime validTo = DateTime.Parse(validToString, new CultureInfo("de-DE"));
             DateTime admissionDate = DateTime.Parse(admissionDateString, new CultureInfo("de-DE"));
 
-            this.Report = StatLpDataGenerator.Instance.CreateStandardAdmissionMessage(validFrom, validTo, personId, admissionDate);
-        }
-
-
-
-        [Given(@"eine Meldung ist korrekt befüllt")]
-        public void GivenAValidReport()
-        {
-            // nichts zu tun
-        }
-
-        [Given(@"die Eigenschaft '(\w*)' von '(\w*)' ist nicht gesetzt")]
-        public void GivenThePropertyIsDefault(string name, string type)
-        {
-            if (type == nameof(Admission) &&
-                name == "valid")
-            { 
-            }
-
-            if (type == nameof(StatLpReport))
-            {
-            }
-
-            if (type == nameof(StatLpReport))
-                this.Report.SetDefault(name);
-            else if (type == nameof(Admission))
-                this.Report.Admissions[0].SetDefault(name);
-            else if (type == nameof(Leaving))
-                this.Report.Leavings[0].SetDefault(name);
-            else if (type == nameof(Person))
-                this.Report.Persons[0].SetDefault(name);
-            else
-                throw new NotImplementedException();
+            this._context.Report = StatLpDataGenerator.Instance.CreateStandardAdmissionMessage(validFrom, validTo, personId, admissionDate);
         }
 
         [Given(@"alle Listen sind leer")]
@@ -113,33 +85,7 @@ namespace Vodamep.Specs.StepDefinitions
 
         }
 
-        [Given(@"die Eigenschaft '(.*)' von '(.*)' ist auf '(.*)' gesetzt")]
-            public void GivenThePropertyIsSetTo(string name, string type, string value)
-        {
-            IMessage message;
 
-            if (type == nameof(StatLpReport))
-                message = this.Report;
-            else if (type == nameof(Institution))
-                message = this.Report.Institution;
-            else if (type == nameof(Admission))
-                message = this.Report.Admissions[0];
-            else if (type == nameof(Attribute))
-                message = this.Report.Attributes[0];
-            else if (type == nameof(Leaving))
-                message = this.Report.Leavings[0];
-            else if (type == nameof(Person))
-                message = this.Report.Persons[0];
-            else if (type == nameof(Stay))
-                message = this.Report.Stays[0];
-            else
-                throw new NotImplementedException();
-
-            if (!string.IsNullOrEmpty(value))
-                message.SetValue(name, value);
-            else
-                message.SetDefault(name);
-        }
 
         [Given(@"die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '(\w*)' ist auf '(.*)' gesetzt")]
         public void GivenTheEnumLIstPropertyFromAdmissionIsSetTo(string type, string value)
@@ -206,29 +152,7 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
-        [Given(@"die Datums-Eigenschaft '(\w*)' von '(\w*)' hat eine Uhrzeit gesetzt")]
-        public void GivenThePropertyHasATime(string name, string type)
-        {
-            IMessage m;
-            if (type == nameof(StatLpReport))
-                m = this.Report;
-            else if (type == nameof(Admission))
-                m = this.Report.Admissions[0];
-            else if (type == nameof(Attribute))
-                m = this.Report.Attributes[0];
-            else if (type == nameof(Person))
-                m = this.Report.Persons[0];
-            else if (type == nameof(Stay))
-                m = this.Report.Stays[0];
-            else
-                throw new NotImplementedException();
 
-            var field = m.GetField(name);
-            var ts = (field.Accessor.GetValue(m) as Timestamp) ?? this.Report.From;
-
-            ts.Seconds = ts.Seconds + 60 * 60;
-            field.Accessor.SetValue(m, ts);
-        }
 
         [Given(@"der Id einer Person ist nicht eindeutig")]
         public void GivenPersonIdNotUnique()
@@ -279,66 +203,16 @@ namespace Vodamep.Specs.StepDefinitions
 
             this.Report.Attributes.Add(new Attribute()
             {
-                AttributeType = type, 
-                FromD = this.Report.FromD, 
-                PersonId = clientId, 
-                Value =value
+                AttributeType = type,
+                FromD = this.Report.FromD,
+                PersonId = clientId,
+                Value = value
             });
         }
 
-        [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
-        public void ThenTheResultContainsNoErrors(string dummy)
-        {
-            Assert.True(this.Result.IsValid);
-            Assert.Empty(this.Result.Errors.Where(x => x.Severity == Severity.Error));
-        }
 
-        [Then(@"*enthält (das Validierungsergebnis )?keine Warnungen")]
-        public void ThenTheResultContainsNoWarnings(string dummy)
-        {
-            Assert.Empty(this.Result.Errors.Where(x => x.Severity == Severity.Warning));
-        }
 
-        [Then(@"*enthält (das Validierungsergebnis )?genau einen Fehler")]
-        public void ThenTheResultContainsOneError(object test)
-        {
-            Assert.False(this.Result.IsValid);
-            Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Error).Select(x => x.ErrorMessage).Distinct());
-        }
 
-        [Then(@"die Fehlermeldung lautet: '(.*)'")]
-        public void ThenTheResultContainsJust(string message)
-        {
-            var pattern = new Regex(message, RegexOptions.IgnoreCase);
-
-            Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage))
-                .Select(e => e.ErrorMessage)
-                .Distinct());
-        }
-
-        [Then(@"enthält das Validierungsergebnis den Fehler '(.*)'")]
-        public void ThenTheResultContainsAnError(string message)
-        {
-            var pattern = new Regex(message, RegexOptions.IgnoreCase);
-
-            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
-        }
-
-        [Then(@"enthält das Validierungsergebnis die Warnung '(.*)'")]
-        public void ThenTheResultContainsAWarning(string message)
-        {
-            var pattern = new Regex(message, RegexOptions.IgnoreCase);
-
-            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Warning && pattern.IsMatch(x.ErrorMessage)));
-        }
-
-        [Then(@"enthält das escapte Validierungsergebnis den Fehler '(.*)'")]
-        public void ThenTheResultContainsAnErrorRegex(string message)
-        {
-            var pattern = new Regex(Regex.Escape(message), RegexOptions.IgnoreCase);
-
-            Assert.NotEmpty(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
-        }
 
     }
 }

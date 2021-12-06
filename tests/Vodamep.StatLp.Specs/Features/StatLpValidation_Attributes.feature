@@ -2,30 +2,36 @@
 Funktionalität: StatLp - Validierung der gemeldeten Attribute einer Datenmeldung
 
 Szenario: Ein Attribut enthält eine Person, die nicht in der Personenliste ist
-	Angenommen die Eigenschaft 'person_id' von 'Attribute' ist auf '2' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'person_id' von 'Attribute' ist auf '2' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Person '2' ist nicht in der Personenliste vorhanden.'
 
 Szenario: Ein Attribut muss im aktuellen Monat liegen
-	Angenommen die Eigenschaft 'from' von 'Attribute' ist auf '2000-01-01' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'from' von 'Attribute' ist auf '2000-01-01' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'muss im aktuellen Monat liegen.'
 
 Szenario: Von darf keine Zeit beinhalten
-	Angenommen die Datums-Eigenschaft 'from' von 'Attribute' hat eine Uhrzeit gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Datums-Eigenschaft 'from' von 'Attribute' hat eine Uhrzeit gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''Von' darf keine Uhrzeit beinhalten.'
 
-Szenario: Ungülige Aufnahmeart Krisenintervention
-	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'AdmissionType' gesetzt
-	Angenommen die Eigenschaft 'value' von 'Attribute' ist auf 'CrisisInterventionAt' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'bei der Aufnahme vom'
-	Und enthält das Validierungsergebnis den Fehler 'ist nicht mehr erlaubt.'
-    Und enthält das Validierungsergebnis genau einen Fehler
-
-Szenario: Ungülige Aufnahmeart Probe
-	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'AdmissionType' gesetzt
-	Angenommen die Eigenschaft 'value' von 'Attribute' ist auf 'TrialAt' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'bei der Aufnahme vom'
-	Und enthält das Validierungsergebnis den Fehler 'ist nicht mehr erlaubt.'
-    Und enthält das Validierungsergebnis genau einen Fehler
+# Todo => nach dem refactoring
+#Szenario: Ungülige Aufnahmeart Krisenintervention
+#	Angenommen es ist ein 'StatLpReport'
+#	Und die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'AdmissionType' gesetzt
+#	Und die Eigenschaft 'value' von 'Attribute' ist auf 'CrisisInterventionAt' gesetzt
+#	Dann enthält das Validierungsergebnis den Fehler 'bei der Aufnahme vom'
+#	Und enthält das Validierungsergebnis den Fehler 'ist nicht mehr erlaubt.'
+#    Und enthält das Validierungsergebnis genau einen Fehler
+#
+#Szenario: Ungülige Aufnahmeart Probe
+#	Angenommen es ist ein 'StatLpReport'
+#	Und die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'AdmissionType' gesetzt
+#	Und die Eigenschaft 'value' von 'Attribute' ist auf 'TrialAt' gesetzt
+#	Dann enthält das Validierungsergebnis den Fehler 'bei der Aufnahme vom'
+#	Und enthält das Validierungsergebnis den Fehler 'ist nicht mehr erlaubt.'
+#    Und enthält das Validierungsergebnis genau einen Fehler
 
 # Todo => der Validator bekommt ein Enum (von Gerhard geliefert) im Konstruktor, hier abfragen
 # Attribute CAREALLOWANCEARGE darf nur L0_AR sein, wenn es sich um Altersheim handelt
@@ -35,13 +41,15 @@ Szenario: Ungülige Aufnahmeart Probe
 # - innerhalb der Connexia Logik
 
 Szenario: Pflegegeld ist undefiniert
-	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'CareAllowance' gesetzt
-	Angenommen die Eigenschaft 'value' von 'Attribute' ist auf 'UndefinedAllowance' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'CareAllowance' gesetzt
+	Und die Eigenschaft 'value' von 'Attribute' ist auf 'UndefinedAllowance' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Pflegestufe'
 	Und enthält das Validierungsergebnis den Fehler 'darf nicht leer sein.'
 
 Szenariogrundriss: Attributewert stimmt mit AttributTyp zusammen
-	Angenommen das Attribut mit dem  Typ '<AttributeType>' ist auf den Wert '<Wert>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und das Attribut mit dem  Typ '<AttributeType>' ist auf den Wert '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 	Beispiele:
@@ -72,8 +80,9 @@ Szenariogrundriss: Attributewert stimmt mit AttributTyp zusammen
 		| Finance           | SocialAssistanceClaimFi   |
 
 Szenariogrundriss: Attributewert stimmt nicht mit AttributTyp zusammen
-	Angenommen die Eigenschaft 'attribute_type' von 'Attribute' ist auf '<AttributeType>' gesetzt
-	Angenommen die Eigenschaft 'value' von 'Attribute' ist auf '<Wert>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'attribute_type' von 'Attribute' ist auf '<AttributeType>' gesetzt
+	Und die Eigenschaft 'value' von 'Attribute' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler '<Fehler>'
 
 	Beispiele:
@@ -104,7 +113,8 @@ Szenariogrundriss: Attributewert stimmt nicht mit AttributTyp zusammen
 		| CareAllowanceArge | SocialAssistanceClaimFi   | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherungsantrag in Bearbeitung' gesetzt werden. |
 
 Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
-    Angenommen das Attribut '<Name>' fehlt
+	Angenommen es ist ein 'StatLpReport'
+    Und das Attribut '<Name>' fehlt
     Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '(.*)' am 01.02.2021 wurde keine '<Bezeichnung>' gesendet.'
 Beispiele:
     | Name              | Bezeichnung        |
@@ -113,6 +123,6 @@ Beispiele:
     | CareAllowanceArge | Pflegestufe (Arge) |
     | Finance           | Finanzierung       |
 
-Szenario: Mehrfache Attribute
+Szenario: Mehrfache Attribute	
     Angenommen enthält das zusätzliche Attribut der Person '1' mit dem  Typ 'AdmissionType' und dem Wert 'ContinuousAt'
     Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '(.*)' am 01.02.2021 wurde 'Aufnahmeart' mehrfach gesendet.'

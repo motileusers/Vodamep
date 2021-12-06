@@ -2,11 +2,13 @@
 Funktionalität: StatLp - Validierung der gemeldeten Aufnahmen einer Datenmeldung
 
 Szenario: Das Aufnahmedatum muss im aktuellen Monat liegen
-	Angenommen die Eigenschaft 'admission_date' von 'Admission' ist auf '2000-01-01' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'admission_date' von 'Admission' ist auf '2000-01-01' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '(.*)' muss im aktuellen Monat liegen.'
 
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
-	Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>''
 	Und  enthält das Validierungsergebnis den Fehler 'darf nicht leer sein.'
 
@@ -21,7 +23,8 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 		| country                       | Land                                           |
 
 Szenariogrundriss: Eine Eigenschaft kann nicht gesetzt sein
-	Angenommen die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 	Beispiele:
@@ -29,7 +32,8 @@ Szenariogrundriss: Eine Eigenschaft kann nicht gesetzt sein
 		| origin_admission_date | Aufnahmedatum |
 
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
-	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von'
 
 	Beispiele:
@@ -44,7 +48,8 @@ Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 		| housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | 0    |
 
 Szenariogrundriss: Die Textfelder enthalten zu lange Werte
-	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom 01.02.2021 von'
 
 	Beispiele:
@@ -55,7 +60,8 @@ Szenariogrundriss: Die Textfelder enthalten zu lange Werte
 		| housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m x |
 
 Szenariogrundriss: Die Textfelder enthalten gültige Werte
-	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 	Beispiele:
@@ -66,7 +72,8 @@ Szenariogrundriss: Die Textfelder enthalten gültige Werte
 		| housing_reason_other  | Wohnraumsituations- und Ausstattungsgründe | abcdefghij abcdefghij abcdefgh |
 
 Szenariogrundriss: Ungültiger Ort / Plz
-	Angenommen die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
 	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnahme vom 01.02.2021 von'
 
@@ -75,7 +82,8 @@ Szenariogrundriss: Ungültiger Ort / Plz
 		| last_postcode | last_city | 0349   | Feldkirch |
 
 Szenariogrundriss: Leerer Ort / Plz
-	Angenommen die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
 	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Keine Angabe von Ort/Plz bei Aufnahme vom 01.02.2021 von'
 
@@ -127,7 +135,8 @@ Szenariogrundriss: Die Auflistung enthalten doppelte Werte
 		| SocialChanges   | Veränderungen nicht bewältigt, weil | NoRelativeCarerSc, NoRelativeCarerSc, MissingMealsSc |
 
 Szenariogrundriss: Die Auflistung enthalten gültige Werte
-	Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert1>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert1>' gesetzt
 	Und die Eigenschaft '<Name2>' von 'Admission' ist auf '<Wert2>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
@@ -141,35 +150,42 @@ Szenariogrundriss: Die Auflistung enthalten gültige Werte
 		| SocialChanges   | Veränderungen nicht bewältigt, weil |                                   | social_change_other   | abcdefghij |
 
 Szenario: Auswahlfelder enthalten Werte, die einen Texteintrag erfordern
-	Angenommen die Eigenschaft 'housing_type_before_admission' von 'Admission' ist auf 'OtherAl' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'housing_type_before_admission' von 'Admission' ist auf 'OtherAl' gesetzt
 	Und die Eigenschaft 'other_housing_type' von 'Admission' ist auf '' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Bei 'Wohnsituation vor der Aufnahme' im Textfeld bitte einen Wert angegeben.'
 
 Szenario: Auswahlfelder enthalten Werte, Texteintrag vorhanden
-	Angenommen die Eigenschaft 'housing_type_before_admission' von 'Admission' ist auf 'OtherAl' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'housing_type_before_admission' von 'Admission' ist auf 'OtherAl' gesetzt
 	Und die Eigenschaft 'other_housing_type' von 'Admission' ist auf 'asdf' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 Szenario: Housing Reasons: Auswahlfelder enthalten Werte, die einen Texteintrag erfordern
-	Angenommen die Eigenschaft 'housing_reason' von 'Admission' ist auf 'OtherHr' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'housing_reason' von 'Admission' ist auf 'OtherHr' gesetzt
 	Und die Eigenschaft 'housing_reason_other' von 'Admission' ist auf '' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Bei 'Wohnraumsituations- und Ausstattungsgründe' im Textfeld bitte einen Wert angegeben.'
 
 Szenario: Housing Reasons: Auswahlfelder enthalten Werte, Texteintrag vorhanden
-	Angenommen die Eigenschaft 'housing_reason' von 'Admission' ist auf 'OtherHr' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'housing_reason' von 'Admission' ist auf 'OtherHr' gesetzt
 	Und die Eigenschaft 'housing_reason_other' von 'Admission' ist auf 'asdf' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 Szenario: Eine Admission enthält eine Person, die nicht in der Personenliste ist
-	Angenommen die Eigenschaft 'person_id' von 'Admission' ist auf '2' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'person_id' von 'Admission' ist auf '2' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Person '2' ist nicht in der Personenliste vorhanden.'
 
 Szenario: Valid darf keine Zeit beinhalten
-	Angenommen die Datums-Eigenschaft 'admission_date' von 'Admission' hat eine Uhrzeit gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Datums-Eigenschaft 'admission_date' von 'Admission' hat eine Uhrzeit gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''Aufnahmedatum' darf keine Uhrzeit beinhalten.'
 
 Szenariogrundriss: Das Land einer Aufnahme enthält einen ungültigen Wert
-	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von '
 	Und enthält das Validierungsergebnis den Fehler 'hat einen ungültigen Wert'
 
@@ -179,7 +195,8 @@ Szenariogrundriss: Das Land einer Aufnahme enthält einen ungültigen Wert
 		| country | Land        | A    |
 
 Szenariogrundriss: Das Land einer Aufnahme enthält einen gültigen Wert
-	Angenommen die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 	Beispiele:

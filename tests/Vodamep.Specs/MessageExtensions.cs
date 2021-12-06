@@ -61,7 +61,10 @@ namespace Vodamep.Specs
                     field.Accessor.SetValue(m, long.Parse(value));
                     break;
                 case FieldType.Enum:
-                    field.Accessor.SetValue(m, System.Enum.Parse(field.Accessor.Descriptor.EnumType.ClrType, value));
+                    var enumValue = System.Enum.TryParse(field.Accessor.Descriptor.EnumType.ClrType, value, out object r) ? r : 0;
+                    field.Accessor.SetValue(m, enumValue);
+                    
+                    
                     break;
                 case FieldType.Double:
                 case FieldType.Float:

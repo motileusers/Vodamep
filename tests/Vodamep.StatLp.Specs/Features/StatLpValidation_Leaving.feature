@@ -2,27 +2,31 @@
 Funktionalität: StatLp - Validierung der gemeldeten Entlassungen einer Datenmeldung
 
 Szenario: Das Entlassungsdatum muss gesetzt sein
-	 Angenommen die Eigenschaft 'leaving_date' von 'Leaving' ist nicht gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'leaving_date' von 'Leaving' ist nicht gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '(.*)' muss im aktuellen Monat liegen.'
 
 Szenario: Das Entlassungsdatum muss im aktuellen Monat liegen
-     Angenommen die Eigenschaft 'leaving_date' von 'Leaving' ist auf '2000-01-01' gesetzt
-     Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '(.*)' muss im aktuellen Monat liegen.'
+	Angenommen es ist ein 'StatLpReport'
+    Und die Eigenschaft 'leaving_date' von 'Leaving' ist auf '2000-01-01' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler 'Die Entlassung von Person '(.*)' muss im aktuellen Monat liegen.'
 
 Szenariogrundriss: Pflichtfelder
-    Angenommen die Eigenschaft '<Name>' von 'Leaving' ist nicht gesetzt
+	Angenommen es ist ein 'StatLpReport'
+    Und die Eigenschaft '<Name>' von 'Leaving' ist nicht gesetzt
     Dann enthält das Validierungsergebnis den Fehler '<Fehler>'
 Beispiele:
     | Name           | Fehler |
     | leaving_reason | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.   | 
 
 Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung
-	Angenommen die Eigenschaft 'leaving_reason' von 'Leaving' ist auf '<leaving_reason>' gesetzt
-	Angenommen die Eigenschaft 'death_location' von 'Leaving' ist auf '<death_location>' gesetzt
-	Angenommen die Eigenschaft 'discharge_location' von 'Leaving' ist auf '<discharge_location>' gesetzt
-	Angenommen die Eigenschaft 'discharge_location_other' von 'Leaving' ist auf '<discharge_location_other>' gesetzt
-	Angenommen die Eigenschaft 'discharge_reason' von 'Leaving' ist auf '<discharge_reason>' gesetzt
-	Angenommen die Eigenschaft 'discharge_reason_other' von 'Leaving' ist auf '<discharge_reason_other>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'leaving_reason' von 'Leaving' ist auf '<leaving_reason>' gesetzt
+	Und die Eigenschaft 'death_location' von 'Leaving' ist auf '<death_location>' gesetzt
+	Und die Eigenschaft 'discharge_location' von 'Leaving' ist auf '<discharge_location>' gesetzt
+	Und die Eigenschaft 'discharge_location_other' von 'Leaving' ist auf '<discharge_location_other>' gesetzt
+	Und die Eigenschaft 'discharge_reason' von 'Leaving' ist auf '<discharge_reason>' gesetzt
+	Und die Eigenschaft 'discharge_reason_other' von 'Leaving' ist auf '<discharge_reason_other>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 Beispiele:
 		| leaving_reason | death_location       | discharge_location	| discharge_location_other | discharge_reason		| discharge_reason_other |
@@ -32,12 +36,13 @@ Beispiele:
 		| DischargeLr    |						| OtherDc				| asd                      | OtherDr				| asd                    |
 
 Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
-	Angenommen die Eigenschaft 'leaving_reason' von 'Leaving' ist auf '<leaving_reason>' gesetzt
-	Angenommen die Eigenschaft 'death_location' von 'Leaving' ist auf '<death_location>' gesetzt
-	Angenommen die Eigenschaft 'discharge_location' von 'Leaving' ist auf '<discharge_location>' gesetzt
-	Angenommen die Eigenschaft 'discharge_location_other' von 'Leaving' ist auf '<discharge_location_other>' gesetzt
-	Angenommen die Eigenschaft 'discharge_reason' von 'Leaving' ist auf '<discharge_reason>' gesetzt
-	Angenommen die Eigenschaft 'discharge_reason_other' von 'Leaving' ist auf '<discharge_reason_other>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft 'leaving_reason' von 'Leaving' ist auf '<leaving_reason>' gesetzt
+	Und die Eigenschaft 'death_location' von 'Leaving' ist auf '<death_location>' gesetzt
+	Und die Eigenschaft 'discharge_location' von 'Leaving' ist auf '<discharge_location>' gesetzt
+	Und die Eigenschaft 'discharge_location_other' von 'Leaving' ist auf '<discharge_location_other>' gesetzt
+	Und die Eigenschaft 'discharge_reason' von 'Leaving' ist auf '<discharge_reason>' gesetzt
+	Und die Eigenschaft 'discharge_reason_other' von 'Leaving' ist auf '<discharge_reason_other>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler '<fehler>'
 	Beispiele:
 		| leaving_reason | death_location        | discharge_location | discharge_location_other | discharge_reason    | discharge_reason_other | fehler																										|
@@ -59,7 +64,8 @@ Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
 		|                |                       |                    |                          |                     | abc                    | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
 		
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
-    Angenommen die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+    Und die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom '01.02.2021' von Klient '1'.'
 Beispiele:
 		| Name                     | Bezeichnung							| Wert |
@@ -69,8 +75,9 @@ Beispiele:
 		| discharge_reason_other   | Entlassung Grund						| 0    |		
 
 Szenariogrundriss: Die Textfelder enthalten zu lange Werte
-	Angenommen die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
-   Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom '01.02.2021' von Klient '1'.'
+	Angenommen es ist ein 'StatLpReport'
+	Und die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom '01.02.2021' von Klient '1'.'
 Beispiele:
     | Name                     | Bezeichnung                          | Wert                               |
     | discharge_location_other | Sonstige Lebens-/Betreuungssituation | abcdefghij abcdefghij abcdefghij x |
@@ -78,7 +85,8 @@ Beispiele:
     
 
 Szenariogrundriss: Die Textfelder enthalten gültige Werte
-    Angenommen die Eigenschaft '<Name1>' von 'Leaving' ist auf '<Wert1>' gesetzt
+	Angenommen es ist ein 'StatLpReport'
+    Und die Eigenschaft '<Name1>' von 'Leaving' ist auf '<Wert1>' gesetzt
     Und die Eigenschaft '<Name2>' von 'Leaving' ist auf '<Wert2>' gesetzt
     Dann enthält das Validierungsergebnis keine Fehler
 Beispiele:

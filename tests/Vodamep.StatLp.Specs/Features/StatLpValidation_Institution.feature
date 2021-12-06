@@ -2,7 +2,8 @@
 Funktionalität: StatLp - Validierung der Einrichtung
 
 Szenariogrundriss: Die Einrichtungsnummer ist falsch.
-    Angenommen die Eigenschaft 'id' von 'Institution' ist auf '<Wert>' gesetzt
+    Angenommen es ist ein 'StatLpReport'
+    Und die Eigenschaft 'id' von 'Institution' ist auf '<Wert>' gesetzt
     Dann enthält das Validierungsergebnis den Fehler 'Ungültige Einrichtungsnummer.'
 Beispiele:
     | Wert  |
