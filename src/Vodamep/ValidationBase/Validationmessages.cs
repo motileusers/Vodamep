@@ -110,6 +110,10 @@ namespace Vodamep.ValidationBase
 
         public static string StatLpStayAfterPeriod(string clientName, string fromDate, string toDate) => $"Der Aufenthalt vom '{fromDate}' bis zum '{toDate}' von '{clientName}' liegt nach dem Meldunszeitraum.";
 
+        public static string StatLpStayToLong(string type, string clientName, string fromDate, string toDate, int maxDays) => $"Der Aufenthalt '{type}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf nicht länger als {maxDays} Tage dauern.";
+
+        public static string StatLpInvalidAdmissionTyeChange(string fromType, string toType, string clientName, string fromDate, string toDate) => $"Nach dem Aufenthalt '{fromType}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf kein '{toType}' folgen.";
+
         public static string StatLpStayMustnotOverlap(string clientName) => $"Die Aufenthalte von '{clientName}' dürfen sich nicht überschneiden.";
         public static string StatLpLeavingReasonMustnotBeEmpty (string clientName) => $"Beim Abgang von Klient '{clientName}' muss eine Abgang Art angegeben werden.";
         public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";

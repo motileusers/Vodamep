@@ -76,7 +76,7 @@ namespace Vodamep.StatLp.Model
             return result;
         }
 
-        public static IEnumerable<(DateTime From, DateTime To, Stay[] Stays)> GetGroupedStays(this StatLpReport report, string personId)
+        public static IEnumerable<GroupedStay> GetGroupedStays(this StatLpReport report, string personId, GroupedStay.SameTypeyGroupMode sameTypeyGroupMode = GroupedStay.SameTypeyGroupMode.NotAllowed)
         {
             var result = new List<(DateTime From, DateTime To, Stay[] Stays)>();
 
@@ -85,19 +85,39 @@ namespace Vodamep.StatLp.Model
             if (stays.Length == 0)
                 yield break;
 
-            (DateTime From, DateTime To, Stay[] Stays) current = (stays[0].FromD, stays[0].ToD, new[] { stays[0] });
+            var current = new GroupedStay(stays[0].FromD, stays[0].ToD, new[] { stays[0] });
 
             foreach (var stay in stays.Skip(1))
             {
                 if (current.To.AddDays(1) == stay.FromD)
                 {
-                    current = (current.From, stay.ToD, current.Stays.Union(new[] { stay }).ToArray());
+                    var lastStay = current.Stays.Last();
+                    if (sameTypeyGroupMode != GroupedStay.SameTypeyGroupMode.Ignore && lastStay.Type == stay.Type)
+                    {
+                        if (sameTypeyGroupMode == GroupedStay.SameTypeyGroupMode.NotAllowed)
+                        {
+                            throw new Exception("Aufeinanderfolgende Aufenthalte müssen unterschiedliche Aufnahmearten haben!");
+                        }
+
+                        //zwei nacheinander folgende Aufenthalte mit gleichem Type sollen zu einem Aufenthalt vereint werden.
+                        var newLastStay = new Stay(lastStay)
+                        {
+                            ToD = stay.ToD
+                        };
+                        var newStays = current.Stays.Take(current.Stays.Length - 1).Union(new[] { newLastStay }).ToArray();
+
+                        current = new GroupedStay(current.From, stay.ToD, newStays);
+                    }
+                    else
+                    {
+                        current = new GroupedStay(current.From, stay.ToD, current.Stays.Union(new[] { stay }).ToArray());
+                    }
                     continue;
                 }
                 else if (current.To.AddDays(1) < stay.FromD)
                 {
                     yield return current;
-                    current = (stay.FromD, stay.ToD, new[] { stay });                    
+                    current = new GroupedStay(stay.FromD, stay.ToD, new[] { stay });
                     continue;
                 }
                 else if (current.To.AddDays(1) >= stay.FromD)

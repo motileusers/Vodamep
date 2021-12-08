@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using FluentValidation.Validators;
 using System;
 using System.Linq;
 using Vodamep.StatLp.Model;
@@ -55,11 +56,11 @@ namespace Vodamep.StatLp.Validation
 
                     foreach (var person in a.Persons)
                     {
-                        (DateTime From, DateTime To, Stay[] Stays)[] stays;
+                        GroupedStay[] stays;
                         try
                         {
                             // mitunter geht das gar nicht, dann wird ein Fehler geworfen
-                            stays = report.GetGroupedStays(person.Id).ToArray();
+                            stays = report.GetGroupedStays(person.Id, GroupedStay.SameTypeyGroupMode.NotAllowed).ToArray();
                         }
                         catch (Exception e)
                         {
@@ -70,6 +71,7 @@ namespace Vodamep.StatLp.Validation
 
                         foreach (var s in stays)
                         {
+                            // Aufenthalte vor Meldezeitraum
                             if (s.To < report.FromD)
                             {
                                 var index = a.Stays.IndexOf(s.Stays[0]);
@@ -77,15 +79,54 @@ namespace Vodamep.StatLp.Validation
                                     Validationmessages.StatLpStayAheadOfPeriod(report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString())));
                             }
 
+                            // Aufenthalte nach Meldezeitraum
                             if (s.To > report.ToD)
                             {
                                 var index = a.Stays.IndexOf(s.Stays[0]);
                                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
                                     Validationmessages.StatLpStayAfterPeriod(report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString())));
                             }
+
+                            StayLengthValidation(ctx, report, s, AdmissionType.HolidayAt, 42);
+
+                            StayLengthValidation(ctx, report, s, AdmissionType.TransitionalAt, 365);
+
+                            AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.HolidayAt);
+
+                            AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.TransitionalAt);
                         }
                     }
                 });
+        }
+
+        private void AdmissionTypeChangeValidation(CustomContext ctx, StatLpReport report, GroupedStay s, AdmissionType from, AdmissionType to)
+        {
+            for (var i = 1; i < s.Stays.Length; i++)
+            {
+                if (s.Stays[i].Type == to && s.Stays[i - 1].Type == from)
+                {
+                    var index = report.Stays.IndexOf(s.Stays[i]);
+
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                        Validationmessages.StatLpInvalidAdmissionTyeChange($"{from}", $"{to}", report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString())));
+                }
+            }
+        }
+
+
+        private void StayLengthValidation(CustomContext ctx, StatLpReport report, GroupedStay s, AdmissionType admissionType, int days)
+        {
+            //Länge Urlaubsbetreuung
+            var holidayToLong = s.Stays.Where(x => x.Type == admissionType)
+                .Where(x => x.ToD.Subtract(x.FromD).TotalDays > days)
+                .FirstOrDefault();
+
+            if (holidayToLong != null)
+            {
+                var index = report.Stays.IndexOf(holidayToLong);
+                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                    Validationmessages.StatLpStayToLong($"{holidayToLong.Type}", report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString(), days)));
+            }
         }
     }
 }

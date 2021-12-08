@@ -17,7 +17,7 @@ namespace Vodamep.Tests.StatLp
         }
 
         [Fact]
-        public void GetStays_TwoAdjacentStays_ReturnsOneGroup()
+        public void GetGroupedStays_TwoAdjacentStays_ReturnsOneGroup()
         {
 
             var stay1 = this.AddFirstStay(new DateTime(2021, 3, 1), AdmissionType.TrialAt, days: 10);
@@ -32,7 +32,7 @@ namespace Vodamep.Tests.StatLp
         }
 
         [Fact]
-        public void GetStays_TwoNonAdjacentStays_ReturnsTwoGroup()
+        public void GetGroupedStays_TwoNonAdjacentStays_ReturnsTwoGroup()
         {
 
             var stay1 = this.AddFirstStay(new DateTime(2021, 3, 1), AdmissionType.TrialAt, days: 10);
@@ -51,13 +51,33 @@ namespace Vodamep.Tests.StatLp
         }
 
         [Fact]
-        public void GetStays_TwoOverlappingStays_ThrowsException()
+        public void GetGroupedStays_TwoOverlappingStays_ThrowsException()
         {
             var stay1 = this.AddFirstStay(new DateTime(2021, 3, 1), AdmissionType.TrialAt, days: 10);
 
             var stay2 = this.AddAdjacentStay(AdmissionType.ContinuousAt, days: 10, gap: -1);
 
             Assert.Throws<Exception>(() => this.Report.GetGroupedStays(this.PersonId).ToArray());
+        }
+
+        [Fact]
+        public void GetGroupedStays_TwoAdjacentStaysWithSameType_ReturnsOneGroupWithOneStay()
+        {
+            var stay1 = this.AddFirstStay(new DateTime(2021, 3, 1), AdmissionType.ContinuousAt, days: 10);
+
+            var stay2 = this.AddAdjacentStay(AdmissionType.ContinuousAt, days: 10);
+
+            var result = this.Report.GetGroupedStays(this.PersonId, GroupedStay.SameTypeyGroupMode.Merge).ToArray();
+
+            Assert.Equal(stay1.FromD, result[0].From);
+            Assert.Equal(stay2.ToD, result[0].To);
+
+            var expectedStay = new Stay(stay1)
+            {
+                To = stay2.To
+            };
+
+            Assert.Equal(new[] { expectedStay }, result[0].Stays);
         }
 
         protected Stay AddFirstStay(DateTime from, AdmissionType admissionType, int days)

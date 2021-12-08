@@ -50,26 +50,26 @@ Szenario: Aufnahmen dürfen sich nicht überschneiden
 
 Szenario: Die maximale Aufenthaltsdauer für HolidayAt ist 42 Tage
     Angenommen die erste Aufnahme startet am '2021-05-30', dauert 60 Tage und ist eine 'HolidayAt'    
-    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+    Dann enthält das Validierungsergebnis den Fehler 'Der Aufenthalt (.*) darf nicht länger als 42 Tage dauern'
 
 Szenario: Die maximale Aufenthaltsdauer für TransitionalAt ist 365 Tage
     Angenommen die erste Aufnahme startet am '2020-05-30', dauert 600 Tage und ist eine 'TransitionalAt'    
-    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+    Dann enthält das Validierungsergebnis den Fehler 'Der Aufenthalt (.*) darf nicht länger als 365 Tage dauern'
 
-Szenario: Angrenzende Aufnahmen müssen eine unterschiedlichen AufnahmeArt haben
+Szenario: Aufeinanderfolgende Aufnahmen müssen eine unterschiedlichen Aufnahmeart haben
     Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'HolidayAt'
     Und es gibt eine weitere Aufnahme 'HolidayAt', die 30 Tage dauert
-    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+    Dann enthält das Validierungsergebnis den Fehler 'Aufeinanderfolgende Aufenthalte müssen unterschiedliche Aufnahmearten haben!'
 
 Szenario: Es darf keinen Wechsel von Continuous auf HolidayAt geben 
     Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'
     Und es gibt eine weitere Aufnahme 'HolidayAt', die 30 Tage dauert
-    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+    Dann enthält das Validierungsergebnis den Fehler 'Nach dem Aufenthalt 'ContinuousAt' (.*) darf kein 'HolidayAt' folgen.'
 
 Szenario: Es darf keinen Wechsel von Continuous auf TransitionalAt geben 
     Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'
     Und es gibt eine weitere Aufnahme 'TransitionalAt', die 30 Tage dauert
-    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+    Dann enthält das Validierungsergebnis den Fehler 'Nach dem Aufenthalt 'ContinuousAt' (.*) darf kein 'TransitionalAt' folgen.'
 
 Szenario: Ungülige Aufnahmeart Krisenintervention
 	Angenommen es ist ein 'StatLpReport'
@@ -86,9 +86,6 @@ Szenario: Ungülige Aufnahmeart Probe
     Und enthält das Validierungsergebnis genau einen Fehler
 
 Szenario: Wenn Bis null ist, kommt danach kein Aufenthalt mehr        
-    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
-
-Szenario: Das Aufenthaltsende muss im Meldungszeitraum liegen oder am Tag danach beginnt ein neuer Aufenthalt    
     Dann enthält das Validierungsergebnis den Fehler 'xxxx'
 
 Szenario: Jeder Aufenthaltsbeginn muss eine Aufnahmemeldung haben    
