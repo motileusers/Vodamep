@@ -94,6 +94,14 @@ namespace Vodamep.StatLp.Validation
                             AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.HolidayAt);
 
                             AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.TransitionalAt);
+
+                            var admission = report.Admissions.Where(x => x.PersonId == s.Stays[0].PersonId && x.AdmissionDateD == s.From).ToArray();
+                            if (!admission.Any())
+                            {
+                                var index = a.Stays.IndexOf(s.Stays[0]);
+                                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                                    Validationmessages.StatLpMissingAdmission(report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString())));
+                            }
                         }
                     }
                 });

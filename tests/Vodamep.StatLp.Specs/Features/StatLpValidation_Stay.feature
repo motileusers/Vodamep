@@ -88,8 +88,10 @@ Szenario: Ungülige Aufnahmeart Probe
 Szenario: Wenn Bis null ist, kommt danach kein Aufenthalt mehr        
     Dann enthält das Validierungsergebnis den Fehler 'xxxx'
 
-Szenario: Jeder Aufenthaltsbeginn muss eine Aufnahmemeldung haben    
-    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+Szenario: Jeder Aufenthaltsbeginn muss eine Aufnahmemeldung haben
+    Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt' 
+    Und die Liste 'Admission' ist leer    
+    Dann enthält das Validierungsergebnis den Fehler 'Für die Neuaufname vom '30.05.2021' von '(.*)' wurden keine Aufnahmedaten gemeldet.'    
 
 Szenario: Jeder Aufenthalt darf nur eine Aufnahmemeldung haben    
     Dann enthält das Validierungsergebnis den Fehler 'xxxx'
@@ -98,4 +100,6 @@ Szenario: Jeder Aufenthalt darf nur eine Entlassungsmeldung haben
     Dann enthält das Validierungsergebnis den Fehler 'xxxx'
 
 Szenario: Jedes Aufenthaltsende muss eine Entlassungsmeldung haben    
-    Dann enthält das Validierungsergebnis den Fehler 'xxxx'
+    Angenommen die erste Aufnahme startet am '2021-05-01', dauert 30 Tage und ist eine 'ContinuousAt' 
+    Und die Liste 'Leaving' ist leer 
+    Dann enthält das Validierungsergebnis den Fehler 'Für die Entlassung vom '30.05.2021' von '(.*)' wurden keine Entlassungdaten gemeldet.'
