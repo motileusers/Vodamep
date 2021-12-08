@@ -1,4 +1,4 @@
-#addin nuget:?package=Cake.Warp&version=0.2.0
+#addin nuget:?package=Cake.Warp&version=0.4.0
 
 var target = Argument("target", "Default");
 var configuration = "Release";
@@ -45,12 +45,7 @@ Task("Restore")
 Task("Build")
     .Does(() => 
     {	
-		var globSettings = new GlobberSettings {
-			Predicate = dirInfo => !dirInfo.Path.FullPath.EndsWith(".Legacy", StringComparison.OrdinalIgnoreCase) 
-				&& !dirInfo.Path.FullPath.EndsWith(".Specs", StringComparison.OrdinalIgnoreCase)	
-				};
-
-		var files = GetFiles("./**/*.csproj", globSettings);
+		var files = GetFiles("./**/*.csproj");
 		foreach (var file in files)
 		{
 			Information(file);
@@ -59,23 +54,6 @@ Task("Build")
 				Configuration = configuration			
 			});
 		}
-
-		var msBuildSettings = new MSBuildSettings {
-    		Verbosity = Verbosity.Minimal,
-    		ToolVersion = MSBuildToolVersion.VS2019,
-    		Configuration = configuration
-    	};
-
-		MSBuild("./src/Vodamep.Legacy/Vodamep.Legacy.csproj",msBuildSettings);
-		MSBuild("./tests/Vodamep.Specs/Vodamep.Specs.csproj",msBuildSettings);
-		MSBuild("./tests/Vodamep.Agp.Specs/Vodamep.Agp.Specs.csproj",msBuildSettings);
-		MSBuild("./tests/Vodamep.Cm.Specs/Vodamep.Cm.Specs.csproj",msBuildSettings);
-		MSBuild("./tests/Vodamep.Hkpv.Specs/Vodamep.Hkpv.Specs.csproj",msBuildSettings);
-		MSBuild("./tests/Vodamep.Mkkp.Specs/Vodamep.Mkkp.Specs.csproj",msBuildSettings);
-		MSBuild("./tests/Vodamep.Mohi.Specs/Vodamep.Mohi.Specs.csproj",msBuildSettings);
-		MSBuild("./tests/Vodamep.StatLp.Specs/Vodamep.StatLp.Specs.csproj",msBuildSettings);
-		MSBuild("./tests/Vodamep.Tb.Specs/Vodamep.Tb.Specs.csproj",msBuildSettings);
-		
     });
 
 
@@ -87,8 +65,6 @@ Task("Test")
 			Configuration = "Release",
 			NoBuild = true			
 		};
-		
-		// return;
 		
         foreach(var file in GetFiles("./tests/**/*.csproj")) 
 		{
@@ -108,15 +84,18 @@ Task("PublishLegacy")
 		{
 			DeleteFile(publishDir + "dml.zip");
 		}
+		
+		var settings = new DotNetCorePublishSettings
+		{         
+			Configuration = "Release",			
+			OutputDirectory = publishDir + "/dml",			
+			Runtime = "win-x64",
+			SelfContained = true
+		};			
+		
+		DotNetCorePublish("./src/Vodamep.Legacy/Vodamep.Legacy.csproj", settings); 
 
-		var msBuildSettings = new MSBuildSettings {
-    		Verbosity = Verbosity.Minimal,
-    		ToolVersion = MSBuildToolVersion.VS2019,
-    		Configuration = configuration
-    	};
-
-		MSBuild("./src/Vodamep.Legacy/Vodamep.Legacy.csproj",msBuildSettings.WithProperty("OutDir", publishDir + "/dml"));
-	
+		
 		Zip(publishDir + "/dml", publishDir + "/dml.zip", publishDir + "/dml/dml.exe");
 	});
 
@@ -130,15 +109,12 @@ Task("PublishClient")
 			DeleteFile(publishDir + "/dmc.zip");
 		}
 
-		EnsureDirectoryExists(publishDir + "/dmc/dmc_warp/");
-
-		var ms = new DotNetCoreMSBuildSettings();
+		EnsureDirectoryExists(publishDir + "/dmc/dmc_warp/");			
 
 		var settings = new DotNetCorePublishSettings
 		{         
 			Configuration = "Release",			
-			OutputDirectory = publishDir + "/dmc",
-			MSBuildSettings = ms,
+			OutputDirectory = publishDir + "/dmc",			
 			Runtime = "win-x64",
 			SelfContained = true
 		};			
@@ -164,15 +140,12 @@ Task("PublishApi")
 			DeleteFile(publishDir + "/dms.zip");
 		}
 
-		EnsureDirectoryExists(publishDir + "/dms/dms_warp/");
-
-		var ms = new DotNetCoreMSBuildSettings();
+		EnsureDirectoryExists(publishDir + "/dms/dms_warp/");		
 
 		var settings = new DotNetCorePublishSettings
 		{         
 			Configuration = "Release",			
-			OutputDirectory = publishDir + "/dms",
-			MSBuildSettings = ms,
+			OutputDirectory = publishDir + "/dms",			
 			Runtime = "win-x64",
 			SelfContained = true
 		};	
