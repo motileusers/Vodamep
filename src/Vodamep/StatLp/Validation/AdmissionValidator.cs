@@ -21,6 +21,7 @@ namespace Vodamep.StatLp.Validation
 
         public AdmissionValidator(StatLpReport report)
         {
+            this.RuleFor(x => x.AdmissionDate).NotEmpty();
 
             this.RuleFor(x => x.Gender).NotEmpty();
 
@@ -32,53 +33,7 @@ namespace Vodamep.StatLp.Validation
                 .WithName(x => displayNameResolver.GetDisplayName(nameof(x.Country)))
                 .WithMessage(x => Validationmessages.ReportBaseInvalidValue(this.GetPersonName(x.PersonId, report)));
 
-            this.RuleFor(x => x.AdmissionDate).SetValidator(new TimestampWithOutTimeValidator());
-
-
-
-            // Aufnahmedatum
-
-            this.RuleFor(x => x.AdmissionDate)
-                .Must((admissionDate) =>
-                {
-                    // Muss im aktuellen Monat sein.
-                    if (admissionDate != null)
-                    {
-                        if (admissionDate < report.From ||
-                            admissionDate > report.To)
-                        {
-                            return false;
-                        }
-                    }
-
-                    return true;
-                    
-                })
-                .WithName(displayNameResolver.GetDisplayName(nameof(Admission)))
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInReportPeriod(report.GetPersonName(x.PersonId)));
-
-
-
-            this.RuleFor(x => x.AdmissionDateD)
-                .NotEmpty()
-                .DependentRules(() =>
-                {
-
-                    // Ursprüngliches Aufnahmedatum größer als das Aufnahmedatum
-                    this.RuleFor(x => x.OriginAdmissionDate)
-                        .Must((admission, personId) =>
-                        {
-                            if (admission.OriginAdmissionDate != null &&
-                                admission.AdmissionDate != null)
-                                return admission.OriginAdmissionDate <= admission.AdmissionDate;
-
-                            return true;
-                        })
-                        .WithMessage(x => Validationmessages.StatLpOriginAdmissionDateMustBeLessThanAdmissionDate(this.GetPersonName(x.PersonId, report), x.AdmissionDateD?.ToShortDateString()));
-                });
-
-
-
+            this.RuleFor(x => x.AdmissionDate).SetValidator(new TimestampWithOutTimeValidator());        
 
 
             this.RuleFor(x => x.PersonId)

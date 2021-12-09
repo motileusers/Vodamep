@@ -82,7 +82,7 @@ Szenariogrundriss: Attributewert stimmt nicht mit AttributTyp zusammen
 		| CareAllowanceArge | SocialAssistanceFi        | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherung' gesetzt werden.                       |
 		| CareAllowanceArge | SocialAssistanceClaimFi   | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherungsantrag in Bearbeitung' gesetzt werden. |
 
-Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
+	Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
 	Angenommen es ist ein 'StatLpReport'
     Und das Attribut '<Name>' fehlt
     Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '(.*)' am 01.01.2021 wurde keine '<Bezeichnung>' gesendet.'
@@ -93,5 +93,6 @@ Beispiele:
     | Finance           | Finanzierung       |
 
 Szenario: Mehrfache Attribute	
-    Angenommen enthält das zusätzliche Attribut der Person '1' mit dem  Typ 'CareAllowance' und dem Wert 'L1'
-    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '(.*)' am 01.01.2021 wurde 'Pflegestufe' mehrfach gesendet.'
+    Angenommen es gibt am '2021-02-15' ein zusätzliches Attribut vom Typ 'CareAllowance' und dem Wert 'L2'
+	Und es gibt am '2021-02-15' ein zusätzliches Attribut vom Typ 'CareAllowance' und dem Wert 'L3'
+    Dann enthält das Validierungsergebnis den Fehler 'Beim Klient '(.*)' wurde am 15.02.2021 das Attribut 'Pflegestufe' mehrfach angegeben.'

@@ -15,9 +15,9 @@ namespace Vodamep.ValidationBase
         public static string IdIsMissing(string id) => $"Der Id '{id}' fehlt.";
         public static string WithoutEntry(string e, string clientName, string staff, string date) => $"Kein Eintrag '{e}': bei '{clientName}', von '{staff}', am '{date}'.";
         public static string WithoutActivity => $"Keine Aktivitäten.";
-        public static string ReportBaseWithoutActivity (string clientOrStaff, string name) => $"Keine Aktivitäten für {clientOrStaff} '{name}' dokumentiert.";
-        public static string ReportBaseActivityWithoutPerson (string activityId, string personId) => $"Eine Aktivität mit der ID '{activityId}' ist keiner vorhandenen Person (ID '{personId}') zugeordnet.";
-        public static string ReportBaseActivitWithoutStaff (string activityId, string staffId) => $"Eine Aktivität mit der ID '{activityId}' ist keinem vorhandenen Mitarbeiter (ID '{staffId}') zugeordnet.";
+        public static string ReportBaseWithoutActivity(string clientOrStaff, string name) => $"Keine Aktivitäten für {clientOrStaff} '{name}' dokumentiert.";
+        public static string ReportBaseActivityWithoutPerson(string activityId, string personId) => $"Eine Aktivität mit der ID '{activityId}' ist keiner vorhandenen Person (ID '{personId}') zugeordnet.";
+        public static string ReportBaseActivitWithoutStaff(string activityId, string staffId) => $"Eine Aktivität mit der ID '{activityId}' ist keinem vorhandenen Mitarbeiter (ID '{staffId}') zugeordnet.";
         public static string StaffWithoutEmployment => $"Beim Mitarbeiter ist keine Beschäftigung vorhanden";
         public static string EmploymentHoursPerWeekMustBeBetween0And100 => $"Die Stundenanzahl muss größer 0 und kleiner 100 sein";
         public static string InvalidEmploymentFromToReportRange(Staff data) => $"Das Anstellungsverhältniss von {data.GivenName} {data.FamilyName} muss innerhalb des Meldungszeitraums liegen.";
@@ -35,19 +35,22 @@ namespace Vodamep.ValidationBase
         public static string FirstDateInMonth => "'{PropertyName}' muss der erste Tag des Monats sein.";
         public static string FirstDateInYear => "'{PropertyName}' muss der erste Tag des Jahres sein.";
         public static string InvalidCode => "Für '{PropertyName}' ist '{PropertyValue}' kein gültiger Code.";
-        public static string ReportBaseInvalidCode (string client) => $"Für '{{PropertyName}}' von Klient '{client}' ist '{{PropertyValue}}' kein gültiger Code.";
+        public static string ReportBaseInvalidCode(string client) => $"Für '{{PropertyName}}' von Klient '{client}' ist '{{PropertyValue}}' kein gültiger Code.";
         public static string InvalidPostCode_City => "'{PropertyValue}' ist kein gültiger Ort.";
-        public static string ReportBaseInvalidPostCodeCity (string client) => $"'{{PropertyValue}}' ist kein gültiger Ort von Klient '{client}'.";
-        public static string ReportBaseReferrerIsOtherRefererrerThenOtherReferrerMustBeSet (string client) => $"Wenn der Zuweiser von Klient '{client}' ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.";
-        public static string DoubledDiagnosisGroups (string client) => $"Es dürfen keine doppelten Diagnosegruppen für Klient '{client}' vorhanden sein.";
-        public static string OnlyONePalliativeDiagnosisGroup (string client) => $"Es darf nur eine Palliativ Diagnose Gruppe für Klient '{client}' vorhanden sein.";
-        public static string AtLeastOneDiagnosisGroup (string client) => $"Es muss mindestens eine Diagnosegruppe für Klient '{client}' vorhanden sein.";
-        public static string ReportBaseMinutesMustBeGreater0 (string propertyName, string clientId) => $"{propertyName} von Klient '{clientId}' muss größer 0 sein.";
-        public static string ReportBaseStepWidthWrong (string propertyName, string clientName, int nrOfMinutes) => $"{propertyName} von '{clientName}' darf nur in {nrOfMinutes} Minuten Schritten eingegeben werden.";
-        public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours (string date, string name) => $"Die Leistungsminuten von '{name}' am '{date}' dürfen 12 Stunden nicht überschreiten.";
-        public static string MaxSumOfMinutesTravelTimesIs5Hours (string staff, string date) => $"Summe Wegzeiten von Mitarbeiter {staff} am {date} darf 5 Stunden nicht überschreiten.";
-        public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Wegzeiten pro Tag erlaubt.";
-        public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed (string personId) => $"Innerhalb einer Aktivität von Klient '{personId}' dürfen keine doppelten Leistungstypen vorhanden sein.";
+        public static string ReportBaseInvalidPostCodeCity(string client) => $"'{{PropertyValue}}' ist kein gültiger Ort von Klient '{client}'.";
+        public static string ReportBaseReferrerIsOtherRefererrerThenOtherReferrerMustBeSet(string client) => $"Wenn der Zuweiser von Klient '{client}' ein Anderer Zuweiser ist, dann muss Anderer Zuweiser gesetzt sein.";
+        public static string DoubledDiagnosisGroups(string client) => $"Es dürfen keine doppelten Diagnosegruppen für Klient '{client}' vorhanden sein.";
+        public static string OnlyONePalliativeDiagnosisGroup(string client) => $"Es darf nur eine Palliativ Diagnose Gruppe für Klient '{client}' vorhanden sein.";
+        public static string AtLeastOneDiagnosisGroup(string client) => $"Es muss mindestens eine Diagnosegruppe für Klient '{client}' vorhanden sein.";
+        public static string ReportBaseMinutesMustBeGreater0(string propertyName, string clientId) => $"{propertyName} von Klient '{clientId}' muss größer 0 sein.";
+        public static string ReportBaseStepWidthWrong(string propertyName, string clientName, int nrOfMinutes) => $"{propertyName} von '{clientName}' darf nur in {nrOfMinutes} Minuten Schritten eingegeben werden.";
+        public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours(string date, string name) => $"Die Leistungsminuten von '{name}' am '{date}' dürfen 12 Stunden nicht überschreiten.";
+        public static string MaxSumOfMinutesTravelTimesIs5Hours(string staff, string date) => $"Summe Wegzeiten von Mitarbeiter {staff} am {date} darf 5 Stunden nicht überschreiten.";
+        public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours(string date) => $"Die Summe der Leistungsminuten des Mitarbeiters am '{date}' darf 12 Stunden nicht überschreiten.";
+        public static string MaxSumOfMinutesTravelTimesIs10Hours(string staff) => $"Summe Reisezeiten von Mitarbeiter {staff} darf 5 Stunden nicht überschreiten.";
+        public static string MaxSumOfMinutesTravelTimesIs10Hours(string staff, string date) => $"Summe Reisezeiten von Mitarbeiter {staff} am {date} darf 5 Stunden nicht überschreiten.";
+        public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeiten pro Tag erlaubt.";
+        public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed(string personId) => $"Innerhalb einer Aktivität von Klient '{personId}' dürfen keine doppelten Leistungstypen vorhanden sein.";
         public static string WithinAnActivityTheValuesAreNotAllowedInCombination(string client, string activityType1, string activityType2) => $"Innerhalb einer Aktivität von Klient '{client}' dürfen nicht gleichzeitg die Leistungstypen '{activityType1}' und '{activityType2}' vorhanden sein.";
         public static string InvalidInstitutionNumber => "Ungültige Einrichtungsnummer.";
         public static string NoDoubledValuesAreAllowed => $"Doppelte Angaben bei '{{PropertyName}}'";
@@ -64,7 +67,7 @@ namespace Vodamep.ValidationBase
         public static string DischargedClientNeedsDischargeLocation(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
         public static string InvalidValue(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom '{date}' von Klient '{personId}'.";
         public static string TextTooLong(string date, string personId) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom '{date}' von Klient '{personId}'.";
-        public static string ReportBaseIdIsNotUnique (string clientId)=> $"Die Id von Klient '{clientId}' ist nicht eindeutig.";
+        public static string ReportBaseIdIsNotUnique(string clientId) => $"Die Id von Klient '{clientId}' ist nicht eindeutig.";
         public static string ReportBaseActivityDateMustBeWithinReport(string propertyName, string clientPersonName, string dateTime) => $"'{propertyName}' der Aktivität {dateTime} von '{clientPersonName}' muss innerhalb des Meldungszeitraums liegen.";
         public static string ReportBaseBirthdayNotInFuture(string clientId) => $"'Geburtsdatum' von Klient '{clientId}' darf nicht in der Zukunft liegen.";
         public static string ReportBaseBirthdayMustNotBeBefore(string clientId) => $"Der Wert von 'Geburtsdatum' von Klient '{clientId}' muss grösser oder gleich .*.";
@@ -91,7 +94,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseClientActivityUnknownPerson(string date) => $"Unbekannter Klient bei Leistung am {date}.";
         public static string ReportBaseActivityMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
         public static string MohiActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
-        public static string ReportBaseItemMustBeInReportPeriod (string clientName) => $"{{PropertyName}} von Person '{clientName}' muss im Meldezeitraum liegen.";
+        public static string ReportBaseItemMustBeInReportPeriod(string clientName) => $"{{PropertyName}} von Person '{clientName}' muss im Meldezeitraum liegen.";
 
         public static string StatLpAdmissionInvalidValueAdmission(string date, string clientName) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {clientName}.";
         public static string StatLpAdmissionTextTooLong(string date, string clientName) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {clientName}.";
@@ -101,8 +104,8 @@ namespace Vodamep.ValidationBase
         public static string StatLpOriginAdmissionDateMustBeLessThanAdmissionDate(string clientName, string from) => $"Das ursprüngliche Aufnahmedatum von Person '{clientName}' muss kleinergleich dem Aufnahmedatum ({from}) sein.";
         public static string StatLpAdmissionDifferentToValid(string clientName, DateTime from) => $"Das ursprüngliche Aufnahmedatum von Person '{clientName}' unterscheidet sich vom Aufnahmedatum ({from.ToShortDateString()}).";
         public static string StatLpAdmissionAttributeMissing(string clientName, string date, string attributeType) => $"Vor der Aufnahme von Klient '{clientName}' am {date} wurde keine '{attributeType}' gesendet.";
-        public static string StatLpAdmissionMultipleAttribute(string clientName, string date, string attributeType) => $"Vor der Aufnahme von Klient '{clientName}' am {date} wurde '{attributeType}' mehrfach gesendet.";
-        
+        public static string StatLpAttributeMultiple(string clientName, string date, string attributeType) => $"Beim Klient '{clientName}' wurde am {date} das Attribut '{attributeType}' mehrfach angegeben.";
+
         public static string StatLpStayEveryPersonMustBeInAStay(string clientName) => $"Die Person '{clientName}' wird in keinem Aufenthalt erwähnt.";
         public static string StatLpStayStartsAfterReportEnd(string clientName, string fromDate) => $"Der Aufenthalt am '{fromDate}' von '{clientName}' darf nicht nach dem Meldunszeitraum beginnen.";
 
@@ -114,23 +117,31 @@ namespace Vodamep.ValidationBase
 
         public static string StatLpStayToLong(string type, string clientName, string fromDate, string toDate, int maxDays) => $"Der Aufenthalt '{type}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf nicht länger als {maxDays} Tage dauern.";
 
-        public static string StatLpInvalidAdmissionTyeChange(string fromType, string toType, string clientName, string fromDate, string toDate) => $"Nach dem Aufenthalt '{fromType}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf kein '{toType}' folgen.";
+        public static string StatLpInvalidAdmissionTypeChange(string fromType, string toType, string clientName, string fromDate, string toDate) => $"Nach dem Aufenthalt '{fromType}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf kein '{toType}' folgen.";
 
         public static string StatLpStayMustnotOverlap(string clientName) => $"Die Aufenthalte von '{clientName}' dürfen sich nicht überschneiden.";
-        public static string StatLpLeavingReasonMustnotBeEmpty (string clientName) => $"Beim Abgang von Klient '{clientName}' muss eine Abgang Art angegeben werden.";
+       
+        public static string StatLpLeavingReasonMustnotBeEmpty(string clientName) => $"Beim Abgang von Klient '{clientName}' muss eine Abgang Art angegeben werden.";
+      
         public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
-        public static string StatLpAttributeMultipleChanged(string clientName, string date, string attributeType) => $"Die Eigenschaft {attributeType} von Klient {clientName} am {date} wurde mehrfach am gleichen Tag geändert.";
+      
         public static string StatLpAttributeWrongValue(string attributeName, string value) => $"Der Wert des Attributs mit dem Typen '{attributeName}' kann nicht auf den Wert '{value}' gesetzt werden.";
-
-
-        public static string StatLpHistoryMissingReports (string date1, string date2) => $"Die Meldungen für den Zeitraum {date1} bis {date2} wurden noch nicht übermittelt.";
-        public static string StatLpHistoryAttributeAlreadySent (string attributeType, string clientName, string attributeValue, string dateCurrent, string dateLast) => $"Die Änderung von '{attributeType}' von Klient '{clientName}' am '{dateCurrent}' auf '{attributeValue}' wurde bereits mit der Meldung am '{dateLast}' gesendet.";
-        public static string StatLpHistoryNoChangeFromLongTimeCarePossible (string clientName,  string newAdmissionTypeValue) => $"Bei Klient '{clientName}' ist kein Wechsel von einer Daueraufname auf '{newAdmissionTypeValue}' möglich.";
-        public static string StatLpHistoryPeriodForAdmissionTooLong (string clientName, string admissionType, string maxPersiod) => $"Bei Klient '{clientName}' wurde der Zeitraum für die Aufnahmeart '{admissionType}' überschritten ({maxPersiod}).";
-        public static string StatLpHistoryPersonChanged (string propertyName, string clientName, string date) => $"Unterschied bei '{propertyName}' von Klient '{clientName}' bei Meldung vom {date}.";
-        public static string StatLpHistoryMultipleAdmissions (string clientName, string datefrom, string dateto) => $"Für den Aufenthalt von Klient '{clientName}' vom '{datefrom}' bis '{dateto}' wurden mehrere Aufnahmen gesendet.";
+      
+        public static string StatLpHistoryMissingReports(string date1, string date2) => $"Die Meldungen für den Zeitraum {date1} bis {date2} wurden noch nicht übermittelt.";
+      
+        public static string StatLpHistoryAttributeAlreadySent(string attributeType, string clientName, string attributeValue, string dateCurrent, string dateLast) => $"Die Änderung von '{attributeType}' von Klient '{clientName}' am '{dateCurrent}' auf '{attributeValue}' wurde bereits mit der Meldung am '{dateLast}' gesendet.";
+      
+        public static string StatLpHistoryNoChangeFromLongTimeCarePossible(string clientName, string newAdmissionTypeValue) => $"Bei Klient '{clientName}' ist kein Wechsel von einer Daueraufname auf '{newAdmissionTypeValue}' möglich.";
+      
+        public static string StatLpHistoryPeriodForAdmissionTooLong(string clientName, string admissionType, string maxPersiod) => $"Bei Klient '{clientName}' wurde der Zeitraum für die Aufnahmeart '{admissionType}' überschritten ({maxPersiod}).";
+      
+        public static string StatLpHistoryPersonChanged(string propertyName, string clientName, string date) => $"Unterschied bei '{propertyName}' von Klient '{clientName}' bei Meldung vom {date}.";
+       
+        public static string StatLpHistoryMultipleAdmissions(string clientName, string datefrom, string dateto) => $"Für den Aufenthalt von Klient '{clientName}' vom '{datefrom}' bis '{dateto}' wurden mehrere Aufnahmen gesendet.";
+       
         public static string StatLpHistoryNoAdmission(string clientName, string date) => $"Vor dem Aufenthalt von Klient '{clientName}' am '{date}' wurden keine Aufnahmedaten gesendet.";
-        public static string StatLpHistoryNoLeaving (string clientName, string date) => $"Zum Aufenthaltsende von Klient '{clientName}' am '{date}' wurden keine Entlassungsdaten gesendet.";
+      
+        public static string StatLpHistoryNoLeaving(string clientName, string date) => $"Zum Aufenthaltsende von Klient '{clientName}' am '{date}' wurden keine Entlassungsdaten gesendet.";
 
 
         public static string GetRange(DateTime minDate, DateTime maxDate)

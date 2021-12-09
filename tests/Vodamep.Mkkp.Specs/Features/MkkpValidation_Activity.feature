@@ -74,7 +74,8 @@ Szenario: Summe TravelTimes darf 5 Stunden nicht überschreiten
     Und die Fehlermeldung lautet: 'Summe Wegzeiten von Mitarbeiter (.*) am (.*) darf 5 Stunden nicht überschreiten.'
 
 Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag
-    Angenommen es werden zusätzliche Wegzeiten für einen Mitarbeiter eingetragen
+    Angenommen es ist ein 'MkkpReport'
+    Und es werden zusätzliche Wegzeiten für einen Mitarbeiter eingetragen
     Dann enthält das Validierungsergebnis genau einen Fehler
     Und die Fehlermeldung lautet: 'Pro Mitarbeiter ist nur ein Eintrag bei den Wegzeiten pro Tag erlaubt.'
  

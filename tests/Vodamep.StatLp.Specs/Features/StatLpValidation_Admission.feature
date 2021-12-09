@@ -1,11 +1,6 @@
 ﻿#language: de-DE
 Funktionalität: StatLp - Validierung Aufnahmen einer Datenmeldung
 
-Szenario: Das Aufnahmedatum muss im Meldezeitraum liegen
-	Angenommen es ist ein 'StatLpReport'
-	Und die Eigenschaft 'admission_date' von 'Admission' ist auf '2000-01-01' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Die Aufnahme von Person '(.*)' muss im Meldezeitraum liegen.'
-
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
@@ -22,14 +17,6 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 		| gender                        | Geschlecht                                     |
 		| country                       | Land                                           |
 
-Szenariogrundriss: Eine Eigenschaft kann nicht gesetzt sein
-	Angenommen es ist ein 'StatLpReport'
-	Und die Eigenschaft '<Name>' von 'Admission' ist nicht gesetzt
-	Dann enthält das Validierungsergebnis keine Fehler
-
-	Beispiele:
-		| Name                  | Bezeichnung   |
-		| origin_admission_date | Aufnahmedatum |
 
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 	Angenommen es ist ein 'StatLpReport'
@@ -75,7 +62,7 @@ Szenariogrundriss: Ungültiger Ort / Plz
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
 	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Aufnahme vom 01.01.2021 von'
+	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz'
 
 	Beispiele:
 		| Field1        | Field2    | Value1 | Value2    |
@@ -85,7 +72,7 @@ Szenariogrundriss: Leerer Ort / Plz
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
 	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Keine Angabe von Ort/Plz bei Aufnahme vom 01.01.2021 von'
+	Dann enthält das Validierungsergebnis den Fehler 'Keine Angabe von Ort/Plz'
 
 	Beispiele:
 		| Field1        | Field2    | Value1 | Value2    |
@@ -96,17 +83,16 @@ Szenariogrundriss: Leerer Ort / Plz
 
 # vor 2019 wird PLZ / Ort nicht geprüft, da konnte alles gesendet werden
 Szenariogrundriss: Gültiger Ort / Plz
-	Angenommen es ist ein 'StatLpReport'
-	Und Eine Meldung gilt vom <MeldungVon> bis <MeldungBis> und ist eine Standard Meldung und enthält eine Aufnahme von Person 1 vom <Aufnahme>
+	Angenommen die erste Aufnahme startet am '2018-05-30' und ist eine 'ContinuousAt'
 	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<PLZ>' gesetzt
 	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Ort>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
 	Beispiele:
-		| PLZ  | Ort       | MeldungVon | MeldungBis | Aufnahme   |
-		| 6800 | Feldkirch | 01.01.2019 | 31.12.2019 | 31.12.2019 |
-		| 0000 | Anderer   | 01.01.2019 | 31.12.2019 | 31.12.2019 |
-		| 9999 | ABCEDEF   | 01.01.2018 | 31.12.2018 | 31.12.2018 |
+		| PLZ  | Ort       |
+		| 6800 | Feldkirch |
+		| 0000 | Anderer   |
+		| 9999 | ABCEDEF   |
 
 Szenariogrundriss: Die Auflistung enthalten ungültige Werte
 	Angenommen die Auflistungs Eigenschaft von Admission mit dem Auflistungstyp '<Name>' ist auf '<Wert1>' gesetzt

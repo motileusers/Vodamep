@@ -10,6 +10,7 @@ namespace Vodamep.StatLp.Validation
 {
     internal class PersonStayValidator : AbstractValidator<StatLpReport>
     {
+        private static readonly DisplayNameResolver DisplayNameResolver = new DisplayNameResolver();
         public PersonStayValidator()
         {
             // Zu jeder Person muss es mindestens einen Aufenthalt geben
@@ -116,7 +117,7 @@ namespace Vodamep.StatLp.Validation
                     var index = report.Stays.IndexOf(s.Stays[i]);
 
                     ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                        Validationmessages.StatLpInvalidAdmissionTyeChange($"{from}", $"{to}", report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString())));
+                        Validationmessages.StatLpInvalidAdmissionTypeChange(DisplayNameResolver.GetDisplayName(from.ToString()), DisplayNameResolver.GetDisplayName(to.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString())));
                 }
             }
         }
@@ -133,7 +134,7 @@ namespace Vodamep.StatLp.Validation
             {
                 var index = report.Stays.IndexOf(holidayToLong);
                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                    Validationmessages.StatLpStayToLong($"{holidayToLong.Type}", report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString(), days)));
+                    Validationmessages.StatLpStayToLong(DisplayNameResolver.GetDisplayName(holidayToLong.Type.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString(), days)));
             }
         }
     }

@@ -54,16 +54,6 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
 
-        [Given(@"Eine Meldung gilt vom (.*) bis (.*) und ist eine Standard Meldung und enthält eine Aufnahme von Person (.*) vom (.*)")]
-        public void GivenMessageIsAStandardAdmissionMessage(string validFromString, string validToString, string personId, string admissionDateString)
-        {
-            DateTime validFrom = DateTime.Parse(validFromString, new CultureInfo("de-DE"));
-            DateTime validTo = DateTime.Parse(validToString, new CultureInfo("de-DE"));
-            DateTime admissionDate = DateTime.Parse(admissionDateString, new CultureInfo("de-DE"));
-
-            this._context.Report = StatLpDataGenerator.Instance.CreateStandardAdmissionMessage(validFrom, validTo, personId, admissionDate);
-        }
-
         [Given(@"alle Listen sind leer")]
         public void GivenAllListsAreEmpty()
         {
@@ -195,41 +185,52 @@ namespace Vodamep.Specs.StepDefinitions
             this.Report.Attributes.First(x => x.AttributeType == type).Value = value;
         }
 
-        [Given(@"enthält das zusätzliche Attribut der Person '(.*)' mit dem  Typ '(.*)' und dem Wert '(.*)'")]
-        public void GivenThereIsOneAdditionalAttribute(string clientId, string attributeType, string value)
+        [Given(@"es gibt am '(.*)' ein zusätzliches Attribut vom Typ '(.*)' und dem Wert '(.*)'")]
+        public void GivenThereIsOneAdditionalAttribute(string date, string attributeType, string value)
         {
             var type = (AttributeType)Enum.Parse(typeof(AttributeType), attributeType);
 
             this.Report.Attributes.Add(new Attribute()
             {
                 AttributeType = type,
-                FromD = this.Report.FromD,
-                PersonId = clientId,
+                FromD = DateTime.Parse(date, new CultureInfo("de-DE")),
+                PersonId = this.Report.Persons[0].Id,
                 Value = value
             });
         }
 
 
         [Given(@"die erste Aufnahme startet am '(.+)', dauert (\d+) Tage und ist eine '(\w+)'")]
-        public void GivenTheFirstStay(string date, int days, string type)
+        public void GivenTheFirstStayWithDuration(string date, int days, string type)
         {
             this.Report.Stays.Clear();
+            this.Report.Leavings.Clear();
+            this.Report.Admissions.Clear();
+            this.Report.Attributes.Clear();
 
-            var personId = this.Report.Persons[0].Id;            
+            var personId = this.Report.Persons[0].Id;
             var from = DateTime.Parse(date, new CultureInfo("de-DE"));
 
             this.Report.Stays.Add(new Stay
             {
                 PersonId = personId,
                 FromD = from,
-                ToD = from.AddDays(days),
+                ToD = days >= 0 ? from.AddDays(days) : this.Report.ToD,
                 Type = Enum.Parse<AdmissionType>(type)
             });
+
+            this.Report.Admissions.Add(StatLpDataGenerator.Instance.CreateAdmission(personId, from));
+
+            this.Report.Attributes.Add(StatLpDataGenerator.Instance.CreateAttributes(personId, from >= this.Report.FromD ? from : this.Report.FromD));
+
         }
+
+        [Given(@"die erste Aufnahme startet am '(.+)' und ist eine '(\w+)'")]
+        public void GivenTheFirstStay(string date, string type) => this.GivenTheFirstStayWithDuration(date, -1, type);
 
         [Given(@"es gibt eine weitere Aufnahme '(\w+)', die (\d+) Tage dauert")]
         public void GivenAnotherStay(string type, int days) => this.GivenAnotherStayWithGap(type, days, 0);
-        
+
 
         [Given(@"es gibt eine weitere Aufnahme '(\w+)', die (\d+) Tage dauert, dazwischen liegen (-?\d+) Tage")]
         public void GivenAnotherStayWithGap(string type, int days, int gap)

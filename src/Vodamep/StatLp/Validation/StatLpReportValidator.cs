@@ -54,10 +54,9 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleForEach(report => report.Admissions).SetValidator(report => new AdmissionValidator(report));
 
-            this.RuleFor(x => x).SetValidator(report => new AdmissionAttributeValidator());
+            this.RuleFor(x => x).SetValidator(report => new AttributesValidator());
             this.RuleForEach(report => report.Attributes).SetValidator(report => new AttributeValidator(report));
-            this.RuleFor(x => x).SetValidator(new AttributeChangeValidator());
-
+           
             this.RuleForEach(report => report.Leavings).SetValidator(report => new LeavingValidator(report));
 
             this.RuleForEach(report => report.Stays).SetValidator(report => new StayValidator(report));

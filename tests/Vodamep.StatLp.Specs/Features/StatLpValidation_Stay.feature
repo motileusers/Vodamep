@@ -64,12 +64,12 @@ Szenario: Aufeinanderfolgende Aufnahmen müssen eine unterschiedlichen Aufnahmea
 Szenario: Es darf keinen Wechsel von Continuous auf HolidayAt geben 
     Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'
     Und es gibt eine weitere Aufnahme 'HolidayAt', die 30 Tage dauert
-    Dann enthält das Validierungsergebnis den Fehler 'Nach dem Aufenthalt 'ContinuousAt' (.*) darf kein 'HolidayAt' folgen.'
+    Dann enthält das Validierungsergebnis den Fehler 'Nach dem Aufenthalt 'Daueraufnahme' (.*) darf kein 'Urlaub von der Pflege' folgen.'
 
 Szenario: Es darf keinen Wechsel von Continuous auf TransitionalAt geben 
     Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'
     Und es gibt eine weitere Aufnahme 'TransitionalAt', die 30 Tage dauert
-    Dann enthält das Validierungsergebnis den Fehler 'Nach dem Aufenthalt 'ContinuousAt' (.*) darf kein 'TransitionalAt' folgen.'
+    Dann enthält das Validierungsergebnis den Fehler 'Nach dem Aufenthalt 'Daueraufnahme' (.*) darf kein 'Übergangspflege' folgen.'
 
 Szenario: Ungülige Aufnahmeart Krisenintervention
 	Angenommen es ist ein 'StatLpReport'
