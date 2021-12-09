@@ -24,68 +24,13 @@ Szenario: Von darf keine Zeit beinhalten
 # - innerhalb der Connexia Logik
 
 Szenario: Pflegegeld ist undefiniert
-	Angenommen es ist ein 'StatLpReport'
-	Und die Eigenschaft 'attribute_type' von 'Attribute' ist auf 'CareAllowance' gesetzt
-	Und die Eigenschaft 'value' von 'Attribute' ist auf 'UndefinedAllowance' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Pflegestufe'
-	Und enthält das Validierungsergebnis den Fehler 'darf nicht leer sein.'
-
-Szenariogrundriss: Attributewert stimmt mit AttributTyp zusammen
-	Angenommen es ist ein 'StatLpReport'
-	Und das Attribut mit dem  Typ '<AttributeType>' ist auf den Wert '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis keine Fehler
-
-	Beispiele:
-		| AttributeType     | Wert                      |		
-		| CareAllowance     | L1                        |
-		| CareAllowance     | L2                        |
-		| CareAllowance     | L3                        |
-		| CareAllowance     | L4                        |
-		| CareAllowance     | L5                        |
-		| CareAllowance     | L6                        |
-		| CareAllowance     | L7                        |
-		| CareAllowanceArge | L0Ar                      |
-		| CareAllowanceArge | L1Ar                      |
-		| CareAllowanceArge | L2Ar                      |
-		| CareAllowanceArge | L3Ar                      |
-		| CareAllowanceArge | L4Ar                      |
-		| CareAllowanceArge | L5Ar                      |
-		| CareAllowanceArge | L6Ar                      |
-		| CareAllowanceArge | L7Ar                      |
-		| Finance           | SelfFi                    |
-		| Finance           | SocialAssistanceFi        |
-		| Finance           | SocialAssistanceClaimFi   |
-
-Szenariogrundriss: Attributewert stimmt nicht mit AttributTyp zusammen
-	Angenommen es ist ein 'StatLpReport'
-	Und die Eigenschaft 'attribute_type' von 'Attribute' ist auf '<AttributeType>' gesetzt
-	Und die Eigenschaft 'value' von 'Attribute' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler '<Fehler>'
-
-	Beispiele:
-		| AttributeType     | Wert                      | Fehler                                                                                                                                   |
-		| CareAllowance     | ContinuousAt              | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Daueraufnahme' gesetzt werden.                               |
-		| CareAllowance     | HolidayAt                 | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Urlaub von der Pflege' gesetzt werden.                       |
-		| CareAllowance     | TransitionalAt            | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Übergangspflege' gesetzt werden.                             |
-		| CareAllowance     | Covid19RespiteAt          | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'COVID-19 Entlastungspflege' gesetzt werden.                  |
-		| CareAllowance     | GeriatricRemobilizationAt | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Geriatrische Remobilisation' gesetzt werden.                 |
-		| CareAllowance     | CareTransitionAt          | Der Wert des Attributs mit dem Typen 'Pflegestufe' kann nicht auf den Wert 'Überleitungspflege' gesetzt werden.                          |		
-		| Finance           | L0Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 1' gesetzt werden.                              |
-		| Finance           | L1Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 2' gesetzt werden.                              |
-		| Finance           | L2Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 3' gesetzt werden.                              |
-		| Finance           | L3Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 4' gesetzt werden.                              |
-		| Finance           | L4Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 5' gesetzt werden.                              |
-		| Finance           | L5Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 6' gesetzt werden.                              |
-		| Finance           | L6Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 7' gesetzt werden.                              |
-		| Finance           | L7Ar                      | Der Wert des Attributs mit dem Typen 'Finanzierung' kann nicht auf den Wert 'Stufe 8' gesetzt werden.                              |
-		| CareAllowanceArge | SelfFi                    | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Selbst/Angehörige 100 %' gesetzt werden.                |
-		| CareAllowanceArge | SocialAssistanceFi        | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherung' gesetzt werden.                       |
-		| CareAllowanceArge | SocialAssistanceClaimFi   | Der Wert des Attributs mit dem Typen 'Pflegestufe Arge' kann nicht auf den Wert 'Mindestsicherungsantrag in Bearbeitung' gesetzt werden. |
-
-	Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
+	Angenommen es gibt am '2021-03-01' ein zusätzliches Attribut vom Typ 'care_allowance' und dem Wert 'Unspecified'
+	Dann enthält das Validierungsergebnis den Fehler 'Ein Merkmal von Klient '(.*)' darf nicht leer sein'
+	
+Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
 	Angenommen es ist ein 'StatLpReport'
     Und das Attribut '<Name>' fehlt
-    Dann enthält das Validierungsergebnis den Fehler 'Vor der Aufnahme von Klient '(.*)' am 01.01.2021 wurde keine '<Bezeichnung>' gesendet.'
+    Dann enthält das Validierungsergebnis den Fehler 'Für die Person '(.*)' wurde am (.*) keine '<Bezeichnung>' gesendet.'
 Beispiele:
     | Name              | Bezeichnung        |    
     | CareAllowance     | Pflegestufe        |

@@ -11,6 +11,4 @@ Szenario: Eine Person die nicht entlassen wurde, befindet sich nicht in der dara
 Dann enthält das Validierungsergebnis den Fehler 'xxxxx'
 
 Szenario: Eine Person die nicht aufgenommen wurde, befindet sich nicht in der vorherigen Meldung
-Dann enthält das Validierungsergebnis den Fehler 'xxxxx'
-
-	
+Dann enthält das Validierungsergebnis den Fehler 'xxxxx'	

@@ -8,7 +8,7 @@ namespace Vodamep.StatLp.Validation
 {
     internal class StayValidator : AbstractValidator<Stay>
     {
-        private DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+        private static readonly DisplayNameResolver DisplayNameResolver = new DisplayNameResolver();
 
         public StayValidator(StatLpReport report)
         {
@@ -25,7 +25,7 @@ namespace Vodamep.StatLp.Validation
                 {
                     return report.Persons.Any(y => y.Id == personId);
                 })
-                .WithMessage(Validationmessages.PersonIsNotAvailable);
+                .WithMessage(x => Validationmessages.PersonIsNotAvailable(report.GetPersonName(x.PersonId)));
 
 
             // Ungültige Aufnahmeart 'Probe'

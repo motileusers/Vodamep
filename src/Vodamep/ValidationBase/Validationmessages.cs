@@ -47,7 +47,6 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours(string date, string name) => $"Die Leistungsminuten von '{name}' am '{date}' dürfen 12 Stunden nicht überschreiten.";
         public static string MaxSumOfMinutesTravelTimesIs5Hours(string staff, string date) => $"Summe Wegzeiten von Mitarbeiter {staff} am {date} darf 5 Stunden nicht überschreiten.";
         public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours(string date) => $"Die Summe der Leistungsminuten des Mitarbeiters am '{date}' darf 12 Stunden nicht überschreiten.";
-        public static string MaxSumOfMinutesTravelTimesIs10Hours(string staff) => $"Summe Reisezeiten von Mitarbeiter {staff} darf 5 Stunden nicht überschreiten.";
         public static string MaxSumOfMinutesTravelTimesIs10Hours(string staff, string date) => $"Summe Reisezeiten von Mitarbeiter {staff} am {date} darf 5 Stunden nicht überschreiten.";
         public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeiten pro Tag erlaubt.";
         public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed(string personId) => $"Innerhalb einer Aktivität von Klient '{personId}' dürfen keine doppelten Leistungstypen vorhanden sein.";
@@ -56,7 +55,7 @@ namespace Vodamep.ValidationBase
         public static string NoDoubledValuesAreAllowed => $"Doppelte Angaben bei '{{PropertyName}}'";
         public static string ItemNotValid => "Keine gültige Angabe bei '{PropertyName}'";
         public static string TextAreaEnterAValue => "Bei '{PropertyName}' im Textfeld bitte einen Wert angegeben.";
-        public static string PersonIsNotAvailable => "Person '{PropertyValue}' ist nicht in der Personenliste vorhanden.";
+        public static string PersonIsNotAvailable(string name) => $"Person '{name}' ist nicht in der Personenliste vorhanden.";
         public static string FromMustBeBeforeTo => $"'Von' muss vor 'Bis' liegen.";
         public static string DeadClientNeedsDeadthLocation(string personId) => $"Wenn der Klient '{personId}' gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.";
         public static string DeadClientMustNotContainDischargeLocation(string personId) => $"Wenn der Klient '{personId}' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.";
@@ -75,7 +74,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseValueMustNotBeEmptyWithProperty(string property) => $"'{{PropertyName}}' von '{property}' darf nicht leer sein.";
         public static string ReportBaseValueMustNotBeEmpty(string clientOrStaff, string clientId) => $"'{{PropertyName}}' von {clientOrStaff} '{clientId}' darf nicht leer sein.";
         public static string ReportBaseValueMustNotBeEmptyWithParentProperty(string property, string parentProperty) => $"'{property}' von {parentProperty} darf nicht leer sein.";
-        public static string ReportBaseValueMustNotBeEmptyWithString(string property, string clientId) => $"'{property}' von Klient '{clientId}' darf nicht leer sein.";
+        public static string ReportBaseValueMustNotBeEmptyWithString(string clientId) => $"Ein Merkmal von Klient '{clientId}' darf nicht leer sein.";
         public static string ReportBaseValueMustNotBeEmpty(string property, string parentProperty, string clientId) => $"'{property}' von {parentProperty} von Klient '{clientId}' darf nicht leer sein.";
         public static string ReportBaseValueMustBeGreaterThanZero(string property, string parentProperty, string clientOrStaff, string clientId) => $"Der Wert von'{property}' von {parentProperty} von {clientOrStaff} '{clientId}' muss größer 0 sein.";
         public static string ReportBasePropertyInvalidFormat(string clientOrStaff, string clientOrStaffId) => $"'{{PropertyName}}' von {clientOrStaff} '{clientOrStaffId}' weist ein ungültiges Format auf.";
@@ -101,13 +100,10 @@ namespace Vodamep.ValidationBase
         public static string StatLpAdmissionEmptyPostCode(string date, string clientName) => $"Keine Angabe von Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
         public static string StatLpAdmissionWrongPostCode(string date, string clientName) => $"Ungültige Kombination Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
 
-        public static string StatLpOriginAdmissionDateMustBeLessThanAdmissionDate(string clientName, string from) => $"Das ursprüngliche Aufnahmedatum von Person '{clientName}' muss kleinergleich dem Aufnahmedatum ({from}) sein.";
-        public static string StatLpAdmissionDifferentToValid(string clientName, DateTime from) => $"Das ursprüngliche Aufnahmedatum von Person '{clientName}' unterscheidet sich vom Aufnahmedatum ({from.ToShortDateString()}).";
-        public static string StatLpAdmissionAttributeMissing(string clientName, string date, string attributeType) => $"Vor der Aufnahme von Klient '{clientName}' am {date} wurde keine '{attributeType}' gesendet.";
+        public static string StatLpAdmissionAttributeMissing(string clientName, string date, string attributeType) => $"Für die Person '{clientName}' wurde am {date} keine '{attributeType}' gesendet.";
         public static string StatLpAttributeMultiple(string clientName, string date, string attributeType) => $"Beim Klient '{clientName}' wurde am {date} das Attribut '{attributeType}' mehrfach angegeben.";
 
         public static string StatLpStayEveryPersonMustBeInAStay(string clientName) => $"Die Person '{clientName}' wird in keinem Aufenthalt erwähnt.";
-        public static string StatLpStayStartsAfterReportEnd(string clientName, string fromDate) => $"Der Aufenthalt am '{fromDate}' von '{clientName}' darf nicht nach dem Meldunszeitraum beginnen.";
 
         public static string StatLpStayAheadOfPeriod(string clientName, string fromDate, string toDate) => $"Der Aufenthalt vom '{fromDate}' bis zum '{toDate}' von '{clientName}' liegt vor dem Meldunszeitraum.";
 
@@ -125,26 +121,9 @@ namespace Vodamep.ValidationBase
 
         public static string StatLpInvalidAdmissionTypeChange(string fromType, string toType, string clientName, string fromDate, string toDate) => $"Nach dem Aufenthalt '{fromType}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf kein '{toType}' folgen.";
 
-        public static string StatLpStayMustnotOverlap(string clientName) => $"Die Aufenthalte von '{clientName}' dürfen sich nicht überschneiden.";
-       
         public static string StatLpLeavingReasonMustnotBeEmpty(string clientName) => $"Beim Abgang von Klient '{clientName}' muss eine Abgang Art angegeben werden.";
-      
-        public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
-      
-        public static string StatLpAttributeWrongValue(string attributeName, string value) => $"Der Wert des Attributs mit dem Typen '{attributeName}' kann nicht auf den Wert '{value}' gesetzt werden.";
-      
-        public static string StatLpHistoryMissingReports(string date1, string date2) => $"Die Meldungen für den Zeitraum {date1} bis {date2} wurden noch nicht übermittelt.";
-      
-        public static string StatLpHistoryAttributeAlreadySent(string attributeType, string clientName, string attributeValue, string dateCurrent, string dateLast) => $"Die Änderung von '{attributeType}' von Klient '{clientName}' am '{dateCurrent}' auf '{attributeValue}' wurde bereits mit der Meldung am '{dateLast}' gesendet.";
-            
-        public static string StatLpHistoryPersonChanged(string propertyName, string clientName, string date) => $"Unterschied bei '{propertyName}' von Klient '{clientName}' bei Meldung vom {date}.";
-       
-        public static string StatLpHistoryMultipleAdmissions(string clientName, string datefrom, string dateto) => $"Für den Aufenthalt von Klient '{clientName}' vom '{datefrom}' bis '{dateto}' wurden mehrere Aufnahmen gesendet.";
-       
-        public static string StatLpHistoryNoAdmission(string clientName, string date) => $"Vor dem Aufenthalt von Klient '{clientName}' am '{date}' wurden keine Aufnahmedaten gesendet.";
-      
-        public static string StatLpHistoryNoLeaving(string clientName, string date) => $"Zum Aufenthaltsende von Klient '{clientName}' am '{date}' wurden keine Entlassungsdaten gesendet.";
 
+        public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
 
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {

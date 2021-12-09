@@ -52,11 +52,13 @@ namespace Vodamep.StatLp.Validation
                 .Unless(x => x.From == null)
                 .WithMessage(Validationmessages.FirstDateInYear);
 
+            this.RuleFor(x => x).SetValidator(report => new AdmissionsValidator());
             this.RuleForEach(report => report.Admissions).SetValidator(report => new AdmissionValidator(report));
 
             this.RuleFor(x => x).SetValidator(report => new AttributesValidator());
             this.RuleForEach(report => report.Attributes).SetValidator(report => new AttributeValidator(report));
-           
+
+            this.RuleFor(x => x).SetValidator(report => new LeavingsValidator());
             this.RuleForEach(report => report.Leavings).SetValidator(report => new LeavingValidator(report));
 
             this.RuleForEach(report => report.Stays).SetValidator(report => new StayValidator(report));

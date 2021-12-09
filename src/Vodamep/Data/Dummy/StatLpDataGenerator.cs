@@ -145,7 +145,7 @@ namespace Vodamep.Data.Dummy
 
             if (admissionDate != null)
             {
-                admission.AdmissionDateD = admissionDate.Value;                
+                admission.AdmissionDateD = admissionDate.Value;
             }
 
             return admission;
@@ -162,33 +162,26 @@ namespace Vodamep.Data.Dummy
 
         public IEnumerable<Attribute> CreateAttributes(string personId, DateTime date)
         {
-            var careAllowanceAttribute = new Attribute
+            yield return new Attribute
             {
                 FromD = date,
                 PersonId = personId,
-                AttributeType = AttributeType.CareAllowance,
-                Value = CareAllowance.L1.ToString()
+                CareAllowance = CareAllowance.L1
             };
-            yield return careAllowanceAttribute;
 
-            var careAllowanceArgeAttribute = new Attribute
+            yield return new Attribute
             {
                 FromD = date,
                 PersonId = personId,
-                AttributeType = AttributeType.CareAllowanceArge,
-                Value = CareAllowanceArge.L1Ar.ToString()
+                CareAllowanceArge = CareAllowanceArge.L1Ar
             };
-            yield return careAllowanceArgeAttribute;
 
-            var financeAttribute = new Attribute
+            yield return new Attribute
             {
                 FromD = date,
                 PersonId = personId,
-                AttributeType = AttributeType.Finance,
-                Value = Finance.SelfFi.ToString()
+                Finance = Finance.SelfFi
             };
-            yield return financeAttribute;
-
         }
 
         public IEnumerable<Stay> CreateStays(IEnumerable<Person> persons, DateTime from)

@@ -102,17 +102,14 @@ message Attribute {
     string person_id = 1;
 
     google.protobuf.Timestamp from = 2;
-    AttributeType attribute_type = 3;
-    string value = 4;                       // Gültiger Wert ist abhängig vom attribute_type
+
+    oneof value {
+        CareAllowance care_allowance = 3;
+        CareAllowanceArge care_allowance_arge = 4;
+        Finance finance = 5;
+    }
 }
 
-// Merkmal Typen
-enum AttributeType {
-  UNDEFINED_ATTRIBUTE = 0;  
-  CARE_ALLOWANCE = 2;                       // 05 Bezieht Pflegegeld, 06 Einstufung nach Pflegegeld Gesetz
-  CARE_ALLOWANCE_ARGE = 3;                  // 42 Pflegeeinstufung nach Arge
-  FINANCE = 4;                              // 43 Finanzierung Selbstzahler/Sozialhilfe
-}
 
 // 33 Wohnraumsituations- und Ausstattungsgründe
 enum HousingReason {
@@ -258,7 +255,7 @@ enum Gender {
 
 // Finanzierung
 enum Finance {
-  UNDEFINED_FI = 0;
+  FINANCE_UNSPECIFIED = 0;
   SELF_FI = 1;                       // Selbst/Angehörige 100 %
   SOCIAL_ASSISTANCE_FI = 2;          // Mindestsicherung
   SOCIAL_ASSISTANCE_CLAIM_FI = 3;    // Mindestsicherungsantrag in Bearbeitung
@@ -267,7 +264,7 @@ enum Finance {
 
 // Pflegegeld
 enum CareAllowance {
-  UNDEFINED_ALLOWANCE = 0;
+  CARE_ALLOWANCE_UNSPECIFIED = 0;
   L1 = 1;
   L2 = 2;
   L3 = 3;
@@ -286,7 +283,7 @@ enum CareAllowance {
 // Pflegestufe ARGE
 // Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
 enum CareAllowanceArge {
-  UNDEFINED_AR = 0;
+  CARE_ALLOWANCE_ARGE_UNSPECIFIED = 0;
   L0_AR = 1;
   L1_AR = 2;
   L2_AR = 3;

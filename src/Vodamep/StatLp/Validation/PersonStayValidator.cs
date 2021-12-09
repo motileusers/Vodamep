@@ -38,7 +38,7 @@ namespace Vodamep.StatLp.Validation
                 {
                     StatLpReport report = ctx.InstanceToValidate as StatLpReport;
 
-                    var idPersons = a.Persons.Select(x => x.Id).Distinct();
+                    var idPersons = a.Persons.Select(x => x.Id).ToArray();
 
                     foreach (var stay in a.Stays.Where(x => !idPersons.Contains(x.PersonId)))
                     {
@@ -95,6 +95,9 @@ namespace Vodamep.StatLp.Validation
                             AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.HolidayAt);
 
                             AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.TransitionalAt);
+                                                     
+                            AttributeValidation(ctx, report, s);
+                           
 
                             var admission = report.Admissions.Where(x => x.PersonId == person.Id && x.AdmissionDateD == s.From).ToArray();
                             if (!admission.Any())
@@ -143,6 +146,35 @@ namespace Vodamep.StatLp.Validation
                 });
         }
 
+        private void AttributeValidation(CustomContext ctx, StatLpReport report, GroupedStay s)
+        {
+            var attributes = report.Attributes
+                .Where(x => x.PersonId == s.Stays[0].PersonId)
+                .GroupBy(x => x.ValueCase)
+                .Select(x => new { AttributeType = x.Key, From = x.Select(y => y.FromD).Min()})
+                .ToArray();
+
+            var from = s.From > report.FromD ? s.From : report.FromD;
+
+            var attributTypes = new[]
+            {
+                Model.Attribute.ValueOneofCase.Finance,
+                Model.Attribute.ValueOneofCase.CareAllowance,
+                Model.Attribute.ValueOneofCase.CareAllowanceArge
+            };
+
+            foreach ( var type in attributTypes)
+            {
+                if (!attributes.Where(x => x.AttributeType == type && x.From >= from).Any())
+                {
+                    var index = report.Stays.IndexOf(s.Stays[0]);
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                        Validationmessages.StatLpAdmissionAttributeMissing(report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), DisplayNameResolver.GetDisplayName(type.ToString()))));
+                }
+            }
+
+
+        }
         private void AdmissionTypeChangeValidation(CustomContext ctx, StatLpReport report, GroupedStay s, AdmissionType from, AdmissionType to)
         {
             for (var i = 1; i < s.Stays.Length; i++)

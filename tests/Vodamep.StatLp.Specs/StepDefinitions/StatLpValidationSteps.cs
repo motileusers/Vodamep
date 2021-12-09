@@ -175,31 +175,33 @@ namespace Vodamep.Specs.StepDefinitions
         [Given(@"das Attribut '(.*)' fehlt")]
         public void GivenAttributeIsMissing(string attributeType)
         {
-            var type = (AttributeType)Enum.Parse(typeof(AttributeType), attributeType);
+            var type = Enum.Parse<Attribute.ValueOneofCase>(attributeType);
 
-            this.Report.Attributes.Remove(this.Report.Attributes.FirstOrDefault(x => x.AttributeType == type));
+            this.Report.Attributes.Remove(this.Report.Attributes.FirstOrDefault(x => x.ValueCase == type));
         }
 
         [Given(@"das Attribut mit dem  Typ '(.*)' ist auf den Wert '(.*)' gesetzt")]
         public void GivenAttributeValueIsSet(string attributeType, string value)
         {
-            var type = (AttributeType)Enum.Parse(typeof(AttributeType), attributeType);
+            var type = Enum.Parse<Attribute.ValueOneofCase>(attributeType);
 
-            this.Report.Attributes.First(x => x.AttributeType == type).Value = value;
+            var attribute = this.Report.Attributes.First(x => x.ValueCase == type);
+
+            attribute.SetValue(attributeType, value);
         }
 
         [Given(@"es gibt am '(.*)' ein zusätzliches Attribut vom Typ '(.*)' und dem Wert '(.*)'")]
         public void GivenThereIsOneAdditionalAttribute(string date, string attributeType, string value)
         {
-            var type = (AttributeType)Enum.Parse(typeof(AttributeType), attributeType);
-
-            this.Report.Attributes.Add(new Attribute()
+            var attribute = new Attribute()
             {
-                AttributeType = type,
                 FromD = DateTime.Parse(date, new CultureInfo("de-DE")),
-                PersonId = this.Report.Persons[0].Id,
-                Value = value
-            });
+                PersonId = this.Report.Persons[0].Id
+            };
+
+            attribute.SetValue(attributeType, value);
+
+            this.Report.Attributes.Add(attribute);
         }
 
 
