@@ -13,7 +13,7 @@ namespace Vodamep.StatLp.Model
             NotAllowed
         }
 
-        public GroupedStay(DateTime from, DateTime to, Stay[] stays)
+        public GroupedStay(DateTime from, DateTime? to, Stay[] stays)
         {
             this.From = from;
             this.To = to;
@@ -22,7 +22,7 @@ namespace Vodamep.StatLp.Model
 
         public DateTime From { get; }
 
-        public DateTime To { get; }
+        public DateTime? To { get; }
 
         public Stay[] Stays { get; }
 

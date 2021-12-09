@@ -77,7 +77,7 @@ namespace Vodamep.StatLp.Validation
                             {
                                 var index = a.Stays.IndexOf(s.Stays[0]);
                                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                                    Validationmessages.StatLpStayAheadOfPeriod(report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString())));
+                                    Validationmessages.StatLpStayAheadOfPeriod(report.GetPersonName(person.Id), s.From.ToShortDateString(), s.To?.ToShortDateString())));
                             }
 
                             // Aufenthalte nach Meldezeitraum
@@ -85,7 +85,7 @@ namespace Vodamep.StatLp.Validation
                             {
                                 var index = a.Stays.IndexOf(s.Stays[0]);
                                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                                    Validationmessages.StatLpStayAfterPeriod(report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString())));
+                                    Validationmessages.StatLpStayAfterPeriod(report.GetPersonName(person.Id), s.From.ToShortDateString(), s.To?.ToShortDateString())));
                             }
 
                             StayLengthValidation(ctx, report, s, AdmissionType.HolidayAt, 42);
@@ -96,12 +96,47 @@ namespace Vodamep.StatLp.Validation
 
                             AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.TransitionalAt);
 
-                            var admission = report.Admissions.Where(x => x.PersonId == s.Stays[0].PersonId && x.AdmissionDateD == s.From).ToArray();
+                            var admission = report.Admissions.Where(x => x.PersonId == person.Id && x.AdmissionDateD == s.From).ToArray();
                             if (!admission.Any())
                             {
                                 var index = a.Stays.IndexOf(s.Stays[0]);
                                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                                    Validationmessages.StatLpMissingAdmission(report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString())));
+                                    Validationmessages.StatLpMissingAdmission(report.GetPersonName(person.Id), s.From.ToShortDateString())));
+                            }
+
+                            var hasMultipleAdmissions = admission.Length > 1 || report.Admissions
+                                .Where(x => x.PersonId == person.Id)
+                                .Where(x => x.AdmissionDateD > s.From && (!s.To.HasValue || x.AdmissionDateD <= s.To.Value))
+                                .Any();
+
+                            if (hasMultipleAdmissions)
+                            {
+                                var index = a.Stays.IndexOf(s.Stays[0]);
+                                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                                    Validationmessages.StatLpMultipleAdmission(report.GetPersonName(person.Id), s.From.ToShortDateString())));
+                            }
+
+                            if (s.To.HasValue && s.To < DateTime.Today)
+                            {
+                                var leaving = report.Leavings.Where(x => x.PersonId == person.Id && x.LeavingDateD == s.To).ToArray();
+                                if (!leaving.Any())
+                                {
+                                    var index = a.Stays.IndexOf(s.Stays[0]);
+                                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                                        Validationmessages.StatLpMissingLeaving(report.GetPersonName(person.Id), s.To?.ToShortDateString())));
+                                }
+
+                                var hasMultipleLeavings = leaving.Length > 1 || report.Leavings
+                                    .Where(x => x.PersonId == person.Id)
+                                    .Where(x => x.LeavingDateD >= s.From && x.LeavingDateD < s.To.Value)
+                                    .Any();
+
+                                if (hasMultipleLeavings)
+                                {
+                                    var index = a.Stays.IndexOf(s.Stays[0]);
+                                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                                        Validationmessages.StatLpMultipleLeavings(report.GetPersonName(person.Id), s.From.ToShortDateString())));
+                                }
                             }
                         }
                     }
@@ -117,7 +152,7 @@ namespace Vodamep.StatLp.Validation
                     var index = report.Stays.IndexOf(s.Stays[i]);
 
                     ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                        Validationmessages.StatLpInvalidAdmissionTypeChange(DisplayNameResolver.GetDisplayName(from.ToString()), DisplayNameResolver.GetDisplayName(to.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString())));
+                        Validationmessages.StatLpInvalidAdmissionTypeChange(DisplayNameResolver.GetDisplayName(from.ToString()), DisplayNameResolver.GetDisplayName(to.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To?.ToShortDateString())));
                 }
             }
         }
@@ -127,14 +162,14 @@ namespace Vodamep.StatLp.Validation
         {
             //Länge Urlaubsbetreuung
             var holidayToLong = s.Stays.Where(x => x.Type == admissionType)
-                .Where(x => x.ToD.Subtract(x.FromD).TotalDays > days)
+                .Where(x => (x.ToD ?? report.ToD).Subtract(x.FromD).TotalDays > days)
                 .FirstOrDefault();
 
             if (holidayToLong != null)
             {
                 var index = report.Stays.IndexOf(holidayToLong);
                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                    Validationmessages.StatLpStayToLong(DisplayNameResolver.GetDisplayName(holidayToLong.Type.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To.ToShortDateString(), days)));
+                    Validationmessages.StatLpStayToLong(DisplayNameResolver.GetDisplayName(holidayToLong.Type.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To?.ToShortDateString(), days)));
             }
         }
     }

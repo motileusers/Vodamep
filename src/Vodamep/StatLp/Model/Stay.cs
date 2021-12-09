@@ -6,7 +6,10 @@ namespace Vodamep.StatLp.Model
     {
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
-        public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }
+        public DateTime? ToD { 
+            get => this.To != null ? this.To.AsDate() :(DateTime ?) null; 
+            set => this.To = value.HasValue? value.Value.AsTimestamp() : null; 
+        }
 
     }
 }

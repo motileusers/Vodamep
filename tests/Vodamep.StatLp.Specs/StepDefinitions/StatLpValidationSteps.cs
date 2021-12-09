@@ -71,7 +71,10 @@ namespace Vodamep.Specs.StepDefinitions
             {
                 this.Report.Attributes.Clear();
             }
-
+            else if (type == nameof(Admission))
+            {
+                this.Report.Admissions.Clear();
+            }
         }
 
 
@@ -208,6 +211,14 @@ namespace Vodamep.Specs.StepDefinitions
             this.Report.Admissions.Clear();
             this.Report.Attributes.Clear();
 
+            this.GivenAnOtherStayWithDuration(date, days, type);
+
+        }
+
+        [Given(@"eine weitere Aufnahme startet am '(.+)', dauert (\d+) Tage und ist eine '(\w+)'")]
+        public void GivenAnOtherStayWithDuration(string date, int days, string type)
+        {
+
             var personId = this.Report.Persons[0].Id;
             var from = DateTime.Parse(date, new CultureInfo("de-DE"));
 
@@ -215,7 +226,7 @@ namespace Vodamep.Specs.StepDefinitions
             {
                 PersonId = personId,
                 FromD = from,
-                ToD = days >= 0 ? from.AddDays(days) : this.Report.ToD,
+                ToD = days >= 0 ? from.AddDays(days) : null,
                 Type = Enum.Parse<AdmissionType>(type)
             });
 
@@ -236,15 +247,31 @@ namespace Vodamep.Specs.StepDefinitions
         public void GivenAnotherStayWithGap(string type, int days, int gap)
         {
             var personId = this.Report.Persons[0].Id;
-            var from = this.Report.Stays.Where(x => x.PersonId == personId).Select(x => x.ToD).Max().AddDays(1).AddDays(gap);
+            var from = this.Report.Stays.Where(x => x.PersonId == personId && x.To != null).Select(x => x.ToD.Value).Max().AddDays(1).AddDays(gap);
 
-            this.Report.Stays.Add(new Stay
+            var stay = new Stay
             {
                 PersonId = personId,
                 FromD = from,
                 ToD = from.AddDays(days),
                 Type = Enum.Parse<AdmissionType>(type)
-            });
+            };
+
+            if (stay.ToD > Report.ToD)
+            {
+                stay.ToD = null;
+            }
+
+            this.Report.Stays.Add(stay);
+        }
+
+        [Given("es gibt eine Entlassungsmeldung mehrfach")]
+        public void GivenMultipleLeavings()
+        {
+            if (this.Report.Leavings.Any())
+            {
+                this.Report.Leavings.Add(new Leaving(this.Report.Leavings[0]));
+            }
         }
     }
 }

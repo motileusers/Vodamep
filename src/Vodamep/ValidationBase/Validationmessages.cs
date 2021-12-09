@@ -115,6 +115,12 @@ namespace Vodamep.ValidationBase
 
         public static string StatLpMissingAdmission(string clientName, string fromDate) => $"Für die Neuaufname vom '{fromDate}' von '{clientName}' wurden keine Aufnahmedaten gemeldet.";
 
+        public static string StatLpMissingLeaving(string clientName, string fromDate) => $"Für die Entlassung am '{fromDate}' von '{clientName}' wurden keine Entlassungsdaten gemeldet.";
+
+        public static string StatLpMultipleAdmission(string clientName, string fromDate) => $"Für die Neuaufname vom '{fromDate}' von '{clientName}' wurden mehrere Aufnahmedaten gemeldet.";
+
+        public static string StatLpMultipleLeavings(string clientName, string fromDate) => $"Für die Aufname vom '{fromDate}' von '{clientName}' wurden mehrere Entlassungsdaten gemeldet.";
+
         public static string StatLpStayToLong(string type, string clientName, string fromDate, string toDate, int maxDays) => $"Der Aufenthalt '{type}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf nicht länger als {maxDays} Tage dauern.";
 
         public static string StatLpInvalidAdmissionTypeChange(string fromType, string toType, string clientName, string fromDate, string toDate) => $"Nach dem Aufenthalt '{fromType}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf kein '{toType}' folgen.";
@@ -130,11 +136,7 @@ namespace Vodamep.ValidationBase
         public static string StatLpHistoryMissingReports(string date1, string date2) => $"Die Meldungen für den Zeitraum {date1} bis {date2} wurden noch nicht übermittelt.";
       
         public static string StatLpHistoryAttributeAlreadySent(string attributeType, string clientName, string attributeValue, string dateCurrent, string dateLast) => $"Die Änderung von '{attributeType}' von Klient '{clientName}' am '{dateCurrent}' auf '{attributeValue}' wurde bereits mit der Meldung am '{dateLast}' gesendet.";
-      
-        public static string StatLpHistoryNoChangeFromLongTimeCarePossible(string clientName, string newAdmissionTypeValue) => $"Bei Klient '{clientName}' ist kein Wechsel von einer Daueraufname auf '{newAdmissionTypeValue}' möglich.";
-      
-        public static string StatLpHistoryPeriodForAdmissionTooLong(string clientName, string admissionType, string maxPersiod) => $"Bei Klient '{clientName}' wurde der Zeitraum für die Aufnahmeart '{admissionType}' überschritten ({maxPersiod}).";
-      
+            
         public static string StatLpHistoryPersonChanged(string propertyName, string clientName, string date) => $"Unterschied bei '{propertyName}' von Klient '{clientName}' bei Meldung vom {date}.";
        
         public static string StatLpHistoryMultipleAdmissions(string clientName, string datefrom, string dateto) => $"Für den Aufenthalt von Klient '{clientName}' vom '{datefrom}' bis '{dateto}' wurden mehrere Aufnahmen gesendet.";

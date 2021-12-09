@@ -99,7 +99,7 @@ namespace Vodamep.Tests.StatLp
 
         protected Stay AddAdjacentStay(AdmissionType admissionType, int days, int gap = 0)
         {
-            var from = this.Report.Stays.Select(x => x.ToD).Max().AddDays(1).AddDays(gap);
+            var from = this.Report.Stays.Where(x => x.To != null).Select(x => x.ToD.Value).Max().AddDays(1).AddDays(gap);
 
             var stay = new Stay
             {

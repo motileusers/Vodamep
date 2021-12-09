@@ -89,7 +89,11 @@ namespace Vodamep.StatLp.Model
 
             foreach (var stay in stays.Skip(1))
             {
-                if (current.To.AddDays(1) == stay.FromD)
+                if (current.To == null)
+                {
+                    throw new Exception("Die Aufenthalte dürfen sich nicht überschneiden!");
+                }
+                else if (current.To.Value.AddDays(1) == stay.FromD)
                 {
                     var lastStay = current.Stays.Last();
                     if (sameTypeyGroupMode != GroupedStay.SameTypeyGroupMode.Ignore && lastStay.Type == stay.Type)
@@ -114,13 +118,13 @@ namespace Vodamep.StatLp.Model
                     }
                     continue;
                 }
-                else if (current.To.AddDays(1) < stay.FromD)
+                else if (current.To.Value.AddDays(1) < stay.FromD)
                 {
                     yield return current;
                     current = new GroupedStay(stay.FromD, stay.ToD, new[] { stay });
                     continue;
                 }
-                else if (current.To.AddDays(1) >= stay.FromD)
+                else if (current.To.Value.AddDays(1) >= stay.FromD)
                 {
                     throw new Exception("Die Aufenthalte dürfen sich nicht überschneiden!");
                 }
