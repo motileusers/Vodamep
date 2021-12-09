@@ -116,9 +116,11 @@ namespace Vodamep.Client
 
                 if (previousReports.Count > 0)
                 {
-                    var result = report.ValidateHistory(previousReports, clearingExceptions);
 
-                    message = formatter.Format(report, result);
+                    throw new Exception("todo");
+                    //var result = report.ValidateHistory(previousReports, clearingExceptions);
+
+                    //message = formatter.Format(report, result);
 
                 }
                 else
