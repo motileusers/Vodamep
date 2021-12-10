@@ -39,7 +39,7 @@ Task("Clean")
 Task("Restore")
     .Does(() => 
     {
-        DotNetCoreRestore();
+        DotNetRestore();
     });
 
 Task("Build")
@@ -49,7 +49,7 @@ Task("Build")
 		foreach (var file in files)
 		{
 			Information(file);
-			DotNetCoreBuild(file.FullPath, new DotNetCoreBuildSettings 
+			DotNetBuild(file.FullPath, new DotNetBuildSettings 
 			{
 				Configuration = configuration			
 			});
@@ -60,7 +60,7 @@ Task("Build")
 Task("Test")	
     .Does(() => 
     {
-		var settings = new DotNetCoreTestSettings
+		var settings = new DotNetTestSettings
 		{
 			Configuration = "Release",
 			NoBuild = true			
@@ -70,7 +70,7 @@ Task("Test")
 		{
 			Information("{0}", file);
 			
-			DotNetCoreTest(file.FullPath, settings);
+			DotNetTest(file.FullPath, settings);
 		}  
         
     });
@@ -85,7 +85,7 @@ Task("PublishLegacy")
 			DeleteFile(publishDir + "dml.zip");
 		}
 		
-		var settings = new DotNetCorePublishSettings
+		var settings = new DotNetPublishSettings
 		{         
 			Configuration = "Release",			
 			OutputDirectory = publishDir + "/dml",			
@@ -93,7 +93,7 @@ Task("PublishLegacy")
 			SelfContained = true
 		};			
 		
-		DotNetCorePublish("./src/Vodamep.Legacy/Vodamep.Legacy.csproj", settings); 
+		DotNetPublish("./src/Vodamep.Legacy/Vodamep.Legacy.csproj", settings); 
 
 		
 		Zip(publishDir + "/dml", publishDir + "/dml.zip", publishDir + "/dml/dml.exe");
@@ -111,7 +111,7 @@ Task("PublishClient")
 
 		EnsureDirectoryExists(publishDir + "/dmc/dmc_warp/");			
 
-		var settings = new DotNetCorePublishSettings
+		var settings = new DotNetPublishSettings
 		{         
 			Configuration = "Release",			
 			OutputDirectory = publishDir + "/dmc",			
@@ -119,7 +119,7 @@ Task("PublishClient")
 			SelfContained = true
 		};			
 		
-		DotNetCorePublish("./src/Vodamep.Client/Vodamep.Client.csproj", settings); 
+		DotNetPublish("./src/Vodamep.Client/Vodamep.Client.csproj", settings); 
 
 		Warp(publishDir+ "/dmc",
 			 "dmc.exe", 
@@ -142,7 +142,7 @@ Task("PublishApi")
 
 		EnsureDirectoryExists(publishDir + "/dms/dms_warp/");		
 
-		var settings = new DotNetCorePublishSettings
+		var settings = new DotNetPublishSettings
 		{         
 			Configuration = "Release",			
 			OutputDirectory = publishDir + "/dms",			
@@ -150,7 +150,7 @@ Task("PublishApi")
 			SelfContained = true
 		};	
 		
-		DotNetCorePublish("./src/Vodamep.Api/Vodamep.Api.csproj", settings); 
+		DotNetPublish("./src/Vodamep.Api/Vodamep.Api.csproj", settings); 
 		
 		Warp(publishDir+ "/dms",
 			 "dms.exe", 
@@ -187,9 +187,9 @@ Task("PublishNuget")
 	{
 		var version = EnvironmentVariable("vodamepversion") ?? "0.0.1";
 
-		var ms = new DotNetCoreMSBuildSettings();
+		var ms = new DotNetMSBuildSettings();
 
-		var settings = new DotNetCorePackSettings
+		var settings = new DotNetPackSettings
 		{
 			Configuration = "Release",
 			OutputDirectory = publishDir,
@@ -198,7 +198,7 @@ Task("PublishNuget")
 
 		settings.MSBuildSettings = settings.MSBuildSettings.WithProperty("Version", version);
 
-		DotNetCorePack("./src/Vodamep/Vodamep.csproj", settings);
+		DotNetPack("./src/Vodamep/Vodamep.csproj", settings);
 	});
 
 RunTarget(target);

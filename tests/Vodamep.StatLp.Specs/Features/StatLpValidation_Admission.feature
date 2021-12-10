@@ -76,8 +76,7 @@ Szenariogrundriss: Leerer Ort / Plz
 
 	Beispiele:
 		| Field1        | Field2    | Value1 | Value2    |
-		| last_postcode | last_city | 0349   |           |
-		| last_postcode | last_city |        | Feldkirch |
+		| last_postcode | last_city | 0349   |           |		
 		| last_postcode | last_city |        | Feldkirch |
 		| last_postcode | last_city |        |           |
 
