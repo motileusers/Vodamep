@@ -125,6 +125,8 @@ namespace Vodamep.ValidationBase
 
         public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
 
+        public static string PersonsPropertyDiffers(string name, string propertyName, string birthday1, string birthday2) => $"Für die Person '{name}' wurde für '{propertyName}' bisher '{birthday1}' statt '{birthday2}' gemeldet.";
+
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {
             if (minDate == maxDate)

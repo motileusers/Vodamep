@@ -13,24 +13,34 @@ namespace Vodamep.Specs.Agp.StepDefinitions
 {
 
     [Binding]
-    public class AgpValidationSteps 
+    public class AgpValidationSteps
     {
         private readonly ReportContext _context;
 
-        public AgpValidationSteps(ReportContext context)            
+        public AgpValidationSteps(ReportContext context)
         {
+            if (context.Report == null)
+            {
+                InitContext(context);
+            }
+
             _context = context;
-            _context.GetPropertiesByType = this.GetPropertiesByType;
+        }
+
+        private void InitContext(ReportContext context)
+        {
+            context.GetPropertiesByType = this.GetPropertiesByType;
+            context.Validator = new AgpReportValidator();
 
             var loc = new AgpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
             var date = new DateTime(2021, 05, 01);
-            _context.Report = AgpDataGenerator.Instance.CreateAgpReport("", date.Year, date.Month, 1, 1, false, false);
-            this.AddDummyActivity(this.Report.Persons[0].Id, this.Report.Staffs[0].Id);
-            this.AddDummyStaffActivity(this.Report.Staffs[0].Id);
+            var r = AgpDataGenerator.Instance.CreateAgpReport("", date.Year, date.Month, 1, 1, false, false);
+            AddDummyActivity(r, r.Persons[0].Id, r.Staffs[0].Id);
+            AddDummyStaffActivity(r.Staffs[0].Id);
 
-            _context.Validator = new AgpReportValidator();
+            context.Report = r;
         }
 
         private AgpReport Report => _context.Report as AgpReport;
@@ -73,7 +83,7 @@ namespace Vodamep.Specs.Agp.StepDefinitions
 
             s.Id = s0.Id;
         }
-              
+
 
         [Given(@"die Diagnose\(n\) ist auf '(.*)' gesetzt")]
         public void GivenTheDiagnosisGroupIsSetTo(string value)
@@ -169,7 +179,7 @@ namespace Vodamep.Specs.Agp.StepDefinitions
             this.Report.Activities[0].StaffId = this.Report.Staffs.First().Id + "id";
         }
 
-        private void AddDummyActivity(string personId, string staffId)
+        private static void AddDummyActivity(AgpReport report, string personId, string staffId)
         {
             var random = new Random();
 
@@ -179,10 +189,10 @@ namespace Vodamep.Specs.Agp.StepDefinitions
 
             var minutes = random.Next(1, 100) * 5;
 
-            var activity = new Activity() { Id = "1", Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };
-            activity.Entries.Add(new[] { ActivityType.ClearingAt, ActivityType.ContactPartnerAt, ActivityType.GuidanceClientAt });
+            var activity = new Activity() { Id = "1", Date = report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };
+            activity.Entries.Add(new[] { ActivityType.ClearingAt, ActivityType.ContactPartnerAt, ActivityType.GuidancePartnerAt });
 
-            this.Report.Activities.Add(activity);
+            report.Activities.Add(activity);
         }
 
 

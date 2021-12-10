@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Google.Protobuf;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
@@ -19,26 +20,32 @@ namespace Vodamep.Specs
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
+            this.Validate = () => Validator.Validate(this.Report);
         }
 
         public IReport Report { get; set; }
 
+        public IReport PrecedingReport { get; set; }
+
         public IMessage ReportM => (IMessage)this.Report;
 
         public IValidator Validator { get; set; }
+
         public ValidationResult Result
         {
             get
             {
                 if (_validationResult == null)
                 {
-                    _validationResult = Validator.Validate(this.Report);
+                    _validationResult = Validate();
                 }
 
                 return _validationResult;
             }
         }
 
-       public GetPropertiesByTypeDelegate GetPropertiesByType { get; set; }
+        public GetPropertiesByTypeDelegate GetPropertiesByType { get; set; }
+
+        public Func<ValidationResult> Validate { get; set; }
     }
 }

@@ -44,6 +44,8 @@ namespace Vodamep.StatLp.Model
 
         public static StatLpReportValidationResult Validate(this StatLpReport report) => (StatLpReportValidationResult)new StatLpReportValidator().Validate(report);
 
+        public static StatLpReportValidationResult ValidateAdjacent(this StatLpReport report, StatLpReport predecessor) => (StatLpReportValidationResult)new StatLpAdjacentReportsValidator().Validate((report, predecessor));
+
         public static string ValidateToText(this StatLpReport report, bool ignoreWarnings) => new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
 
         public static IEnumerable<string> ValidateToEnumerable(this StatLpReport report, bool ignoreWarnings) => new StatLpReportValidationResultListFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
@@ -73,6 +75,11 @@ namespace Vodamep.StatLp.Model
 
             var stays = report.Stays.Where(x => x.PersonId == personId).OrderBy(x => x.From).ToArray();
 
+            return stays.GetGroupedStays(sameTypeyGroupMode);
+        }
+
+        public static IEnumerable<GroupedStay> GetGroupedStays(this Stay[] stays, GroupedStay.SameTypeyGroupMode sameTypeyGroupMode = GroupedStay.SameTypeyGroupMode.NotAllowed)
+        {
             if (stays.Length == 0)
                 yield break;
 

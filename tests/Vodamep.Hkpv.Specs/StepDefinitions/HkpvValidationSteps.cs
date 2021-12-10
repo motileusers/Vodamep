@@ -22,21 +22,32 @@ namespace Vodamep.Specs.StepDefinitions
 
         public HkpvValidationSteps(ReportContext context)
         {
-            _context = context;            
-            _context.GetPropertiesByType = this.GetPropertiesByType;
-            _context.Validator = new HkpvReportValidator();
+            if (context.Report == null)
+            {
+                InitContext(context);
+                _context = context;
+                AddDummyActivities(this.Report.Persons[0].Id, this.Report.Staffs[0].Id);
+            }
+
+            _context = context;
+        }
+
+        private void InitContext(ReportContext context)
+        {
+            context.GetPropertiesByType = this.GetPropertiesByType;
+            context.Validator = new HkpvReportValidator();
 
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
             var date = DateTime.Today.AddMonths(-1);
-            _context.Report = HkpvDataGenerator.Instance.CreateHkpvReport("", date.Year, date.Month, 1, 1, false);
+            var r = HkpvDataGenerator.Instance.CreateHkpvReport("", date.Year, date.Month, 1, 1, false);
 
-            this.AddDummyActivities(Report.Persons[0].Id, Report.Staffs[0].Id);
-
-            var consultation = new Activity() { Date = this.Report.From, StaffId = Report.Staffs[0].Id };
+            var consultation = new Activity() { Date = r.From, StaffId = r.Staffs[0].Id };
             consultation.Entries.Add(ActivityType.Lv31);
-            this.Report.Activities.Add(consultation);            
+            r.Activities.Add(consultation);
+
+            context.Report = r;
         }
 
         private IEnumerable<IMessage> GetPropertiesByType(string type)
@@ -44,7 +55,7 @@ namespace Vodamep.Specs.StepDefinitions
             return type switch
             {
                 nameof(Person) => new[] { this.Report.Persons[0] },
-                nameof(Staff) => new[] { this.Report.Staffs[0] },                
+                nameof(Staff) => new[] { this.Report.Staffs[0] },
                 nameof(Activity) => this.Report.Activities,
                 nameof(Employment) => this.Report.Staffs[0].Employments,
                 _ => Array.Empty<IMessage>(),
@@ -72,7 +83,7 @@ namespace Vodamep.Specs.StepDefinitions
         {
             string[] fromTos = employments.Split(',');
             Employment existingEmployment = this.Report.Staffs[0].Employments.First();
-            Activity existingActivity = this.Report.Activities.First();
+            
 
             this.Report.Staffs[0].Employments.Clear();
             this.Report.Activities.Clear();
@@ -80,7 +91,7 @@ namespace Vodamep.Specs.StepDefinitions
             string[] activityDates = activities.Split(',');
             foreach (string activityDate in activityDates)
             {
-                var a = new Activity() { DateD = new DateTime(this.Report.FromD.Year, this.Report.FromD.Month, Convert.ToInt32(activityDate)), PersonId = existingActivity.PersonId, StaffId = existingActivity.StaffId };
+                var a = new Activity() { DateD = new DateTime(this.Report.FromD.Year, this.Report.FromD.Month, Convert.ToInt32(activityDate)), PersonId = this.Report.Persons[0].Id, StaffId = this.Report.Staffs[0].Id };
                 a.Entries.Add(ActivityType.Lv01);
 
                 this.Report.Activities.Add(a);
@@ -214,7 +225,6 @@ namespace Vodamep.Specs.StepDefinitions
 
         private void AddDummyActivities(string personId, string staffId)
         {
-
             _dummyActivities = new Activity() { Date = this.Report.From, PersonId = personId, StaffId = staffId };
             _dummyActivities.Entries.Add(new[] { ActivityType.Lv02, ActivityType.Lv04, ActivityType.Lv15 });
 

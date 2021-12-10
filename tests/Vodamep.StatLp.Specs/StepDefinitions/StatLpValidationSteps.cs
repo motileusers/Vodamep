@@ -21,14 +21,25 @@ namespace Vodamep.Specs.StepDefinitions
 
         public StatLpValidationSteps(ReportContext context)
         {
+            if (context.Report == null)
+            {
+                InitContext(context);
+            }
+
             _context = context;
-            _context.GetPropertiesByType = this.GetPropertiesByType;
-            _context.Validator = new StatLpReportValidator();
+        }
+
+        private void InitContext(ReportContext context)
+        {
+            context.GetPropertiesByType = GetPropertiesByType;
+            context.Validator = new StatLpReportValidator();
 
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
-            this._context.Report = StatLpDataGenerator.Instance.CreateStatLpReport("0001", 2021, 1);
+            var r = StatLpDataGenerator.Instance.CreateStatLpReport("0001", 2021, 1);
+
+            context.Report = r;
         }
 
         private IEnumerable<IMessage> GetPropertiesByType(string type)
@@ -72,6 +83,10 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Attributes.Clear();
             }
             else if (type == nameof(Admission))
+            {
+                this.Report.Admissions.Clear();
+            }
+            else if (type == nameof(Stay))
             {
                 this.Report.Admissions.Clear();
             }
