@@ -100,7 +100,7 @@ namespace Vodamep.ValidationBase
         public static string StatLpAdmissionEmptyPostCode(string date, string clientName) => $"Keine Angabe von Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
         public static string StatLpAdmissionWrongPostCode(string date, string clientName) => $"Ungültige Kombination Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
 
-        public static string StatLpAdmissionAttributeMissing(string clientName, string date, string attributeType) => $"Für die Person '{clientName}' wurde am {date} keine '{attributeType}' gesendet.";
+        public static string StatLpAdmissionAttributeMissing(string clientName, string date, string attributeType) => $"Für die Person '{clientName}' wurde am {date} keine '{attributeType}' gemeldet.";
         public static string StatLpAttributeMultiple(string clientName, string date, string attributeType) => $"Beim Klient '{clientName}' wurde am {date} das Attribut '{attributeType}' mehrfach angegeben.";
 
         public static string StatLpStayEveryPersonMustBeInAStay(string clientName) => $"Die Person '{clientName}' wird in keinem Aufenthalt erwähnt.";

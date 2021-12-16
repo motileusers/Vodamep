@@ -165,7 +165,7 @@ namespace Vodamep.StatLp.Validation
 
             foreach ( var type in attributTypes)
             {
-                if (!attributes.Where(x => x.AttributeType == type && x.From >= from).Any())
+                if (!attributes.Where(x => x.AttributeType == type && x.From <= from).Any())
                 {
                     var index = report.Stays.IndexOf(s.Stays[0]);
                     ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",

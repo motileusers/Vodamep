@@ -108,3 +108,16 @@ Szenario: Jedes Aufenthaltsende muss eine Entlassungsmeldung haben
 Szenario: Jeder Aufenthalt darf nur eine Entlassungsmeldung haben
 	Angenommen es gibt eine Entlassungsmeldung mehrfach
 	Dann enthält das Validierungsergebnis den Fehler 'Für die Aufname (.*) wurden mehrere Entlassungsdaten gemeldet.'
+
+Szenario: Zu jedem Aufenthalt müssen die Attribute definiert sein
+	Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'
+	Und die Liste 'Attribute' ist leer
+	Dann enthält das Validierungsergebnis den Fehler 'Für die Person '(.*)' wurde am 30.05.2021 keine 'Pflegestufe' gemeldet'
+	Und enthält das Validierungsergebnis den Fehler 'Für die Person '(.*)' wurde am 30.05.2021 keine 'Pflegestufe Arge' gemeldet'
+	Und enthält das Validierungsergebnis den Fehler 'Für die Person '(.*)' wurde am 30.05.2021 keine 'Finanzierung' gemeldet'
+
+Szenario: Bei mehreren Aufnahmen müssen gleich beleibende Attribute nicht mehrmals gemeldet werden
+	Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'	
+	Und eine weitere Aufnahme startet am '2021-08-12', dauert 30 Tage und ist eine 'ContinuousAt'
+	Dann enthält das Validierungsergebnis keine Fehler
+	

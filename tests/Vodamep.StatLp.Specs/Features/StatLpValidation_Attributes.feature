@@ -30,7 +30,7 @@ Szenario: Pflegegeld ist undefiniert
 Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
 	Angenommen es ist ein 'StatLpReport'
     Und das Attribut '<Name>' fehlt
-    Dann enthält das Validierungsergebnis den Fehler 'Für die Person '(.*)' wurde am (.*) keine '<Bezeichnung>' gesendet.'
+    Dann enthält das Validierungsergebnis den Fehler 'Für die Person '(.*)' wurde am (.*) keine '<Bezeichnung>' gemeldet.'
 Beispiele:
     | Name              | Bezeichnung        |    
     | CareAllowance     | Pflegestufe        |

@@ -90,6 +90,14 @@ namespace Vodamep.Specs.StepDefinitions
             {
                 this.Report.Admissions.Clear();
             }
+            else if (type == nameof(Leaving))
+            {
+                this.Report.Leavings.Clear();
+            }
+            else
+            {
+                throw new NotImplementedException(type);
+            }
         }
 
 
@@ -239,17 +247,37 @@ namespace Vodamep.Specs.StepDefinitions
             var personId = this.Report.Persons[0].Id;
             var from = DateTime.Parse(date, new CultureInfo("de-DE"));
 
-            this.Report.Stays.Add(new Stay
+            var stay = new Stay
             {
                 PersonId = personId,
                 FromD = from,
                 ToD = days >= 0 ? from.AddDays(days) : null,
                 Type = Enum.Parse<AdmissionType>(type)
-            });
+            };
+
+            if (stay.ToD > this.Report.ToD)
+            {
+                stay.ToD = null;
+            }
+
+            this.Report.Stays.Add(stay);
 
             this.Report.Admissions.Add(StatLpDataGenerator.Instance.CreateAdmission(personId, from));
 
             this.Report.Attributes.Add(StatLpDataGenerator.Instance.CreateAttributes(personId, from >= this.Report.FromD ? from : this.Report.FromD));
+
+            // ggf. das Leaving des direkt vorngehenden Aufenthaltes entfernen
+            var removeLeaving = this.Report.Leavings.Where(x => x.PersonId == personId && x.LeavingDateD == from.AddDays(-1)).FirstOrDefault();
+            if (removeLeaving != null)
+            {
+                this.Report.Leavings.Remove(removeLeaving);
+            }
+
+            // ggf eine Leaving erzeugen
+            if (stay.To != null && stay.From >= this.Report.From)
+            {
+                this.Report.Leavings.Add(StatLpDataGenerator.Instance.CreateLeaving(personId, stay.ToD.Value));
+            }
 
         }
 
