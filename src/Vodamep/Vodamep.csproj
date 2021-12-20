@@ -74,6 +74,7 @@
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\service.csv" Link="Data\StatLp\service.csv" />
     <EmbeddedResource Include="..\..\specifications\Datasets\StatLp\social_change.csv" Link="Data\StatLp\social_change.csv" />
     <None Include="..\..\specifications\Datasets\admission_location.csv" Link="Data\StatLp\admission_location.csv" />
+    <None Include="..\..\specifications\Datasets\Agp\staffactivitytypes.csv" Link="Data\Agp\staffactivitytypes.csv" />
     <None Include="..\..\specifications\Datasets\Cm\activity_type.csv" Link="Data\Cm\activity_type.csv" />
     <None Include="..\..\specifications\Datasets\Cm\client_activity_type.csv" Link="Data\Cm\client_activity_type.csv" />
     <None Include="..\..\specifications\Datasets\gender.csv" Link="Data\gender.csv" />

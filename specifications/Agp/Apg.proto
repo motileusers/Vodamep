@@ -12,7 +12,7 @@ message AgpReport {
     repeated Staff staffs = 4; 
     repeated Person persons = 5;         
     repeated Activity activities = 6;     
-    repeated TravelTime travel_times = 7;     
+    repeated StaffActivity staff_activities = 7;     
 }
 
 // Einrichtung
@@ -45,6 +45,25 @@ message Person {
 }
 
 // Leistungen
+message StaffActivity {
+    string id = 1;
+    google.protobuf.Timestamp date = 2;
+    string staff_id = 3;
+    StaffActivityType activity_type = 4; 
+    int32 minutes = 5;
+}
+
+
+// Beschreibung in staffactivitytypes.csv
+enum StaffActivityType { 
+    UNDEFINED_SA = 0;
+    TRAVELING_SA = 1;
+    NETWORKING_SA = 2;
+    QUALIFICATION_SA = 3;
+    ORGANIZATION_SA = 4;
+}
+
+// Leistungen
 message Activity {
     string id = 1;
     google.protobuf.Timestamp date = 2;
@@ -55,28 +74,19 @@ message Activity {
     int32 minutes = 7;
 }
 
-// Wegzeiten
-message TravelTime {
-    string id = 1;
-    google.protobuf.Timestamp date = 2;
-    string staff_id = 3;
-    int32 minutes = 4;
-}
-
-// Leistungstypen
 // Beschreibung in activitytypes.csv
 enum ActivityType { 
-    UNDEFINED_ACTIVITY = 0;
-    CLEARING = 1;
-    OBSERVATIONS_ASSESSMENT = 2;
-    GERIATRIC_PSYCHIATRIC = 3;
-    GUIDANCE_PARTNER = 4;
-    GUIDANCE_CLIENT = 5;
-    CARE_DOCUMENTATION = 6;
-    CONTACT_PARTNER = 7;
-    EXECUTION_TRANSPORT = 8;
-    MISCELLANEOUS = 9;
+    UNDEFINED_AT = 0;
+    CLEARING_AT = 1;
+    OBSERVATIONS_ASSESSMENT_AT = 2;
+    GERIATRIC_PSYCHIATRIC_AT = 3;
+    GUIDANCE_PARTNER_AT = 4;
+    GUIDANCE_CLIENT_AT = 5;
+    CARE_DOCUMENTATION_AT = 6;
+    CONTACT_PARTNER_AT = 7;
+    EXECUTION_TRANSPORT_AT = 8;
 }
+
 
 // Diagnosegruppen
 // Beschreibung in diagnosisgroups.csv

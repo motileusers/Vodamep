@@ -163,7 +163,7 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
-        [Given(@"es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen")]
+        [Given(@"es werden zusätzliche Wegzeiten für einen Mitarbeiter eingetragen")]
         public void GivenTravelTimesAreAdded()
         {
             var existingTravelTime = this.Report.TravelTimes.FirstOrDefault();
@@ -273,7 +273,9 @@ namespace Vodamep.Specs.StepDefinitions
         [Then(@"die Fehlermeldung lautet: '(.*)'")]
         public void ThenTheResultContainsJust(string message)
         {
-            Assert.Equal(message, this.Result.Errors.Select(x => x.ErrorMessage).Distinct().Single());
+            var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
 
         private void AddDummyActivity(string personId, string staffId)

@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Vodamep.Agp.Model;
 using Vodamep.ValidationBase;
 
-namespace Vodamep.ReportBase
+namespace Vodamep.Agp.Validation
 {
-    internal class ActivityMinutesValidator : AbstractValidator<IMinutesActivity>
+    internal class StaffActivityMinutesValidator : AbstractValidator<StaffActivity>
     {
-        public ActivityMinutesValidator(string propertyName, string client)
+        public StaffActivityMinutesValidator(string propertyName, string client)
         {
             this.RuleFor(x => x.Minutes)
                 .GreaterThan(0)

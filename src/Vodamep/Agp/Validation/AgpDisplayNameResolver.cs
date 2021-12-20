@@ -38,7 +38,9 @@ namespace Vodamep.Agp.Validation
 
             _dict.Add(nameof(Staff.GivenName), "Vorname");
             _dict.Add(nameof(Staff.FamilyName), "Familienname");
-            
+
+            _dict.Add(nameof(StaffActivity), "Aktivität");
+
             _dict.Add(nameof(Activity), "Aktivität");
             _dict.Add(nameof(Activity.Date), "Datum");
             _dict.Add(nameof(Activity.DateD), "Datum");
@@ -47,12 +49,6 @@ namespace Vodamep.Agp.Validation
             _dict.Add(nameof(Activity.PlaceOfAction), "Einsatzort");
             _dict.Add(nameof(Activity.Entries), "Leistungsbereiche");
             _dict.Add(nameof(Activity.Minutes), "Leistungszeit");
-
-            //_dict.Add(nameof(TravelTime.Id), "Wegzeiten-ID");
-            //_dict.Add(nameof(TravelTime.Date), "Datum");
-            //_dict.Add(nameof(TravelTime.DateD), "Datum");
-            //_dict.Add(nameof(TravelTime.StaffId), "Mitarbeiter-ID");
-            //_dict.Add(nameof(TravelTime.Minutes), "Wegzeit");
 
         }
 

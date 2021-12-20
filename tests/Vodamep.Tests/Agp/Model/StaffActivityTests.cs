@@ -7,21 +7,17 @@ using Xunit;
 
 namespace Vodamep.Tests.Agp.Model
 {
-    public class ActivityTests
+    public class StaffActivityTests
     {
         [Fact]
         public void AsSorted_ReturnspectedResult()
         {
             var list1 = new[] {
-                ActivityType.UndefinedAt,
-                ActivityType.CareDocumentationAt,
-                ActivityType.ClearingAt,
-                ActivityType.ContactPartnerAt,
-                ActivityType.ExecutionTransportAt,
-                ActivityType.GeriatricPsychiatricAt,
-                ActivityType.GuidanceClientAt,
-                ActivityType.GuidancePartnerAt,
-                ActivityType.ObservationsAssessmentAt
+                StaffActivityType.UndefinedSa,
+                StaffActivityType.NetworkingSa,
+                StaffActivityType.OrganizationSa,
+                StaffActivityType.QualificationSa,
+                StaffActivityType.TravelingSa,
             }.Select(x => x.ToString());
 
             var values = ActivityTypeProvider.Instance.Values.Select(x => x.Key);

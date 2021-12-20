@@ -40,12 +40,10 @@ namespace Vodamep.ValidationBase
         public static string OnlyONePalliativeDiagnosisGroup (string client) => $"Es darf nur eine Palliativ Diagnose Gruppe für Klient '{client}' vorhanden sein.";
         public static string AtLeastOneDiagnosisGroup (string client) => $"Es muss mindestens eine Diagnosegruppe für Klient '{client}' vorhanden sein.";
         public static string ReportBaseMinutesMustBeGreater0 (string propertyName, string clientId) => $"{propertyName} von Klient '{clientId}' muss größer 0 sein.";
-        public static string ReportBaseStepWidthWrong (string propertyName, string clientId, int nrOfMinutes) => $"{propertyName} von Klient '{clientId}' darf nur in {nrOfMinutes} Minuten Schritten eingegeben werden.";
-        public static string MaxSumOfMinutesPerStaffMemberIs12Hours => "Summe Leistungsminuten pro Tag / pro Mitarbeiter darf 12 Stunden nicht überschreiten.";
-        public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours (string date) => $"Die Summe der Leistungsminuten des Mitarbeiters am '{date}' darf 12 Stunden nicht überschreiten.";
-        public static string MaxSumOfMinutesTravelTimesIs10Hours (string staff) => $"Summe Reisezeiten von Mitarbeiter {staff} darf 5 Stunden nicht überschreiten.";
-        public static string MaxSumOfMinutesTravelTimesIs10Hours (string staff, string date) => $"Summe Reisezeiten von Mitarbeiter {staff} am {date} darf 5 Stunden nicht überschreiten.";
-        public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Reisezeiten pro Tag erlaubt.";
+        public static string ReportBaseStepWidthWrong (string propertyName, string clientName, int nrOfMinutes) => $"{propertyName} von '{clientName}' darf nur in {nrOfMinutes} Minuten Schritten eingegeben werden.";
+        public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours (string date, string name) => $"Die Leistungsminuten von '{name}' am '{date}' dürfen 12 Stunden nicht überschreiten.";
+        public static string MaxSumOfMinutesTravelTimesIs5Hours (string staff, string date) => $"Summe Wegzeiten von Mitarbeiter {staff} am {date} darf 5 Stunden nicht überschreiten.";
+        public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Wegzeiten pro Tag erlaubt.";
         public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed (string personId) => $"Innerhalb einer Aktivität von Klient '{personId}' dürfen keine doppelten Leistungstypen vorhanden sein.";
         public static string WithinAnActivityTheValuesAreNotAllowedInCombination(string client, string activityType1, string activityType2) => $"Innerhalb einer Aktivität von Klient '{client}' dürfen nicht gleichzeitg die Leistungstypen '{activityType1}' und '{activityType2}' vorhanden sein.";
         public static string InvalidInstitutionNumber => "Ungültige Einrichtungsnummer.";
@@ -64,7 +62,7 @@ namespace Vodamep.ValidationBase
         public static string InvalidValue(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom '{date}' von Klient '{personId}'.";
         public static string TextTooLong(string date, string personId) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom '{date}' von Klient '{personId}'.";
         public static string ReportBaseIdIsNotUnique (string clientId)=> $"Die Id von Klient '{clientId}' ist nicht eindeutig.";
-        public static string ReportBaseActivityDateMustBeWithinReport(string propertyName, string clientId) => $"'{propertyName}' einer Aktivität von Klient '{clientId}' muss innerhalb des Meldungszeitraums liegen.";
+        public static string ReportBaseActivityDateMustBeWithinReport(string propertyName, string clientPersonName, string dateTime) => $"'{propertyName}' der Aktivität {dateTime} von '{clientPersonName}' muss innerhalb des Meldungszeitraums liegen.";
         public static string ReportBaseBirthdayNotInFuture(string clientId) => $"'Geburtsdatum' von Klient '{clientId}' darf nicht in der Zukunft liegen.";
         public static string ReportBaseBirthdayMustNotBeBefore(string clientId) => $"Der Wert von 'Geburtsdatum' von Klient '{clientId}' muss grösser oder gleich .*.";
         public static string ReportBaseValueMustNotBeEmpty(string clientId) => $"'{{PropertyName}}' von Klient '{clientId}' darf nicht leer sein.";

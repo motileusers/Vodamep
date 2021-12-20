@@ -36,11 +36,24 @@ namespace Vodamep.Data.Dummy
             return s;
         }
 
-        public static TravelTime AddDummyTravelTime (this AgpReport report, DateTime from)
+
+        public static StaffActivity[] AddDummyStaffActivities(this AgpReport report)
         {
-            var tt = AgpDataGenerator.Instance.CreateTravelTimes(report, from);
-            report.TravelTimes.Add(tt);
-            return tt;
+            if (report.FromD == null)
+                report.FromD = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-1);
+
+            if (report.ToD == null)
+                report.ToD = report.FromD.LastDateInMonth();
+
+            if (report.Staffs.Count == 0)
+                report.AddDummyStaff();
+
+            if (report.Persons.Count == 0)
+                report.AddDummyPerson();
+
+            var a = AgpDataGenerator.Instance.CreateStaffActivities(report);
+            report.StaffActivities.AddRange(a);
+            return a;
         }
 
         public static Activity[] AddDummyActivities(this AgpReport report)

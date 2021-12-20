@@ -11,12 +11,48 @@ namespace Vodamep.Agp
 
         public AgpReportDiffer()
         {
-            // Test 5
             this.DiffFunctions.Add(typeof(RepeatedField<Person>), this.DiffPersons);
             this.DiffFunctions.Add(typeof(RepeatedField<Staff>), this.DiffStaffs);
             this.DiffFunctions.Add(typeof(RepeatedField<Activity>), this.DiffActivities);
-            this.DiffFunctions.Add(typeof(RepeatedField<TravelTime>), this.DiffTravelTimes);
+            this.DiffFunctions.Add(typeof(RepeatedField<StaffActivity>), this.DiffStaffActivities);
 
+        }
+
+        public List<DiffObject> DiffList(AgpReport report1, AgpReport report2)
+        {
+            var result = new List<DiffObject>();
+
+            if (report1.GetType() != report2.GetType())
+            {
+                result.Add(new DiffObject
+                {
+                    DataDescription = "Reports are different",
+                    Value1 = report1.GetType(),
+                    Value2 = report2.GetType(),
+                    Difference = Difference.Difference
+                });
+            }
+            else
+            {
+                if (DiffFunctions.ContainsKey(report1.GetType()))
+                {
+                    result.AddRange(DiffFunctions[report1.GetType()](report1, report2));
+                }
+
+                var properties = report1.GetType().GetProperties();
+
+                foreach (var property in properties)
+                {
+                    if (DiffFunctions.ContainsKey(property.PropertyType))
+                    {
+                        result.AddRange(DiffFunctions[property.PropertyType](property.GetValue(report1), property.GetValue(report2)));
+                    }
+                }
+            }
+
+            result.RemoveAll(x => x.Difference == Difference.Unchanged);
+
+            return result;
         }
 
         private IEnumerable<DiffObject> DiffStaffs(object obj1, object obj2)
@@ -51,12 +87,15 @@ namespace Vodamep.Agp
 
             return list;
         }
-        private IEnumerable<DiffObject> DiffTravelTimes(object obj1, object obj2)
-        {
-            var travelTimes1 = (obj1 as RepeatedField<TravelTime>);
-            var travelTimes2 = (obj2 as RepeatedField<TravelTime>);
 
-            return DiffItems(travelTimes1, travelTimes2, DifferenceIdType.TravelTime);
+
+        private IEnumerable<DiffObject> DiffStaffActivities(object obj1, object obj2)
+        {
+            var staffs1 = (obj1 as RepeatedField<StaffActivity>).ToList();
+            var staffs2 = (obj2 as RepeatedField<StaffActivity>).ToList();
+
+            return DiffItems(staffs1, staffs2, DifferenceIdType.StaffActivity);
         }
+
     }
 }

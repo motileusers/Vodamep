@@ -9,7 +9,7 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.Agp.Model
 {
-    public partial class AgpReport : ITravelTimeReport
+    public partial class AgpReport : IReport
     {
         public ReportType ReportType => ReportType.Agp;
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
@@ -19,10 +19,20 @@ namespace Vodamep.Agp.Model
         IInstitution IReport.Institution => this.Institution;
 
         IList<IPerson> IReport.Persons => this.Persons.Select(x => x as IPerson).ToList();
-       
-        IList<IStaff> ITravelTimeReport.Staffs => this.Staffs.Select(x => x as IStaff).ToList();
-        
-        IList<ITravelTime> ITravelTimeReport.TravelTimes => this.TravelTimes.Select(x => x as ITravelTime).ToList();
+
+        public string GetStaffName(string id)
+        {
+            string client = id;
+
+            var staff = this.Staffs.FirstOrDefault(p => p.Id == id);
+
+            if (staff != null)
+            {
+                client = $"{staff.GivenName} {staff.FamilyName}";
+            }
+
+            return client;
+        }
 
         public static AgpReport CreateDummyData()
         {
@@ -72,8 +82,6 @@ namespace Vodamep.Agp.Model
 
         public string GetSHA256Hash() => SHAHasher.GetReportHash(this.ToByteArray());
 
-
-        //public DiffResult Diff(AgpReport report) => new HkpAgvReportDiffer().Diff(this, report);
 
         public List<DiffObject> DiffList(AgpReport report) => new AgpReportDiffer().DiffList(this, report);
 

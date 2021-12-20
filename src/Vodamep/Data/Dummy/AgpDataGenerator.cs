@@ -46,13 +46,16 @@ namespace Vodamep.Data.Dummy
 
             report.AddDummyPersons(persons);
             report.AddDummyStaffs(staffs, useRandomValues);
-            report.AddDummyTravelTime(from);
 
             if (addActivities)
+            {
                 report.AddDummyActivities();
+                report.AddDummyStaffActivities();
+            }
 
             return report;
         }
+
 
         public Person CreatePerson(string id = null)
         {
@@ -110,7 +113,7 @@ namespace Vodamep.Data.Dummy
                 //Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
                 //            .Where(x => x != Referrer.OtherReferrer &&
                 //                        x != Referrer.UndefinedReferrer)
-                            //.ElementAt(index),
+                //.ElementAt(index),
 
                 HospitalDoctor = "Dr. " + _familynames[index],
                 LocalDoctor = "Dr. " + _familynames[index],
@@ -135,7 +138,7 @@ namespace Vodamep.Data.Dummy
         public IEnumerable<Person> CreatePersons(int count)
         {
             for (var i = 0; i < count; i++)
-                yield return CreatePerson((i+1).ToString());
+                yield return CreatePerson((i + 1).ToString());
         }
 
         public Staff CreateStaff(AgpReport report, bool useRandomValues = true)
@@ -145,7 +148,7 @@ namespace Vodamep.Data.Dummy
             var staff = new Staff
             {
                 Id = id,
-                FamilyName = useRandomValues ? _familynames[_rand.Next(_familynames.Length)]: _familynames[0],
+                FamilyName = useRandomValues ? _familynames[_rand.Next(_familynames.Length)] : _familynames[0],
                 GivenName = useRandomValues ? _names[_rand.Next(_names.Length)] : _names[0],
             };
 
@@ -172,18 +175,6 @@ namespace Vodamep.Data.Dummy
                 yield return CreateStaff(report, useRandomValues);
         }
 
-        public TravelTime CreateTravelTimes (AgpReport report, DateTime from)
-        {
-            var travelTime = new TravelTime
-            {
-                Id = "0",
-                DateD = from,
-                Minutes = 125,
-                StaffId = report.Staffs.First().Id,
-            };
-
-            return travelTime;
-        }
 
         private ActivityType[] CreateRandomActivities()
         {
@@ -194,6 +185,21 @@ namespace Vodamep.Data.Dummy
             return a.Split(',').Select(x => (ActivityType)int.Parse(x)).Distinct().ToArray();
         }
 
+        private StaffActivity CreateStaffActivity(string staffId, DateTime date, int minuten)
+        {
+            var result = new StaffActivity()
+            {
+                StaffId = staffId,
+                DateD = date,
+                ActivityType = StaffActivityType.NetworkingSa,
+                Minutes = 5,
+            };
+
+            result.Minutes = minuten;
+
+            return result;
+        }
+
         private Activity CreateRandomActivity(string personId, string staffId, DateTime date, int minuten)
         {
             var result = new Activity()
@@ -202,7 +208,7 @@ namespace Vodamep.Data.Dummy
                 PersonId = personId,
                 DateD = date,
                 PlaceOfAction = ((PlaceOfAction[])(Enum.GetValues(typeof(PlaceOfAction))))
-                .Where(x => x != PlaceOfAction.UndefinedPlace )
+                .Where(x => x != PlaceOfAction.UndefinedPlace)
                 .ElementAt(_rand.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1))
             };
 
@@ -213,6 +219,22 @@ namespace Vodamep.Data.Dummy
 
             return result;
         }
+
+
+        public StaffActivity[] CreateStaffActivities(AgpReport report)
+        {
+            var result = new List<StaffActivity>();
+
+            foreach (Staff staff in report.Staffs)
+            {
+                var date = report.FromD.AddDays(1);
+
+                result.Add(CreateStaffActivity(staff.Id, date, 5));
+            }
+
+            return result.ToArray();
+        }
+
 
         public Activity[] CreateActivities(AgpReport report)
         {
