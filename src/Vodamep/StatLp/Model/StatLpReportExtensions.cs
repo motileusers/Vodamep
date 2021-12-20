@@ -87,13 +87,24 @@ namespace Vodamep.StatLp.Model
 
             foreach (var stay in stays.Skip(1))
             {
+                var lastStay = current.Stays.Last();
+                if (lastStay.PersonId != stay.PersonId)
+                {
+                    throw new Exception("Es können keine Aufenthalte unterschiedlicher Personen gruppiert werden!");
+                }
+
+                if (lastStay.FromD > stay.FromD)
+                {
+                    throw new Exception("Die Aufenthalte müssen vor dem Gruppieren nach Datum sortiert sein!");
+                }
+
                 if (current.To == null)
                 {
                     throw new Exception("Die Aufenthalte dürfen sich nicht überschneiden!");
                 }
-                else if (current.To.Value.AddDays(1) == stay.FromD)
+
+                if (current.To.Value.AddDays(1) == stay.FromD)
                 {
-                    var lastStay = current.Stays.Last();
                     if (sameTypeyGroupMode != GroupedStay.SameTypeyGroupMode.Ignore && lastStay.Type == stay.Type)
                     {
                         if (sameTypeyGroupMode == GroupedStay.SameTypeyGroupMode.NotAllowed)
