@@ -8,15 +8,15 @@
     <Company>connexia – Gesellschaft für Gesundheit und Pflege</Company>
     <Description>Komponente zum Validieren, Speichern und Senden von Datenmeldungen an connexia.</Description>
     <Copyright>connexia</Copyright>
-    <PackageProjectUrl>https://bitbucket.org/team_connexia/vodamep/src/master/</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/connexiadev/Vodamep/tree/master/</PackageProjectUrl>
     <PackageIcon></PackageIcon>
-    <RepositoryUrl>https://bitbucket.org/team_connexia/vodamep.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/connexiadev/Vodamep.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.17.7</Version>
+    <Version>1.18.0</Version>
     <Product>Vorarlberger Datenmeldung Pflege</Product>
-    <PackageReleaseNotes>AB + MH + TB + CM</PackageReleaseNotes>
-    <AssemblyVersion>1.17.7.0</AssemblyVersion>
-    <FileVersion>1.17.7.0</FileVersion>
+    <PackageReleaseNotes>AGP Struktur Änderungen</PackageReleaseNotes>
+    <AssemblyVersion>1.18.0.0</AssemblyVersion>
+    <FileVersion>1.18.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
