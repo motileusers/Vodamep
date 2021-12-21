@@ -2,6 +2,7 @@
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -294,7 +295,9 @@ namespace Vodamep.Specs.StepDefinitions
         {
             var pattern = new Regex(message, RegexOptions.IgnoreCase);
 
-            Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
+            Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage))
+                .Select(e => e.ErrorMessage)
+                .Distinct());
         }
 
         [Then(@"enthält das Validierungsergebnis den Fehler '(.*)'")]

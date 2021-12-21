@@ -43,8 +43,8 @@ namespace Vodamep.Mkkp.Model
 
             result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
             result.Staffs.AddRange(report.Staffs.OrderBy(x => x.Id));
-            result.Activities.Add(report.Activities.OrderBy(x => x.StaffId).ThenBy(x => x.PersonId).ThenBy(x => x.DateD));
-            result.TravelTimes.AddRange(report.TravelTimes.OrderBy(x => x.Id));
+
+            result.TravelTimes.AddRange(report.TravelTimes.OrderBy(x => x.StaffId).ThenBy(x => x.DateD).ThenBy(x => x.Minutes));
 
             return result;
         }

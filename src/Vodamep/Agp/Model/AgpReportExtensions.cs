@@ -39,11 +39,10 @@ namespace Vodamep.Agp.Model
             };
 
             result.Activities.AddRange(report.Activities.AsSorted());
+            result.StaffActivities.AddRange(report.StaffActivities.AsSorted());
 
             result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
             result.Staffs.AddRange(report.Staffs.OrderBy(x => x.Id));
-            result.Activities.Add(report.Activities.OrderBy(x => x.StaffId).ThenBy(x => x.PersonId).ThenBy(x => x.DateD));
-            result.StaffActivities.Add(report.StaffActivities.OrderBy(x => x.StaffId).ThenBy(x => x.DateD));
 
             return result;
         }

@@ -13,14 +13,14 @@ namespace Vodamep.Tests.Agp.Model
         public void AsSorted_ReturnspectedResult()
         {
             var list1 = new[] {
-                StaffActivityType.UndefinedSa,
                 StaffActivityType.NetworkingSa,
                 StaffActivityType.OrganizationSa,
                 StaffActivityType.QualificationSa,
                 StaffActivityType.TravelingSa,
+                StaffActivityType.UndefinedSa,
             }.Select(x => x.ToString());
 
-            var values = ActivityTypeProvider.Instance.Values.Select(x => x.Key);
+            var values = StaffActivityTypeProvider.Instance.Values.Select(x => x.Key);
 
             Assert.Equal(list1, values);
         }
