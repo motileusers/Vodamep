@@ -80,6 +80,47 @@ namespace Vodamep.Tests.StatLp
             Assert.Equal(new[] { expectedStay }, result[0].Stays);
         }
 
+        [Fact]
+        public void GetGroupedStays_StaysWithDiversePersonId_ThrowsException()
+        {
+            var stay1 = this.AddFirstStay(new DateTime(2021, 3, 1), AdmissionType.TrialAt, days: 10);
+
+            var stay2 = this.AddAdjacentStay(AdmissionType.ContinuousAt, days: 10, gap: 0);
+
+            stay2.PersonId = this.PersonId + "0";
+
+            var stays = new[] { stay1, stay2 };
+
+            Assert.Throws<Exception>(() => stays.GetGroupedStays().ToArray());
+        }
+
+        [Fact]
+        public void GetGroupedStays_StaysNotOrderedByFrom_ThrowsException()
+        {
+            var stay1 = this.AddFirstStay(new DateTime(2021, 3, 1), AdmissionType.TrialAt, days: 10);
+
+            var stay2 = this.AddAdjacentStay(AdmissionType.ContinuousAt, days: 10, gap: 0);
+
+            var stays = new[] { stay2, stay1 };
+
+            Assert.Throws<Exception>(() => stays.GetGroupedStays().ToArray());
+        }
+
+        [Fact]
+        public void GetGroupedStays_StaysMergedWithEmptyToDateBetween_ThrowsException()
+        {
+            var stay1 = this.AddFirstStay(new DateTime(2021, 3, 1), AdmissionType.TrialAt, days: 10);
+
+            var stay2 = this.AddAdjacentStay(AdmissionType.ContinuousAt, days: 10, gap: 0);
+            stay2.ToD = null;
+
+            var stay3 = this.AddAdjacentStay(AdmissionType.ContinuousAt, days: 10, gap: 0);
+
+            var stays = new[] { stay1, stay2, stay3 };
+
+            Assert.Throws<Exception>(() => stays.GetGroupedStays(GroupedStay.SameTypeyGroupMode.Merge).ToArray());
+        }
+
         protected Stay AddFirstStay(DateTime from, AdmissionType admissionType, int days)
         {
             this.Report.Stays.Clear();
