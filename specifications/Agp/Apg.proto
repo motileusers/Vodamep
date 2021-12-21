@@ -147,12 +147,12 @@ enum CareAllowance {
 }
 
 enum Gender {
-  UNDEFINED_GENDER = 0;
-  MALE = 1;
-  FEMALE = 2;
-  DIVERS = 3;
-  INTER = 4;
-  OPEN = 5;
+  UNDEFINED_GE = 0;
+  MALE_GE = 1;
+  FEMALE_GE = 2;
+  DIVERS_GE = 3;
+  INTER_GE = 4;
+  OPEN_GE = 5;
 }
 
 
