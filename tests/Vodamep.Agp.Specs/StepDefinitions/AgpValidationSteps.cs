@@ -33,6 +33,7 @@ namespace Vodamep.Specs.StepDefinitions
             var date = new DateTime(2021, 05, 01);
             this.Report = AgpDataGenerator.Instance.CreateAgpReport("", date.Year, date.Month, 1, 1,false, false);
             this.AddDummyActivity(this.Report.Persons[0].Id, this.Report.Staffs[0].Id);
+            this.AddDummyStaffActivity(this.Report.Staffs[0].Id);
         }
 
         public AgpReport Report { get; private set; }
@@ -66,6 +67,9 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Persons[0].SetDefault(name);
             else if (type == nameof(Staff))
                 this.Report.Staffs[0].SetDefault(name);
+            else if (type == nameof(StaffActivity))
+                foreach (var a in this.Report.StaffActivities)
+                    a.SetDefault(name);
             else if (type == nameof(Activity))
                 foreach (var a in this.Report.Activities)
                     a.SetDefault(name);
@@ -82,8 +86,8 @@ namespace Vodamep.Specs.StepDefinitions
                 this.Report.Persons[0].SetValue(name, value);
             else if (type == nameof(Staff))
                 this.Report.Staffs[0].SetValue(name, value);
-            else if (type == nameof(TravelTime))
-                foreach (var a in this.Report.TravelTimes)
+            else if (type == nameof(StaffActivity))
+                foreach (var a in this.Report.StaffActivities)
                     a.SetValue(name, value);
             else if (type == nameof(Activity))
                 foreach (var a in this.Report.Activities)
@@ -160,19 +164,6 @@ namespace Vodamep.Specs.StepDefinitions
             }
         }
 
-        [Given(@"es werden zusätzliche Reisezeiten für einen Mitarbeiter eingetragen")]
-        public void GivenTravelTimesAreAdded()
-        {
-            var existingTravelTime = this.Report.TravelTimes.First();
-            this.Report.TravelTimes.Add(new TravelTime
-            {
-                Id = existingTravelTime.Id,
-                Date = existingTravelTime.Date,
-                DateD = existingTravelTime.DateD,
-                Minutes = 125,
-                StaffId = existingTravelTime.StaffId
-            });
-        }
 
         [Given(@"es werden zusätzliche Leistungen pro Klient an einem Tag eingetragen")]
         public void GivenAdditonalActivitiesPerClientAndDay()
@@ -189,7 +180,7 @@ namespace Vodamep.Specs.StepDefinitions
                 StaffId = existingActivity.StaffId,
                 PersonId = existingActivity.PersonId,
                 PlaceOfAction = PlaceOfAction.BasePlace,
-                Entries = { ActivityType.GeriatricPsychiatric }
+                Entries = { ActivityType.GeriatricPsychiatricAt }
             });
         }
 
@@ -252,7 +243,11 @@ namespace Vodamep.Specs.StepDefinitions
         [Then(@"die Fehlermeldung lautet: '(.*)'")]
         public void ThenTheResultContainsJust(string message)
         {
-            Assert.Equal(message, this.Result.Errors.Select(x => x.ErrorMessage).Distinct().Single());
+            var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage))
+                .Select(e => e.ErrorMessage)
+                .Distinct());
         }
 
         [Then(@"enthält das Validierungsergebnis den Fehler '(.*)'")]
@@ -279,12 +274,22 @@ namespace Vodamep.Specs.StepDefinitions
                 .Where(x => x != PlaceOfAction.UndefinedPlace)
                 .ElementAt(random.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1));
 
-            var minutes = random.Next(1,100) * 5;
+            var minutes = random.Next(1,50) * 5;
           
             var activity = new Activity() {Id = "1", Date = this.Report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };
-            activity.Entries.Add(new[] { ActivityType.Clearing, ActivityType.ContactPartner, ActivityType.GuidancePartner });
+            activity.Entries.Add(new[] { ActivityType.ClearingAt, ActivityType.ContactPartnerAt, ActivityType.GuidancePartnerAt });
 
             this.Report.Activities.Add(activity);
+        }
+
+
+        private void AddDummyStaffActivity(string staffId)
+        {
+            int minutes = 45;
+
+            var activity = new StaffActivity() { Id = "1", Date = this.Report.From, StaffId = staffId, Minutes = minutes, ActivityType = StaffActivityType.NetworkingSa };
+
+            this.Report.StaffActivities.Add(activity);
         }
 
     }

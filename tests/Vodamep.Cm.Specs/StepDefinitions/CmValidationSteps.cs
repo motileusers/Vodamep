@@ -166,7 +166,11 @@ namespace Vodamep.Specs.StepDefinitions
         [Then(@"die Fehlermeldung lautet: '(.*)'")]
         public void ThenTheResultContainsJust(string message)
         {
-            Assert.Equal(message, this.Result.Errors.Select(x => x.ErrorMessage).Distinct().Single());
+            var pattern = new Regex(message, RegexOptions.IgnoreCase);
+
+            Assert.Single(this.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage))
+                .Select(e => e.ErrorMessage)
+                .Distinct());
         }
 
         [Then(@"enthält das Validierungsergebnis den Fehler '(.*)'")]

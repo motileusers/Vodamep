@@ -1,11 +1,10 @@
-﻿// Leistungsbereiche AGP
-
-Clearing;Clearing (Erstkontakt, Abklärung) 	
-ObservationsAssessment;Klientenbeobachtung/Assessment	
-GeriatricPsychiatric;gerontopsychiatrische Pflege 	
-GuidancePartner;Beratung, Begleitung, Anleitung (Systempartner)	
-GuidanceClient;Beratung, Begleitung, Anleitung (Klientensystem)	
-CareDocumentation;Pflegedokumentation	
-ContactPartner;Kontakt mit Haus-/Fachärztin, and. Systempartner	
-ExecutionTransport;Erledigung, Transport 	
-Miscellaneous;Verschiedene
+﻿//KlientenbezogeneAktivitätstypen
+UndefinedAt;
+ClearingAt;Clearing(Erstkontakt,Abklärung)
+ObservationsAssessmentAt;Klientenbeobachtung/Assessment
+GeriatricPsychiatricAt;gerontopsychiatrischePflege
+GuidancePartnerAt;Beratung,Begleitung,Anleitung(Systempartner)
+GuidanceClientAt;Beratung,Begleitung,Anleitung(Klientensystem)
+CareDocumentationAt;Pflegedokumentation
+ContactPartnerAt;KontaktmitHaus-/Fachärztin,and.Systempartner
+ExecutionTransportAt;Erledigung,Transport

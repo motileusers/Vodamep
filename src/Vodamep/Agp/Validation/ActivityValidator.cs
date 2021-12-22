@@ -10,7 +10,7 @@ namespace Vodamep.Agp.Validation
 {
     internal class ActivityValidator : AbstractValidator<Activity>
     {
-        public ActivityValidator(DateTime from, DateTime to)
+        public ActivityValidator(AgpReport report)
         {
             var displayNameResolver = new AgpDisplayNameResolver();
 
@@ -28,7 +28,7 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.DateD)
                 .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
-                    x.PersonId, from, to, x.Date));
+                    "", report.GetStaffName(x.StaffId), report.FromD, report.ToD, x.Date));
 
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
@@ -47,8 +47,7 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.PlaceOfAction).NotEmpty();
 
-            this.RuleFor(x => x).SetValidator(x => new ActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(Activity.Minutes)), x.PersonId));
-
+            this.RuleFor(x => x).SetValidator(x => new ActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(Activity.Minutes)), report.GetStaffName(x.StaffId)));
         }
     }
 }

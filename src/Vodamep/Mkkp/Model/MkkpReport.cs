@@ -22,6 +22,36 @@ namespace Vodamep.Mkkp.Model
         IList<IStaff> ITravelTimeReport.Staffs  => this.Staffs.Select(x => x as IStaff).ToList();
         IList<ITravelTime> ITravelTimeReport.TravelTimes  => this.TravelTimes.Select(x => x as ITravelTime).ToList();
 
+
+        public string GetStaffName(string id)
+        {
+            string client = id;
+
+            var staff = this.Staffs.FirstOrDefault(p => p.Id == id);
+
+            if (staff != null)
+            {
+                client = $"{staff.GivenName} {staff.FamilyName}";
+            }
+
+            return client;
+        }
+
+        public string GetClient(string id)
+        {
+            string client = id;
+
+            var person = this.Persons.FirstOrDefault(p => p.Id == id);
+
+            if (person != null)
+            {
+                client = $"{person.GivenName} {person.FamilyName}";
+            }
+
+            return client;
+        }
+
+
         public static MkkpReport ReadFile(string file)
         {
             var report = new MkkpReportSerializer().DeserializeFile(file);

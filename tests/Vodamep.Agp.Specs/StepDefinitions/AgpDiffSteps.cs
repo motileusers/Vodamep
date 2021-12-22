@@ -50,7 +50,6 @@ namespace Vodamep.Specs.StepDefinitions
             this.Report1.Staffs.First().FamilyName = "Test";
             //this.Report1.Activities.First().Entries.Clear();
             //this.Report1.Activities.First().Entries.Add(ActivityType.Lv05);
-            this.Report1.TravelTimes.First().Minutes += 10;
         }
 
         [Then(@"enthält das Ergebnis '(.*)' Objekte\(e\)")]

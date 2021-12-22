@@ -84,7 +84,7 @@ Szenario: Zuweiser ist undefiniert
     Dann enthält das Validierungsergebnis den Fehler ''Zuweiser' von Klient 'Peter Gruber' darf nicht leer sein.'
 
 Szenario: Geschlecht ist undefiniert
-    Angenommen die Eigenschaft 'gender' von 'Person' ist auf 'UndefinedGender' gesetzt
+    Angenommen die Eigenschaft 'gender' von 'Person' ist auf 'UndefinedGe' gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''Geschlecht' von Klient 'Peter Gruber' darf nicht leer sein.'
 
 Szenario: Pflegegeld ist undefiniert

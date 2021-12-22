@@ -26,7 +26,7 @@ namespace Vodamep.Mkkp.Model
             }
 
             // jetzt die Einträge selbst sortieren
-            return entries.OrderBy(x => x.Id);
+            return entries.OrderBy(x => x.StaffId).ThenBy(x => x.PersonId).ThenBy(x => x.Date).ThenBy(x => x.PlaceOfAction).ThenBy(x => x.Minutes);
         }
     }
 }

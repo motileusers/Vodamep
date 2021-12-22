@@ -66,7 +66,7 @@ namespace Vodamep.Data.Dummy
                             .Where(x => x != CareAllowance.Any && x != CareAllowance.UndefinedAllowance)
                             .ElementAt(_rand.Next(Enum.GetValues(typeof(CareAllowance)).Length - 2)),
 
-                Gender = _rand.Next(2) == 1 ? Gender.Female : Gender.Male,
+                Gender = _rand.Next(2) == 1 ? Gender.FemaleGe : Gender.MaleGe,
 
                 Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
                             .Where(x => x != Referrer.OtherReferrer &&

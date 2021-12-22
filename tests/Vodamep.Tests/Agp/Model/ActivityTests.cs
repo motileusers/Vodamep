@@ -13,15 +13,15 @@ namespace Vodamep.Tests.Agp.Model
         public void AsSorted_ReturnspectedResult()
         {
             var list1 = new[] {
-                ActivityType.CareDocumentation,
-                ActivityType.Clearing,
-                ActivityType.ContactPartner,
-                ActivityType.ExecutionTransport,
-                ActivityType.GeriatricPsychiatric,
-                ActivityType.GuidanceClient,
-                ActivityType.GuidancePartner,
-                ActivityType.Miscellaneous,
-                ActivityType.ObservationsAssessment
+                ActivityType.CareDocumentationAt,
+                ActivityType.ClearingAt,
+                ActivityType.ContactPartnerAt,
+                ActivityType.ExecutionTransportAt,
+                ActivityType.GeriatricPsychiatricAt,
+                ActivityType.GuidanceClientAt,
+                ActivityType.GuidancePartnerAt,
+                ActivityType.ObservationsAssessmentAt,
+                ActivityType.UndefinedAt,
             }.Select(x => x.ToString());
 
             var values = ActivityTypeProvider.Instance.Values.Select(x => x.Key);
