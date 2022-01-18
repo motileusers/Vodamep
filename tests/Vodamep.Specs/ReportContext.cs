@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
+using TechTalk.SpecFlow;
 using Vodamep.ReportBase;
 
 namespace Vodamep.Specs
@@ -12,12 +13,12 @@ namespace Vodamep.Specs
 
     public delegate IEnumerable<IMessage> GetPropertiesByTypeDelegate(string typeName);
 
-    public class ReportContext
+    public class ReportContext 
     {
         private ValidationResult _validationResult;
 
         public ReportContext()
-        {
+        {            
             Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
             this.Validate = () => Validator.Validate(this.Report);

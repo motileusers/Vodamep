@@ -68,7 +68,7 @@ namespace Vodamep.Specs
                     break;
                 case FieldType.Double:
                 case FieldType.Float:
-                    field.Accessor.SetValue(m, float.Parse(value));
+                    field.Accessor.SetValue(m, float.Parse(value, System.Globalization.CultureInfo.InvariantCulture));
                     break;
                 case FieldType.Message:
                     if (field.MessageType == Timestamp.Descriptor)

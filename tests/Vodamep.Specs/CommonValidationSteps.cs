@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
+using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TechTalk.SpecFlow;
@@ -8,8 +9,9 @@ using Xunit;
 
 namespace Vodamep.Specs
 {
+    
 
-    [Binding]
+    [Binding]    
     public class CommonValidationSteps
     {
         private readonly ReportContext _context;
@@ -68,6 +70,37 @@ namespace Vodamep.Specs
         public void GivenAValidReport()
         {
             // nichts zu tun
+        }
+
+        [Given(@"alle Listen sind leer")]
+        public void GivenAllListsAreEmpty()
+        {
+
+            foreach (var field in _context.ReportM.Descriptor.Fields.InFieldNumberOrder()
+                 .Where(x => x.IsRepeated))
+            {
+                if (field.Accessor.GetValue(_context.ReportM) is IList list)
+                {
+                    list.Clear();
+                }
+            }
+        }
+
+
+
+        [Given(@"die Liste '(.*)' ist leer")]
+        public void GivenTheListIsEmpty(string value)
+        {
+            foreach (var type in value.Split(","))
+            {
+                var field = _context.ReportM.Descriptor.Fields.InFieldNumberOrder()
+                    .Where(x => x.IsRepeated)
+                    .Where(x => x.MessageType.Name == type)
+                    .FirstOrDefault();
+
+                var l = field?.Accessor.GetValue(_context.ReportM) as IList;
+                l?.Clear();
+            }
         }
 
 
