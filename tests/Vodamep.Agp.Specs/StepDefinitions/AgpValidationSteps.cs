@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Google.Protobuf;
+using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace Vodamep.Specs.Agp.StepDefinitions
             var date = new DateTime(2021, 05, 01);
             var r = AgpDataGenerator.Instance.CreateAgpReport("", date.Year, date.Month, 1, 1, false, false);
             AddDummyActivity(r, r.Persons[0].Id, r.Staffs[0].Id);
-            AddDummyStaffActivity(r.Staffs[0].Id);
+            AddDummyStaffActivity(r, r.Staffs[0].Id);
 
             context.Report = r;
         }
@@ -196,13 +197,13 @@ namespace Vodamep.Specs.Agp.StepDefinitions
         }
 
 
-        private void AddDummyStaffActivity(string staffId)
+        private void AddDummyStaffActivity(AgpReport report, string staffId)
         {
             int minutes = 45;
 
-            var activity = new StaffActivity() { Id = "1", Date = this.Report.From, StaffId = staffId, Minutes = minutes, ActivityType = StaffActivityType.NetworkingSa };
+            var activity = new StaffActivity() { Id = "1", Date = report.From, StaffId = staffId, Minutes = minutes, ActivityType = StaffActivityType.NetworkingSa };
 
-            this.Report.StaffActivities.Add(activity);
+            report.StaffActivities.Add(activity);
         }
 
     }
