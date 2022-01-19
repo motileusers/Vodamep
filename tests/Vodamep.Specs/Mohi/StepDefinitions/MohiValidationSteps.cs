@@ -28,8 +28,7 @@ namespace Vodamep.Specs.Mohi.StepDefinitions
         private void InitContext(ReportContext context)
         {
             context.GetPropertiesByType = GetPropertiesByType;
-            context.Validator = new MohiReportValidator();
-
+            
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 

@@ -30,8 +30,7 @@ namespace Vodamep.Specs.Agp.StepDefinitions
         private void InitContext(ReportContext context)
         {
             context.GetPropertiesByType = this.GetPropertiesByType;
-            context.Validator = new AgpReportValidator();
-
+            
             var loc = new AgpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 

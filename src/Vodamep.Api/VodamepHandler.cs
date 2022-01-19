@@ -161,15 +161,15 @@ namespace Vodamep.Api
                 return;
             }
 
-            var validationResult = await new VodamepValidator().Validate(report);
-            if (validationResult == null)
+            var validationResult = report.ValidateToText(false);
+            if (validationResult == default)
             {
                 await RespondError(context, "Validierung konnte nicht durchgeführt werden.");
             }
 
-            if (!validationResult.Item1)
+            if (!validationResult.IsValid)
             {
-                await RespondError(context, validationResult.Item2);
+                await RespondError(context, validationResult.Message);
                 return;
             }
 
@@ -189,7 +189,7 @@ namespace Vodamep.Api
             }
             engine.Execute(saveCmd);
 
-            await RespondSuccess(context, validationResult.Item2);
+            await RespondSuccess(context, validationResult.Message);
 
             _logger?.LogInformation("Report received.");
         }

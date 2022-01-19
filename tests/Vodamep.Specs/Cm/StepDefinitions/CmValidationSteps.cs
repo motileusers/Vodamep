@@ -29,8 +29,7 @@ namespace Vodamep.Specs.Cm.StepDefinitions
         private void InitContext(ReportContext context)
         {
             context.GetPropertiesByType = GetPropertiesByType;
-            context.Validator = new CmReportValidator();
-
+            
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 

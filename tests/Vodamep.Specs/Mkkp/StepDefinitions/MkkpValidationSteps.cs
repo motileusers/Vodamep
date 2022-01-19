@@ -31,8 +31,7 @@ namespace Vodamep.Specs.Mkkp.StepDefinitions
         private void InitContext(ReportContext context)
         {
             context.GetPropertiesByType = GetPropertiesByType;
-            context.Validator = new MkkpReportValidator();
-
+            
             var loc = new MkkpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 

@@ -61,12 +61,6 @@ Beispiele:
     | 2,15      |	
     | 2,2,15    |  # zwei Hausbesuche an einem Tag
 
-@diskussion
-@ignore
-Szenario: Es ist nur ein Hausbesuch pro Aktivitätsblock zulässig
-    Angenommen die Meldung enthält die Aktivitäten '02,02,15'
-    Dann enthält das Validierungsergebnis den Fehler 'Es ist nur ein Hausbesuch pro Aktivitätsblock zulässig'	
-
 Szenariogrundriss: Beispiele für möglicherweise ungültige Aktivitäten
     Angenommen die Meldung enthält die Aktivitäten '<Art>'	
 	Und die Eigenschaft 'to' von 'HkpvReport' ist auf '<Datum>' gesetzt

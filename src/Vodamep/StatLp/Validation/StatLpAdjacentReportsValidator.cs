@@ -56,7 +56,7 @@ namespace Vodamep.StatLp.Validation
 
             foreach (var personId in personIds)
             {
-                if (!values1.TryGetValue(personId, out var v1) || values2.TryGetValue(personId, out var v2) || v1 != v2)
+                if (!values1.TryGetValue(personId, out var v1) || !values2.TryGetValue(personId, out var v2) || v1 != v2)
                 {
                     var person = data.Report.Persons.Where(x => x.Id == personId).FirstOrDefault();
                     var index = person != null ? data.Report.Persons.IndexOf(person) : -1;
@@ -89,7 +89,7 @@ namespace Vodamep.StatLp.Validation
 
             foreach (var personId in personIds)
             {
-                if (!values1.TryGetValue(personId, out var v1) || values2.TryGetValue(personId, out var v2) || v1 != v2)
+                if (!values1.TryGetValue(personId, out var v1) || !values2.TryGetValue(personId, out var v2) || v1 != v2)
                 {
                     var person = data.Report.Persons.Where(x => x.Id == personId).FirstOrDefault();
                     var index = person != null ? data.Report.Persons.IndexOf(person) : -1;

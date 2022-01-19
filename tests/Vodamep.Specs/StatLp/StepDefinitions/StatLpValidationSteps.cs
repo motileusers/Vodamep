@@ -32,8 +32,7 @@ namespace Vodamep.Specs.StatLp.StepDefinitions
         private void InitContext(ReportContext context)
         {
             context.GetPropertiesByType = GetPropertiesByType;
-            context.Validator = new StatLpReportValidator();
-
+            
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 

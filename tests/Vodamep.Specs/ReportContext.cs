@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
-using TechTalk.SpecFlow;
 using Vodamep.ReportBase;
 
 namespace Vodamep.Specs
@@ -21,7 +20,7 @@ namespace Vodamep.Specs
         {            
             Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
-            this.Validate = () => Validator.Validate(this.Report);
+            this.Validate = () => this.Report.Validate();
         }
 
         public IReport Report { get; set; }
@@ -29,8 +28,6 @@ namespace Vodamep.Specs
         public IReport PrecedingReport { get; set; }
 
         public IMessage ReportM => (IMessage)this.Report;
-
-        public IValidator Validator { get; set; }
 
         public ValidationResult Result
         {

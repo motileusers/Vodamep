@@ -35,8 +35,7 @@ namespace Vodamep.Specs.Hkpv.StepDefinitions
         private void InitContext(ReportContext context)
         {
             context.GetPropertiesByType = this.GetPropertiesByType;
-            context.Validator = new HkpvReportValidator();
-
+            
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
