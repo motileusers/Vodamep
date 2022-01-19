@@ -26,6 +26,6 @@ namespace Vodamep.Data.Mkkp
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Data.Mkkp.diagnosisgroups.csv";
+        protected override string ResourceName => "Datasets.Mkkp.diagnosisgroups.csv";
     }
 }

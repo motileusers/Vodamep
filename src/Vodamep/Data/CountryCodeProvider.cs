@@ -28,6 +28,6 @@ namespace Vodamep.Data
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Data.german-iso-3166.csv";
+        protected override string ResourceName => "Datasets.german-iso-3166.csv";
     }
 }

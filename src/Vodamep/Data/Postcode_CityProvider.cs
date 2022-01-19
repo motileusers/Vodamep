@@ -29,7 +29,7 @@ namespace Vodamep.Data
             return base.IsValid(code);
         }
 
-        protected override string ResourceName => "Data.postcode_cities.csv";
+        protected override string ResourceName => "Datasets.postcode_cities.csv";
 
         public override string Unknown => "";
     }

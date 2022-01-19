@@ -26,6 +26,6 @@ namespace Vodamep.Data.StatLp
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Data.StatLp.personal_change.csv";
+        protected override string ResourceName => "Datasets.StatLp.personal_change.csv";
     }
 }
