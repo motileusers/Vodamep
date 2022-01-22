@@ -35,7 +35,11 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.ToD).GreaterThan(x => x.FromD).Unless(x => x.From == null || x.To == null);
 
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
-            this.RuleFor(x => x).SetValidator(new PersonIdUniqueValidator());
+            
+            this.RuleFor(x => x).SetValidator(new UniqePersonIdValidator());
+
+            this.RuleFor(x => x).SetValidator(new PersonHasUniqueIdValidator());
+            
 
             this.RuleFor(x => new { x.FromD, x.ToD })
                 .Must(x => x.FromD.Year == x.ToD.Year)

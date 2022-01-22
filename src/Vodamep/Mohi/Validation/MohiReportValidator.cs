@@ -28,7 +28,7 @@ namespace Vodamep.Mohi.Validation
 
             this.RuleFor(x => x).SetValidator(new ReportDateValidator());
 
-            this.RuleFor(x => x).SetValidator(new UniqePersonValidator());
+            this.RuleFor(x => x).SetValidator(new UniqePersonIdValidator());
 
             var earliestBirthday = new DateTime(1890, 01, 01);
             var nameRegex = "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$";

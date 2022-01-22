@@ -1,15 +1,14 @@
-﻿using System.Linq;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
+using System.Linq;
 using Vodamep.ReportBase;
-using Vodamep.ValidationBase;
 
 namespace Vodamep.ValidationBase
 {
-    
-    internal class UniqePersonValidator : AbstractValidator<IReport>
+
+    internal class UniqePersonIdValidator : AbstractValidator<IReport>
     {
-        public UniqePersonValidator()
+        public UniqePersonIdValidator()
         {
             this.RuleFor(x => x.Persons)
                 .Custom((list, ctx) =>

@@ -12,6 +12,7 @@ namespace Vodamep.ValidationBase
         public static string ActivityMoreThen350(Person p, int x) => $"Für '{p?.FamilyName} {p?.GivenName}' wurden mehr als 350 LP in einem Monat erfasst. ({x})";
         public static string TraineeMustNotContain06To10(Staff staff) => $"'{staff?.FamilyName} {staff?.GivenName} ({staff?.Id})' darf als Auszubildende/r keine medizinischen Leistungen (6-10) dokumentieren.";
         public static string IdIsNotUnique => "Der Id ist nicht eindeutig.";
+        public static string PersonWithMultipleIds(StatLp.Model.Person p, IEnumerable<string> ids) => $"'{p?.FamilyName} {p?.GivenName}' wurde mehrmals mit folgenden Ids gemeldet: '{string.Join(",", ids)}'.";
         public static string IdIsMissing(string id) => $"Der Id '{id}' fehlt.";
         public static string WithoutEntry(string e, string clientName, string staff, string date) => $"Kein Eintrag '{e}': bei '{clientName}', von '{staff}', am '{date}'.";
         public static string WithoutActivity => $"Keine Aktivitäten.";

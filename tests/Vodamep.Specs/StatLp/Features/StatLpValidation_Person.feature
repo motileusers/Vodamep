@@ -55,3 +55,12 @@ Beispiele:
 Szenario: Die Liste enthält eine Person, die nicht in mindestens einem stay ist
     Angenommen es gibt eine weitere Person
     Dann enthält das Validierungsergebnis den Fehler 'Die Person '(.*)' wird in keinem Aufenthalt erwähnt.'
+
+Szenario: Für eine Person wurde für unterschiedliche Aufenthalte ein unterschiedlicher Id verwendet.
+    Angenommen mit den Stammdaten der StatLp-Person mit Id '1' gibt es einen weiteren Aufenthalt als Person mit Id '1X'
+    Dann enthält das Validierungsergebnis den Fehler ''(.*)' wurde mehrmals mit folgenden Ids gemeldet: '(.*)'
+
+Szenario: Für eine Person wurde für unterschiedliche Aufenthalte ein unterschiedlicher Id verwendet, dabei wurde ein alias-Id eingetragen.
+    Angenommen mit den Stammdaten der StatLp-Person mit Id '1' gibt es einen weiteren Aufenthalt als Person mit Id '1X'
+    Und es gibt einen Alias '1'='1X'
+    Dann enthält das Validierungsergebnis keine Fehler

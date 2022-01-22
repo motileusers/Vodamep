@@ -13,17 +13,7 @@ namespace Vodamep.Hkpv.Validation
     {
         public HkpvReportPersonIdValidator()
         {
-            this.RuleFor(x => x.Persons)
-                .Custom((list, ctx) =>
-                {
-                    foreach (var id in list.Select(x => x.Id).OrderBy(x => x).GroupBy(x => x).Where(x => x.Count() > 1))
-                    {
-                        var item = list.Where(x => x.Id == id.Key).First();
-                        var index = list.IndexOf(item);
-                        ctx.AddFailure(new ValidationFailure($"{nameof(HkpvReport.Persons)}[{index}]", Validationmessages.IdIsNotUnique));
-                    }
-                });
-
+            this.RuleFor(x => x).SetValidator(new UniqePersonIdValidator());
 
             //corert kann derzeit nicht mit AnonymousType umgehen. Vielleicht später: new { x.Persons, x.Activities }
             this.RuleFor(x => new Tuple<IList<Person>, IList<Activity>>(x.Persons, x.Activities))

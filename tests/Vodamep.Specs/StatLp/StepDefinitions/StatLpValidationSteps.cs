@@ -32,7 +32,7 @@ namespace Vodamep.Specs.StatLp.StepDefinitions
         private void InitContext(ReportContext context)
         {
             context.GetPropertiesByType = GetPropertiesByType;
-            
+
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
@@ -80,6 +80,49 @@ namespace Vodamep.Specs.StatLp.StepDefinitions
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        [Given("mit den Stammdaten der StatLp-Person mit Id '1' gibt es einen weiteren Aufenthalt als Person mit Id '1X'")]
+        public void GivenADuplicate()
+        {
+
+            var p1 = this.Report.Persons.Where(x => x.Id == "1").First();
+            var p2 = new Person(p1)
+            {
+                Id = $"1X"
+            };
+
+            this.Report.Persons.Add(p2);
+
+            var from2 = this.Report.ToD.Date.AddDays(-10);
+
+            this.Report.AddAdmission(new Admission(this.Report.Admissions.Where(x => x.PersonId == p1.Id).First())
+            {
+                PersonId = p2.Id,
+                AdmissionDateD = from2
+            });
+
+            foreach (var att in this.Report.Attributes.Where(x => x.PersonId == p1.Id))
+            {
+                this.Report.Attributes.Add(new Attribute(att)
+                {
+                    PersonId = p2.Id,
+                    FromD = from2
+                });
+            }
+
+            this.Report.AddStay(new Stay
+            {
+                PersonId = p2.Id,
+                FromD = from2,
+                Type = AdmissionType.ContinuousAt
+            });
+        }
+
+        [Given("es gibt einen Alias '1'='1X'")]
+        public void GivenAnAlias()
+        {
+
         }
 
         private void SetPersonalChanges(string value)
