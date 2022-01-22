@@ -52,8 +52,7 @@ namespace Vodamep.Data.Dummy
         {
             var report = new StatLpReport()
             {
-                Institution = new Institution() { Id = string.IsNullOrEmpty(institutionId) ? "1234" : institutionId, Name = "Testverein" },
-                SourceSystemId = "System1"
+                Institution = new Institution() { Id = string.IsNullOrEmpty(institutionId) ? "1234" : institutionId, Name = "Testverein" }
             };
 
             report.FromD = new DateTime(year, 1, 1);
@@ -72,8 +71,7 @@ namespace Vodamep.Data.Dummy
         {
             var report = new StatLpReport()
             {
-                Institution = new Institution() { Id = "1234", Name = "Testverein" },
-                SourceSystemId = "System1"
+                Institution = new Institution() { Id = "1234", Name = "Testverein" }
             };
 
             return report;

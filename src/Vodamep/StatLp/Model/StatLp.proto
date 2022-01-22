@@ -6,15 +6,15 @@ import "google/protobuf/timestamp.proto";
 option csharp_namespace = "Vodamep.StatLp.Model";
 
 message StatLpReport {   
-    Institution institution = 1;   
-    string source_system_id = 2;           // System ID, die für das Mapping der Personen IDs verwendet wird. Wird von connexia ausgegeben.
-    google.protobuf.Timestamp from = 3;
-    google.protobuf.Timestamp to = 4;
-    repeated Person persons = 5; 
-    repeated Stay stays = 6;
-    repeated Attribute attributes = 7;
-    repeated Admission admissions = 8;
-    repeated Leaving leavings= 9;
+    Institution institution = 1;
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    repeated Person persons = 4; 
+    repeated Stay stays = 5;
+    repeated Attribute attributes = 6;
+    repeated Admission admissions = 7;
+    repeated Leaving leavings= 8;
+    repeated Alias aliases = 9;
 }
 
 // Einrichtung
@@ -108,6 +108,13 @@ message Attribute {
         CareAllowanceArge care_allowance_arge = 4;
         Finance finance = 5;
     }
+}
+
+// Definiert explizit die Beziehung zwischen zwei person_ids: Ist die selbe Person / Ist nicht sie selbe Person
+message Alias {
+    string id_1 = 1;
+    string id_2 = 2;
+    bool is_alias = 3;
 }
 
 

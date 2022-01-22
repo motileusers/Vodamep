@@ -122,7 +122,12 @@ namespace Vodamep.Specs.StatLp.StepDefinitions
         [Given("es gibt einen Alias '1'='1X'")]
         public void GivenAnAlias()
         {
-
+            this.Report.Aliases.Add(new Alias
+            {
+                Id1 = "1",
+                Id2 = "1X",
+                IsAlias = true
+            });
         }
 
         private void SetPersonalChanges(string value)
@@ -140,7 +145,7 @@ namespace Vodamep.Specs.StatLp.StepDefinitions
             }
             else if (value == "")
             {
-                //nothing do do, already emptied yet
+                //nothing do do, already emptied
             }
             else
             {
@@ -163,7 +168,7 @@ namespace Vodamep.Specs.StatLp.StepDefinitions
             }
             else if (value == "")
             {
-                //nothing do do, already emptied yet
+                //nothing do do, already emptied
             }
             else
             {

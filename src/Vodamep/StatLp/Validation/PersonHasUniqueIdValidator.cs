@@ -10,14 +10,28 @@ namespace Vodamep.StatLp.Validation
     {
         public PersonHasUniqueIdValidator()
         {
-            this.RuleFor(x => x.Persons)
-                .Custom((list, ctx) =>
+            this.RuleFor(x => new { x.Persons, x.Aliases })
+                .Custom((item, ctx) =>
                 {
-                    foreach (var entry in list.GroupBy(x => (x.FamilyName, x.GivenName, x.Birthday)).Where(x => x.Count() > 1))
+
+                    var aliases = item.Aliases.Select(x => x.Id1).Union(item.Aliases.Select(x => x.Id2)).Distinct().ToList();
+                    var persons = item.Persons;
+
+                    foreach (var entry in persons
+                        .GroupBy(x => (x.FamilyName, x.GivenName, x.Birthday))
+                        .Where(x => x.Count() > 1))
                     {
-                        var ids = entry.Select(x => x.Id).ToArray();
-                        var index = list.IndexOf(entry.First());
-                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]", Validationmessages.PersonWithMultipleIds(entry.First(), ids)));
+                        // nur ids, für die kein alias-Eintrag vorhanden ist.
+                        var ids = entry
+                            .Select(x => x.Id)
+                            .Where(x => !aliases.Contains(x))
+                            .ToList();
+
+                        if (ids.Any())
+                        {
+                            var index = persons.IndexOf(entry.First());
+                            ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]", Validationmessages.PersonWithMultipleIds(entry.First(), ids)));
+                        }
                     }
                 });
         }

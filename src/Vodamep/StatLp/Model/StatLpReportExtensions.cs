@@ -1,25 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Vodamep.StatLp.Validation;
-using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Model
 {
     public static class StatLpReportExtensions
     {
-
-        /// <summary>
-        /// Clearing IDs auf allen Personen setzen
-        /// </summary>
-        public static void SetClearingIds(this StatLpReport report, ClearingExceptions clearingExceptions)
-        {
-            foreach (Person person in report.Persons)
-            {
-                person.ClearingId = ClearingIdUtiliy.CreateClearingId(person.FamilyName, person.GivenName, person.BirthdayD);
-                person.ClearingId = ClearingIdUtiliy.MapClearingId(clearingExceptions, person.ClearingId, report.SourceSystemId, person.Id);
-            }
-        }
 
         public static StatLpReport AddPerson(this StatLpReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static StatLpReport AddPersons(this StatLpReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
@@ -38,8 +24,7 @@ namespace Vodamep.StatLp.Model
             {
                 Institution = report.Institution,
                 From = report.From,
-                To = report.To,
-                SourceSystemId = report.SourceSystemId
+                To = report.To
             };
 
             result.Admissions.AddRange(report.Admissions.OrderBy(x => x.PersonId).ThenBy(x => x.AdmissionDate));
@@ -47,6 +32,7 @@ namespace Vodamep.StatLp.Model
             result.Leavings.AddRange(report.Leavings.OrderBy(x => x.PersonId).ThenBy(x => x.LeavingDateD));
             result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
             result.Stays.AddRange(report.Stays.OrderBy(x => x.PersonId).ThenBy(x => x.From));
+            result.Aliases.AddRange(result.Aliases.OrderBy(x => x.Id1));
 
             return result;
         }

@@ -24,8 +24,7 @@ namespace Vodamep.StatLp.Validation
         public StatLpReportValidator()
         {
 
-            this.RuleFor(x => x.Institution).NotEmpty();
-            this.RuleFor(x => x.SourceSystemId).NotEmpty();
+            this.RuleFor(x => x.Institution).NotEmpty();           
             this.RuleFor(x => x.Institution).SetValidator(new InstitutionValidator());
             this.RuleFor(x => x.From).NotEmpty();
             this.RuleFor(x => x.To).NotEmpty();
