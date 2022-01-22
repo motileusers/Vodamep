@@ -51,7 +51,7 @@ namespace Vodamep
                     return new StatLpAdjacentReportsValidator().Validate((rOther, r));
                 }
 
-                if (report.FromD.Date.AddDays(-1) == other.FromD.Date)
+                if (report.FromD.Date == other.FromD.Date)
                 {
                     return new StatLpUpdateReportValidator().Validate((rOther, r));
                 }
