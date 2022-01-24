@@ -1,28 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Vodamep.ReportBase;
-using Vodamep.StatLp.Validation;
-using Vodamep.ValidationBase;
 
 namespace Vodamep.StatLp.Model
 {
     public static class StatLpReportExtensions
     {
-
-        /// <summary>
-        /// Clearing IDs auf allen Personen setzen
-        /// </summary>
-        public static void SetClearingIds(this StatLpReport report, ClearingExceptions clearingExceptions)
-        {
-            foreach (Person person in report.Persons)
-            {
-                person.ClearingId = ClearingIdUtiliy.CreateClearingId(person.FamilyName, person.GivenName, person.BirthdayD);
-                person.ClearingId = ClearingIdUtiliy.MapClearingId(clearingExceptions, person.ClearingId, report.SourceSystemId, person.Id);
-            }
-        }
-
 
         public static StatLpReport AddPerson(this StatLpReport report, Person person) => report.InvokeAndReturn(m => m.Persons.Add(person));
         public static StatLpReport AddPersons(this StatLpReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
@@ -35,47 +18,100 @@ namespace Vodamep.StatLp.Model
         public static StatLpReport AddLeaving(this StatLpReport report, Leaving leaving) => report.InvokeAndReturn(m => m.Leavings.Add(leaving));
         public static StatLpReport AddLeavings(this StatLpReport report, IEnumerable<Leaving> leavings) => report.InvokeAndReturn(m => m.Leavings.AddRange(leavings));
 
-        private static StatLpReport InvokeAndReturn(this StatLpReport m, Action<StatLpReport> action)
-        {
-            action(m);
-            return m;
-        }
-
-        public static Task<SendResult> Send(this StatLpReport report, Uri address, string username, string password) => new ReportSendClient(address).Send(report, username, password);
-
-        public static StatLpReportValidationResult Validate(this StatLpReport report) => (StatLpReportValidationResult)new StatLpReportValidator().Validate(report);
-
-        public static StatLpReportValidationResult ValidateHistory(this StatLpReport report, List<StatLpReport> existingReports, ClearingExceptions clearingExceptions) => (StatLpReportValidationResult)new StatLpHistoryValidator().Validate
-            (
-            new StatLpReportHistory
-            {
-                StatLpReport = report,
-                StatLpReports = existingReports,
-                ClearingExceptions = clearingExceptions
-            });
-
-        public static string ValidateToText(this StatLpReport report, bool ignoreWarnings) => new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
-
-        public static IEnumerable<string> ValidateToEnumerable(this StatLpReport report, bool ignoreWarnings) => new StatLpReportValidationResultListFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
-
         public static StatLpReport AsSorted(this StatLpReport report)
         {
             var result = new StatLpReport()
             {
                 Institution = report.Institution,
                 From = report.From,
-                To = report.To,
-                SourceSystemId = report.SourceSystemId
+                To = report.To
             };
 
-            result.Admissions.AddRange(report.Admissions.OrderBy(x => x.PersonId));
-            result.Attributes.AddRange(report.Attributes.OrderBy(x => x.PersonId));
-            result.Leavings.AddRange(report.Leavings.OrderBy(x => x.PersonId));
+            result.Admissions.AddRange(report.Admissions.OrderBy(x => x.PersonId).ThenBy(x => x.AdmissionDate));
+            result.Attributes.AddRange(report.Attributes.OrderBy(x => x.PersonId).ThenBy(x => x.From).ThenBy(x => x.ValueCase));
+            result.Leavings.AddRange(report.Leavings.OrderBy(x => x.PersonId).ThenBy(x => x.LeavingDateD));
             result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
-            result.Stays.AddRange(report.Stays.OrderBy(x => x.PersonId));
+            result.Stays.AddRange(report.Stays.OrderBy(x => x.PersonId).ThenBy(x => x.From));
+            result.Aliases.AddRange(result.Aliases.OrderBy(x => x.Id1));
 
             return result;
         }
+
+        public static IEnumerable<GroupedStay> GetGroupedStays(this StatLpReport report, string personId, GroupedStay.SameTypeyGroupMode sameTypeyGroupMode = GroupedStay.SameTypeyGroupMode.NotAllowed)
+        {
+            var result = new List<(DateTime From, DateTime To, Stay[] Stays)>();
+
+            var stays = report.Stays.Where(x => x.PersonId == personId).OrderBy(x => x.From).ToArray();
+
+            return stays.GetGroupedStays(sameTypeyGroupMode);
+        }
+
+        public static IEnumerable<GroupedStay> GetGroupedStays(this Stay[] stays, GroupedStay.SameTypeyGroupMode sameTypeyGroupMode = GroupedStay.SameTypeyGroupMode.NotAllowed)
+        {
+            if (stays.Length == 0)
+                yield break;
+
+            var current = new GroupedStay(stays[0].FromD, stays[0].ToD, new[] { stays[0] });
+
+            foreach (var stay in stays.Skip(1))
+            {
+                var lastStay = current.Stays.Last();
+                if (lastStay.PersonId != stay.PersonId)
+                {
+                    throw new Exception("Es können keine Aufenthalte unterschiedlicher Personen gruppiert werden!");
+                }
+
+                if (lastStay.FromD > stay.FromD)
+                {
+                    throw new Exception("Die Aufenthalte müssen vor dem Gruppieren nach Datum sortiert sein!");
+                }
+
+                if (current.To == null)
+                {
+                    throw new Exception("Die Aufenthalte dürfen sich nicht überschneiden!");
+                }
+
+                if (current.To.Value.AddDays(1) == stay.FromD)
+                {
+                    if (sameTypeyGroupMode != GroupedStay.SameTypeyGroupMode.Ignore && lastStay.Type == stay.Type)
+                    {
+                        if (sameTypeyGroupMode == GroupedStay.SameTypeyGroupMode.NotAllowed)
+                        {
+                            throw new Exception("Aufeinanderfolgende Aufenthalte müssen unterschiedliche Aufnahmearten haben!");
+                        }
+
+                        //zwei nacheinander folgende Aufenthalte mit gleichem Type sollen zu einem Aufenthalt vereint werden.
+                        var newLastStay = new Stay(lastStay)
+                        {
+                            ToD = stay.ToD
+                        };
+                        var newStays = current.Stays.Take(current.Stays.Length - 1).Union(new[] { newLastStay }).ToArray();
+
+                        current = new GroupedStay(current.From, stay.ToD, newStays);
+                    }
+                    else
+                    {
+                        current = new GroupedStay(current.From, stay.ToD, current.Stays.Union(new[] { stay }).ToArray());
+                    }
+                    continue;
+                }
+                else if (current.To.Value.AddDays(1) < stay.FromD)
+                {
+                    yield return current;
+                    current = new GroupedStay(stay.FromD, stay.ToD, new[] { stay });
+                    continue;
+                }
+                else if (current.To.Value.AddDays(1) >= stay.FromD)
+                {
+                    throw new Exception("Die Aufenthalte dürfen sich nicht überschneiden!");
+                }
+
+                throw new Exception("Die Aufenthalte können nicht verarbeitet werden!");
+            }
+
+            yield return current;
+        }
+
 
     }
 }

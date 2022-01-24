@@ -295,8 +295,12 @@ tools/**
 
 # End of https://www.gitignore.io/api/csharp
 
+# Fody - auto-generated XML schema
+FodyWeavers.xsd
 
 *.g.cs
 
 build/
 store/
+
+*.feature.cs

@@ -26,6 +26,6 @@ namespace Vodamep.Data.StatLp
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Data.StatLp.care_allowance_arge.csv";
+        protected override string ResourceName => "Datasets.StatLp.care_allowance_arge.csv";
     }
 }

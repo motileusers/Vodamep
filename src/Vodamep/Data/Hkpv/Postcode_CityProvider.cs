@@ -24,7 +24,7 @@ namespace Vodamep.Data.Hkpv
             }
         }
 
-        protected override string ResourceName => "Data.Hkpv.postcode_cities.csv";
+        protected override string ResourceName => "Datasets.Hkpv.postcode_cities.csv";
 
         public override string Unknown => "";
     }

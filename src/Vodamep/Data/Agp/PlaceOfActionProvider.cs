@@ -26,6 +26,6 @@ namespace Vodamep.Data.Agp
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Data.Agp.places_of_action.csv";
+        protected override string ResourceName => "Datasets.Agp.places_of_action.csv";
     }
 }

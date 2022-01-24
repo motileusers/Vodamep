@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Google.Protobuf.Collections;
-using Google.Protobuf.WellKnownTypes;
 using Vodamep.StatLp.Model;
 using Attribute = Vodamep.StatLp.Model.Attribute;
-using Enum = System.Enum;
 
 namespace Vodamep.Data.Dummy
 {
@@ -32,7 +28,6 @@ namespace Vodamep.Data.Dummy
 
         }
 
-
         public StatLpReport CreateStandardAdmissionMessage(DateTime validFrom, DateTime validTo, string personId, DateTime admissionDate)
         {
             StatLpReport report = StatLpDataGenerator.Instance.CreateEmptyStatLpReport();
@@ -44,39 +39,29 @@ namespace Vodamep.Data.Dummy
 
             var person = report.Persons.FirstOrDefault(x => x.Id == personId.ToString()) ?? report.AddDummyPerson(personIndex, false);
 
-            var admission = StatLpDataGenerator.Instance.CreateAdmission(personId.ToString(), admissionDate);
-            report.Admissions.Add(admission);
+            report.Stays.Add(StatLpDataGenerator.Instance.CreateStay(personId, admissionDate, report.ToD));
 
-            IEnumerable<Attribute> attributes = StatLpDataGenerator.Instance.CreateAttributesForSingleAdmission(admission);
-            report.Attributes.AddRange(attributes);
+            report.Admissions.Add(StatLpDataGenerator.Instance.CreateAdmission(personId.ToString(), admissionDate));
 
-            var stay = StatLpDataGenerator.Instance.CreateStay(personId, admissionDate, report.ToD);
-            report.Stays.Add(stay);
+            report.Attributes.AddRange(StatLpDataGenerator.Instance.CreateAttributes(personId, admissionDate >= report.FromD ? admissionDate : report.FromD));
 
             return report;
         }
 
-
-
-
-
-        public StatLpReport CreateStatLpReport(string institutionId = "", int? year = null, int? month = null, int persons = 100, int staffs = 5, bool addActivities = true)
+        public StatLpReport CreateStatLpReport(string institutionId, int year, int persons = 100)
         {
             var report = new StatLpReport()
             {
-                Institution = new Institution() { Id = string.IsNullOrEmpty(institutionId) ? "1234" : institutionId, Name = "Testverein" },
-                SourceSystemId = "System1"
+                Institution = new Institution() { Id = string.IsNullOrEmpty(institutionId) ? "1234" : institutionId, Name = "Testverein" }
             };
 
-            var from = year.HasValue || month.HasValue ? new DateTime(year ?? DateTime.Today.Year, month ?? DateTime.Today.Month, 1) : DateTime.Today.FirstDateInMonth().AddMonths(-1);
-
-            report.FromD = from;
-            report.ToD = report.FromD.LastDateInMonth();
+            report.FromD = new DateTime(year, 1, 1);
+            report.ToD = new DateTime(year, 12, 31);
 
             report.AddDummyPersons(persons);
+            report.AddDummyStays(new DateTime(year, 1, 15));
             report.AddDummyAdmissions();
             report.AddDummyAttributes();
-            report.AddDummyStays(from);
             report.AddDummyLeavings();
 
             return report;
@@ -86,8 +71,7 @@ namespace Vodamep.Data.Dummy
         {
             var report = new StatLpReport()
             {
-                Institution = new Institution() { Id = "1234", Name = "Testverein" },
-                SourceSystemId = "System1"
+                Institution = new Institution() { Id = "1234", Name = "Testverein" }
             };
 
             return report;
@@ -160,7 +144,6 @@ namespace Vodamep.Data.Dummy
             if (admissionDate != null)
             {
                 admission.AdmissionDateD = admissionDate.Value;
-                admission.OriginAdmissionDateD = admissionDate.Value;
             }
 
             return admission;
@@ -175,52 +158,28 @@ namespace Vodamep.Data.Dummy
             }
         }
 
-        public IEnumerable<Attribute> CreateAttributes(IEnumerable<Admission> admissions)
+        public IEnumerable<Attribute> CreateAttributes(string personId, DateTime date)
         {
-            var attributes = new List<Attribute>();
-
-            foreach (var admission in admissions)
+            yield return new Attribute
             {
-                attributes.AddRange(CreateAttributesForSingleAdmission(admission));
-            }
+                FromD = date,
+                PersonId = personId,
+                CareAllowance = CareAllowance.L1
+            };
 
-            return attributes;
-        }
+            yield return new Attribute
+            {
+                FromD = date,
+                PersonId = personId,
+                CareAllowanceArge = CareAllowanceArge.L1Ar
+            };
 
-        public IEnumerable<Attribute> CreateAttributesForSingleAdmission(Admission admission)
-        {
-            var attributes = new List<Attribute>();
-
-            var admissionTypeAttribute = new Attribute();
-            admissionTypeAttribute.PersonId = admission.PersonId;
-            admissionTypeAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
-            admissionTypeAttribute.AttributeType = AttributeType.AdmissionType;
-            admissionTypeAttribute.Value = AdmissionType.ContinuousAt.ToString();
-            attributes.Add(admissionTypeAttribute);
-
-            var careAllowanceAttribute = new Attribute();
-            careAllowanceAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
-            careAllowanceAttribute.PersonId = admission.PersonId;
-            careAllowanceAttribute.AttributeType = AttributeType.CareAllowance;
-            careAllowanceAttribute.Value = CareAllowance.L1.ToString();
-            attributes.Add(careAllowanceAttribute);
-
-            var careAllowanceArgeAttribute = new Attribute();
-            careAllowanceArgeAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
-            careAllowanceArgeAttribute.PersonId = admission.PersonId;
-            careAllowanceArgeAttribute.AttributeType = AttributeType.CareAllowanceArge;
-            careAllowanceArgeAttribute.Value = CareAllowanceArge.L1Ar.ToString();
-            attributes.Add(careAllowanceArgeAttribute);
-
-            var financeAttribute = new Attribute();
-            financeAttribute.FromD = admission.AdmissionDateD.GetValueOrDefault();
-            financeAttribute.PersonId = admission.PersonId;
-            financeAttribute.AttributeType = AttributeType.Finance;
-            financeAttribute.Value = Finance.SelfFi.ToString();
-            attributes.Add(financeAttribute);
-
-            return attributes;
-
+            yield return new Attribute
+            {
+                FromD = date,
+                PersonId = personId,
+                Finance = Finance.SelfFi
+            };
         }
 
         public IEnumerable<Stay> CreateStays(IEnumerable<Person> persons, DateTime from)
@@ -238,6 +197,7 @@ namespace Vodamep.Data.Dummy
                 PersonId = personId,
                 From = from.AsTimestamp(),
                 To = from.AddDays(10).AsTimestamp(),
+                Type = AdmissionType.ContinuousAt
             };
 
             return stay;

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Vodamep.ReportBase;
 using Vodamep.Tb.Validation;
 using Vodamep.ValidationBase;
 
@@ -25,16 +22,6 @@ namespace Vodamep.Tb.Model
         public static TbReport AddPersons(this TbReport report, IEnumerable<Person> persons) => report.InvokeAndReturn(m => m.Persons.AddRange(persons));
         public static TbReport AddActivity(this TbReport report, Activity activity) => report.InvokeAndReturn(m => m.Activities.Add(activity));
         public static TbReport AddActivities(this TbReport report, IEnumerable<Activity> activities) => report.InvokeAndReturn(m => m.Activities.AddRange(activities));
-
-        private static TbReport InvokeAndReturn(this TbReport m, Action<TbReport> action)
-        {
-            action(m);
-            return m;
-        }
-
-
-
-        public static Task<SendResult> Send(this TbReport report, Uri address, string username, string password) => new ReportSendClient(address).Send(report, username, password);
 
         public static TbReportValidationResult Validate(this TbReport report) => (TbReportValidationResult)new TbReportValidator().Validate(report);
 

@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="nlog.config" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Engines\SqlServer\Scripts\0001_CreateTable.sql" />
     <None Remove="Engines\SqlServer\Scripts\0002_AddColums.sql" />
     <None Remove="swagger.yaml" />
@@ -20,16 +16,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Engines\SqlServer\Scripts\0002_AddColums.sql" />
     <EmbeddedResource Include="Engines\SqlServer\Scripts\0001_CreateTable.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="..\..\specifications\WebApi\swagger.yaml" Link="swagger.yaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="swagger.yaml" />
   </ItemGroup>
 
   <ItemGroup>    

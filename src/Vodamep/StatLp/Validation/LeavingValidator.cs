@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using FluentValidation;
+﻿using FluentValidation;
+using System.Text.RegularExpressions;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
 
@@ -7,21 +7,27 @@ namespace Vodamep.StatLp.Validation
 {
     internal class LeavingValidator : AbstractValidator<Leaving>
     {
-        private DisplayNameResolver displayNameResolver = new DisplayNameResolver();
+        private static readonly DisplayNameResolver DisplayNameResolver = new DisplayNameResolver();
 
         public LeavingValidator(StatLpReport report)
         {
             this.RuleFor(x => x.LeavingReason).NotEmpty().WithMessage(x => Validationmessages.StatLpLeavingReasonMustnotBeEmpty(report.GetPersonName(x.PersonId)));
-           
+
             this.RuleFor(x => x.DeathLocation).NotEmpty()
                 .Unless(x => x.LeavingReason != LeavingReason.DeceasedLr)
                 .Unless(x => x.LeavingReason == LeavingReason.UndefinedLr)
                 .WithMessage(x => Validationmessages.DeadClientNeedsDeadthLocation(x.PersonId));
 
-            this.RuleFor(x => x.LeavingDate)
-                .Must(x => report.From <= x && x <= report.To)
-                .WithName(displayNameResolver.GetDisplayName(nameof(Leaving)))
-                .WithMessage(x => Validationmessages.ReportBaseItemMustBeInCurrentMonth(report.GetPersonName(x.PersonId)));
+            this.RuleFor(x => x.LeavingDate).NotEmpty();
+
+            if (report.From != null && report.To != null)
+            {
+                this.RuleFor(x => x.LeavingDate)
+                    .Must(x => report.From <= x && x <= report.To)
+                    .Unless(x => x.LeavingDate == null)
+                    .WithName(DisplayNameResolver.GetDisplayName(nameof(Leaving)))
+                    .WithMessage(x => Validationmessages.ReportBaseItemMustBeInReportPeriod(report.GetPersonName(x.PersonId)));
+            }
 
             this.RuleFor(x => x).Must(x =>
             {
@@ -40,7 +46,7 @@ namespace Vodamep.StatLp.Validation
                         return false;
                 }
 
-                return true; 
+                return true;
 
             }).WithMessage(x => Validationmessages.DeadClientMustNotContainDischargeLocation(x.PersonId));
 
@@ -52,13 +58,13 @@ namespace Vodamep.StatLp.Validation
                  .Unless(x => x.DischargeLocation == DischargeLocation.OtherDc)
                  .WithMessage(x => Validationmessages.LeavingOtherFilledNeedsOther(x.PersonId));
 
-             this.RuleFor(x => x.DischargeLocation).NotEmpty()
-                .When(x => x.LeavingReason == LeavingReason.DischargeLr)
-                .WithMessage(x => Validationmessages.LeavingClientNeedsLeavingLocation(x.PersonId));
+            this.RuleFor(x => x.DischargeLocation).NotEmpty()
+               .When(x => x.LeavingReason == LeavingReason.DischargeLr)
+               .WithMessage(x => Validationmessages.LeavingClientNeedsLeavingLocation(x.PersonId));
 
-             this.RuleFor(x => x.DischargeReason).NotEmpty()
-                 .When(x => x.LeavingReason == LeavingReason.DischargeLr)
-                 .WithMessage(x => Validationmessages.LeavingClientNeedsLeavingReason(x.PersonId));
+            this.RuleFor(x => x.DischargeReason).NotEmpty()
+                .When(x => x.LeavingReason == LeavingReason.DischargeLr)
+                .WithMessage(x => Validationmessages.LeavingClientNeedsLeavingReason(x.PersonId));
 
             this.RuleFor(x => x.DeathLocation).Empty()
                 .When(x => x.LeavingReason != LeavingReason.DeceasedLr)
@@ -72,22 +78,22 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.DischargeLocationOther)
                 .Matches(r).Unless(x => string.IsNullOrEmpty(x.DischargeLocationOther))
-                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.DischargeLocationOther)))
+                .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.DischargeLocationOther)))
                 .WithMessage(x => Validationmessages.InvalidValue(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.DischargeLocationOther)
                 .MaximumLength(30).Unless(x => string.IsNullOrEmpty(x.DischargeLocationOther))
-                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.DischargeLocationOther)))
+                .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.DischargeLocationOther)))
                 .WithMessage(x => Validationmessages.TextTooLong(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.DischargeReasonOther)
                 .Matches(r).Unless(x => string.IsNullOrEmpty(x.DischargeReasonOther))
-                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.DischargeReasonOther)))
+                .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.DischargeReasonOther)))
                 .WithMessage(x => Validationmessages.InvalidValue(report.FromD.ToShortDateString(), x.PersonId));
 
             this.RuleFor(x => x.DischargeReasonOther)
                 .MaximumLength(30).Unless(x => string.IsNullOrEmpty(x.DischargeReasonOther))
-                .WithName(x => displayNameResolver.GetDisplayName(nameof(x.DischargeReasonOther)))
+                .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.DischargeReasonOther)))
                 .WithMessage(x => Validationmessages.TextTooLong(report.FromD.ToShortDateString(), x.PersonId));
 
         }

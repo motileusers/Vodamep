@@ -44,7 +44,7 @@ namespace Vodamep.Specs.StepDefinitions
         }
 
 
-        [Given(@"alle Properties des 2. Reports haben sich verändert")]
+        [Given(@"alle XProperties des 2. Reports haben sich verändert")]
         public void GivenAllPropertiesOfTheSecondReportHaveChanged()
         {
             this.Report1.Persons.First().FamilyName = "Test";
@@ -53,7 +53,7 @@ namespace Vodamep.Specs.StepDefinitions
             //this.Report1.Activities.First().Entries.Add(ActivityType.Lv05);
         }
 
-        [Then(@"enthält das Ergebnis '(.*)' Objekte\(e\)")]
+        [Then(@"enthält das XErgebnis '(.*)' Objekte\(e\)")]
         public void ThenTheResultContainsNrOfElements(int nrOfResults)
         {
             var diffResult = this.Report1.DiffList(this.Report2);
@@ -61,7 +61,7 @@ namespace Vodamep.Specs.StepDefinitions
             Assert.Equal(nrOfResults, diffResult.Count);
         }
 
-        [Then(@"ein Element besitzt den Status '(.*?)' mit der Id '(.*?)', dem Wert1 '(.*?)' und dem Wert2 '(.*?)'")]
+        [Then(@"ein XElement besitzt den Status '(.*?)' mit der Id '(.*?)', dem Wert1 '(.*?)' und dem Wert2 '(.*?)'")]
         public void ThenTheResultDoesNotContainsEntry(Difference difference, DifferenceIdType differenceId, string value1, string value2)
         {
             if (string.IsNullOrWhiteSpace(value1))

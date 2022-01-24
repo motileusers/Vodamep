@@ -3,7 +3,7 @@
 
 nuget-Paket installieren:
 ```
-Install-Package Vodamep -Source https://ci.appveyor.com/nuget/vodamep
+Install-Package Vodamep
 ```
 
 Beispiel:

@@ -23,44 +23,47 @@ namespace Vodamep.StatLp.Validation
 
         public StatLpReportValidator()
         {
-         
-            this.RuleFor(x => x.Institution).NotEmpty();
-            this.RuleFor(x => x.SourceSystemId).NotEmpty();
+
+            this.RuleFor(x => x.Institution).NotEmpty();           
             this.RuleFor(x => x.Institution).SetValidator(new InstitutionValidator());
             this.RuleFor(x => x.From).NotEmpty();
             this.RuleFor(x => x.To).NotEmpty();
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
             this.RuleFor(x => x.To).SetValidator(new TimestampWithOutTimeValidator());
-            this.RuleFor(x => x.ToD).LessThanOrEqualTo(x => DateTime.Today);
+            this.RuleFor(x => x.ToD).LessThanOrEqualTo(x => new DateTime(DateTime.Today.Year, 12, 31));
             this.RuleFor(x => x.ToD).GreaterThan(x => x.FromD).Unless(x => x.From == null || x.To == null);
 
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
-            this.RuleFor(x => x).SetValidator(new PersonIdUniqueValidator());
+            
+            this.RuleFor(x => x).SetValidator(new UniqePersonIdValidator());
 
-            //corert kann derzeit nicht mit AnonymousType umgehen. Vielleicht später: this.RuleFor(x => new { x.From, x.To })
-            this.RuleFor(x => new Tuple<DateTime, DateTime>(x.FromD, x.ToD))
-                .Must(x => x.Item2 == x.Item1.LastDateInMonth())
+            this.RuleFor(x => x).SetValidator(new PersonHasUniqueIdValidator());
+            
+
+            this.RuleFor(x => new { x.FromD, x.ToD })
+                .Must(x => x.FromD.Year == x.ToD.Year)
                 .Unless(x => x.From == null || x.To == null)
-                .WithMessage(Validationmessages.OneMonth);
+                .WithMessage(Validationmessages.SameYear);
 
             this.RuleFor(x => x.ToD)
-                .Must(x => x == x.LastDateInMonth())
+                .Must(x => x.Day == 31 && x.Month == 12)
                 .Unless(x => x.To == null)
-                .WithMessage(Validationmessages.LastDateInMonth);
+                .WithMessage(Validationmessages.LastDateInYear);
 
             this.RuleFor(x => x.FromD)
-                .Must(x => x.Day == 1)
+                .Must(x => x.Day == 1 && x.Month == 1)
                 .Unless(x => x.From == null)
-                .WithMessage(Validationmessages.FirstDateInMonth);
+                .WithMessage(Validationmessages.FirstDateInYear);
 
+            this.RuleFor(x => x).SetValidator(report => new AdmissionsValidator());
             this.RuleForEach(report => report.Admissions).SetValidator(report => new AdmissionValidator(report));
 
-            this.RuleFor(x => x).SetValidator(report => new AdmissionAttributeValidator());
+            this.RuleFor(x => x).SetValidator(report => new AttributesValidator());
             this.RuleForEach(report => report.Attributes).SetValidator(report => new AttributeValidator(report));
-            this.RuleFor(x => x).SetValidator(new AttributeChangeValidator());
 
+            this.RuleFor(x => x).SetValidator(report => new LeavingsValidator());
             this.RuleForEach(report => report.Leavings).SetValidator(report => new LeavingValidator(report));
-      
+
             this.RuleForEach(report => report.Stays).SetValidator(report => new StayValidator(report));
             this.RuleFor(report => report).SetValidator(new PersonStayValidator());
         }

@@ -30,9 +30,7 @@ namespace Vodamep
 
         public static Timestamp AsTimestamp(this DateTime date) => Timestamp.FromDateTime(date.IgnoreTime());
 
-        public static DateTime AsDate(this Timestamp value) => value?.ToDateTime().IgnoreTime() ?? DateTime.MinValue;
-
-        public static Nullable<DateTime> AsNullableDate(this Timestamp value) => value?.ToDateTime().IgnoreTime();
+        public static DateTime AsDate(this Timestamp value) => value?.ToDateTime().IgnoreTime() ?? DateTime.MinValue;       
 
         public static DateTime IgnoreTime(this DateTime date) => new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, DateTimeKind.Utc);
 
