@@ -66,7 +66,7 @@ namespace Vodamep.StatLp.Validation
                         catch (Exception e)
                         {
                             var index = a.Persons.IndexOf(person);
-                            ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)[index]}", $"{report.GetPersonName(person.Id)}: {e.Message}"));
+                            ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]", $"{report.GetPersonName(person.Id)}: {e.Message}"));
                             return;
                         }
 
