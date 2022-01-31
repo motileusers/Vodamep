@@ -262,7 +262,7 @@ enum Gender {
 
 // Finanzierung
 enum Finance {
-  FINANCE_UNSPECIFIED = 0;
+  UNDEFINED_FI = 0;
   SELF_FI = 1;                       // Selbst/Angehörige 100 %
   SOCIAL_ASSISTANCE_FI = 2;          // Mindestsicherung
   SOCIAL_ASSISTANCE_CLAIM_FI = 3;    // Mindestsicherungsantrag in Bearbeitung
@@ -271,7 +271,7 @@ enum Finance {
 
 // Pflegegeld
 enum CareAllowance {
-  CARE_ALLOWANCE_UNSPECIFIED = 0;
+  UNDEFINED_ALLOWANCE = 0;
   L1 = 1;
   L2 = 2;
   L3 = 3;
@@ -290,7 +290,7 @@ enum CareAllowance {
 // Pflegestufe ARGE
 // Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
 enum CareAllowanceArge {
-  CARE_ALLOWANCE_ARGE_UNSPECIFIED = 0;
+  UNDEFINED_AR = 0;
   L0_AR = 1;
   L1_AR = 2;
   L2_AR = 3;

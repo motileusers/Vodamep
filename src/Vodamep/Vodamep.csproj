@@ -12,11 +12,11 @@
 		<PackageIcon></PackageIcon>
 		<RepositoryUrl>https://github.com/connexiadev/Vodamep.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>1.18.1</Version>
+		<Version>1.20.3</Version>
 		<Product>Vorarlberger Datenmeldung Pflege</Product>
 		<PackageReleaseNotes>AGP Struktur Änderungen</PackageReleaseNotes>
-		<AssemblyVersion>1.18.1.0</AssemblyVersion>
-		<FileVersion>1.18.1.0</FileVersion>
+		<AssemblyVersion>1.20.3.0</AssemblyVersion>
+		<FileVersion>1.20.3.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -36,15 +36,15 @@
 		<EmbeddedResource Include="Datasets\Agp\places_of_action.csv" />
 		<EmbeddedResource Include="Datasets\Agp\referrer.csv" />
 		<EmbeddedResource Include="Datasets\Agp\staffactivitytypes.csv" />
-		<EmbeddedResource Include="Datasets\StatLp\care_allowance.csv" />
-		<EmbeddedResource Include="Datasets\StatLp\care_allowance_arge.csv" />
+		<EmbeddedResource Include="Datasets\care_allowance.csv" />
+		<EmbeddedResource Include="Datasets\care_allowance_arge.csv" />
 		<EmbeddedResource Include="Datasets\Cm\activity_type.csv" />
 		<EmbeddedResource Include="Datasets\Cm\client_activity_type.csv" />
 		<EmbeddedResource Include="Datasets\gender.csv" />
 		<EmbeddedResource Include="Datasets\german-iso-3166.csv" />
 		<EmbeddedResource Include="Datasets\Hkpv\postcode_cities.csv" />
 		<EmbeddedResource Include="Datasets\insurances.csv" />
-		<EmbeddedResource Include="Datasets\StatLp\main_attendance_closeness.csv" />
+		<EmbeddedResource Include="Datasets\main_attendance_closeness.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\activitytypes.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\diagnosisgroups.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\places_of_action.csv" />
