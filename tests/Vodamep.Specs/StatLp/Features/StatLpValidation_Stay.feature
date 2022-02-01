@@ -104,6 +104,12 @@ Szenario: Jedes Aufenthaltsende muss eine Entlassungsmeldung haben
 	Angenommen die erste Aufnahme startet am '2021-05-01', dauert 30 Tage und ist eine 'ContinuousAt'
 	Und die Liste 'Leaving' ist leer
 	Dann enthält das Validierungsergebnis den Fehler 'Für die Entlassung am '31.05.2021' von '(.*)' wurden keine Entlassungsdaten gemeldet.'
+
+Szenario: Ein Aufenthaltsende am 31.12 muss nicht zwingend eine Entlassungsmeldung haben. Es könnte ein Wechsel der Aufnahmeart sein.
+	Angenommen die erste Aufnahme startet am '2021-12-01', dauert 31 Tage und ist eine 'HolidayAt'
+	Und die Eigenschaft 'to' von 'Stay' ist auf '2021-12-31' gesetzt
+	Und die Liste 'Leaving' ist leer
+	Dann enthält das Validierungsergebnis keine Fehler
 	
 Szenario: Jeder Aufenthalt darf nur eine Entlassungsmeldung haben
 	Angenommen es gibt eine Entlassungsmeldung mehrfach

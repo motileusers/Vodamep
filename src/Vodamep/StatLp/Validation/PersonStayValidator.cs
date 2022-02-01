@@ -95,12 +95,23 @@ namespace Vodamep.StatLp.Validation
                             AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.HolidayAt);
 
                             AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.TransitionalAt);
-                                                     
+
                             AttributeValidation(ctx, report, s);
-                           
+
 
                             var admission = report.Admissions.Where(x => x.PersonId == person.Id && x.AdmissionDateD == s.From).ToArray();
-                            if (!admission.Any())
+                            var hasMissingAdmission = !admission.Any();
+
+                            //Wenn der Beginn des Aufenthaltes zum Begin des Meldezeitraums ist, könnte es sich auch um einen Wechsel der Aufenthaltsart handeln
+                            if (hasMissingAdmission && s.From == report.FromD)
+                            {
+                                //überlegen: man könnte hier die Aufnahmearten einschränken, für die ein Wechsel zum Jahresende in Frage kommen?
+
+                                hasMissingAdmission = false;
+                            }
+
+
+                            if (hasMissingAdmission)
                             {
                                 var index = a.Stays.IndexOf(s.Stays[0]);
                                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
@@ -122,7 +133,17 @@ namespace Vodamep.StatLp.Validation
                             if (s.To.HasValue && s.To < DateTime.Today)
                             {
                                 var leaving = report.Leavings.Where(x => x.PersonId == person.Id && x.LeavingDateD == s.To).ToArray();
-                                if (!leaving.Any())
+                                var hasMissingLeaving = !leaving.Any();
+
+                                //Wenn das Ende des Aufenthaltes am Ende Meldezeitraums ist, könnte es sich auch um einen Wechsel der Aufenthaltsart handeln
+                                if (hasMissingLeaving && s.To.Value == report.ToD)
+                                {
+                                    //überlegen: man könnte hier die Aufnahmearten einschränken, für die ein Wechsel zum Jahresende in Frage kommen?
+
+                                    hasMissingLeaving = false;
+                                }
+
+                                if (hasMissingLeaving)
                                 {
                                     var index = a.Stays.IndexOf(s.Stays[0]);
                                     ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
@@ -151,7 +172,7 @@ namespace Vodamep.StatLp.Validation
             var attributes = report.Attributes
                 .Where(x => x.PersonId == s.Stays[0].PersonId)
                 .GroupBy(x => x.ValueCase)
-                .Select(x => new { AttributeType = x.Key, From = x.Select(y => y.FromD).Min()})
+                .Select(x => new { AttributeType = x.Key, From = x.Select(y => y.FromD).Min() })
                 .ToArray();
 
             var from = s.From > report.FromD ? s.From : report.FromD;
@@ -163,7 +184,7 @@ namespace Vodamep.StatLp.Validation
                 Model.Attribute.ValueOneofCase.CareAllowanceArge
             };
 
-            foreach ( var type in attributTypes)
+            foreach (var type in attributTypes)
             {
                 if (!attributes.Where(x => x.AttributeType == type && x.From <= from).Any())
                 {

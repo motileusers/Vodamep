@@ -2,6 +2,7 @@
 using Google.Protobuf;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using TechTalk.SpecFlow;
 using Vodamep.Data.Dummy;
 using Vodamep.StatLp.Model;
@@ -38,6 +39,7 @@ namespace Vodamep.Specs.StatLp.StepDefinitions
             r1.Admissions[0].Gender = Gender.FemaleGe;
             r1.Persons[0].BirthdayD = new DateTime(1955, 1, 1);
             r1.Stays[0].To = null;
+            r1.Leavings.Clear();
 
             var r2 = new StatLpReport(r1)
             {
@@ -60,6 +62,26 @@ namespace Vodamep.Specs.StatLp.StepDefinitions
         [Given("es gibt zwei aneinander grenzende StatLp-Datenmeldungen")]
         public void GivenAdjacentReports()
         {
+
+        }
+        
+        [Given(@"zum Jahresende wechselt die AufnahmeArt von '(\w+)' zu '(\w+)'")]
+        public void GivenChangeOfStayType(string type1, string type2)
+        {
+            var r1 = (StatLpReport)_context.PrecedingReport;
+            var r2 = (StatLpReport)_context.Report;
+                        
+            r1.Stays[0].ToD = r1.ToD;
+            r1.Stays[0].Type = Enum.Parse<AdmissionType>(type1);
+
+            r2.Stays[0].ToD = r1.ToD;
+            r2.Stays[0].Type = Enum.Parse<AdmissionType>(type1);
+
+            r2.Stays.Add(new Stay
+            {
+                FromD = r2.FromD,
+                Type = Enum.Parse<AdmissionType>(type2)
+            });
 
         }
 
