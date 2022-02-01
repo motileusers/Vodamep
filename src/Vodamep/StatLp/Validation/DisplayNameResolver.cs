@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Vodamep.Data.StatLp;
+using Vodamep.Data;
 using Vodamep.StatLp.Model;
 
 namespace Vodamep.StatLp.Validation

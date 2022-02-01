@@ -14,17 +14,17 @@ namespace Vodamep.StatLp.Model
                 {
                     case Attribute.ValueOneofCase.CareAllowance:
                         {
-                            this.CareAllowance = Enum.TryParse<CareAllowance>(value, out var v) ? v : CareAllowance.Unspecified;
+                            this.CareAllowance = Enum.TryParse<CareAllowance>(value, out var v) ? v : CareAllowance.UndefinedAllowance;
                             break;
                         }
                     case Attribute.ValueOneofCase.CareAllowanceArge:
                         {
-                            this.CareAllowanceArge = Enum.TryParse<CareAllowanceArge>(value, out var v) ? v : CareAllowanceArge.Unspecified;
+                            this.CareAllowanceArge = Enum.TryParse<CareAllowanceArge>(value, out var v) ? v : CareAllowanceArge.UndefinedAr;
                             break;
                         }
                     case Attribute.ValueOneofCase.Finance:
                         {
-                            this.Finance = Enum.TryParse<Finance>(value, out var v) ? v : Finance.Unspecified;
+                            this.Finance = Enum.TryParse<Finance>(value, out var v) ? v : Finance.UndefinedFi;
                         }
                         break;
                 }

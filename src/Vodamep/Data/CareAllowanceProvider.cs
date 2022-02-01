@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Vodamep.Data.StatLp
+namespace Vodamep.Data
 {
-    public class CareAllowanceArgeProvider : CodeProviderBase
+    public class CareAllowanceProvider : CodeProviderBase
     {
-        private static volatile CareAllowanceArgeProvider instance;
+        private static volatile CareAllowanceProvider instance;
         private static object syncRoot = new Object();
 
-        public static CareAllowanceArgeProvider Instance
+        public static CareAllowanceProvider Instance
         {
             get
             {
@@ -16,7 +16,7 @@ namespace Vodamep.Data.StatLp
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new CareAllowanceArgeProvider();
+                            instance = new CareAllowanceProvider();
                     }
                 }
 
@@ -26,6 +26,6 @@ namespace Vodamep.Data.StatLp
 
         public override string Unknown => "ZZ";
 
-        protected override string ResourceName => "Datasets.StatLp.care_allowance_arge.csv";
+        protected override string ResourceName => "Datasets.care_allowance.csv";
     }
 }
