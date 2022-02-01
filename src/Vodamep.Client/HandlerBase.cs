@@ -26,12 +26,6 @@ namespace Vodamep.Client
             }
         }
 
-        public void ValidateHistory(ValidateHistoryArgs args)
-        {
-            string[] files = GetFiles(args.HistoryFiles);
-
-            this.ValidateHistory(args, files);
-        }
 
 
         /// <summary>
@@ -76,7 +70,7 @@ namespace Vodamep.Client
 
         protected abstract void Validate(ValidateArgs args, string file);
 
-        protected virtual void ValidateHistory(ValidateHistoryArgs args, string[] files)
+        public virtual void ValidatePrevious(ValidatePreviousArgs args)
         {
             HandleFailure("Für dieses Modul nicht verfügbar.");
         }

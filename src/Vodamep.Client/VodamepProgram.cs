@@ -26,11 +26,11 @@ namespace Vodamep.Client
             handler.Validate(args);
         }
 
-        [ArgActionMethod, ArgDescription("Prüfung der Meldungsgeschichte mehrerer Meldungen.")]
-        public void ValidateHistory(ValidateHistoryArgs args)
+        [ArgActionMethod, ArgDescription("Prüfung der Meldung gegenüber einer Vorgängermeldung.")]
+        public void ValidatePrevious(ValidatePreviousArgs args)
         {
             HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
-            handler.ValidateHistory(args);
+            handler.ValidatePrevious(args);
         }
 
         [ArgActionMethod, ArgDescription("Meldung neu verpacken.")]

@@ -6,6 +6,7 @@ namespace Vodamep.Client
     {        
         [ArgRequired, ArgPosition(1)]
         public string File { get; set; }
+
         public bool IgnoreWarnings { get; set; } = false;
     }
 }
