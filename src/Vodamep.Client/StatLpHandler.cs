@@ -75,63 +75,17 @@ namespace Vodamep.Client
         }
 
 
-        protected override void ValidateHistory(ValidateHistoryArgs args, string[] files)
+        public override void ValidatePrevious(ValidatePreviousArgs args)
         {
-            List<StatLpReport> historyReports = new List<StatLpReport>();
+            StatLpReport report = ReadReport(args.File);
+            StatLpReport previous = ReadReport(args.PreviousFile);
 
-            foreach (string file in files)
-            {
-                StatLpReport report = ReadReport(file);
-                historyReports.Add(report);
-            }
+            var result = report.Validate(previous);
 
-            // der Reihenfolge nach sortieren
-            historyReports = historyReports.OrderBy(x => x.From).ToList();
+            var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
+            var message = formatter.Format(report, result);
 
-
-            // Es gibt immer einen aktiven Report, der mit einer Geschichte an Reports
-            // geprüft wird. Wir können aber viele Reports gegen die Historie prüfen lasen.
-            List<StatLpReport> validateReports = new List<StatLpReport>();
-
-            string[] checkFiles = GetFiles(args.File);
-            foreach (string file in checkFiles)
-            {
-                StatLpReport report = ReadReport(file);
-                validateReports.Add(report);
-            }
-
-            // todo: Clearing aus der DB auslesen
-            ClearingExceptions clearingExceptions = new ClearingExceptions();
-
-
-
-            validateReports = validateReports.OrderBy(x => x.FromD).ToList();
-
-            foreach (StatLpReport report in validateReports)
-            {
-                var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
-                string message = "";
-
-                List<StatLpReport> previousReports = historyReports.Where(x => x.FromD < report.FromD).ToList();
-
-                if (previousReports.Count > 0)
-                {
-
-                    throw new Exception("todo");
-                    //var result = report.ValidateHistory(previousReports, clearingExceptions);
-
-                    //message = formatter.Format(report, result);
-
-                }
-                else
-                {
-                    message = formatter.Format(report, null);
-                }
-
-                Console.WriteLine(message);
-
-            }
-
+            Console.WriteLine(message);
         }
 
 
