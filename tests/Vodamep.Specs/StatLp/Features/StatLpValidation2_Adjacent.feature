@@ -27,3 +27,15 @@ Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
 Und die Eigenschaft 'id' von 'Person' ist auf '123' gesetzt
 Und die Eigenschaft 'person_id' von 'Stay' ist auf '123' gesetzt
 Dann enthält das Validierungsergebnis den Fehler 'Aufenthalte von '(.*)' wurden letztes Jahr gemeldet. Sie fehlen in diesem Jahr'	
+
+Szenario: Es findet zum Jahresende eine Wechsel von Urlaubspflege zu Daueraufnahme statt
+Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
+Und zum Jahresende wechselt die AufnahmeArt von 'HolidayAt' zu 'ContinuousAt'
+Dann enthält das Validierungsergebnis keine Fehler
+
+
+Szenario: Es findet zum Jahresende eine Wechsel von Urlaubspflege zu Daueraufnahme statt, die Daueraufnahme wird dann aber nicht gemeldet
+Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
+Und zum Jahresende wechselt die AufnahmeArt von 'HolidayAt' zu 'ContinuousAt'
+Und die Liste 'Stay' ist leer
+Dann enthält das Validierungsergebnis den Fehler 'Aufenthalte von '(.*)' wurden letztes Jahr gemeldet. Sie fehlen in diesem Jahr'	
