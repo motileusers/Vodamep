@@ -16,6 +16,11 @@ Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
 Und die Eigenschaft 'from' von 'Stay' ist auf '2000-01-01' gesetzt
 Dann enthält das Validierungsergebnis den Fehler 'Aufenthalte von '(.*)' stimmen nicht mit der vorhergehenden Meldung überein'
 
+Szenario: Ein Aufenthalt, der bisher kein Ende-Datum hatte, wird in der aktuellen Meldung beendet
+Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
+Und die Eigenschaft 'to' von 'Stay' ist auf '2021-01-31' gesetzt
+Dann enthält das Validierungsergebnis keine Fehler
+
 Szenario: Eine Person die nicht entlassen wurde, befindet sich nicht in der darauf folgenden Meldung
 Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
 Und die Eigenschaft 'id' von 'Person' ist auf '123' gesetzt
@@ -32,7 +37,6 @@ Szenario: Es findet zum Jahresende eine Wechsel von Urlaubspflege zu Daueraufnah
 Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
 Und zum Jahresende wechselt die AufnahmeArt von 'HolidayAt' zu 'ContinuousAt'
 Dann enthält das Validierungsergebnis keine Fehler
-
 
 Szenario: Es findet zum Jahresende eine Wechsel von Urlaubspflege zu Daueraufnahme statt, die Daueraufnahme wird dann aber nicht gemeldet
 Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
