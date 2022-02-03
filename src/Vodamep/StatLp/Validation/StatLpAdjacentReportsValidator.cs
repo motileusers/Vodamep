@@ -126,14 +126,29 @@ namespace Vodamep.StatLp.Validation
 
             foreach (var personId in personIds)
             {
-                var stays1 = data.Predecessor.Stays.Where(x => x.PersonId == personId).ToArray()
-                    .GetGroupedStays()
-                    .Where(x => x.To == null || x.To >= data.Predecessor.ToD)
-                    .FirstOrDefault();
+                // die relevanten Einträge der Vorgängermeldung
+                var predStays = data.Predecessor.Stays.Where(x => x.PersonId == personId).ToArray();
 
-                var stays2 = data.Report.Stays.Where(x => x.PersonId == personId && x.FromD <= data.Report.FromD).ToArray()
-                    .GetGroupedStays()
-                    .FirstOrDefault();
+                // die relevanten Einträge der aktuellen Meldung
+                var actualStays = data.Report.Stays.Where(x => x.PersonId == personId && x.FromD <= data.Report.FromD).ToArray();
+
+                if (actualStays.Any() && predStays.Any())
+                {
+                    //bei einem Aufenhalt über den Meldezeitraum hinaus, ist das To des letzten Aufenthaltes des Vorgängerberichts nicht gesetzt.
+                    //um den Vergleich einfach zu machen, wird das To des entsprecheden ersten Aufenthalts der aktuellen Meldung ebenfalls auf null gesetzt.
+                    if (!predStays.Last().ToD.HasValue && actualStays[0].ToD.HasValue)
+                    {
+                        actualStays[0] = new Stay(actualStays[0])
+                        {
+                            ToD = null
+                        };
+                    }
+                }
+
+                // verglichen werden die beiden GroupedStays 
+                var stays1 = predStays.GetGroupedStays().FirstOrDefault();
+
+                var stays2 = actualStays.GetGroupedStays().FirstOrDefault();
 
 
                 if (stays1 == null || stays2 == null || !stays1.Equals(stays2))
