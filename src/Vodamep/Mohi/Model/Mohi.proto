@@ -33,7 +33,7 @@ message Person {
     string postcode = 6;				                        // postcode und city müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
     string city = 7;                                       
                                                                 
-    string country = 8;                                         // Land aus german-iso-3166.csv
+    string nationality = 8;                                     // Land aus german-iso-3166.csv
                                                                 
     CareAllowance care_allowance = 9;                           // Bezieht Pflegegeld
 

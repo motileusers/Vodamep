@@ -34,7 +34,7 @@ namespace Vodamep.StatLp.Validation
             _dict.Add(nameof(Admission.AdmissionDate), "Aufnahmedatum");
             _dict.Add(nameof(Admission.AdmissionDateD), "Aufnahmedatum");           
             _dict.Add(nameof(Admission.Gender), "Geschlecht");
-            _dict.Add(nameof(Admission.Country), "Land");
+            _dict.Add(nameof(Admission.Nationality), "Staatsbürgerschaft");
             _dict.Add(nameof(Admission.HousingTypeBeforeAdmission), "Wohnsituation vor der Aufnahme");
             _dict.Add(nameof(Admission.MainAttendanceRelation), "Verwandtschaftsverhältnis Hauptbetreuungspers.");
             _dict.Add(nameof(Admission.MainAttendanceCloseness), "Räumliche Nähe Hauptbetreuungsperson");
