@@ -26,13 +26,6 @@ namespace Vodamep.Client
             handler.Validate(args);
         }
 
-        [ArgActionMethod, ArgDescription("Prüfung der Meldung gegenüber einer Vorgängermeldung.")]
-        public void ValidatePrevious(ValidatePreviousArgs args)
-        {
-            HandlerBase handler = this.handlerFactory.CreateFromType(args.Type);
-            handler.ValidatePrevious(args);
-        }
-
         [ArgActionMethod, ArgDescription("Meldung neu verpacken.")]
         public void PackFile(PackFileArgs args)
         {

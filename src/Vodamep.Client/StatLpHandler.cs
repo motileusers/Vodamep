@@ -62,31 +62,30 @@ namespace Vodamep.Client
 
         }
 
-        protected override void Validate(ValidateArgs args, string file)
+        protected override void ValidateSingleFile(ValidateArgs args)
         {
-            var report = ReadReport(file);
+            var report = ReadReport(args.File);
 
             var result = report.Validate();
 
-            var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
-            var message = formatter.Format(report, result);
+            if (!String.IsNullOrWhiteSpace(args.PreviousFile))
+            {
+                var previousReport = ReadReport(args.PreviousFile);
+                result = new FluentValidation.Results.ValidationResult(report.Validate(previousReport).Errors);
+            }
 
-            Console.WriteLine(message);
-        }
-
-
-        public override void ValidatePrevious(ValidatePreviousArgs args)
-        {
-            StatLpReport report = ReadReport(args.File);
-            StatLpReport previous = ReadReport(args.PreviousFile);
-
-            var result = report.Validate(previous);
+            if (!String.IsNullOrWhiteSpace(args.ExistingFile))
+            {
+                var existingReport = ReadReport(args.ExistingFile);
+                result = new FluentValidation.Results.ValidationResult(report.Validate(existingReport).Errors);
+            }
 
             var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
             var message = formatter.Format(report, result);
 
             Console.WriteLine(message);
         }
+
 
 
 
