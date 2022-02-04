@@ -52,7 +52,7 @@ message Admission {
 
     string last_postcode = 3;				                    // Postcode und City müssen zusammen einem Wert aus der Liste postcode_cities_StatLP.csv entsprechen
     string last_city = 4;
-    string country = 5;                                         // Staatsbürgerschaft, Land aus german-iso-3166.csv
+    string nationality = 5;                                     // Staatsbürgerschaft, Land aus german-iso-3166.csv
 
     google.protobuf.Timestamp admission_date = 6;
 

@@ -31,7 +31,7 @@ namespace Vodamep.Mohi.Validation
             _dict.Add(nameof(Person.Postcode), "PLZ");
             _dict.Add(nameof(Person.City), "Ort");
             _dict.Add(nameof(Person.Gender), "Geschlecht");
-            _dict.Add(nameof(Person.Country), "Land");
+            _dict.Add(nameof(Person.Nationality), "Staatsbürgerschaft");
             _dict.Add(nameof(Person.MainAttendanceCloseness), "Räumliche Nähe Hauptbetreuungsperson");
         }
 

@@ -3,7 +3,7 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.Mohi.Model
 {
-    public partial class Person : ICountryPerson
+    public partial class Person : INationalityPerson
     {
         /// <summary>
         /// Id, die für das Personen Mapping der Personen mit unterschiedlichen IDs über mehrere Meldungen hinweg verwendet wird.

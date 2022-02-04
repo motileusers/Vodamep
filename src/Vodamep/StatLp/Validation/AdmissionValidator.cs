@@ -25,12 +25,12 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.Gender).NotEmpty();
 
-            this.RuleFor(x => x.Country).NotEmpty();
+            this.RuleFor(x => x.Nationality).NotEmpty();
 
-            this.RuleFor(x => x.Country)
+            this.RuleFor(x => x.Nationality)
                 .Must((person, country) => CountryCodeProvider.Instance.IsValid(country))
-                .Unless(x => string.IsNullOrEmpty(x.Country))
-                .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.Country)))
+                .Unless(x => string.IsNullOrEmpty(x.Nationality))
+                .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.Nationality)))
                 .WithMessage(x => Validationmessages.ReportBaseInvalidValue(this.GetPersonName(x.PersonId, report)));
 
             this.RuleFor(x => x.AdmissionDate).SetValidator(new TimestampWithOutTimeValidator());

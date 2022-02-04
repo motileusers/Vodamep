@@ -137,7 +137,7 @@ namespace Vodamep.Data.Dummy
                 PersonalChangeOther = "",
                 SocialChanges = { SocialChange.MissingMealsSc },
                 SocialChangeOther = "",
-                Country = "AT",
+                Nationality = "AT",
                 Gender = Gender.MaleGe,
             };
 
