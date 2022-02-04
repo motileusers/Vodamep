@@ -63,9 +63,11 @@ namespace Vodamep.Client
 
         }
 
-        protected override void Validate(ValidateArgs args, string file)
+        protected override void ValidateSingleFile(ValidateArgs args)
         {
-            var report = ReadReport(file);
+            ThrowUnsupportedExistingPrevious(args);
+
+            var report = ReadReport(args.File);
 
             var result = report.Validate();
 

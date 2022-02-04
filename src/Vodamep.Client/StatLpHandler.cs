@@ -62,11 +62,23 @@ namespace Vodamep.Client
 
         }
 
-        protected override void Validate(ValidateArgs args, string file)
+        protected override void ValidateSingleFile(ValidateArgs args)
         {
-            var report = ReadReport(file);
+            var report = ReadReport(args.File);
 
             var result = report.Validate();
+
+            if (!String.IsNullOrWhiteSpace(args.PreviousFile))
+            {
+                var previousReport = ReadReport(args.PreviousFile);
+                result = new FluentValidation.Results.ValidationResult(report.Validate(previousReport).Errors);
+            }
+
+            if (!String.IsNullOrWhiteSpace(args.ExistingFile))
+            {
+                var existingReport = ReadReport(args.ExistingFile);
+                result = new FluentValidation.Results.ValidationResult(report.Validate(existingReport).Errors);
+            }
 
             var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
             var message = formatter.Format(report, result);
@@ -74,65 +86,6 @@ namespace Vodamep.Client
             Console.WriteLine(message);
         }
 
-
-        protected override void ValidateHistory(ValidateHistoryArgs args, string[] files)
-        {
-            List<StatLpReport> historyReports = new List<StatLpReport>();
-
-            foreach (string file in files)
-            {
-                StatLpReport report = ReadReport(file);
-                historyReports.Add(report);
-            }
-
-            // der Reihenfolge nach sortieren
-            historyReports = historyReports.OrderBy(x => x.From).ToList();
-
-
-            // Es gibt immer einen aktiven Report, der mit einer Geschichte an Reports
-            // geprüft wird. Wir können aber viele Reports gegen die Historie prüfen lasen.
-            List<StatLpReport> validateReports = new List<StatLpReport>();
-
-            string[] checkFiles = GetFiles(args.File);
-            foreach (string file in checkFiles)
-            {
-                StatLpReport report = ReadReport(file);
-                validateReports.Add(report);
-            }
-
-            // todo: Clearing aus der DB auslesen
-            ClearingExceptions clearingExceptions = new ClearingExceptions();
-
-
-
-            validateReports = validateReports.OrderBy(x => x.FromD).ToList();
-
-            foreach (StatLpReport report in validateReports)
-            {
-                var formatter = new StatLpReportValidationResultFormatter(ResultFormatterTemplate.Text, args.IgnoreWarnings);
-                string message = "";
-
-                List<StatLpReport> previousReports = historyReports.Where(x => x.FromD < report.FromD).ToList();
-
-                if (previousReports.Count > 0)
-                {
-
-                    throw new Exception("todo");
-                    //var result = report.ValidateHistory(previousReports, clearingExceptions);
-
-                    //message = formatter.Format(report, result);
-
-                }
-                else
-                {
-                    message = formatter.Format(report, null);
-                }
-
-                Console.WriteLine(message);
-
-            }
-
-        }
 
 
 

@@ -20,17 +20,29 @@ namespace Vodamep.Client
         {
             string[] files = GetFiles(args.File);
 
+            if (files.Length > 1)
+            {
+                if (!string.IsNullOrWhiteSpace(args.ExistingFile))
+                    throw new Exception("Prüfung mehrerer Meldungen mit bestehenden Meldungen nicht unterstützt. Geben Sie eine Meldungen, wennn Sie Existing verwenden.");
+
+                if (!string.IsNullOrWhiteSpace(args.PreviousFile))
+                    throw new Exception("Prüfung mehrerer Meldungen mit Vorgänger Meldungen nicht unterstützt. Geben Sie eine Meldungen, wennn Sie Previous verwenden.");
+            }
+
             foreach (var file in files)
             {
-                this.Validate(args, file);
+                this.ValidateSingleFile(args);
             }
         }
 
-        public void ValidateHistory(ValidateHistoryArgs args)
-        {
-            string[] files = GetFiles(args.HistoryFiles);
 
-            this.ValidateHistory(args, files);
+        protected void ThrowUnsupportedExistingPrevious(ValidateArgs args)
+        {
+            if (!string.IsNullOrWhiteSpace(args.ExistingFile))
+                throw new Exception($"Prüfung gegen existierende Meldungen für die Schnittstelle {args.Type} derzeit nicht unterstützt.");
+
+            if (!string.IsNullOrWhiteSpace(args.PreviousFile))
+                throw new Exception($"Prüfung gegen Vergänger Meldungen für die Schnittstelle {args.Type} derzeit nicht unterstützt.");
         }
 
 
@@ -74,13 +86,8 @@ namespace Vodamep.Client
 
         protected abstract void Send(SendArgs args, string file);
 
-        protected abstract void Validate(ValidateArgs args, string file);
+        protected abstract void ValidateSingleFile(ValidateArgs args);
 
-        protected virtual void ValidateHistory(ValidateHistoryArgs args, string[] files)
-        {
-            HandleFailure("Für dieses Modul nicht verfügbar.");
-        }
-        
         protected void HandleFailure(string message = null)
         {
             throw new Exception(message);
