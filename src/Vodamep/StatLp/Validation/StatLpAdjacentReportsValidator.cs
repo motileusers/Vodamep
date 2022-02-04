@@ -136,9 +136,12 @@ namespace Vodamep.StatLp.Validation
                 {
                     //bei einem Aufenhalt über den Meldezeitraum hinaus, ist das To des letzten Aufenthaltes des Vorgängerberichts nicht gesetzt.
                     //um den Vergleich einfach zu machen, wird das To des entsprecheden ersten Aufenthalts der aktuellen Meldung ebenfalls auf null gesetzt.
-                    if (!predStays.Last().ToD.HasValue && actualStays[0].ToD.HasValue)
+                    
+                    var index = actualStays.Length - 1;
+                    
+                    if (!predStays.Last().ToD.HasValue && actualStays[index].ToD.HasValue)
                     {
-                        actualStays[0] = new Stay(actualStays[0])
+                        actualStays[index] = new Stay(actualStays[index])
                         {
                             ToD = null
                         };
