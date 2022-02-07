@@ -104,7 +104,26 @@ namespace Vodamep.StatLp.Validation.Adjacent.Tests
 
             var result = _validator.Validate((_r1, _r2));
 
-            Assert.False(result.IsValid);            
+            Assert.False(result.IsValid);
+        }
+
+
+        [Fact]
+        public void Validate_AHolidayStayEndsAtReportToDateAndIsFollowedByAnotherStay_IsValid()
+        {
+            _r1.Stays.Clear();
+            _r2.Stays.Clear();
+
+
+            _r1.Stays.Add(new Stay { PersonId = "1", FromD = new DateTime(2021, 11, 29), ToD = new DateTime(2021, 12, 31), Type = AdmissionType.HolidayAt });
+
+            _r2.Stays.Add(new Stay { PersonId = "1", FromD = new DateTime(2021, 11, 29), ToD = new DateTime(2021, 12, 31), Type = AdmissionType.HolidayAt });
+            _r2.Stays.Add(new Stay { PersonId = "1", FromD = new DateTime(2022, 1, 1), ToD = null, Type = AdmissionType.ContinuousAt });
+
+
+            var result = _validator.Validate((_r1, _r2));
+
+            Assert.True(result.IsValid);
         }
     }
 }
