@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using Vodamep.StatLp.Model;
 
-namespace Vodamep.StatLp.Validation
+namespace Vodamep.StatLp.Validation.Update
 {
     internal class StatLpUpdateReportValidator : AbstractValidator<(StatLpReport OldReport, StatLpReport Report)>
     {

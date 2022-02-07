@@ -5,16 +5,15 @@ using System;
 using System.Linq;
 using System.Threading;
 using Vodamep.StatLp.Model;
-using Vodamep.ValidationBase;
 
-namespace Vodamep.StatLp.Validation
+namespace Vodamep.StatLp.Validation.Adjacent
 {
-    internal class StatLpAdjacentReportsValidator : AbstractValidator<(StatLpReport Predecessor, StatLpReport Report)>
+    internal class StatLpAdjacentReportsStaysValidator : AbstractValidator<(StatLpReport Predecessor, StatLpReport Report)>
     {
 
         private static readonly DisplayNameResolver DisplayNameResolver = new DisplayNameResolver();
 
-        static StatLpAdjacentReportsValidator()
+        static StatLpAdjacentReportsStaysValidator()
         {
             var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
             if (isGerman)
@@ -24,88 +23,9 @@ namespace Vodamep.StatLp.Validation
             }
         }
 
-        public StatLpAdjacentReportsValidator()
+        public StatLpAdjacentReportsStaysValidator()
         {
-            this.RuleFor(x => x).Custom((data, ctx) =>
-            {
-                // gemeinsame PersonIds
-                var personIds = data.Report.Persons.Select(x => x.Id)
-                    .Intersect(data.Predecessor.Persons.Select(x => x.Id))
-                    .ToArray();
-
-                CheckBirthday(data, ctx, personIds);
-
-                CheckGenders(data, ctx, personIds);
-            });
-
             this.RuleFor(x => x).Custom(CheckStays);
-        }
-
-        private void CheckBirthday((StatLpReport Predecessor, StatLpReport Report) data, CustomContext ctx, string[] personIds)
-        {
-            var values1 = data.Report.Persons
-                   .Where(x => personIds.Contains(x.Id))
-                   .Select(x => (x.Id, x.BirthdayD))
-                   .Distinct()
-                   .ToDictionary(x => x.Id, x => x.BirthdayD);
-
-            var values2 = data.Predecessor.Persons
-                .Where(x => personIds.Contains(x.Id))
-                .Select(x => (x.Id, x.BirthdayD))
-                .Distinct().ToDictionary(x => x.Id, x => x.BirthdayD);
-
-            foreach (var personId in personIds)
-            {
-                if (!values1.TryGetValue(personId, out var v1) || !values2.TryGetValue(personId, out var v2) || v1 != v2)
-                {
-                    var person = data.Report.Persons.Where(x => x.Id == personId).FirstOrDefault();
-                    var index = person != null ? data.Report.Persons.IndexOf(person) : -1;
-
-                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]",
-                        Validationmessages.PersonsPropertyDiffers(
-                            data.Report.GetPersonName(personId),
-                            DisplayNameResolver.GetDisplayName(nameof(Person.Birthday)),
-                            values1[personId].ToShortDateString(),
-                            values2[personId].ToShortDateString()
-                            ))
-                    {
-                        Severity = Severity.Warning
-                    });
-                }
-            }
-        }
-
-        private void CheckGenders((StatLpReport Predecessor, StatLpReport Report) data, CustomContext ctx, string[] personIds)
-        {
-            var values1 = data.Report.Admissions
-                   .Where(x => personIds.Contains(x.PersonId))
-                   .Select(x => (x.PersonId, x.Gender))
-                   .Distinct().ToDictionary(x => x.PersonId, x => x.Gender);
-
-            var values2 = data.Predecessor.Admissions
-                .Where(x => personIds.Contains(x.PersonId))
-                .Select(x => (x.PersonId, x.Gender))
-                .Distinct().ToDictionary(x => x.PersonId, x => x.Gender);
-
-            foreach (var personId in personIds)
-            {
-                if (!values1.TryGetValue(personId, out var v1) || !values2.TryGetValue(personId, out var v2) || v1 != v2)
-                {
-                    var person = data.Report.Persons.Where(x => x.Id == personId).FirstOrDefault();
-                    var index = person != null ? data.Report.Persons.IndexOf(person) : -1;
-
-                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]",
-                        Validationmessages.PersonsPropertyDiffers(
-                            data.Report.GetPersonName(personId),
-                            DisplayNameResolver.GetDisplayName(nameof(Admission.Gender)),
-                            DisplayNameResolver.GetDisplayName(values1[personId].ToString()),
-                            DisplayNameResolver.GetDisplayName(values2[personId].ToString())
-                            ))
-                    {
-                        Severity = Severity.Warning
-                    });
-                }
-            }
         }
 
         private void CheckStays((StatLpReport Predecessor, StatLpReport Report) data, CustomContext ctx)
@@ -136,9 +56,9 @@ namespace Vodamep.StatLp.Validation
                 {
                     //bei einem Aufenhalt über den Meldezeitraum hinaus, ist das To des letzten Aufenthaltes des Vorgängerberichts nicht gesetzt.
                     //um den Vergleich einfach zu machen, wird das To des entsprecheden ersten Aufenthalts der aktuellen Meldung ebenfalls auf null gesetzt.
-                    
+
                     var index = actualStays.Length - 1;
-                    
+
                     if (!predStays.Last().ToD.HasValue && actualStays[index].ToD.HasValue)
                     {
                         actualStays[index] = new Stay(actualStays[index])
@@ -149,9 +69,18 @@ namespace Vodamep.StatLp.Validation
                 }
 
                 // verglichen werden die beiden GroupedStays 
-                var stays1 = predStays.GetGroupedStays().FirstOrDefault();
-
-                var stays2 = actualStays.GetGroupedStays().FirstOrDefault();
+                GroupedStay stays1;
+                GroupedStay stays2;
+                try
+                {
+                    stays1 = predStays.GetGroupedStays().LastOrDefault();
+                    stays2 = actualStays.GetGroupedStays().FirstOrDefault();
+                }
+                catch (Exception e)
+                {
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}", e.Message));
+                    return;
+                }
 
 
                 if (stays1 == null || stays2 == null || !stays1.Equals(stays2))

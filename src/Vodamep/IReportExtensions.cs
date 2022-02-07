@@ -15,6 +15,8 @@ using Vodamep.Mohi.Validation;
 using Vodamep.ReportBase;
 using Vodamep.StatLp.Model;
 using Vodamep.StatLp.Validation;
+using Vodamep.StatLp.Validation.Adjacent;
+using Vodamep.StatLp.Validation.Update;
 using Vodamep.Tb.Model;
 using Vodamep.Tb.Validation;
 
