@@ -21,16 +21,16 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Und die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' darf nicht leer sein.'
 
-	Beispiele:
-		| Name           | Bezeichnung  |
-		| family_name    | Familienname |
-		| given_name     | Vorname      |
-		| birthday       | Geburtsdatum |
-		| gender         | Geschlecht   |
-		| country        | Land         |
-		| postcode       | PLZ          |
-		| city           | Ort          |
-		| care_allowance | Pflegegeld   |
+Beispiele:
+	| Name           | Bezeichnung        |
+	| family_name    | Familienname       |
+	| given_name     | Vorname            |
+	| birthday       | Geburtsdatum       |
+	| gender         | Geschlecht         |
+	| nationality    | Staatsbürgerschaft |
+	| postcode       | PLZ                |
+	| city           | Ort                |
+	| care_allowance | Pflegegeld         |
 
 # Regex "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$"
 Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
@@ -38,10 +38,10 @@ Szenariogrundriss: Der Name einer Person enthält ein ungültiges Zeichen
 	Und die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Person '1' weist ein ungültiges Format auf.'
 
-	Beispiele:
-		| Name        | Bezeichnung  | Wert |
-		| family_name | Familienname | t@st |
-		| given_name  | Vorname      | t@st |
+Beispiele:
+	| Name        | Bezeichnung  | Wert |
+	| family_name | Familienname | t@st |
+	| given_name  | Vorname      | t@st |
 
 # Länge 2 - 50 Zeichen
 Szenariogrundriss: Der Familienname einer Person ist zu kurz / lang
@@ -49,10 +49,10 @@ Szenariogrundriss: Der Familienname einer Person ist zu kurz / lang
 	Und die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' besitzt eine ungültige Länge'
 
-	Beispiele:
-		| Name        | Bezeichnung  | Wert                                                     |
-		| family_name | Familienname | abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij x |
-		| family_name | Familienname | x                                                        |
+Beispiele:
+	| Name        | Bezeichnung  | Wert                                                     |
+	| family_name | Familienname | abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij x |
+	| family_name | Familienname | x                                                        |
 
 # Länge 2 - 30 Zeichen
 Szenariogrundriss: Der Vorname einer Person ist zu kurz / lang
@@ -60,10 +60,10 @@ Szenariogrundriss: Der Vorname einer Person ist zu kurz / lang
 	Und die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' besitzt eine ungültige Länge.'
 
-	Beispiele:
-		| Name       | Bezeichnung | Wert                               |
-		| given_name | Vorname     | abcdefghij abcdefghij abcdefghij x |
-		| given_name | Vorname     | x                                  |
+Beispiele:
+	| Name       | Bezeichnung | Wert                               |
+	| given_name | Vorname     | abcdefghij abcdefghij abcdefghij x |
+	| given_name | Vorname     | x                                  |
 #
 # Land
 Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
@@ -71,26 +71,26 @@ Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
 	Und die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' hat einen ungültigen Wert'
 
-	Beispiele:
-		| Name    | Bezeichnung | Wert |
-		| country | Land        | A    |
-		| country | Land        | ZZ   |
+Beispiele:
+	| Name        | Bezeichnung        | Wert |
+	| nationality | Staatsbürgerschaft | A    |
+	| nationality | Staatsbürgerschaft | ZZ   |
 
 Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert
 	Angenommen es ist ein 'CmReport'
 	Und die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 
-	Beispiele:
-		| Name    | Bezeichnung | Wert |
-		| country | Land        | AD   |
-		| country | Land        | AT   |
+Beispiele:
+	| Name        | Bezeichnung        | Wert |
+	| nationality | Staatsbürgerschaft | AD   |
+	| nationality | Staatsbürgerschaft | AT   |
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
 	Angenommen es ist ein 'CmReport'
 	Und die Datums-Eigenschaft '<Name>' von 'Person' hat eine Uhrzeit gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '1' darf keine Uhrzeit beinhalten.'
 
-	Beispiele:
-		| Name     | Bezeichnung  |
-		| birthday | Geburtsdatum |
+Beispiele:
+	| Name     | Bezeichnung  |
+	| birthday | Geburtsdatum |
