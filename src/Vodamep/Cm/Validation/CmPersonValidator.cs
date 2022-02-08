@@ -15,7 +15,7 @@ namespace Vodamep.Cm.Validation
             this.RuleFor(x => x.City).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.Id));
             this.RuleFor(x => x.CareAllowance).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.Id));
 
-            this.RuleFor(x => x).SetValidator(x => new CountryValidator());
+            this.RuleFor(x => x).SetValidator(x => new NationalityValidator());
         }
     }
 }

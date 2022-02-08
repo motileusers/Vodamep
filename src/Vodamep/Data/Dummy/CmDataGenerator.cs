@@ -61,7 +61,7 @@ namespace Vodamep.Data.Dummy
                 CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
                     .Where(x => x != CareAllowance.UndefinedAllowance)
                     .ElementAt(_rand.Next(Enum.GetValues(typeof(CareAllowance)).Length - 1)),
-                Country = "AT",
+                Nationality = "AT",
                 Gender = Gender.MaleGe,
             };
 
