@@ -34,6 +34,17 @@ namespace Vodamep.Agp.Model
             return client;
         }
 
+        public string GetClient(string id)
+        {
+            string client = id;
+
+            var person = this.Persons.FirstOrDefault(p => p.Id == id);
+
+            client = person?.GetDisplayName();
+
+            return client;
+        }
+
         public static AgpReport CreateDummyData()
         {
             var r = new AgpReport()

@@ -122,12 +122,12 @@ Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons
     Angenommen es ist ein 'MkkpReport'
     Und die Eigenschaft 'person_id' von 'Activity' ist auf '-1' gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler 'Eine Aktivität mit der ID '1' ist keiner vorhandenen Person (ID '-1') zugeordnet.'
+    Dann enthält das Validierungsergebnis den Fehler 'Eine Aktivität vom (.*) mit der ID (.*) ist keiner vorhandenen Person'
 
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Mitarbeiter
     Angenommen es ist ein 'MkkpReport'
     Und die Eigenschaft 'staff_id' von 'Activity' ist auf '-1' gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler 'Eine Aktivität mit der ID '1' ist keinem vorhandenen Mitarbeiter (ID '-1') zugeordnet.'
+    Dann enthält das Validierungsergebnis den Fehler 'Eine Aktivität vom (.*) mit der ID (.*) ist keinem vorhandenen Mitarbeiter'
 
 Szenario: Eine Person ohne Aktivität.
     Angenommen es ist ein 'MkkpReport'

@@ -48,7 +48,7 @@ namespace Vodamep.Mkkp.Validation
                     foreach (var activity in activities)
                     {
                         if (!idPersons.Contains(activity.PersonId))
-                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivityWithoutPerson(activity.Id, activity.PersonId)));
+                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivityWithoutPerson(activity.Id, activity.PersonId, activity.DateD)));
                     }
 
                 });

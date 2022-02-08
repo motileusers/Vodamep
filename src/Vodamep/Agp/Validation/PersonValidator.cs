@@ -10,10 +10,6 @@ namespace Vodamep.Agp.Validation
     {
         public PersonValidator()
         {
-            this.RuleFor(x => x.Referrer).NotEmpty();
-            this.RuleFor(x => x.HospitalDoctor).NotEmpty();
-            this.RuleFor(x => x.LocalDoctor).NotEmpty();
-
             // Änderung 5.11.2018, LH
             var r = new Regex(@"^[\p{L}][-\p{L}. ]*[\p{L}.]$");
             this.RuleFor(x => x.HospitalDoctor).Matches(r).Unless(x => string.IsNullOrEmpty(x.HospitalDoctor));
@@ -21,7 +17,6 @@ namespace Vodamep.Agp.Validation
 
             this.Include(new PersonBirthdayValidator());
            
-            this.RuleFor(x => x.Insurance).NotEmpty();
             this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<InsuranceCodeProvider>());
 
             this.RuleFor(x => x.CareAllowance).NotEmpty();
@@ -40,6 +35,7 @@ namespace Vodamep.Agp.Validation
                 .WithMessage(x => Validationmessages.ReportBaseReferrerIsOtherRefererrerThenOtherReferrerMustBeSet (x.GetDisplayName()));
 
             this.RuleFor(x => x.Diagnoses).NotEmpty().WithMessage(x => Validationmessages.AtLeastOneDiagnosisGroup(x.GetDisplayName()));
+
             this.Include(new DiagnosisGroupIsUniqueValidator());
         }
     }

@@ -11,14 +11,12 @@ namespace Vodamep.Mkkp.Validation
 {
     internal class ActivityValidator : AbstractValidator<Activity>
     {
-        private readonly MkkpReport mkkpReport;
-
         public ActivityValidator(MkkpReport report, DateTime from, DateTime to)
         {
             var displayNameResolver = new MkkpDisplayNameResolver();
 
-            this.mkkpReport = report;
-
+            this.RuleFor(x => x.PersonId).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithParentProperty(displayNameResolver.GetDisplayName(nameof(x.PersonId)), displayNameResolver.GetDisplayName(nameof(Activity))));
             this.RuleFor(x => x.StaffId).NotEmpty()
                 .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.StaffId)), displayNameResolver.GetDisplayName(nameof(Activity)), report.GetClient(x.PersonId)));
             this.RuleFor(x => x.PlaceOfAction).NotEmpty()
@@ -31,9 +29,6 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.DateD)
                 .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
                     report.GetClient(x.PersonId), report.GetStaffName(x.StaffId), from, to, x.Date));
-
-            this.RuleFor(x => x.PersonId).NotEmpty()
-                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithParentProperty(displayNameResolver.GetDisplayName(nameof(x.PersonId)), displayNameResolver.GetDisplayName(nameof(Activity))));
 
             this.RuleFor(x => x).Custom((x, ctx) =>
             {

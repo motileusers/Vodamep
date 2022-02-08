@@ -31,13 +31,16 @@ namespace Vodamep.Agp.Validation
                     foreach (var id in idPersons.Except(idActivities))
                     {
                         var item = persons.Where(x => x.Id == id).First();
-                        ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseWithoutActivity(displayNameResolver.GetDisplayName(nameof(Person)), id)));
+
+                        AgpReport report = ctx.InstanceToValidate as AgpReport;
+
+                        ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseWithoutActivity(displayNameResolver.GetDisplayName(nameof(Person)), report.GetClient(id))));
                     }
 
                     foreach (var activity in activities)
                     {
                         if (!idPersons.Contains(activity.PersonId))
-                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivityWithoutPerson(activity.Id, activity.PersonId)));
+                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivityWithoutPerson(activity.Id, activity.PersonId, activity.DateD)));
                     }
                 });
         }

@@ -17,8 +17,8 @@ namespace Vodamep.ValidationBase
         public static string WithoutEntry(string e, string clientName, string staff, string date) => $"Kein Eintrag '{e}': bei '{clientName}', von '{staff}', am '{date}'.";
         public static string WithoutActivity => $"Keine Aktivitäten.";
         public static string ReportBaseWithoutActivity(string clientOrStaff, string name) => $"Keine Aktivitäten für {clientOrStaff} '{name}' dokumentiert.";
-        public static string ReportBaseActivityWithoutPerson(string activityId, string personId) => $"Eine Aktivität mit der ID '{activityId}' ist keiner vorhandenen Person (ID '{personId}') zugeordnet.";
-        public static string ReportBaseActivitWithoutStaff(string activityId, string staffId) => $"Eine Aktivität mit der ID '{activityId}' ist keinem vorhandenen Mitarbeiter (ID '{staffId}') zugeordnet.";
+        public static string ReportBaseActivityWithoutPerson(string activityId, string personId, DateTime date) => $"Eine Aktivität vom {date.ToShortDateString()} mit der ID '{activityId}' ist keiner vorhandenen Person (ID '{personId}') zugeordnet.";
+        public static string ReportBaseActivitWithoutStaff(string activityId, string staffId, DateTime date) => $"Eine Aktivität vom {date.ToShortDateString()} mit der ID '{activityId}' ist keinem vorhandenen Mitarbeiter (ID '{staffId}') zugeordnet.";
         public static string StaffWithoutEmployment => $"Beim Mitarbeiter ist keine Beschäftigung vorhanden";
         public static string EmploymentHoursPerWeekMustBeBetween0And100 => $"Die Stundenanzahl muss größer 0 und kleiner 100 sein";
         public static string InvalidEmploymentFromToReportRange(Staff data) => $"Das Anstellungsverhältniss von {data.GivenName} {data.FamilyName} muss innerhalb des Meldungszeitraums liegen.";
