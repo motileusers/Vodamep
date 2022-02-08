@@ -50,7 +50,7 @@ namespace Vodamep.StatLp.Validation.Adjacent
                 var predStays = data.Predecessor.Stays.Where(x => x.PersonId == personId).ToArray();
 
                 // die relevanten Einträge der aktuellen Meldung
-                var actualStays = data.Report.Stays.Where(x => x.PersonId == personId && x.FromD <= data.Report.FromD).ToArray();
+                var actualStays = data.Report.Stays.Where(x => x.PersonId == personId && x.FromD < data.Report.FromD).ToArray();
 
                 if (actualStays.Any() && predStays.Any())
                 {
