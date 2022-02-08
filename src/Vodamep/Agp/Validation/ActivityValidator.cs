@@ -16,38 +16,37 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.PersonId).NotEmpty()
                 .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithParentProperty(displayNameResolver.GetDisplayName(nameof(x.PersonId)), displayNameResolver.GetDisplayName(nameof(Activity))));
-
             this.RuleFor(x => x.StaffId).NotEmpty()
-                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.StaffId)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.StaffId)), displayNameResolver.GetDisplayName(nameof(Activity)), report.GetClient(x.PersonId)));
             this.RuleFor(x => x.PlaceOfAction).NotEmpty()
-                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.PlaceOfAction)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.PlaceOfAction)), displayNameResolver.GetDisplayName(nameof(Activity)), report.GetClient(x.PersonId)));
             this.RuleFor(x => x.Entries).NotEmpty()
-                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Entries)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Entries)), displayNameResolver.GetDisplayName(nameof(Activity)), report.GetClient(x.PersonId)));
             this.RuleFor(x => x.Date).NotEmpty()
-                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Date)), displayNameResolver.GetDisplayName(nameof(Activity)), x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Date)), displayNameResolver.GetDisplayName(nameof(Activity)), report.GetClient(x.PersonId)));
+
 
             this.RuleFor(x => x.DateD)
                 .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
-                    "", report.GetStaffName(x.StaffId), report.FromD, report.ToD, x.Date));
+                    report.GetClient(x.PersonId), report.GetStaffName(x.StaffId), report.FromD, report.ToD, x.Date));
+
 
             this.RuleFor(x => x).Custom((x, ctx) =>
             {
                 var entries = x.Entries;
 
-                var query = entries.GroupBy(y => y)
+                var doubledQuery = entries.GroupBy(y => y)
                     .Where(activityTypes => activityTypes.Count() > 1)
                     .Select(group => group.Key);
 
-                if (query.Any())
+                if (doubledQuery.Any())
                 {
-                    ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.WithinAnActivityThereAreNoDoubledActivityTypesAllowed(x.PersonId)));
+                    ctx.AddFailure(new ValidationFailure(nameof(Activity.Minutes), Validationmessages.WithinAnActivityThereAreNoDoubledActivityTypesAllowed(report.GetClient(x.PersonId))));
                 }
 
             });
 
-            this.RuleFor(x => x.PlaceOfAction).NotEmpty();
-
-            this.RuleFor(x => x).SetValidator(x => new ActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(Activity.Minutes)), report.GetStaffName(x.StaffId)));
+            this.RuleFor(x => x).SetValidator(x => new ActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(Activity.Minutes)), report.GetClient(x.PersonId)));
         }
     }
 }
