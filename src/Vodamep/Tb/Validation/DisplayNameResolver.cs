@@ -22,6 +22,7 @@ namespace Vodamep.Tb.Validation
 
             _dict.Add(nameof(TbReport.Institution), "Einrichtung");
 
+            _dict.Add(nameof(Person), "Klient");
             _dict.Add(nameof(Person.GivenName), "Vorname");
             _dict.Add(nameof(Person.FamilyName), "Familienname");
             _dict.Add(nameof(Person.Birthday), "Geburtsdatum");

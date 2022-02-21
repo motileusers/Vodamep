@@ -7,7 +7,7 @@ namespace Vodamep.Mkkp.Model
     {
         public string GetDisplayName()
         {
-            return  $"{this.GivenName} {this.FamilyName}";
+            return PersonNameBuilder.FullNameOrId(this.GivenName, this.FamilyName, this.Id);
         }
     }
 }

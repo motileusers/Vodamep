@@ -8,8 +8,7 @@ namespace Vodamep.Mkkp.Model
         public DateTime BirthdayD { get => this.Birthday.AsDate(); set => this.Birthday = value.AsTimestamp(); }
         public string GetDisplayName()
         {
-            return (string.IsNullOrWhiteSpace(this.GivenName) || string.IsNullOrWhiteSpace(this.FamilyName)) ? 
-                this.Id : $"{this.GivenName} {this.FamilyName}";
+            return PersonNameBuilder.FullNameOrId(this.GivenName, this.FamilyName, this.Id);
         }
     }
 }
