@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Vodamep.Agp.Model;
-using Vodamep.ReportBase;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Agp.Validation
@@ -12,13 +11,14 @@ namespace Vodamep.Agp.Validation
 
     internal class AgpReportValidator : AbstractValidator<AgpReport>
     {
+        private static readonly AgpDisplayNameResolver displayNameResolver;
         static AgpReportValidator()
         {
             var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
             if (isGerman)
             {
-                var loc = new AgpDisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
+                displayNameResolver = new AgpDisplayNameResolver();
+                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => displayNameResolver.GetDisplayName(memberInfo?.Name);
             }
         }
         public AgpReportValidator()
@@ -48,7 +48,9 @@ namespace Vodamep.Agp.Validation
                 .Unless(x => x.From == null)
                 .WithMessage(Validationmessages.FirstDateInMonth);
 
-            this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(new AgpPersonValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(displayNameResolver.GetDisplayName(nameof(Person)), @"^[\p{L}][-\p{L}. ]*[\p{L}.]$", -1, -1, -1, -1));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(new DateTime(1900, 01, 01), displayNameResolver.GetDisplayName(nameof(Person))));
 
             this.RuleForEach(report => report.Activities).SetValidator(r => new ActivityValidator(r));
 

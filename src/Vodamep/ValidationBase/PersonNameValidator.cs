@@ -6,7 +6,7 @@ namespace Vodamep.ValidationBase
 {
     internal class PersonNameValidator : AbstractValidator<INamedPerson>
     {
-        public PersonNameValidator(string localizedPerson, string nameRegex,int minLengthGivenName, int maxLengthGivenName, int minLengthFamilyName, int maxLengthFamilyName)
+        public PersonNameValidator(string localizedPerson, string nameRegex, int minLengthGivenName, int maxLengthGivenName, int minLengthFamilyName, int maxLengthFamilyName)
         {
             this.RuleFor(x => x.FamilyName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
             this.RuleFor(x => x.GivenName).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
@@ -14,7 +14,7 @@ namespace Vodamep.ValidationBase
             var r = new Regex(nameRegex);
             this.RuleFor(x => x.FamilyName)
                 .Matches(r).Unless(x => string.IsNullOrEmpty(x.FamilyName))
-                .WithMessage(x => Validationmessages.ReportBasePropertyInvalidFormat( localizedPerson, x.GetDisplayName()));
+                .WithMessage(x => Validationmessages.ReportBasePropertyInvalidFormat(localizedPerson, x.GetDisplayName()));
 
             this.RuleFor(x => x.GivenName)
                 .Matches(r).Unless(x => string.IsNullOrEmpty(x.GivenName))
@@ -32,12 +32,12 @@ namespace Vodamep.ValidationBase
 
             if (minLengthFamilyName > 0)
             {
-                this.RuleFor(x => x.FamilyName).MinimumLength(minLengthFamilyName).WithMessage(x => Validationmessages.ReportBaseInvalidLength(x.Id));
+                this.RuleFor(x => x.FamilyName).MinimumLength(minLengthFamilyName).WithMessage(x => Validationmessages.ReportBaseInvalidLength(x.GetDisplayName()));
             }
 
             if (maxLengthFamilyName > 0)
             {
-                this.RuleFor(x => x.FamilyName).MaximumLength(maxLengthFamilyName).WithMessage(x => Validationmessages.ReportBaseInvalidLength(x.Id));
+                this.RuleFor(x => x.FamilyName).MaximumLength(maxLengthFamilyName).WithMessage(x => Validationmessages.ReportBaseInvalidLength(x.GetDisplayName()));
             }
         }
     }
