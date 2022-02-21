@@ -139,6 +139,10 @@ namespace Vodamep.Specs
         {
             var pattern = new Regex(message, RegexOptions.IgnoreCase);
 
+            if (message.Contains("1"))
+            {
+            }
+
             Assert.NotEmpty(this._context.Result.Errors.Where(x => x.Severity == Severity.Error && pattern.IsMatch(x.ErrorMessage)));
         }
 

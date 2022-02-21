@@ -31,17 +31,19 @@ message Staff {
 // Personen, die im Zeitraum eine Leistung bezogen haben
 message Person {
     string id = 1;        
-    google.protobuf.Timestamp birthday = 2;
-	Gender gender = 3;
-    string postcode = 4;				// postcode und city müssen zusammen einem Wert aus der Liste der Orte entsprechen
-    string city = 5;
-	CareAllowance care_allowance = 6;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
-	string insurance = 7;               // Ein Wert aus der Liste der Sozialversicherungen
-    Referrer referrer = 8;
-    string other_referrer = 9;
-    string hospital_doctor = 10;
-    string local_doctor = 11;
-    repeated DiagnosisGroup diagnoses = 12;
+    string family_name = 2;
+    string given_name = 3;    
+    google.protobuf.Timestamp birthday = 4;
+	Gender gender = 5;
+    string postcode = 6;				// postcode und city müssen zusammen einem Wert aus der Liste der Orte entsprechen
+    string city = 7;
+	CareAllowance care_allowance = 8;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
+	string insurance = 9;               // Ein Wert aus der Liste der Sozialversicherungen
+    Referrer referrer = 10;
+    string other_referrer = 11;
+    string hospital_doctor = 12;
+    string local_doctor = 13;
+    repeated DiagnosisGroup diagnoses = 14;
 }
 
 // Leistungen

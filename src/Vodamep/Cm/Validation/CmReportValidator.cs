@@ -12,15 +12,15 @@ namespace Vodamep.Cm.Validation
 
     internal class CmReportValidator : AbstractValidator<CmReport>
     {
-        private static DisplayNameResolver _displayNameResolver;
+        private static DisplayNameResolver displayNameResolver;
 
         static CmReportValidator()
         {
             var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
             if (isGerman)
             {
-                _displayNameResolver = new DisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => _displayNameResolver.GetDisplayName(memberInfo?.Name);
+                displayNameResolver = new DisplayNameResolver();
+                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => displayNameResolver.GetDisplayName(memberInfo?.Name);
             }
         }
         public CmReportValidator()
@@ -33,8 +33,8 @@ namespace Vodamep.Cm.Validation
 
             var earliestBirthday = new DateTime(1890, 01, 01);
             var nameRegex = "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$";
-            this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(earliestBirthday));
-            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(_displayNameResolver.GetDisplayName(nameof(Person)),  nameRegex, 2, 30, 2, 50));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(earliestBirthday, displayNameResolver.GetDisplayName(nameof(Person))));
+            this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(displayNameResolver.GetDisplayName(nameof(Person)),  nameRegex, 2, 30, 2, 50));
             this.RuleForEach(report => report.Persons).SetValidator(new CmPersonValidator());
 
             this.RuleForEach(report => report.Activities).SetValidator(r => new CmActivityValidator(r));

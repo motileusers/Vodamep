@@ -64,6 +64,8 @@ namespace Vodamep.Data.Dummy
             var person = new Person()
             {
                 Id = id,
+                FamilyName = id == null ? _familynames[_rand.Next(_familynames.Length)] : _familynames[0],
+                GivenName = id == null ? _names[_rand.Next(_names.Length)] : _names[0],
                 Insurance = "19",
 
                 CareAllowance = ((CareAllowance[])(Enum.GetValues(typeof(CareAllowance))))
