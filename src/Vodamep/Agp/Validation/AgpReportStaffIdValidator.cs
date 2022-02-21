@@ -35,26 +35,21 @@ namespace Vodamep.Agp.Validation
 
 
                     var idStaffs = staffs.Select(x => x.Id).Distinct().ToArray();
-                    var idActivities = (
+                    var idStaffsInActivities = (
                         activities.Select(x => x.StaffId)
                     ).Distinct().ToArray();
 
-                    foreach (var id in idStaffs.Except(idActivities))
+                    foreach (var id in idStaffs.Except(idStaffsInActivities))
                     {
-                        var item = staffs.Where(x => x.Id == id).First();
-                        var index = staffs.IndexOf(item);
-                        ctx.AddFailure(new ValidationFailure(nameof(Staff), Validationmessages.ReportBaseWithoutActivity(displayNameResolver.GetDisplayName(nameof(Staff)), id)));
-                    }
+                        AgpReport report = ctx.InstanceToValidate as AgpReport;
 
-                    foreach (var id in idActivities.Except(idStaffs))
-                    {
-                        ctx.AddFailure(new ValidationFailure(nameof(AgpReport.Staffs), Validationmessages.IdIsMissing(id)));
+                        ctx.AddFailure(new ValidationFailure(nameof(Staff), Validationmessages.ReportBaseWithoutActivity(displayNameResolver.GetDisplayName(nameof(Staff)), report.GetStaffName(id))));
                     }
 
                     foreach (var activity in activities)
                     {
                         if (!idStaffs.Contains(activity.StaffId))
-                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivitWithoutStaff(activity.Id, activity.StaffId)));
+                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivitWithoutStaff(activity.Id, activity.StaffId, activity.DateD)));
                     }
                 });
 

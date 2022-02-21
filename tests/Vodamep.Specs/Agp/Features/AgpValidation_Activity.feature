@@ -18,6 +18,13 @@ Beispiele:
     | staff_id          | Mitarbeiter-ID  | 
 
 
+Szenario: Einsatzort ist undefiniert
+    Angenommen es ist ein 'AgpReport'
+    Und die Eigenschaft 'place_of_Action' von 'Activity' ist auf 'UndefinedPlace' gesetzt
+    Dann enthält das Validierungsergebnis den Fehler ''Einsatzort' von Aktivität von Klient '(.*)' darf nicht leer sein.'
+
+
+
 Szenario: Leistungszeit muss > 0 sein 
     Angenommen es ist ein 'AgpReport'    
     Angenommen die Eigenschaft 'minutes' von 'Activity' ist nicht gesetzt
@@ -133,12 +140,12 @@ Szenario: Eine Aktivität ist vor dem Meldungszeitraum.
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Persons
     Angenommen es ist ein 'AgpReport'
     Und die Eigenschaft 'person_id' von 'Activity' ist auf '-1' gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler 'Eine Aktivität mit der ID '1' ist keiner vorhandenen Person'
+    Dann enthält das Validierungsergebnis den Fehler 'Eine Aktivität vom (.*) mit der ID (.*) ist keiner vorhandenen Person'
 
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Mitarbeiter
     Angenommen es ist ein 'AgpReport'
     Und die Eigenschaft 'staff_id' von 'Activity' ist auf '-1' gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler 'Eine Aktivität mit der ID '1' ist keinem vorhandenen Mitarbeiter'
+    Dann enthält das Validierungsergebnis den Fehler 'Eine Aktivität vom (.*) mit der ID (.*) ist keinem vorhandenen Mitarbeiter'
 
 Szenario: Eine Aktivität ist nach dem Meldungszeitraum - Mitarbeiter Leistungen
     Angenommen es ist ein 'AgpReport'
@@ -153,14 +160,7 @@ Szenario: Eine Aktivität ist vor dem Meldungszeitraum - Mitarbeiter Leistungen
 Szenario: Eine Aktivität ohne entsprechenden Eintrag in Mitarbeiter - Mitarbeiter Leistungen
     Angenommen es ist ein 'AgpReport'
     Und die Eigenschaft 'staff_id' von 'Activity' ist auf '-1' gesetzt
-    Dann enthält das escapte Validierungsergebnis den Fehler 'Eine Aktivität mit der ID '1' ist keinem vorhandenen Mitarbeiter'
-
-
-
-Szenario: Einsatzort ist undefiniert
-    Angenommen es ist ein 'AgpReport'
-    Und die Eigenschaft 'place_of_Action' von 'Activity' ist auf 'UndefinedPlace' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Einsatzort' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Eine Aktivität vom (.*) mit der ID (.*) ist keinem vorhandenen Mitarbeiter'
 
 
 # todo -- das hier um die Staff Aktivitäten erweitern

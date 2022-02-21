@@ -46,15 +46,10 @@ namespace Vodamep.Mkkp.Validation
 
                     }
 
-                    foreach (var id in idActivities.Except(idStaffs))
-                    {
-                        ctx.AddFailure(new ValidationFailure(nameof(MkkpReport.Staffs), Validationmessages.IdIsMissing(id)));
-                    }
-
                     foreach (var activity in activities)
                     {
                         if (!idStaffs.Contains(activity.StaffId))
-                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivitWithoutStaff(activity.Id, activity.StaffId)));
+                            ctx.AddFailure(new ValidationFailure(nameof(Activity), Validationmessages.ReportBaseActivitWithoutStaff(activity.Id, activity.StaffId, activity.DateD)));
                     }
                 });
 
