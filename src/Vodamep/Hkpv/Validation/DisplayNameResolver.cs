@@ -15,6 +15,7 @@ namespace Vodamep.Hkpv.Validation
         private void Init()
         {
 
+            _dict.Add(nameof(Person), "Person");
             _dict.Add(nameof(Person.GivenName), "Vorname");
             _dict.Add(nameof(Person.FamilyName), "Familienname");            
             _dict.Add(nameof(Person.Ssn), "Versicherungsnummer");

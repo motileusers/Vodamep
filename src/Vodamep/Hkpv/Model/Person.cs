@@ -8,7 +8,7 @@ namespace Vodamep.Hkpv.Model
         public DateTime BirthdayD { get => this.Birthday.AsDate(); set => this.Birthday = value.AsTimestamp(); }
         public string GetDisplayName()
         {
-            return this.Id;
+            return PersonNameBuilder.FullNameOrId(this.GivenName, this.FamilyName, this.Id);
         }
     }
 }
