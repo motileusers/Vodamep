@@ -9,7 +9,7 @@ Szenario: Pesonen ID ist nicht gesetzt
 Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen es ist ein 'AgpReport'
     Und die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Aktivität von Klient '1' darf nicht leer sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Aktivität von Klient 'Peter Gruber' darf nicht leer sein.'
     Angenommen die Eigenschaft '<Name>' von 'Activity' ist nicht gesetzt
     Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Aktivität von Klient '(.*)' darf nicht leer sein.'
 Beispiele:
@@ -121,11 +121,11 @@ Szenario: Mehrfache Leistungstypen pro Leistung
 
 Szenario: Doppelte Leistungen innerhalb einer Aktivität
     Angenommen die Leistungstypen 'CareDocumentationAt,CareDocumentationAt' sind für eine AGP-Aktivität gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität von Klient '1' dürfen keine doppelten Leistungstypen vorhanden sein.'
+    Dann enthält das Validierungsergebnis den Fehler 'Innerhalb einer Aktivität von Klient 'Peter Gruber' dürfen keine doppelten Leistungstypen vorhanden sein.'
 
 Szenario: Es muss mindestens ein Leistungstyp pro Leistung vorhanden sein
    Angenommen die Leistungstypen '' sind für eine AGP-Aktivität gesetzt
-   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' von Aktivität von Klient '1' darf nicht leer sein.'
+   Dann enthält das Validierungsergebnis den Fehler 'Leistungsbereiche' von Aktivität von Klient 'Peter Gruber' darf nicht leer sein.'
 
 Szenario: Eine Aktivität ist nach dem Meldungszeitraum.
     Angenommen es ist ein 'AgpReport'
