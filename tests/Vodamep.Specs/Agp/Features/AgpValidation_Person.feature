@@ -28,23 +28,34 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Dann enthält das Validierungsergebnis genau einen Fehler
 	Und enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '<NewName>' darf nicht leer sein.'
 Beispiele:
-	| Name            | Bezeichnung                                 | NewName      |
-	| birthday        | Geburtsdatum                                | Peter Gruber |
-	| family_name     | Familienname                                | Peter        |
-	| given_name      | Vorname                                     | Gruber       |
-	| insurance       | Versicherung                                | Peter Gruber |
-	| postcode        | Plz                                         | Peter Gruber |
-	| city            | Ort                                         | Peter Gruber |
-	| gender          | Geschlecht                                  | Peter Gruber |
-	| referrer        | Zuweiser                                    | Peter Gruber |
-	| hospital_doctor | Betreuender Arzt (Krankenhaus)              | Peter Gruber |
-	| local_doctor    | Betreuender Arzt (Niedergelassener Bereich) | Peter Gruber |
+	| Name        | Bezeichnung        | NewName      |
+	| family_name | Familienname       | Peter        |
+	| given_name  | Vorname            | Gruber       |
+	| birthday    | Geburtsdatum       | Peter Gruber |
+	| postcode    | Plz                | Peter Gruber |
+	| city        | Ort                | Peter Gruber |
+	| gender      | Geschlecht         | Peter Gruber |
+	| referrer    | Zuweiser           | Peter Gruber |
+	| nationality | Staatsbürgerschaft | Peter Gruber |
+
+Szenariogrundriss: Eine Eigenschaft muss nicht gesetzt sein
+	Angenommen es ist ein 'AgpReport'
+	Und die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
+Beispiele:
+	| Name            |
+	| insurance       |
+	| hospital_doctor |
+	| local_doctor    |
+
+
 
 Szenariogrundriss: Eine Eigenschaft ist mit einem ungültigen Wert gesetzt.
 	Angenommen es ist ein 'AgpReport'
 	Und die Eigenschaft '<Name>' von 'Person' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis genau einen Fehler
-	Und die Fehlermeldung lautet: 'Für '<Bezeichnung>' ist '<Wert>' kein gültiger Code.'
+	Und die Fehlermeldung lautet: 'Für '<Bezeichnung>' von Klient 'Peter Gruber' ist 'test' kein gültiger Code.'
+	
 Beispiele:
 	| Name      | Bezeichnung  | Wert |
 	| insurance | Versicherung | test |
@@ -100,7 +111,7 @@ Szenario: Geschlecht ist undefiniert
 Szenario: Pflegegeld ist undefiniert
 	Angenommen es ist ein 'AgpReport'
 	Und die Eigenschaft 'care_allowance' von 'Person' ist auf 'UndefinedAllowance' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Pflegegeld' darf nicht leer sein.'
+	Dann enthält das Validierungsergebnis den Fehler ''Pflegegeld' von Klient 'Peter Gruber' darf nicht leer sein.'
 
 Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
 	Angenommen die Agp-Diagnose(n) ist auf 'AffectiveDisorder, AffectiveDisorder' gesetzt

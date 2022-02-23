@@ -29,6 +29,7 @@ namespace Vodamep.Agp.Validation
             _dict.Add(nameof(Person.Gender), "Geschlecht");
             _dict.Add(nameof(Person.Postcode), "Plz");
             _dict.Add(nameof(Person.City), "Ort");
+            _dict.Add(nameof(Person.Nationality), "Staatsbürgerschaft");
             _dict.Add(nameof(Person.Insurance), "Versicherung");
             _dict.Add(nameof(Person.CareAllowance), "Pflegegeld");
             _dict.Add(nameof(Person.Referrer), "Zuweiser");

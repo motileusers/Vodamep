@@ -12,20 +12,9 @@ namespace Vodamep.ValidationBase
 
         }
 
-        public CodeValidator(string client)
-            : base(Validationmessages.ReportBaseInvalidCode (client))
-        {
-
-        }
-
         protected override bool IsValid(PropertyValidatorContext context)
         {
-
             string test = typeof(T).Name;
-
-            if (test == "QualificationCodeProvider")
-            {
-            }
 
             var code = context.PropertyValue as string;
 

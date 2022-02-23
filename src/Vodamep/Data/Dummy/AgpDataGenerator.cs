@@ -81,6 +81,7 @@ namespace Vodamep.Data.Dummy
 
                 HospitalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
                 LocalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
+                Nationality = "AT", 
             };
 
             person.Diagnoses.Add(DiagnosisGroup.AffectiveDisorder);
