@@ -37,13 +37,14 @@ message Person {
 	Gender gender = 5;
     string postcode = 6;				// postcode und city müssen zusammen einem Wert aus der Liste der Orte entsprechen
     string city = 7;
-	CareAllowance care_allowance = 8;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
-	string insurance = 9;               // Ein Wert aus der Liste der Sozialversicherungen
-    Referrer referrer = 10;
-    string other_referrer = 11;
-    string hospital_doctor = 12;
-    string local_doctor = 13;
-    repeated DiagnosisGroup diagnoses = 14;
+    string nationality = 8;             // Land aus german-iso-3166.csv
+	CareAllowance care_allowance = 9;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
+	string insurance = 10;               // Ein Wert aus der Liste der Sozialversicherungen
+    Referrer referrer = 11;
+    string other_referrer = 12;
+    string hospital_doctor = 13;
+    string local_doctor = 14;
+    repeated DiagnosisGroup diagnoses = 15;
 }
 
 // Leistungen

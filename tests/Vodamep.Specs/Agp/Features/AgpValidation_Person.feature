@@ -28,14 +28,15 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Dann enthält das Validierungsergebnis genau einen Fehler
 	Und enthält das escapte Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '<NewName>' darf nicht leer sein.'
 Beispiele:
-	| Name        | Bezeichnung  | NewName      |
-	| family_name | Familienname | Peter        |
-	| given_name  | Vorname      | Gruber       |
-	| birthday    | Geburtsdatum | Peter Gruber |
-	| postcode    | Plz          | Peter Gruber |
-	| city        | Ort          | Peter Gruber |
-	| gender      | Geschlecht   | Peter Gruber |
-	| referrer    | Zuweiser     | Peter Gruber |
+	| Name        | Bezeichnung        | NewName      |
+	| family_name | Familienname       | Peter        |
+	| given_name  | Vorname            | Gruber       |
+	| birthday    | Geburtsdatum       | Peter Gruber |
+	| postcode    | Plz                | Peter Gruber |
+	| city        | Ort                | Peter Gruber |
+	| gender      | Geschlecht         | Peter Gruber |
+	| referrer    | Zuweiser           | Peter Gruber |
+	| nationality | Staatsbürgerschaft | Peter Gruber |
 
 Szenariogrundriss: Eine Eigenschaft muss nicht gesetzt sein
 	Angenommen es ist ein 'AgpReport'
@@ -110,7 +111,7 @@ Szenario: Geschlecht ist undefiniert
 Szenario: Pflegegeld ist undefiniert
 	Angenommen es ist ein 'AgpReport'
 	Und die Eigenschaft 'care_allowance' von 'Person' ist auf 'UndefinedAllowance' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler ''Pflegegeld' von Klient 'Peter Gruber' darf nicht leer sein.' 
+	Dann enthält das Validierungsergebnis den Fehler ''Pflegegeld' von Klient 'Peter Gruber' darf nicht leer sein.'
 
 Szenario: Es dürfen keine doppelten Diagnosegruppen vorhanden sein.
 	Angenommen die Agp-Diagnose(n) ist auf 'AffectiveDisorder, AffectiveDisorder' gesetzt
