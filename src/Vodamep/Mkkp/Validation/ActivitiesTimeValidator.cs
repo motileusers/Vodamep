@@ -27,7 +27,9 @@ namespace Vodamep.Mkkp.Validation
                     string key = activity.StaffId + activity.DateD.ToShortDateString();
                     if (!timeDictionary.ContainsKey(key))
                     {
-                        timeDictionary.Add(key, activity);
+                        // Summieren mit Clone, sonst wird das Original Objekt mit der Prüfunge geändert
+                        Activity sum = activity.Clone();
+                        timeDictionary.Add(key, sum);
                     }
                     else
                     {
