@@ -28,7 +28,9 @@ namespace Vodamep.Agp.Validation
                     string key = activity.StaffId + activity.DateD.ToShortDateString();
                     if (!timeDictionary.ContainsKey(key))
                     {
-                        timeDictionary.Add(key, activity);
+                        // Summieren mit Clone, sonst wird das Original Objekt mit der Prüfunge geändert
+                        StaffActivity sum = activity.Clone();
+                        timeDictionary.Add(key, sum);
                     }
                     else
                     {
@@ -79,7 +81,9 @@ namespace Vodamep.Agp.Validation
                         string key = activity.StaffId + activity.DateD.ToShortDateString();
                         if (!timeDictionary.ContainsKey(key))
                         {
-                            timeDictionary.Add(key, activity);
+                            // Summieren mit Clone, sonst wird das Original Objekt mit der Prüfunge geändert
+                            StaffActivity sum = activity.Clone();
+                            timeDictionary.Add(key, sum);
                         }
                         else
                         {
