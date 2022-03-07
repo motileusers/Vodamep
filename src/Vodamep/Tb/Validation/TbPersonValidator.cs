@@ -25,7 +25,8 @@ namespace Vodamep.Tb.Validation
                 .Unless(x => string.IsNullOrWhiteSpace(x.Nationality))
                 .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.GetDisplayName()));
 
-            if (reportDate >= new DateTime(2015, 1, 1))
+            // Nur für alte Importdaten 
+            if (reportDate >= new DateTime(2022, 1, 1))
             {
                 this.RuleFor(x => x.Nationality)
                     .Must((person, country) => country != CountryCodeProvider.Instance.Unknown)
