@@ -26,7 +26,13 @@ namespace Vodamep.Agp.Validation
             this.RuleFor(x => x.Postcode).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
             this.RuleFor(x => x.City).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
 
-            this.RuleFor(x => x).SetValidator(x => new NationalityValidator());
+
+            this.RuleFor(x => x.Nationality).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
+            this.RuleFor(x => x.Nationality)
+                .Must((person, country) => CountryCodeProvider.Instance.IsValid(country) && 
+                                           country != CountryCodeProvider.Instance.Unknown)
+                .Unless(x => string.IsNullOrWhiteSpace(x.Nationality))
+                .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.GetDisplayName()));
 
 
             this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<InsuranceCodeProvider>()).Unless(x => string.IsNullOrEmpty(x.Insurance)).WithMessage(x => Validationmessages.ReportBaseInvalidCode(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
