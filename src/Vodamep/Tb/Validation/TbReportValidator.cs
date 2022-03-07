@@ -33,7 +33,7 @@ namespace Vodamep.Tb.Validation
             var nameRegex = "^[a-zA-ZäöüÄÖÜß][-a-zA-ZäöüÄÖÜß ]*?[a-zA-ZäöüÄÖÜß]$";
             this.RuleForEach(report => report.Persons).SetValidator(new PersonBirthdayValidator(earliestBirthday, displayNameResolver.GetDisplayName(nameof(Person))));
             this.RuleForEach(report => report.Persons).SetValidator(new PersonNameValidator(displayNameResolver.GetDisplayName(nameof(Person)), nameRegex, 2, 30, 2, 50));
-            this.RuleForEach(report => report.Persons).SetValidator(new TbPersonValidator());
+            this.RuleForEach(report => report.Persons).SetValidator(x => new TbPersonValidator(x.FromD));
             this.RuleForEach(report => report.Persons).SetValidator(x => new UniqePersonValidatorWithClientId(x.Persons));
             this.RuleForEach(report => report.Persons).SetValidator(x => new PersonHasOnlyOneActivtyValidator(x.Activities));
 

@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using FluentValidation;
 using Vodamep.Cm.Model;
+using Vodamep.Data;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Cm.Validation
@@ -15,7 +16,12 @@ namespace Vodamep.Cm.Validation
             this.RuleFor(x => x.City).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
             this.RuleFor(x => x.CareAllowance).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
 
-            this.RuleFor(x => x).SetValidator(x => new NationalityValidator());
+            this.RuleFor(x => x.Nationality).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
+            this.RuleFor(x => x.Nationality)
+                .Must((person, country) => CountryCodeProvider.Instance.IsValid(country) &&
+                                           country != CountryCodeProvider.Instance.Unknown)
+                .Unless(x => string.IsNullOrWhiteSpace(x.Nationality))
+                .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.GetDisplayName()));
         }
     }
 }
