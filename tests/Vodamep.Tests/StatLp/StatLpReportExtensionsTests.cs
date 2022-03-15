@@ -156,5 +156,45 @@ namespace Vodamep.Tests.StatLp
         }
 
 
+        [Fact]
+        public void RemoveDoublets_OneReport_DoubletteIsRemoved()
+        {
+            var p1 = this.Report.Persons.First();
+
+            //p2 unterscheidet sich nur durch den Id
+            var p2 = new Person(p1) { Id = $"x{p1.Id}" };
+
+            this.Report.AddPerson(p2);
+
+            var r = this.Report.RemoveDoubletes();
+
+            Assert.Contains(p1, r.Persons);
+            Assert.DoesNotContain(p2, r.Persons);
+        }
+
+
+        [Fact]
+        public void RemoveDoublets_TwoReport_DoubletteIsRemoved()
+        {
+
+            var r1 = this.Report;
+            var p1 = r1.Persons.First();
+
+            var r2 = r1.Clone();
+
+            var p2 = r2.Persons.First();
+            p2.Id = $"x{p2.Id}";   //unterscheidet sich nur durch den Id
+
+
+            var rs = new[] { r1, r2 }.RemoveDoubletes();
+
+            foreach (var r in rs)
+            {
+                Assert.Contains(p1, r.Persons);
+                Assert.DoesNotContain(p2, r.Persons);
+            }
+        }
+
+
     }
 }
