@@ -13,13 +13,13 @@ namespace Vodamep.Hkpv.Validation
     {
         static HkpvReportValidator()
         {
-            var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
-            if (isGerman)
-            {
-                var loc = new DisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
-            }
+            CultureCheck.Check();
+
+            var loc = new DisplayNameResolver();
+            ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
+
         }
+
         public HkpvReportValidator()
         {
             this.RuleFor(x => x.Institution).NotEmpty();
@@ -63,7 +63,7 @@ namespace Vodamep.Hkpv.Validation
 
             this.Include(new ActivityWarningIfMoreThan5Validator());
 
-            this.Include(new ActivityWarningIfMoreThan350Validator());            
+            this.Include(new ActivityWarningIfMoreThan350Validator());
 
             this.Include(new HkpvReportPersonIdValidator());
 

@@ -16,17 +16,17 @@ namespace Vodamep.Tb.Validation
 
         static TbReportValidator()
         {
-            var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
-            if (isGerman)
-            {
-                displayNameResolver = new DisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => displayNameResolver.GetDisplayName(memberInfo?.Name);
-            }
+            CultureCheck.Check();
+
+            displayNameResolver = new DisplayNameResolver();
+            ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => displayNameResolver.GetDisplayName(memberInfo?.Name);
         }
+
+
         public TbReportValidator()
         {
             this.RuleFor(x => x.Institution).NotEmpty();
-            
+
             this.RuleFor(x => x).SetValidator(new ReportDateValidator());
 
             var earliestBirthday = new DateTime(1890, 01, 01);
