@@ -18,9 +18,6 @@ namespace Vodamep.Specs.StepDefinitions
 
         public MkkpDiffSteps()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
-
             var loc = new MkkpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
         }

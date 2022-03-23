@@ -19,9 +19,6 @@ namespace Vodamep.Specs.StepDefinitions
 
         public DiffSteps()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
-
             var loc = new DisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
         }

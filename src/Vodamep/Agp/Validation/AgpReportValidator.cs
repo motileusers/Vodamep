@@ -14,13 +14,12 @@ namespace Vodamep.Agp.Validation
         private static readonly AgpDisplayNameResolver displayNameResolver;
         static AgpReportValidator()
         {
-            var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
-            if (isGerman)
-            {
-                displayNameResolver = new AgpDisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => displayNameResolver.GetDisplayName(memberInfo?.Name);
-            }
+            CultureCheck.Check();
+
+            displayNameResolver = new AgpDisplayNameResolver();
+            ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => displayNameResolver.GetDisplayName(memberInfo?.Name);
         }
+
         public AgpReportValidator()
         {
             this.RuleFor(x => x.Institution).NotEmpty();

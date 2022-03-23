@@ -12,19 +12,17 @@ namespace Vodamep.StatLp.Validation
     {
         static StatLpReportValidator()
         {
-            var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
-            if (isGerman)
-            {
-                var loc = new DisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
-            }
+            CultureCheck.Check();
+
+            var loc = new DisplayNameResolver();
+            ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
         }
 
 
         public StatLpReportValidator()
         {
 
-            this.RuleFor(x => x.Institution).NotEmpty();           
+            this.RuleFor(x => x.Institution).NotEmpty();
             this.RuleFor(x => x.Institution).SetValidator(new InstitutionValidator());
             this.RuleFor(x => x.From).NotEmpty();
             this.RuleFor(x => x.To).NotEmpty();
@@ -34,11 +32,11 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.ToD).GreaterThan(x => x.FromD).Unless(x => x.From == null || x.To == null);
 
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
-            
+
             this.RuleFor(x => x).SetValidator(new UniqePersonIdValidator());
 
             this.RuleFor(x => x).SetValidator(new PersonHasUniqueIdValidator());
-            
+
 
             this.RuleFor(x => new { x.FromD, x.ToD })
                 .Must(x => x.FromD.Year == x.ToD.Year)

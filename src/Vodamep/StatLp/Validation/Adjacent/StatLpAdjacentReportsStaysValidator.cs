@@ -15,12 +15,8 @@ namespace Vodamep.StatLp.Validation.Adjacent
 
         static StatLpAdjacentReportsStaysValidator()
         {
-            var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
-            if (isGerman)
-            {
-                var loc = new DisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
-            }
+            var loc = new DisplayNameResolver();
+            ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
         }
 
         public StatLpAdjacentReportsStaysValidator()

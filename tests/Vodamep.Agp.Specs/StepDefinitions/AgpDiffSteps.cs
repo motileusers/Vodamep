@@ -18,9 +18,6 @@ namespace Vodamep.Specs.Agp.StepDefinitions
 
         public AgpDiffSteps()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
-
             var loc = new AgpDisplayNameResolver();
             ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
         }

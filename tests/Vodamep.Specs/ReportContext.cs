@@ -17,9 +17,10 @@ namespace Vodamep.Specs
         private ValidationResult _validationResult;
 
         public ReportContext()
-        {            
+        {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("de");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("de");
+
             this.Validate = () => this.Report.Validate();
         }
 

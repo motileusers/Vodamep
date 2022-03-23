@@ -13,13 +13,13 @@ namespace Vodamep.Mkkp.Validation
         private static readonly MkkpDisplayNameResolver displayNameResolver;
         static MkkpReportValidator()
         {
-            var isGerman = Thread.CurrentThread.CurrentCulture.Name.StartsWith("de", StringComparison.CurrentCultureIgnoreCase);
-            if (isGerman)
-            {
-                displayNameResolver = new MkkpDisplayNameResolver();
-                ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => displayNameResolver.GetDisplayName(memberInfo?.Name);
-            }
+            CultureCheck.Check();
+
+            displayNameResolver = new MkkpDisplayNameResolver();
+            ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => displayNameResolver.GetDisplayName(memberInfo?.Name);
+
         }
+
         public MkkpReportValidator()
         {
             this.RuleFor(x => x.Institution).NotEmpty();
