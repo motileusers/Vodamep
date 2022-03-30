@@ -58,6 +58,21 @@ namespace Vodamep.StatLp.Validation
                 .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{x.Type}", x.FromD.ToShortDateString()));
 
 
+            // Ungültige Aufnahmeart 'Übergangspflege'
+            this.RuleFor(x => new { x.Type, x.FromD })
+                .Must((a) =>
+                {
+                    if (a.Type == AdmissionType.TransitionalAt &&
+                       a.FromD > new DateTime(2022, 1, 1))
+                    {
+                        return false;
+                    }
+
+                    return true;
+                })
+                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{x.Type}", x.FromD.ToShortDateString()));
+
+
         }
     }
 }
