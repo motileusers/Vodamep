@@ -71,6 +71,7 @@ Szenario: Es darf keinen Wechsel von Continuous auf TransitionalAt geben
 	Und es gibt eine weitere Aufnahme 'TransitionalAt', die 30 Tage dauert
 	Dann enthält das Validierungsergebnis den Fehler 'Nach dem Aufenthalt 'Daueraufnahme' (.*) darf kein 'Übergangspflege' folgen.'
 
+
 Szenario: Ungülige Aufnahmeart Krisenintervention
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft 'type' von 'Stay' ist auf 'CrisisInterventionAt' gesetzt
