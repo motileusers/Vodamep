@@ -47,10 +47,11 @@ namespace Vodamep
 
             if (report is StatLpReport r && other is StatLpReport rOther)
             {
-
                 if (report.FromD.Date.AddDays(-1) == other.ToD.Date)
                 {
-                    return new StatLpAdjacentReportsValidator().Validate((rOther, r));
+                    var reportsWithoutDoubletes = new StatLpReport[] { rOther, r }.RemoveDoubletes();
+
+                    return new StatLpAdjacentReportsValidator().Validate((reportsWithoutDoubletes[0], reportsWithoutDoubletes[1]));
                 }
 
                 if (report.FromD.Date == other.FromD.Date)

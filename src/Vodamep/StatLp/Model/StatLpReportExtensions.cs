@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Vodamep.Aliases;
 
 namespace Vodamep.StatLp.Model
 {
@@ -113,5 +114,92 @@ namespace Vodamep.StatLp.Model
         }
 
 
+        public static StatLpReport RemoveDoubletes(this StatLpReport report) => RemoveDoubletes(new[] { report })[0];
+
+        public static StatLpReport[] RemoveDoubletes(this IEnumerable<StatLpReport> reports)
+        {
+            var map = reports.CreatePatientIdMap();
+
+            var result = reports.Select(x => x.ApplyPersonIdMap(map)).ToArray();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Erzeugt aus einer Reihe von StatLpReport eine Mappingtabelle um bei Dubletten einen eindeutigen Id zu bestimmen.
+        /// Berücksichtigt werden Einträge der Alias-Liste der Reports
+        /// Dubletten sind gleiche Einträge der Namensfelder und des Geburtsdatums
+        /// </summary>       
+        public static IDictionary<string, string> CreatePatientIdMap(this IEnumerable<StatLpReport> reports)
+        {
+            var aliasSystem = new AliasSystem();
+
+            foreach (var r in reports)
+            {
+                aliasSystem = aliasSystem
+                    .SetAliases(r.Aliases.Where(x => x.IsAlias).Select(x => (x.Id1, x.Id2)))
+                    .SetNotAliases(r.Aliases.Where(x => !x.IsAlias).Select(x => (x.Id1, x.Id2)));
+            }
+
+            var entities = reports.SelectMany(x => x.Persons);
+
+            aliasSystem = aliasSystem.SetAliases(entities, x => x.Id, x => $"{x.FamilyName}|{x.GivenName}|{x.BirthdayD:yyyyMMdd}");
+
+            var map = aliasSystem.BuildMap();
+
+            return map;
+        }
+          
+        public static StatLpReport ApplyPersonIdMap(this StatLpReport report, IDictionary<string, string> map)
+        {
+            report = report.Clone();
+
+            foreach (var p in report.Persons)
+            {
+                if (map.TryGetValue(p.Id, out string idNew))
+                {
+                    //replace
+                    var idOld = p.Id;
+
+                    foreach (var admission in report.Admissions.Where(x => x.PersonId == idOld).ToArray())
+                    {
+                        admission.PersonId = idNew;
+                    }
+
+                    foreach (var attribute in report.Attributes.Where(x => x.PersonId == idOld).ToArray())
+                    {
+                        attribute.PersonId = idNew;
+                    }
+
+                    foreach (var leavings in report.Leavings.Where(x => x.PersonId == idOld).ToArray())
+                    {
+                        leavings.PersonId = idNew;
+                    }
+
+                    foreach (var stay in report.Stays.Where(x => x.PersonId == idOld).ToArray())
+                    {
+                        stay.PersonId = idNew;
+                    }
+
+                    foreach (var person in report.Persons.Where(x => x.Id == idOld).ToArray())
+                    {
+                        if (report.Persons.Where(x => x.Id == idNew).Any())
+                        {
+                            report.Persons.Remove(person);
+                        }
+                        else
+                        {
+                            person.Id = idNew;
+                        }
+                    }
+                }
+            }
+
+            return report.AsSorted();
+
+
+        }
+
+        
     }
 }

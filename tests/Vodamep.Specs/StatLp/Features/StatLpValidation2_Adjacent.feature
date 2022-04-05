@@ -24,12 +24,14 @@ Dann enthält das Validierungsergebnis keine Fehler
 Szenario: Eine Person die nicht entlassen wurde, befindet sich nicht in der darauf folgenden Meldung
 Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
 Und die Eigenschaft 'id' von 'Person' ist auf '123' gesetzt
+Und die Eigenschaft 'given_name' von 'Person' ist auf 'anders' gesetzt
 Und die Eigenschaft 'person_id' von 'Stay' ist auf '123' gesetzt
 Dann enthält das Validierungsergebnis den Fehler 'Aufenthalte von '(.*)' wurden dieses Jahr gemeldet. Sie fehlen im letzten Jahr'
 
 Szenario: Eine Person die nicht aufgenommen wurde, befindet sich nicht in der vorherigen Meldung
 Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
 Und die Eigenschaft 'id' von 'Person' ist auf '123' gesetzt
+Und die Eigenschaft 'given_name' von 'Person' ist auf 'anders' gesetzt
 Und die Eigenschaft 'person_id' von 'Stay' ist auf '123' gesetzt
 Dann enthält das Validierungsergebnis den Fehler 'Aufenthalte von '(.*)' wurden letztes Jahr gemeldet. Sie fehlen in diesem Jahr'	
 

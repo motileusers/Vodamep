@@ -190,7 +190,7 @@ namespace Vodamep.StatLp.Validation
                 {
                     var index = report.Stays.IndexOf(s.Stays[0]);
                     ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                        Validationmessages.StatLpAdmissionAttributeMissing(report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), DisplayNameResolver.GetDisplayName(type.ToString()))));
+                        Validationmessages.StatLpAdmissionAttributeMissing(report.GetPersonName(s.Stays[0].PersonId), from.ToShortDateString(), DisplayNameResolver.GetDisplayName(type.ToString()))));
                 }
             }
 

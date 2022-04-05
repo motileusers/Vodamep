@@ -3,7 +3,6 @@ using FluentValidation.Results;
 using FluentValidation.Validators;
 using System;
 using System.Linq;
-using System.Threading;
 using Vodamep.StatLp.Model;
 
 namespace Vodamep.StatLp.Validation.Adjacent
@@ -42,70 +41,78 @@ namespace Vodamep.StatLp.Validation.Adjacent
 
             foreach (var personId in personIds)
             {
-                // die relevanten Einträge der Vorgängermeldung
-                var predStays = data.Predecessor.Stays.Where(x => x.PersonId == personId).ToArray();
+                CheckStays(data, ctx, personId);
+            }
+        }
 
-                // die relevanten Einträge der aktuellen Meldung
-                var actualStays = data.Report.Stays.Where(x => x.PersonId == personId && x.FromD < data.Report.FromD).ToArray();
+        private void CheckStays((StatLpReport Predecessor, StatLpReport Report) data, CustomContext ctx, string personId)
+        {
+            // die relevanten Einträge der Vorgängermeldung
+            var predStays = data.Predecessor.Stays.Where(x => x.PersonId == personId).ToArray();
 
-                if (actualStays.Any() && predStays.Any())
+            // die relevanten Einträge der aktuellen Meldung
+            var stays = data.Report.Stays.Where(x => x.PersonId == personId && x.FromD < data.Report.FromD).ToArray();
+
+            if (stays.Any() && predStays.Any())
+            {
+                //bei einem Aufenhalt über den Meldezeitraum hinaus, ist das To des letzten Aufenthaltes des Vorgängerberichts nicht gesetzt.
+                //um den Vergleich einfach zu machen, wird das To des entsprecheden ersten Aufenthalts der aktuellen Meldung ebenfalls auf null gesetzt.
+
+                var index = stays.Length - 1;
+
+                if (!predStays.Last().ToD.HasValue && stays[index].ToD.HasValue)
                 {
-                    //bei einem Aufenhalt über den Meldezeitraum hinaus, ist das To des letzten Aufenthaltes des Vorgängerberichts nicht gesetzt.
-                    //um den Vergleich einfach zu machen, wird das To des entsprecheden ersten Aufenthalts der aktuellen Meldung ebenfalls auf null gesetzt.
-
-                    var index = actualStays.Length - 1;
-
-                    if (!predStays.Last().ToD.HasValue && actualStays[index].ToD.HasValue)
+                    stays[index] = new Stay(stays[index])
                     {
-                        actualStays[index] = new Stay(actualStays[index])
-                        {
-                            ToD = null
-                        };
-                    }
+                        ToD = null
+                    };
                 }
+            }
 
-                // verglichen werden die beiden GroupedStays 
-                GroupedStay stays1;
-                GroupedStay stays2;
-                try
-                {
-                    stays1 = predStays.GetGroupedStays().LastOrDefault();
-                    stays2 = actualStays.GetGroupedStays().FirstOrDefault();
-                }
-                catch (Exception e)
-                {
-                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}", e.Message));
-                    return;
-                }
+            string GetNameOfPerson() => data.Report.Persons.Where(x => x.Id == personId).Any() ? data.Report.GetPersonName(personId) : data.Predecessor.GetPersonName(personId);
 
+            CheckStays(predStays, stays, ctx, GetNameOfPerson);
 
-                if (stays1 == null || stays2 == null || !stays1.Equals(stays2))
-                {
-                    var person = data.Report.Persons.Where(x => x.Id == personId).FirstOrDefault();
+        }
 
-                    var index = person != null ? data.Report.Persons.IndexOf(person) : -1;
-                    var name = person != null ? data.Report.GetPersonName(personId) : data.Predecessor.GetPersonName(personId);
-
-                    if (stays2 == null)
-                    {
-                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]",
-                             $"Aufenthalte von '{name}' wurden letztes Jahr gemeldet. Sie fehlen in diesem Jahr"));
-                    }
-                    else if (stays1 == null)
-                    {
-                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]",
-                            $"Aufenthalte von '{name}' wurden dieses Jahr gemeldet. Sie fehlen im letzten Jahr"));
-                    }
-                    else
-                    {
-                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Persons)}[{index}]",
-                            $"Aufenthalte von '{name}' stimmen nicht mit der vorhergehenden Meldung überein"));
-                    }
-                }
-
+        private void CheckStays(Stay[] predStays, Stay[] stays, CustomContext ctx, Func<string> getNameOfPerson)
+        {
+            // verglichen werden die beiden GroupedStays 
+            GroupedStay groupdPred;
+            GroupedStay grouped;
+            try
+            {
+                groupdPred = predStays.GetGroupedStays().LastOrDefault();
+                grouped = stays.GetGroupedStays().FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}", e.Message));
+                return;
             }
 
 
+            if (groupdPred == null || grouped == null || !groupdPred.Equals(grouped))
+            {
+                if (grouped == null)
+                {
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
+                         $"Aufenthalte von '{getNameOfPerson()}' wurden letztes Jahr gemeldet. Sie fehlen in diesem Jahr: {PrintStays(groupdPred)}"));
+                }
+                else if (groupdPred == null)
+                {
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
+                        $"Aufenthalte von '{getNameOfPerson()}' wurden dieses Jahr gemeldet. Sie fehlen im letzten Jahr:{PrintStays(grouped)}"));
+                }
+                else
+                {
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
+                        $"Aufenthalte von '{getNameOfPerson()}' stimmen nicht mit der vorhergehenden Meldung überein.:{PrintStays(groupdPred)} vs. {PrintStays(grouped)}"));
+                }
+            }
         }
+
+
+        private string PrintStays(GroupedStay stays) => $"{(string.Join(", ", stays.Stays.Select(x => $"{DisplayNameResolver.GetDisplayName($"{x.Type}")}: {x.FromD:dd.MM.yyyy}-{x.ToD:dd.MM.yyyy}")))}";
     }
 }
