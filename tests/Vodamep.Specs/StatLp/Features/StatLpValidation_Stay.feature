@@ -94,12 +94,12 @@ Szenario: Wenn Bis null ist, kommt danach kein Aufenthalt mehr
 Szenario: Jeder Aufenthaltsbeginn muss eine Aufnahmemeldung haben
 	Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'
 	Und die Liste 'Admission' ist leer
-	Dann enthält das Validierungsergebnis den Fehler 'Für die Neuaufname vom '30.05.2021' von '(.*)' wurden keine Aufnahmedaten gemeldet.'
+	Dann enthält das Validierungsergebnis den Fehler 'Für die Neuaufnahme vom '30.05.2021' von '(.*)' wurden keine Aufnahmedaten gemeldet.'
 
 Szenario: Jeder Aufenthalt darf nur eine Aufnahmemeldung haben
 	Angenommen die erste Aufnahme startet am '2021-05-01', dauert 10 Tage und ist eine 'TransitionalAt'
 	Und eine weitere Aufnahme startet am '2021-05-12', dauert 30 Tage und ist eine 'ContinuousAt'
-	Dann enthält das Validierungsergebnis den Fehler 'Für die Neuaufname (.*) wurden mehrere Aufnahmedaten gemeldet.'
+	Dann enthält das Validierungsergebnis den Fehler 'Für die Neuaufnahme (.*) wurden mehrere Aufnahmedaten gemeldet.'
 
 Szenario: Jedes Aufenthaltsende muss eine Entlassungsmeldung haben
 	Angenommen die erste Aufnahme startet am '2021-05-01', dauert 30 Tage und ist eine 'ContinuousAt'
@@ -114,7 +114,7 @@ Szenario: Ein Aufenthaltsende am 31.12 muss nicht zwingend eine Entlassungsmeldu
 	
 Szenario: Jeder Aufenthalt darf nur eine Entlassungsmeldung haben
 	Angenommen es gibt eine Entlassungsmeldung mehrfach
-	Dann enthält das Validierungsergebnis den Fehler 'Für die Aufname (.*) wurden mehrere Entlassungsdaten gemeldet.'
+	Dann enthält das Validierungsergebnis den Fehler 'Für die Aufnahme (.*) wurden mehrere Entlassungsdaten gemeldet.'
 
 Szenario: Zu jedem Aufenthalt müssen die Attribute definiert sein
 	Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'

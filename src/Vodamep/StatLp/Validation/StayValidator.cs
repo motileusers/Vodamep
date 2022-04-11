@@ -8,7 +8,7 @@ namespace Vodamep.StatLp.Validation
 {
     internal class StayValidator : AbstractValidator<Stay>
     {
-        private static readonly DisplayNameResolver DisplayNameResolver = new DisplayNameResolver();
+        private static readonly DisplayNameResolver displayNameResolver = new DisplayNameResolver();
 
         public StayValidator(StatLpReport report)
         {
@@ -40,7 +40,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{x.Type}", x.FromD.ToShortDateString()));
+                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{displayNameResolver.GetDisplayName(x.Type.ToString())}", x.FromD.ToShortDateString()));
 
 
             // Ungültige Aufnahmeart 'Krisenintervention'
@@ -55,7 +55,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{x.Type}", x.FromD.ToShortDateString()));
+                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{displayNameResolver.GetDisplayName(x.Type.ToString())}", x.FromD.ToShortDateString()));
 
 
             // Ungültige Aufnahmeart 'Übergangspflege'
@@ -70,7 +70,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{x.Type}", x.FromD.ToShortDateString()));
+                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{displayNameResolver.GetDisplayName(x.Type.ToString())}", x.FromD.ToShortDateString()));
 
 
         }
