@@ -189,3 +189,4 @@ Beispiele:
 	| Name        | Bezeichnung        | Wert |
 	| nationality | Staatsbürgerschaft | AD   |
 	| nationality | Staatsbürgerschaft | AT   |
+	| nationality | Staatsbürgerschaft | ZZ   |
