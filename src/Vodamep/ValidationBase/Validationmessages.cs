@@ -111,13 +111,13 @@ namespace Vodamep.ValidationBase
 
         public static string StatLpStayAfterPeriod(string clientName, string fromDate, string toDate) => $"Der Aufenthalt vom '{fromDate}' bis zum '{toDate}' von '{clientName}' liegt nach dem Meldunszeitraum.";
 
-        public static string StatLpMissingAdmission(string clientName, string fromDate) => $"Für die Neuaufname vom '{fromDate}' von '{clientName}' wurden keine Aufnahmedaten gemeldet.";
+        public static string StatLpMissingAdmission(string clientName, string fromDate) => $"Für die Neuaufnahme vom '{fromDate}' von '{clientName}' wurden keine Aufnahmedaten gemeldet.";
 
         public static string StatLpMissingLeaving(string clientName, string fromDate) => $"Für die Entlassung am '{fromDate}' von '{clientName}' wurden keine Entlassungsdaten gemeldet.";
 
-        public static string StatLpMultipleAdmission(string clientName, string fromDate) => $"Für die Neuaufname vom '{fromDate}' von '{clientName}' wurden mehrere Aufnahmedaten gemeldet.";
+        public static string StatLpMultipleAdmission(string clientName, string fromDate) => $"Für die Neuaufnahme vom '{fromDate}' von '{clientName}' wurden mehrere Aufnahmedaten gemeldet.";
 
-        public static string StatLpMultipleLeavings(string clientName, string fromDate) => $"Für die Aufname vom '{fromDate}' von '{clientName}' wurden mehrere Entlassungsdaten gemeldet.";
+        public static string StatLpMultipleLeavings(string clientName, string fromDate) => $"Für die aufnahme vom '{fromDate}' von '{clientName}' wurden mehrere Entlassungsdaten gemeldet.";
 
         public static string StatLpStayToLong(string type, string clientName, string fromDate, string toDate, int maxDays) => $"Der Aufenthalt '{type}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf nicht länger als {maxDays} Tage dauern.";
 
