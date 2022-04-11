@@ -213,7 +213,7 @@ namespace Vodamep.StatLp.Validation
 
         private void StayLengthValidation(CustomContext ctx, StatLpReport report, GroupedStay s, AdmissionType admissionType, int days)
         {
-            //Länge Urlaubsbetreuung
+            // Länge Urlaubsbetreuung
             var holidayToLong = s.Stays.Where(x => x.Type == admissionType)
                 .Where(x => (x.ToD ?? report.ToD).Subtract(x.FromD).TotalDays > days)
                 .FirstOrDefault();
@@ -222,7 +222,10 @@ namespace Vodamep.StatLp.Validation
             {
                 var index = report.Stays.IndexOf(holidayToLong);
                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                    Validationmessages.StatLpStayToLong(DisplayNameResolver.GetDisplayName(holidayToLong.Type.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To?.ToShortDateString(), days)));
+                    Validationmessages.StatLpStayToLong(DisplayNameResolver.GetDisplayName(holidayToLong.Type.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To?.ToShortDateString(), days))
+                {
+                    Severity = Severity.Warning
+                });
             }
         }
     }
