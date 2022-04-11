@@ -76,7 +76,6 @@ Szenariogrundriss: Das Land einer Person enthält einen ungültigen Wert
 Beispiele:
 	| Name        | Bezeichnung        | Wert |
 	| nationality | Staatsbürgerschaft | A    |
-	| nationality | Staatsbürgerschaft | ZZ   |
 
 Szenariogrundriss: Das Land einer Person enthält einen gültigen Wert
 	Angenommen es ist ein 'TbReport'
@@ -87,6 +86,7 @@ Beispiele:
 	| Name        | Bezeichnung        | Wert |
 	| nationality | Staatsbürgerschaft | AD   |
 	| nationality | Staatsbürgerschaft | AT   |
+	| nationality | Staatsbürgerschaft | ZZ   |
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
 	Angenommen es ist ein 'TbReport'

@@ -24,7 +24,7 @@ namespace Vodamep.Data.Agp
             }
         }
 
-        public override string Unknown => "ZZ";
+        public override string Unknown => "";
 
         protected override string ResourceName => "Datasets.Agp.staffactivitytypes.csv";
     }

@@ -29,8 +29,7 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.Nationality).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
             this.RuleFor(x => x.Nationality)
-                .Must((person, country) => CountryCodeProvider.Instance.IsValid(country) && 
-                                           country != CountryCodeProvider.Instance.Unknown)
+                .Must((person, country) => CountryCodeProvider.Instance.IsValid(country))
                 .Unless(x => string.IsNullOrWhiteSpace(x.Nationality))
                 .WithMessage(x => Validationmessages.ReportBaseInvalidValue(x.GetDisplayName()));
 

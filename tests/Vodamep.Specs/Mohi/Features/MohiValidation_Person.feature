@@ -79,7 +79,6 @@ Szenariogrundriss: Das Staatsbürgerschaft einer Person enthält einen ungültig
 Beispiele:
 	| Name        | Bezeichnung        | Wert |
 	| nationality | Staatsbürgerschaft | A    |
-	| nationality | Staatsbürgerschaft | ZZ   |
 
 
 Szenariogrundriss: Das Staatsbürgerschaft einer Person enthält einen gültigen Wert
@@ -91,6 +90,7 @@ Beispiele:
 	| Name        | Bezeichnung        | Wert |
 	| nationality | Staatsbürgerschaft | AD   |
 	| nationality | Staatsbürgerschaft | AT   |
+	| nationality | Staatsbürgerschaft | ZZ   |
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
 	Angenommen es ist ein 'MohiReport'

@@ -24,7 +24,7 @@ namespace Vodamep.Data
             }
         }
 
-        public override string Unknown => "ZZ";
+        public override string Unknown => "";
 
         protected override string ResourceName => "Datasets.StatLp.discharge_location.csv";
     }
