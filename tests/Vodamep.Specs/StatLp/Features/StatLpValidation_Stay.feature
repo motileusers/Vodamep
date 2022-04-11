@@ -50,11 +50,11 @@ Szenario: Aufnahmen dürfen sich nicht überschneiden
 
 Szenario: Die maximale Aufenthaltsdauer für HolidayAt ist 42 Tage
 	Angenommen die erste Aufnahme startet am '2021-05-30', dauert 60 Tage und ist eine 'HolidayAt'
-	Dann enthält das Validierungsergebnis den Fehler 'Der Aufenthalt (.*) darf nicht länger als 42 Tage dauern'
+	Dann enthält das Validierungsergebnis die Warnung 'Der Aufenthalt (.*) darf nicht länger als 42 Tage dauern'
 
 Szenario: Die maximale Aufenthaltsdauer für TransitionalAt ist 365 Tage
 	Angenommen die erste Aufnahme startet am '2020-05-30', dauert 600 Tage und ist eine 'TransitionalAt'
-	Dann enthält das Validierungsergebnis den Fehler 'Der Aufenthalt (.*) darf nicht länger als 365 Tage dauern'
+	Dann enthält das Validierungsergebnis die Warnung 'Der Aufenthalt (.*) darf nicht länger als 365 Tage dauern'
 
 Szenario: Aufeinanderfolgende Aufnahmen müssen eine unterschiedlichen Aufnahmeart haben
 	Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'HolidayAt'
