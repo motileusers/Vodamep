@@ -58,6 +58,7 @@ namespace Vodamep.StatLp.Validation
 
 
 
+
             //ungültige werte
             var regex0 = new Regex(@"^[-,.a-zA-Z0-9äöüÄÖÜß\(\) ][-,.a-zA-Z0-9äöüÄÖÜß\(\) ]*[-,.a-zA-Z0-9äöüÄÖÜß\(\) ]$");
 
