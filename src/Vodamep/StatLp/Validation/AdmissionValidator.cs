@@ -39,7 +39,6 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.MainAttendanceRelation).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(DisplayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
             this.RuleFor(x => x.MainAttendanceCloseness).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(DisplayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
 
-
             this.RuleFor(x => x)
                 .Must((x) =>
                 {
@@ -55,6 +54,8 @@ namespace Vodamep.StatLp.Validation
                     return true;
                 })
                 .WithMessage(x => Validationmessages.ReportBaseClientValueMustNotBeEmpty(DisplayNameResolver.GetDisplayName(nameof(HousingReason)), this.GetPersonName(x.PersonId, report)));
+
+
 
             //ungültige werte
             var regex0 = new Regex(@"^[-,.a-zA-Z0-9äöüÄÖÜß\(\) ][-,.a-zA-Z0-9äöüÄÖÜß\(\) ]*[-,.a-zA-Z0-9äöüÄÖÜß\(\) ]$");
