@@ -39,19 +39,23 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.MainAttendanceRelation).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(DisplayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
             this.RuleFor(x => x.MainAttendanceCloseness).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(DisplayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
 
-            this.RuleFor(x => x.HousingReason)
+
+            this.RuleFor(x => x)
                 .Must((x) =>
                 {
                     // Vor diesem Datum war nicht immer gewährleistet, dass dieser Wert befüllt ist
-                    if (report.FromD >= new DateTime(2011, 01, 01))
+                    if (x.AdmissionDateD > new DateTime(2011, 01, 01))
                     {
-                        if (x == HousingReason.UndefinedHr)
+                        if (x.HousingReason == HousingReason.UndefinedHr)
+                        {
                             return false;
+                        }
                     }
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(DisplayNameResolver.GetDisplayName(nameof(Person)), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.ReportBaseClientValueMustNotBeEmpty(DisplayNameResolver.GetDisplayName(nameof(HousingReason)), this.GetPersonName(x.PersonId, report)));
+
 
 
 
