@@ -41,3 +41,8 @@ Szenario: Mehrfache Attribute
     Angenommen es gibt am '2021-02-15' ein zusätzliches Attribut vom Typ 'CareAllowance' und dem Wert 'L2'
 	Und es gibt am '2021-02-15' ein zusätzliches Attribut vom Typ 'CareAllowance' und dem Wert 'L3'
     Dann enthält das Validierungsergebnis den Fehler 'Beim Klient '(.*)' wurde am 15.02.2021 das Attribut 'Pflegestufe' mehrfach angegeben.'
+
+Szenario: Ein Attribut wurde außerhalb eines Aufenthaltes gesetzt
+	Angenommen die erste Aufnahme startet am '2021-05-30', dauert 30 Tage und ist eine 'ContinuousAt'
+	Und die Eigenschaft 'from' von 'Attribute' ist auf '2021-01-01' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'wurde am (.*) das Attribut '(.*)' außerhalb eines Aufenthaltes angegeben'
