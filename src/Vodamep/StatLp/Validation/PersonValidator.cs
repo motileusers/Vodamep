@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Text.RegularExpressions;
-using Vodamep.Data;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
 
@@ -9,8 +7,6 @@ namespace Vodamep.StatLp.Validation
 {
     internal class PersonValidator : AbstractValidator<Person>
     {
-        DisplayNameResolver displayNameResolver = new DisplayNameResolver();
-
         public PersonValidator()
         {
             this.RuleFor(x => x.FamilyName).NotEmpty();
