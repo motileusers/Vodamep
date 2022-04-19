@@ -134,22 +134,25 @@ namespace Vodamep.StatLp.Model
         {
             var aliasSystem = new AliasSystem();
 
-            foreach (var r in reports)
+            foreach (var r in reports.Where(x => x != null))
             {
                 aliasSystem = aliasSystem
                     .SetAliases(r.Aliases.Where(x => x.IsAlias).Select(x => (x.Id1, x.Id2)))
                     .SetNotAliases(r.Aliases.Where(x => !x.IsAlias).Select(x => (x.Id1, x.Id2)));
             }
 
-            var entities = reports.SelectMany(x => x.Persons);
+            var entities = reports.Where(x => x != null).SelectMany(x => x.Persons);
 
-            aliasSystem = aliasSystem.SetAliases(entities, x => x.Id, x => $"{x.FamilyName}|{x.GivenName}|{x.BirthdayD:yyyyMMdd}");
+            aliasSystem = aliasSystem.SetAliases(entities, x => x.Id, Person.ConcatNameAndBirthday);
 
             var map = aliasSystem.BuildMap();
 
             return map;
         }
-          
+
+        public static IDictionary<string, string> CreatePatientIdMap(this StatLpReport report) => report != null ? (new[] { report }).CreatePatientIdMap() : new Dictionary<string, string>();
+
+
         public static StatLpReport ApplyPersonIdMap(this StatLpReport report, IDictionary<string, string> map)
         {
             report = report.Clone();
@@ -200,6 +203,6 @@ namespace Vodamep.StatLp.Model
 
         }
 
-        
+
     }
 }

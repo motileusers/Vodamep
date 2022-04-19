@@ -10,5 +10,7 @@ namespace Vodamep.StatLp.Model
         {
             return PersonNameBuilder.FullNameOrId(this.GivenName, this.FamilyName, this.Id);
         }
+
+        internal static string ConcatNameAndBirthday(Person p) => $"{p.FamilyName}|{p.GivenName}|{p.BirthdayD:yyyyMMdd}";
     }
 };
