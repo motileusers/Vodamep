@@ -105,6 +105,8 @@ namespace Vodamep.ValidationBase
         public static string StatLpAdmissionAttributeMissing(string clientName, string date, string attributeType) => $"Für die Person '{clientName}' wurde am {date} keine '{attributeType}' gemeldet.";
         public static string StatLpAttributeMultiple(string clientName, string date, string attributeType) => $"Beim Klient '{clientName}' wurde am {date} das Attribut '{attributeType}' mehrfach angegeben.";
 
+        public static string StatLpAttributeNotWithinDate(string clientName, string date, string attributeType) => $"Beim Klient '{clientName}' wurde am {date} das Attribut '{attributeType}' außerhalb eines Aufenthaltes angegeben.";
+
         public static string StatLpStayEveryPersonMustBeInAStay(string clientName) => $"Die Person '{clientName}' wird in keinem Aufenthalt erwähnt.";
 
         public static string StatLpStayAheadOfPeriod(string clientName, string fromDate, string toDate) => $"Der Aufenthalt vom '{fromDate}' bis zum '{toDate}' von '{clientName}' liegt vor dem Meldunszeitraum.";
