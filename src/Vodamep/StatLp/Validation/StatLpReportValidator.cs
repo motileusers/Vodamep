@@ -33,6 +33,8 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
 
+            this.RuleFor(report => report).SetValidator(new FindDoubletsValidator());
+
             this.RuleFor(x => x).SetValidator(new UniqePersonIdValidator());
 
             this.RuleFor(x => x).SetValidator(new PersonHasUniqueIdValidator());

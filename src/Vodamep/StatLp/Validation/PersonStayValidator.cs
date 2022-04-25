@@ -42,8 +42,7 @@ namespace Vodamep.StatLp.Validation
 
                     foreach (var stay in a.Stays.Where(x => !idPersons.Contains(x.PersonId)))
                     {
-                        var index = a.Stays.IndexOf(stay);
-                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]", "Für einen Aufenthalt wurde keine Person gemeldet!"));
+                        ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}", "Für einen Aufenthalt wurde keine Person gemeldet!"));
                     }
                 });
 
@@ -75,16 +74,14 @@ namespace Vodamep.StatLp.Validation
                             // Aufenthalte vor Meldezeitraum
                             if (s.To < report.FromD)
                             {
-                                var index = a.Stays.IndexOf(s.Stays[0]);
-                                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
                                     Validationmessages.StatLpStayAheadOfPeriod(report.GetPersonName(person.Id), s.From.ToShortDateString(), s.To?.ToShortDateString())));
                             }
 
                             // Aufenthalte nach Meldezeitraum
                             if (s.To > report.ToD)
                             {
-                                var index = a.Stays.IndexOf(s.Stays[0]);
-                                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
                                     Validationmessages.StatLpStayAfterPeriod(report.GetPersonName(person.Id), s.From.ToShortDateString(), s.To?.ToShortDateString())));
                             }
 
@@ -98,74 +95,13 @@ namespace Vodamep.StatLp.Validation
 
                             AttributeValidation(ctx, report, s);
 
+                            AdmissionValidation(ctx, report, person, s);
 
-                            var admission = report.Admissions.Where(x => x.PersonId == person.Id && x.AdmissionDateD == s.From).ToArray();
-                            var hasMissingAdmission = !admission.Any();
-
-                            //Wenn der Beginn des Aufenthaltes zum Begin des Meldezeitraums ist, könnte es sich auch um einen Wechsel der Aufenthaltsart handeln
-                            if (hasMissingAdmission && s.From == report.FromD)
-                            {
-                                //überlegen: man könnte hier die Aufnahmearten einschränken, für die ein Wechsel zum Jahresende in Frage kommen?
-
-                                hasMissingAdmission = false;
-                            }
-
-
-                            if (hasMissingAdmission)
-                            {
-                                var index = a.Stays.IndexOf(s.Stays[0]);
-                                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                                    Validationmessages.StatLpMissingAdmission(report.GetPersonName(person.Id), s.From.ToShortDateString())));
-                            }
-
-                            var hasMultipleAdmissions = admission.Length > 1 || report.Admissions
-                                .Where(x => x.PersonId == person.Id)
-                                .Where(x => x.AdmissionDateD > s.From && (!s.To.HasValue || x.AdmissionDateD <= s.To.Value))
-                                .Any();
-
-                            if (hasMultipleAdmissions)
-                            {
-                                var index = a.Stays.IndexOf(s.Stays[0]);
-                                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                                    Validationmessages.StatLpMultipleAdmission(report.GetPersonName(person.Id), s.From.ToShortDateString())));
-                            }
-
-                            if (s.To.HasValue && s.To < DateTime.Today)
-                            {
-                                var leaving = report.Leavings.Where(x => x.PersonId == person.Id && x.LeavingDateD == s.To).ToArray();
-                                var hasMissingLeaving = !leaving.Any();
-
-                                //Wenn das Ende des Aufenthaltes am Ende Meldezeitraums ist, könnte es sich auch um einen Wechsel der Aufenthaltsart handeln
-                                if (hasMissingLeaving && s.To.Value == report.ToD)
-                                {
-                                    //überlegen: man könnte hier die Aufnahmearten einschränken, für die ein Wechsel zum Jahresende in Frage kommen?
-
-                                    hasMissingLeaving = false;
-                                }
-
-                                if (hasMissingLeaving)
-                                {
-                                    var index = a.Stays.IndexOf(s.Stays[0]);
-                                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                                        Validationmessages.StatLpMissingLeaving(report.GetPersonName(person.Id), s.To?.ToShortDateString())));
-                                }
-
-                                var hasMultipleLeavings = leaving.Length > 1 || report.Leavings
-                                    .Where(x => x.PersonId == person.Id)
-                                    .Where(x => x.LeavingDateD >= s.From && x.LeavingDateD < s.To.Value)
-                                    .Any();
-
-                                if (hasMultipleLeavings)
-                                {
-                                    var index = a.Stays.IndexOf(s.Stays[0]);
-                                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
-                                        Validationmessages.StatLpMultipleLeavings(report.GetPersonName(person.Id), s.From.ToShortDateString())));
-                                }
-                            }
+                            LeavingValidation(ctx, report, person, s);
                         }
                     }
                 });
-        }
+        }      
 
         private void AttributeValidation(CustomContext ctx, StatLpReport report, GroupedStay s)
         {
@@ -188,8 +124,7 @@ namespace Vodamep.StatLp.Validation
             {
                 if (!attributes.Where(x => x.AttributeType == type && x.From <= from).Any())
                 {
-                    var index = report.Stays.IndexOf(s.Stays[0]);
-                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
                         Validationmessages.StatLpAdmissionAttributeMissing(report.GetPersonName(s.Stays[0].PersonId), from.ToShortDateString(), DisplayNameResolver.GetDisplayName(type.ToString()))));
                 }
             }
@@ -202,9 +137,7 @@ namespace Vodamep.StatLp.Validation
             {
                 if (s.Stays[i].Type == to && s.Stays[i - 1].Type == from)
                 {
-                    var index = report.Stays.IndexOf(s.Stays[i]);
-
-                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
                         Validationmessages.StatLpInvalidAdmissionTypeChange(DisplayNameResolver.GetDisplayName(from.ToString()), DisplayNameResolver.GetDisplayName(to.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To?.ToShortDateString())));
                 }
             }
@@ -220,12 +153,77 @@ namespace Vodamep.StatLp.Validation
 
             if (holidayToLong != null)
             {
-                var index = report.Stays.IndexOf(holidayToLong);
-                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}[{index}]",
+                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
                     Validationmessages.StatLpStayToLong(DisplayNameResolver.GetDisplayName(holidayToLong.Type.ToString()), report.GetPersonName(s.Stays[0].PersonId), s.From.ToShortDateString(), s.To?.ToShortDateString(), days))
                 {
                     Severity = Severity.Warning
                 });
+            }
+        }
+
+        private void AdmissionValidation(CustomContext ctx, StatLpReport report, Person person, GroupedStay s)
+        {
+            var admission = report.Admissions.Where(x => x.PersonId == person.Id && x.AdmissionDateD == s.From).ToArray();
+            var hasMissingAdmission = !admission.Any();
+
+            //Wenn der Beginn des Aufenthaltes zum Begin des Meldezeitraums ist, könnte es sich auch um einen Wechsel der Aufenthaltsart handeln
+            if (hasMissingAdmission && s.From == report.FromD)
+            {
+                //überlegen: man könnte hier die Aufnahmearten einschränken, für die ein Wechsel zum Jahresende in Frage kommen?
+
+                hasMissingAdmission = false;
+            }
+
+
+            if (hasMissingAdmission)
+            {
+                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
+                    Validationmessages.StatLpMissingAdmission(report.GetPersonName(person.Id), s.From.ToShortDateString())));
+            }
+
+            var hasMultipleAdmissions = admission.Length > 1 || report.Admissions
+                .Where(x => x.PersonId == person.Id)
+                .Where(x => x.AdmissionDateD > s.From && (!s.To.HasValue || x.AdmissionDateD <= s.To.Value))
+                .Any();
+
+            if (hasMultipleAdmissions)
+            {
+                ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
+                    Validationmessages.StatLpMultipleAdmission(report.GetPersonName(person.Id), s.From.ToShortDateString())));
+            }
+        }
+
+        private void LeavingValidation(CustomContext ctx, StatLpReport report, Person person, GroupedStay s)
+        {
+            if (s.To.HasValue && s.To < DateTime.Today)
+            {
+                var leaving = report.Leavings.Where(x => x.PersonId == person.Id && x.LeavingDateD == s.To).ToArray();
+                var hasMissingLeaving = !leaving.Any();
+
+                //Wenn das Ende des Aufenthaltes am Ende Meldezeitraums ist, könnte es sich auch um einen Wechsel der Aufenthaltsart handeln
+                if (hasMissingLeaving && s.To.Value == report.ToD)
+                {
+                    //überlegen: man könnte hier die Aufnahmearten einschränken, für die ein Wechsel zum Jahresende in Frage kommen?
+
+                    hasMissingLeaving = false;
+                }
+
+                if (hasMissingLeaving)
+                {
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
+                        Validationmessages.StatLpMissingLeaving(report.GetPersonName(person.Id), s.To?.ToShortDateString())));
+                }
+
+                var hasMultipleLeavings = leaving.Length > 1 || report.Leavings
+                    .Where(x => x.PersonId == person.Id)
+                    .Where(x => x.LeavingDateD >= s.From && x.LeavingDateD < s.To.Value)
+                    .Any();
+
+                if (hasMultipleLeavings)
+                {
+                    ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
+                        Validationmessages.StatLpMultipleLeavings(report.GetPersonName(person.Id), s.From.ToShortDateString())));
+                }
             }
         }
     }
