@@ -48,7 +48,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours(string date, string name) => $"Die Leistungsminuten von '{name}' am '{date}' dürfen 12 Stunden nicht überschreiten.";
         public static string MaxSumOfMinutesTravelTimesIs5Hours(string staff, string date) => $"Summe Wegzeiten von Mitarbeiter {staff} am {date} darf 5 Stunden nicht überschreiten.";
         public static string OnlyOneTravelTimeEntryPerStaffMemberAndDay => "Pro Mitarbeiter ist nur ein Eintrag bei den Wegzeiten pro Tag erlaubt.";
-        public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed(string personId) => $"Innerhalb einer Aktivität von Klient '{personId}' dürfen keine doppelten Leistungstypen vorhanden sein.";
+        public static string WithinAnActivityThereAreNoDoubledActivityTypesAllowed(string client) => $"Innerhalb einer Aktivität von Klient '{client}' dürfen keine doppelten Leistungstypen vorhanden sein.";
         public static string WithinAnActivityTheValuesAreNotAllowedInCombination(string client, string activityType1, string activityType2) => $"Innerhalb einer Aktivität von Klient '{client}' dürfen nicht gleichzeitg die Leistungstypen '{activityType1}' und '{activityType2}' vorhanden sein.";
         public static string InvalidInstitutionNumber => "Ungültige Einrichtungsnummer.";
         public static string NoDoubledValuesAreAllowed => $"Doppelte Angaben bei '{{PropertyName}}'";
@@ -56,15 +56,15 @@ namespace Vodamep.ValidationBase
         public static string TextAreaEnterAValue => "Bei '{PropertyName}' im Textfeld bitte einen Wert angegeben.";
         public static string PersonIsNotAvailable(string name) => $"Person '{name}' ist nicht in der Personenliste vorhanden.";
         public static string FromMustBeBeforeTo => $"'Von' muss vor 'Bis' liegen.";
-        public static string DeadClientNeedsDeadthLocation(string personId) => $"Wenn der Klient '{personId}' gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.";
-        public static string DeadClientMustNotContainDischargeLocation(string personId) => $"Wenn der Klient '{personId}' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.";
-        public static string LeavingOtherFilledNeedsOther(string personId) => $"Wenn bei der Entlassung von Klient '{personId}' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.";
-        public static string LeavingClientNeedsLeavingLocation(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
-        public static string LeavingClientNeedsLeavingReason(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.";
-        public static string LeavingClientDeathMustNotBeFilled(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.";
-        public static string DischargedClientNeedsDischargeLocation(string personId) => $"Wenn der Klient '{personId}' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
-        public static string InvalidValue(string date, string personId) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom '{date}' von Klient '{personId}'.";
-        public static string TextTooLong(string date, string personId) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom '{date}' von Klient '{personId}'.";
+        public static string DeadClientNeedsDeadthLocation() => $"Wenn der Klient gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.";
+        public static string DeadClientMustNotContainDischargeLocation() => $"Wenn der Klient gestorben ist, darf keine Angabe zur Entlassung gemacht werden.";
+        public static string LeavingOtherFilledNeedsOther() => $"Wenn bei der Entlassung sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.";
+        public static string LeavingClientNeedsLeavingLocation() => $"Wenn der Klient entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
+        public static string LeavingClientNeedsLeavingReason() => $"Wenn der Klient entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.";
+        public static string LeavingClientDeathMustNotBeFilled() => $"Wenn der Klient entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.";
+        public static string DischargedClientNeedsDischargeLocation() => $"Wenn der Klient entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.";
+        public static string InvalidValue() => $"Ungültiger Wert für '{{PropertyName}}'.";
+        public static string TextTooLong() => $"Zu langer Text für '{{PropertyName}}'.";
         public static string ReportBaseIdIsNotUnique(string clientId) => $"Die Id von Klient '{clientId}' ist nicht eindeutig.";
         public static string ReportBaseActivityDateMustBeWithinReport(string propertyName, string clientPersonName, string dateTime) => $"'{propertyName}' der Aktivität {dateTime} von '{clientPersonName}' muss innerhalb des Meldungszeitraums liegen.";
         public static string ReportBaseBirthdayNotInFuture(string clientId, string clientOrStaff) => $"'Geburtsdatum' von {clientOrStaff} '{clientId}' darf nicht in der Zukunft liegen.";
@@ -97,10 +97,10 @@ namespace Vodamep.ValidationBase
         public static string MohiActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
         public static string ReportBaseItemMustBeInReportPeriod(string clientName) => $"{{PropertyName}} von Person '{clientName}' muss im Meldezeitraum liegen.";
 
-        public static string StatLpAdmissionInvalidValueAdmission(string date, string clientName) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {clientName}.";
-        public static string StatLpAdmissionTextTooLong(string date, string clientName) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme vom {date} von Klient {clientName}.";
-        public static string StatLpAdmissionEmptyPostCode(string date, string clientName) => $"Keine Angabe von Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
-        public static string StatLpAdmissionWrongPostCode(string date, string clientName) => $"Ungültige Kombination Ort/Plz bei Aufnahme vom {date} von Klient {clientName}.";
+        public static string StatLpAdmissionInvalidValueAdmission(string date) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme am {date}.";
+        public static string StatLpAdmissionTextTooLong(string date) => $"Zu langer Text für '{{PropertyName}}' bei Aufnahme am {date}.";
+        public static string StatLpAdmissionEmptyPostCode(string date) => $"Keine Angabe von Ort/Plz bei Aufnahme am {date}.";
+        public static string StatLpAdmissionWrongPostCode(string date) => $"Ungültige Kombination Ort/Plz bei Aufnahme am {date}.";
 
         public static string StatLpAdmissionAttributeMissing(string clientName, string date, string attributeType) => $"Für die Person '{clientName}' wurde am {date} keine '{attributeType}' gemeldet.";
         public static string StatLpAttributeMultiple(string clientName, string date, string attributeType) => $"Beim Klient '{clientName}' wurde am {date} das Attribut '{attributeType}' mehrfach angegeben.";
@@ -125,7 +125,7 @@ namespace Vodamep.ValidationBase
 
         public static string StatLpInvalidAdmissionTypeChange(string fromType, string toType, string clientName, string fromDate, string toDate) => $"Nach dem Aufenthalt '{fromType}' vom '{fromDate}' bis zum '{toDate}' von '{clientName}' darf kein '{toType}' folgen.";
 
-        public static string StatLpLeavingReasonMustnotBeEmpty(string clientName) => $"Beim Abgang von Klient '{clientName}' muss eine Abgang Art angegeben werden.";
+        public static string StatLpLeavingReasonMustnotBeEmpty() => $"Beim Abgang muss eine Abgang Art angegeben werden.";
 
         public static string StatLpAttributeInvalidAdmissionType(string clientName, string admissionType, string date) => $"Die Aufnahmeart {admissionType} bei der Aufnahme vom {date} von Klient '{clientName}' ist nicht mehr erlaubt.";
 

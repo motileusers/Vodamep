@@ -1,8 +1,7 @@
 ﻿using FluentValidation.Results;
-using System;
+using Google.Protobuf;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Vodamep.StatLp.Model;
 
 namespace Vodamep.StatLp.Validation
@@ -37,11 +36,14 @@ namespace Vodamep.StatLp.Validation
                 {
                     result.Append(_template.HeaderSeverity(GetSeverityName(severity.Key)));
 
-                    var entries = severity.Select(x => new
+                    var entries = severity.Select(x =>
                     {
-                        Info = this.GetInfo(report, x.PropertyName),
-                        Message = x.ErrorMessage,
-                        Value = x.AttemptedValue?.ToString()
+                        return new
+                        {
+                            Info = this.GetInfo(report, x.PropertyName),
+                            Message = x.ErrorMessage,
+                            Value = x.AttemptedValue is IMessage ? "" : x.AttemptedValue?.ToString()
+                        };
                     }).ToArray();
 
                     foreach (var groupedInfos in entries.OrderBy(x => x.Info).GroupBy(x => x.Info))
