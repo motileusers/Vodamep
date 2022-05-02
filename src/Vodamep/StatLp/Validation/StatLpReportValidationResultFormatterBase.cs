@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Vodamep.StatLp.Model;
 
@@ -17,7 +18,9 @@ namespace Vodamep.StatLp.Validation
             _strategies = new[]
             {
                 new GetNameByPatternStrategy(GetIdPattern(nameof(StatLpReport.Persons)), GetNameOfPerson),
-          
+                new GetNameByPatternStrategy(GetIdPattern(nameof(StatLpReport.Admissions)), GetNameOfAdmission),
+                new GetNameByPatternStrategy(GetIdPattern(nameof(StatLpReport.Leavings)), GetNameOfLeavings),
+
                 new GetNameByPatternStrategy($"^{nameof(StatLpReport.To)}$",(a,b) => string.Empty),
                 new GetNameByPatternStrategy($"^{nameof(StatLpReport.ToD)}$",(a,b) => string.Empty),
                 new GetNameByPatternStrategy($"^{nameof(StatLpReport.From)}$",(a,b) => string.Empty),
@@ -68,8 +71,31 @@ namespace Vodamep.StatLp.Validation
             return string.Empty;
         }
 
- 
- 
+        private string GetNameOfAdmission(StatLpReport report, int index)
+        {
+            if (report.Admissions.Count > index && index >= 0)
+            {
+                var e = report.Admissions[index];
+                var p = report.Persons.Where(x => x.Id == e.PersonId).FirstOrDefault();
+                return $"Aufnahmedaten von {p?.FamilyName} {p?.GivenName}, {e.AdmissionDateD:dd.MM.yyy}";
+            }
+
+            return string.Empty;
+        }
+
+        private string GetNameOfLeavings(StatLpReport report, int index)
+        {
+            if (report.Leavings.Count > index && index >= 0)
+            {
+                var l = report.Leavings[index];
+                var p = report.Persons.Where(x => x.Id == l.PersonId).FirstOrDefault();
+                return $"Entlassungsdaten von {p?.FamilyName} {p?.GivenName}, {l.LeavingDateD:dd.MM.yyy}";
+            }
+
+            return string.Empty;
+        }
+
+
         private class GetNameByPatternStrategy
         {
             private readonly Regex _pattern;

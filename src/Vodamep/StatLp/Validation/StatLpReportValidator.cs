@@ -46,9 +46,16 @@ namespace Vodamep.StatLp.Validation
                 .WithMessage(Validationmessages.SameYear);
 
             this.RuleFor(x => x.ToD)
-                .Must(x => x.Day == 31 && x.Month == 12)
+                .Must(x => x == x.LastDateInMonth())
                 .Unless(x => x.To == null)
-                .WithMessage(Validationmessages.LastDateInYear);
+                .WithMessage(Validationmessages.LastDateInMonth);
+
+            //ausgeklammert, weil bis zu jedem beliebigen Monatsende gesendet werden können soll
+            //nur so funktionieren Validierungen für begrenzte Aufenthaltsdauer bei offenem Aufenthaltsende
+            //this.RuleFor(x => x.ToD)
+            //    .Must(x => x.Day == 31 && x.Month == 12)
+            //    .Unless(x => x.To == null)
+            //    .WithMessage(Validationmessages.LastDateInYear);
 
             this.RuleFor(x => x.FromD)
                 .Must(x => x.Day == 1 && x.Month == 1)

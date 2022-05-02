@@ -62,35 +62,35 @@ namespace Vodamep.StatLp.Validation
 
             this.RuleFor(x => x.OtherHousingType).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.OtherHousingType))
                 .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.OtherHousingType)))
-                .WithMessage(x => Validationmessages.StatLpAdmissionInvalidValueAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionInvalidValueAdmission(report.FromD.ToShortDateString()));
 
             this.RuleFor(x => x.PersonalChangeOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.PersonalChangeOther))
                 .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.PersonalChangeOther)))
-                .WithMessage(x => Validationmessages.StatLpAdmissionInvalidValueAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionInvalidValueAdmission(report.FromD.ToShortDateString()));
 
             this.RuleFor(x => x.SocialChangeOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.SocialChangeOther))
                 .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.SocialChangeOther)))
-                .WithMessage(x => Validationmessages.StatLpAdmissionInvalidValueAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionInvalidValueAdmission(report.FromD.ToShortDateString()));
 
             this.RuleFor(x => x.HousingReasonOther).Matches(regex0).Unless(x => string.IsNullOrEmpty(x.HousingReasonOther))
                 .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
-                .WithMessage(x => Validationmessages.StatLpAdmissionInvalidValueAdmission(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionInvalidValueAdmission(report.FromD.ToShortDateString()));
 
             this.RuleFor(x => x.OtherHousingType).MaximumLength(100)
                 .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.OtherHousingType)))
-                .WithMessage(x => Validationmessages.StatLpAdmissionTextTooLong(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionTextTooLong(report.FromD.ToShortDateString()));
 
             this.RuleFor(x => x.PersonalChangeOther).MaximumLength(100)
                 .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.PersonalChangeOther)))
-                .WithMessage(x => Validationmessages.StatLpAdmissionTextTooLong(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionTextTooLong(report.FromD.ToShortDateString()));
 
             this.RuleFor(x => x.SocialChangeOther).MaximumLength(100)
                 .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.SocialChangeOther)))
-                .WithMessage(x => Validationmessages.StatLpAdmissionTextTooLong(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionTextTooLong(report.FromD.ToShortDateString()));
 
             this.RuleFor(x => x.HousingReasonOther).MaximumLength(100)
                 .WithName(x => DisplayNameResolver.GetDisplayName(nameof(x.HousingReasonOther)))
-                .WithMessage(x => Validationmessages.StatLpAdmissionTextTooLong(report.FromD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionTextTooLong(report.FromD.ToShortDateString()));
 
 
             this.RuleFor(x => x)
@@ -105,7 +105,7 @@ namespace Vodamep.StatLp.Validation
 
                     return true;
                 })
-                .WithMessage(x => Validationmessages.StatLpAdmissionEmptyPostCode(x.AdmissionDateD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                .WithMessage(x => Validationmessages.StatLpAdmissionEmptyPostCode(x.AdmissionDateD.ToShortDateString()));
 
 
             this.RuleFor(x => x)
@@ -125,8 +125,8 @@ namespace Vodamep.StatLp.Validation
                     }
 
                     return result;
-                })
-                .WithMessage(x => Validationmessages.StatLpAdmissionWrongPostCode(x.AdmissionDateD.ToShortDateString(), this.GetPersonName(x.PersonId, report)));
+                })                
+                .WithMessage(x => Validationmessages.StatLpAdmissionWrongPostCode(x.AdmissionDateD.ToShortDateString()));
 
 
             this.RuleFor(x => x.PersonalChanges).NotEmpty().Unless(x => !string.IsNullOrEmpty(x.PersonalChangeOther))
