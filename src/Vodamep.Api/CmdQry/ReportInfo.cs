@@ -10,6 +10,9 @@ namespace Vodamep.Api.CmdQry
         public int Year { get; set; }
         public string Institution { get; set; }
         public string HashSHA256 { get; set; }
+
+        public byte[] Data { get; set; }
+
         public DateTime Created { get; set; }
 
 
@@ -25,6 +28,19 @@ namespace Vodamep.Api.CmdQry
                 HashSHA256 = report.GetSHA256Hash()
             };
         }
+
+        public static ReportInfo CreatePrevious(IReport report)
+        {
+            DateTime previousDate = report.GetPreviousDate();
+
+            return new ReportInfo
+            {
+                Month = previousDate.Month,
+                Year = previousDate.Year,
+                Institution = report.Institution.Id
+            };
+        }
+
 
         public bool Equals(ReportInfo other)
         {

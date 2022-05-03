@@ -93,5 +93,10 @@ namespace Vodamep.Api.Engines.FileSystem
 
             return (null, string.Empty);
         }
+
+        public IReport GetPrevious(IReport current)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -13,10 +13,9 @@ namespace Vodamep.Api
 {
     public class ReportFactory
     {
-        public IReport Create(ReportType reportType, Stream reportStream)
-        {
-            var bytes = this.Convert(reportStream);
 
+        public IReport Create(ReportType reportType, byte[] bytes)
+        {
             IReport report = null;
 
             //#extend 
@@ -48,8 +47,17 @@ namespace Vodamep.Api
             }
 
             return report;
-
         }
+
+        public IReport Create(ReportType reportType, Stream reportStream)
+        {
+            var bytes = this.Convert(reportStream);
+            IReport report = this.Create(reportType, bytes);
+
+            return report;
+        }
+
+
 
         private byte[] Convert(Stream stream)
         {
