@@ -200,10 +200,10 @@ namespace Vodamep.Api.Engines.SqlServer
 
         private void SaveReport(SqlConnection connection, IReport report, ReportInfo info, string state)
         {
-            var institutionId = this.GetRowId("Institution", report.Institution.Id, connection);
 
             using (var ms = report.WriteToStream(asJson: false, compressed: true))
             {
+                var institutionId = this.GetRowId("Institution", report.Institution.Id, connection);
                 var userId = this.GetRowId("User", _authContext.Principal.Identity.Name, connection);
 
                 SqlCommand insert =
