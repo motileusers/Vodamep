@@ -13,6 +13,14 @@ namespace Vodamep.ReportBase
         DateTime ToD { get; }
         Timestamp To { get; }
         IInstitution Institution { get; }
+
+
+        /// <summary>
+        /// Liefert das Datum, zu dem der vorherige Report gesendet werden sollte
+        /// </summary>
+        DateTime GetPreviousDate();
+
+
         MemoryStream WriteToStream(bool asJson = false, bool compressed = true);
         void WriteToFile(string filename, bool asJson = false, bool compressed = true);
         string GetSHA256Hash();

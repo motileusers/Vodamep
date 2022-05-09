@@ -10,13 +10,25 @@ namespace Vodamep.StatLp.Model
     public partial class StatLpReport : IReport
     {
         public ReportType ReportType => ReportType.StatLp;
+
+
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
         public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }
 
+        /// <summary>
+        /// Liefert das Datum, zu dem der vorherige Report gesendet werden sollte
+        /// </summary>
+        public DateTime GetPreviousDate()
+        {
+            return this.FromD.AddYears(-1);
+        }
+
+
         IInstitution IReport.Institution => this.Institution;
 
         IList<IPerson> IReport.Persons => this.Persons.Select(x => x as IPerson).ToList();
+
 
         public string GetPersonName(string id)
         {
@@ -31,6 +43,8 @@ namespace Vodamep.StatLp.Model
 
             return client;
         }
+
+
 
         public static StatLpReport ReadFile(string file)
         {
@@ -49,6 +63,8 @@ namespace Vodamep.StatLp.Model
             var report = new StatLpReportSerializer().Deserialize(data);
             return report;
         }
+
+
 
         public string WriteToPath(string path, bool asJson = false, bool compressed = true) => new StatLpReportSerializer().WriteToPath(this, path, asJson, compressed);
 

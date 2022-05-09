@@ -15,7 +15,7 @@ Szenario: Von-Datum muss der erste Tag des Jahres sein.
 Szenario: Bis-Datum muss der letzte Tag des Jahres sein.
     Angenommen es ist ein 'StatLpReport'
     Und die Eigenschaft 'to' von 'StatLpReport' ist auf '2021-04-04' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler ''Bis' muss der letzte Tag des Jahres sein.'
+    Dann enthält das Validierungsergebnis den Fehler ''Bis' muss der letzte Tag des Monats sein.'
 
 Szenario: Die Meldung darf nicht die Zukunft betreffen.
     Angenommen es ist ein 'StatLpReport'

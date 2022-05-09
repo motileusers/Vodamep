@@ -3,7 +3,6 @@ using System;
 using System.Data.SqlClient;
 using System.Security.Principal;
 using Vodamep.Api.CmdQry;
-using Vodamep.Hkpv.Model;
 using Vodamep.ReportBase;
 
 namespace Vodamep.Api.Engines.SqlServer
@@ -74,31 +73,141 @@ namespace Vodamep.Api.Engines.SqlServer
             {
                 connection.Open();
 
-                var institutionId = this.GetRowId("Institution", report.Institution.Id, connection);
-
-                var lastInfo = GetLast(report.Institution.Id, institutionId, connection);
-
-                var info = ReportInfo.Create(report, lastInfo?.Id ?? -1, lastInfo?.Created ?? DateTime.Now);
+                // Aktuelle Reportinformation extrahieren und Datenbank Report suchen
+                ReportInfo sentInfo = ReportInfo.Create(report, -1, DateTime.Now);
+                ReportInfo databaseInfo = GetReportInfoFromDatabase(connection, sentInfo);
 
                 string state = "";
 
-                if (lastInfo != null && info.Equals(lastInfo))
+                if (databaseInfo != null && sentInfo.Equals(databaseInfo))
                 {
                     state = "DUPLICATE";
                 }
 
-                this.SaveReport(connection, report, info, institutionId, state);
+                this.SaveReport(connection, report, sentInfo, state);
             }
         }
 
-        private void SaveReport(SqlConnection connection, IReport report, ReportInfo info, int institutionId, string state)
+
+
+        /// <summary>
+        /// Vorgänger Report anhand eines aktuellen Reports auslesen
+        /// </summary>
+        public IReport GetPrevious(IReport current)
         {
+            IReport result = null;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                ReportInfo previousInfo = ReportInfo.CreatePrevious(current);
+
+                ReportInfo previousInfoFromDatabase = GetReportInfoFromDatabase(connection, previousInfo, true);
+                if (previousInfoFromDatabase?.Data != null)
+                {
+                    ReportFactory factory = new ReportFactory();
+                    result = factory.Create(current.ReportType, previousInfoFromDatabase?.Data);
+                }
+                    
+            }
+
+            return result;
+
+        }
+
+
+        /// <summary>
+        /// Report Informationen aus der Datenbank auslesen
+        /// </summary>
+        private ReportInfo GetReportInfoFromDatabase(SqlConnection connection, ReportInfo reportInfo, bool withData = false)
+        {
+            try
+            {
+                int institutionId = this.GetRowId("Institution", reportInfo.Institution, connection);
+
+                // and (isnull(State, '') in ('', 'OK')) ...
+
+                // State kann
+                // - null sein (default) - noch nicht importiert
+                // - leer (falsches Update) - noch nicht importiert
+                // - oder OK (nach Import) - bereits importiert
+
+                // alles gilt als "aktives" Paket
+
+                string dataField = ", Message.Data ";
+
+                var command =
+
+                    new SqlCommand
+                    (
+                        @$"Select top 1
+                                  Message.Id
+                                , Message.Month
+                                , Message.Year
+                                , Message.Hash_SHA256
+                                , Message.Date 
+                                {dataField}
+                                , Institution.Name 
+                           from Message 
+                           inner join Institution on Institution.Id = Message.InstitutionId
+                           where InstitutionId =  @institudionId 
+
+                           and Month = @month
+                           and Year = @year
+
+                           and (isnull(State, '') in ('', 'OK'))
+
+                           order by Date desc",
+
+                        connection
+                    );
+
+                command.Parameters.AddWithValue("@institudionId", institutionId);
+                command.Parameters.AddWithValue("@month", reportInfo.Month);
+                command.Parameters.AddWithValue("@year", reportInfo.Year);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        var result = new ReportInfo()
+                        {
+                            Month = reader.Get<short>("Month"),
+                            Year = reader.Get<short>("Year"),
+                            HashSHA256 = reader.Get<string>("Hash_SHA256"),
+                            Created = reader.Get<DateTime>("Date"),
+                            Institution = reader.Get<string>("Name"),
+                        };
+
+                        if (withData)
+                            result.Data = reader.Get<byte[]>("Data");
+
+                        return result;
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation(exception.Message);
+                throw exception;
+            }
+
+
+            return null;
+        }
+
+
+        private void SaveReport(SqlConnection connection, IReport report, ReportInfo info, string state)
+        {
+
             using (var ms = report.WriteToStream(asJson: false, compressed: true))
             {
+                var institutionId = this.GetRowId("Institution", report.Institution.Id, connection);
                 var userId = this.GetRowId("User", _authContext.Principal.Identity.Name, connection);
 
                 SqlCommand insert =
-                    new SqlCommand("insert into [Message]([UserId], [InstitutionId], [Hash_SHA256], [Month], [Year], [Date], [Data], [State]) values(@userId, @institutionId, @hash, @month, @year, @date, @data, @state)",
+                    new SqlCommand("insert into [Message]([UserId], [InstitutionId], [Hash_SHA256], [Month], [Year], [Date], [Data], [State]) values (@userId, @institutionId, @hash, @month, @year, @date, @data, @state)",
                         connection);
                 insert.Parameters.AddWithValue("@userId", userId);
                 insert.Parameters.AddWithValue("@institutionId", institutionId);
@@ -153,42 +262,5 @@ namespace Vodamep.Api.Engines.SqlServer
         }
 
 
-        private ReportInfo GetLast(string institution, int institudionId, SqlConnection connection)
-        {
-            try
-            {
-                var command =
-                    new SqlCommand(
-                        $"SELECT top 1 [Id],[Month],[Year],[Hash_SHA256],[Date] from [Message] where [InstitutionId] =  @institudionId ORDER BY [Date] desc",
-                        connection);
-                command.Parameters.AddWithValue("@institudionId", institudionId);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        var info = new ReportInfo()
-                        {
-                            //Id = reader.GetInt32(0),
-                            Month = reader.GetInt16(1),
-                            Year = reader.GetInt16(2),
-                            HashSHA256 = reader.GetString(3),
-                            Created = reader.GetDateTime(4),
-                            Institution = institution
-                        };
-
-                        return info;
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation(exception.Message);
-                throw exception;
-            }
-
-
-            return null;
-        }
     }
 }

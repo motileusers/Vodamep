@@ -12,9 +12,19 @@ namespace Vodamep.Hkpv.Model
     public partial class HkpvReport : IReport
     {
         public ReportType ReportType => ReportType.Hkpv;
+
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
         public DateTime ToD { get => this.To.AsDate(); set => this.To = value.AsTimestamp(); }
+
+        /// <summary>
+        /// Liefert das Datum, zu dem der vorherige Report gesendet werden sollte
+        /// </summary>
+        public DateTime GetPreviousDate()
+        {
+            return this.FromD.AddMonths(-1);
+        }
+
 
         IInstitution IReport.Institution => this.Institution;
 

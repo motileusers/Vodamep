@@ -21,7 +21,7 @@ Beispiele:
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom 01.01.2021 von'
+	Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme am 01.01.2021.'
 
 Beispiele:
 	| Name                  | Bezeichnung                                | Wert |
@@ -37,7 +37,7 @@ Beispiele:
 Szenariogrundriss: Die Textfelder enthalten zu lange Werte
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft '<Name>' von 'Admission' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom 01.01.2021 von'
+	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme am 01.01.2021.'
 
 Beispiele:
 	| Name                  | Bezeichnung                                | Wert                                                                                                   |

@@ -65,7 +65,20 @@ namespace Vodamep
 
         public static (bool IsValid, string Message) ValidateToText(this IReport report, bool ignoreWarnings)
         {
-            var vr = Validate(report);
+            return ValidateToText(report, null, ignoreWarnings);
+        }
+
+
+        public static (bool IsValid, string Message) ValidateToText(this IReport report, IReport other, bool ignoreWarnings)
+        {
+            //#extend 
+            ValidationResult vr;
+
+            if (other != null)
+                vr = Validate(report, other);
+            else
+                vr = Validate(report);
+
             string msg = string.Empty;
             switch (report)
             {
@@ -93,11 +106,16 @@ namespace Vodamep
             }
 
             return (vr.IsValid, msg);
+
         }
+
+
 
         [Obsolete("wird das noch benötigt?")]
         public static (bool IsValid, string[] messages) ValidateToEnumable(this IReport report, bool ignoreWarnings)
         {
+
+            // #extend
             var vr = Validate(report);
             string[] msg = Array.Empty<string>();
             switch (report)

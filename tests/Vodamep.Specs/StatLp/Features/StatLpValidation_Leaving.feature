@@ -17,7 +17,8 @@ Szenariogrundriss: Pflichtfelder
     Dann enthält das Validierungsergebnis den Fehler '<Fehler>'
 Beispiele:
     | Name           | Fehler |
-    | leaving_reason | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.   | 
+    | leaving_reason | Beim Abgang muss eine Abgang Art angegeben werden.   | 
+
 
 Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung
 	Angenommen es ist ein 'StatLpReport'
@@ -46,27 +47,27 @@ Szenariogrundriss: Abhängigkeiten von Sterbefall / Entlassung - Fehler
 	Dann enthält das Validierungsergebnis den Fehler '<fehler>'
 	Beispiele:
 		| leaving_reason | death_location        | discharge_location | discharge_location_other | discharge_reason    | discharge_reason_other | fehler																										|
-		| DeceasedLr	 |                       |                    |                          |                     |                        | Wenn der Klient '1' gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.								|
-		| DeceasedLr     | DeathNursingHomeDl  	 | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
-		| DeceasedLr     | DeathNursingHomeDl	 |                    | abc                      |                     |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
-		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          | EndShortTermCareDr  |                        | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
-		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          |                     | asdf                   | Wenn der Klient '1' gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
-		| DischargeLr    |                       | NursingHomeDc      | asd                      | EndShortTermCareDr  |                        | Wenn bei der Entlassung von Klient '1' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.	|
-		| DischargeLr    |                       | NursingHomeDc      |                          | EndShortTermCareDr  | asdfasd                | Wenn bei der Entlassung von Klient '1' sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.	|
-		| DischargeLr    |                       |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.			|
-		| DischargeLr    | DeathNursingHomeDl	 |                    |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.					|
-		| DischargeLr    |                       | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient '1' entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.			|
- 		|                |                       |                    |                          |                     |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|	
-		|                | DeathNursingHomeDl	 |                    |                          |                     |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
-		|                |                       | HomeLivingAloneDc  |                          |                     |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
-		|                |                       |                    |                          | EndShortTermCareDr  |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
-		|                |                       |                    | abc                      |                     |                        | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
-		|                |                       |                    |                          |                     | abc                    | Beim Abgang von Klient '(.*)' muss eine Abgang Art angegeben werden.												|
+		| DeceasedLr	 |                       |                    |                          |                     |                        | Wenn der Klient gestorben ist, muss eine Angabe zum Sterbeort gemacht werden.								|
+		| DeceasedLr     | DeathNursingHomeDl  	 | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
+		| DeceasedLr     | DeathNursingHomeDl	 |                    | abc                      |                     |                        | Wenn der Klient gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
+		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          | EndShortTermCareDr  |                        | Wenn der Klient gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
+		| DeceasedLr     | DeathNursingHomeDl	 |                    |                          |                     | asdf                   | Wenn der Klient gestorben ist, darf keine Angabe zur Entlassung gemacht werden.							|
+		| DischargeLr    |                       | NursingHomeDc      | asd                      | EndShortTermCareDr  |                        | Wenn bei der Entlassung sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.	|
+		| DischargeLr    |                       | NursingHomeDc      |                          | EndShortTermCareDr  | asdfasd                | Wenn bei der Entlassung sonstige Angaben gemacht werden, muss 'Sonstige' ausgewählt werden.	|
+		| DischargeLr    |                       |                    |                          |                     |                        | Wenn der Klient entlassen worden ist, muss angegeben werden, wohin der Klient entlassen wurde.			|
+		| DischargeLr    | DeathNursingHomeDl	 |                    |                          |                     |                        | Wenn der Klient entlassen worden ist, darf keine Angabe zum Sterbefall gemacht werden.					|
+		| DischargeLr    |                       | HomeLivingAloneDc  |                          |                     |                        | Wenn der Klient entlassen worden ist, muss angegeben werden, warum der Klient entlassen wurde.			|
+ 		|                |                       |                    |                          |                     |                        | Beim Abgang muss eine Abgang Art angegeben werden.												|	
+		|                | DeathNursingHomeDl	 |                    |                          |                     |                        | Beim Abgang muss eine Abgang Art angegeben werden.												|
+		|                |                       | HomeLivingAloneDc  |                          |                     |                        | Beim Abgang muss eine Abgang Art angegeben werden.												|
+		|                |                       |                    |                          | EndShortTermCareDr  |                        | Beim Abgang muss eine Abgang Art angegeben werden.												|
+		|                |                       |                    | abc                      |                     |                        | Beim Abgang muss eine Abgang Art angegeben werden.												|
+		|                |                       |                    |                          |                     | abc                    | Beim Abgang muss eine Abgang Art angegeben werden.												|
 		
 Szenariogrundriss: Die Textfelder enthalten ungültige Werte
 	Angenommen es ist ein 'StatLpReport'
     Und die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
-    Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>' bei Aufnahme vom '01.01.2021' von Klient '1'.'
+    Dann enthält das Validierungsergebnis den Fehler 'Ungültiger Wert für '<Bezeichnung>'.'
 Beispiele:
 		| Name                     | Bezeichnung							| Wert |
 		| discharge_location_other | Sonstige Lebens-/Betreuungssituation	| =    |
@@ -77,7 +78,7 @@ Beispiele:
 Szenariogrundriss: Die Textfelder enthalten zu lange Werte
 	Angenommen es ist ein 'StatLpReport'
 	Und die Eigenschaft '<Name>' von 'Leaving' ist auf '<Wert>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>' bei Aufnahme vom '01.01.2021' von Klient '1'.'
+	Dann enthält das Validierungsergebnis den Fehler 'Zu langer Text für '<Bezeichnung>'.'
 Beispiele:
     | Name                     | Bezeichnung                          | Wert                               |
     | discharge_location_other | Sonstige Lebens-/Betreuungssituation | abcdefghij abcdefghij abcdefghij x |

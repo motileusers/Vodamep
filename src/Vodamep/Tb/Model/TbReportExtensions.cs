@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Vodamep.Tb.Validation;
 using Vodamep.ValidationBase;
 
 namespace Vodamep.Tb.Model
@@ -23,12 +22,6 @@ namespace Vodamep.Tb.Model
         public static TbReport AddActivity(this TbReport report, Activity activity) => report.InvokeAndReturn(m => m.Activities.Add(activity));
         public static TbReport AddActivities(this TbReport report, IEnumerable<Activity> activities) => report.InvokeAndReturn(m => m.Activities.AddRange(activities));
 
-        public static TbReportValidationResult Validate(this TbReport report) => (TbReportValidationResult)new TbReportValidator().Validate(report);
-
-        public static string ValidateToText(this TbReport report, bool ignoreWarnings) => new TbReportValidationResultFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
-
-        public static IEnumerable<string> ValidateToEnumerable(this TbReport report, bool ignoreWarnings) => new TbReportValidationResultListFormatter(ResultFormatterTemplate.Text, ignoreWarnings).Format(report, Validate(report));
-
         public static TbReport AsSorted(this TbReport report)
         {
             var result = new TbReport()
@@ -38,7 +31,6 @@ namespace Vodamep.Tb.Model
                 To = report.To,
                 SourceSystemId = report.SourceSystemId,
             };
-
 
             result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
 

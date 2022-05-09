@@ -124,11 +124,13 @@ namespace Vodamep.Api
 
             _logger?.LogInformation("Reading data.");
 
+
             IReport report;
+            var engine = _engineFactory();
 
             try
             {
-                var reportType = (ReportType) Enum.Parse(typeof(ReportType), reportTypeAsString, true);
+                ReportType reportType = (ReportType) Enum.Parse(typeof(ReportType), reportTypeAsString, true);
                 report = new ReportFactory().Create(reportType, context.Request.Body);
             }
             catch
@@ -161,6 +163,9 @@ namespace Vodamep.Api
                 return;
             }
 
+
+            // Report selbst validieren
+
             var validationResult = report.ValidateToText(false);
             if (validationResult == default)
             {
@@ -173,8 +178,24 @@ namespace Vodamep.Api
                 return;
             }
 
+
+            // Vorherigen Report mitvalidieren
+
+            IReport previous = engine.GetPrevious(report);
+            if (previous != null)
+            {
+                validationResult = report.ValidateToText(previous, false);
+
+                if (!validationResult.IsValid)
+                {
+                    await RespondError(context, validationResult.Message);
+                    return;
+                }
+            }
+
+
+
             var saveCmd = new ReportSaveCommand() { Report = report };
-            var engine = _engineFactory();
 
             if (_useAuthentication)
             {
