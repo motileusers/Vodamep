@@ -25,7 +25,7 @@ namespace Vodamep.Agp.Validation
                 .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
                     "", report.GetStaffName(x.StaffId), report.FromD, report.ToD, x.Date));
 
-            this.RuleFor(x => x).SetValidator(x => new StaffActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(Activity.Minutes)), report.GetStaffName(x.StaffId)));
+            this.RuleFor(x => x).SetValidator(x => new StaffActivityMinutesValidator(displayNameResolver.GetDisplayName(nameof(Activity.Minutes)), report.GetClient(x.PersonId)));
 
         }
     }
