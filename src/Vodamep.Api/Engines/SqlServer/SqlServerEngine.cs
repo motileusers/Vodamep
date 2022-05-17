@@ -103,13 +103,15 @@ namespace Vodamep.Api.Engines.SqlServer
 
                 ReportInfo previousInfo = ReportInfo.CreatePrevious(current);
 
-                ReportInfo previousInfoFromDatabase = GetReportInfoFromDatabase(connection, previousInfo, true);
-                if (previousInfoFromDatabase?.Data != null)
+                if (previousInfo != null)
                 {
-                    ReportFactory factory = new ReportFactory();
-                    result = factory.Create(current.ReportType, previousInfoFromDatabase?.Data);
+                    ReportInfo previousInfoFromDatabase = GetReportInfoFromDatabase(connection, previousInfo, true);
+                    if (previousInfoFromDatabase?.Data != null)
+                    {
+                        ReportFactory factory = new ReportFactory();
+                        result = factory.Create(current.ReportType, previousInfoFromDatabase?.Data);
+                    }
                 }
-                    
             }
 
             return result;

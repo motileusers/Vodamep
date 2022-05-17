@@ -80,6 +80,7 @@ namespace Vodamep
                 vr = Validate(report);
 
             string msg = string.Empty;
+
             switch (report)
             {
                 case AgpReport agp:
@@ -105,8 +106,10 @@ namespace Vodamep
                     break;
             }
 
-            return (vr.IsValid, msg);
-
+            if (vr != null)
+                return (vr.IsValid, msg);
+            else
+                return (true, msg);
         }
 
 

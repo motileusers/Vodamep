@@ -18,7 +18,7 @@ namespace Vodamep.ReportBase
         /// <summary>
         /// Liefert das Datum, zu dem der vorherige Report gesendet werden sollte
         /// </summary>
-        DateTime GetPreviousDate();
+        DateTime? GetPreviousDate();
 
 
         MemoryStream WriteToStream(bool asJson = false, bool compressed = true);
