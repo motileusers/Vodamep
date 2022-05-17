@@ -31,14 +31,21 @@ namespace Vodamep.Api.CmdQry
 
         public static ReportInfo CreatePrevious(IReport report)
         {
-            DateTime previousDate = report.GetPreviousDate();
+            DateTime? previousDate = report.GetPreviousDate();
 
-            return new ReportInfo
+            if (previousDate != null)
             {
-                Month = previousDate.Month,
-                Year = previousDate.Year,
-                Institution = report.Institution.Id
-            };
+                return new ReportInfo
+                {
+                    Month = previousDate.Value.Month,
+                    Year = previousDate.Value.Year,
+                    Institution = report.Institution.Id
+                };
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
