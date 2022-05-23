@@ -84,7 +84,7 @@ enum MainAttendanceCloseness {
   UP_TO_30_MIN_MC = 3;                         // bis zu 30 Minuten
   OVER_TO_30_MIN_MC = 4;                       // über 30 Minuten
   NO_MAINATTENDANCE_MC = 5;                    // keine Hauptbetreuungsperson
-  NO_MAINATTENDANCECLOSENESS_MC = 6;           // keine Angabe
+  NO_MAINATTENDANCE_CLOSENESS_MC = 6;           // keine Angabe
 }
 
 // Inanspruchnahme anderer Dienste

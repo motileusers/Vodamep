@@ -1,8 +1,8 @@
 ﻿// Zuweiser AGP
 
-LkhFeldkirchReferrer;LKH Feldkirch
-KhDornbirnReferrer;KH Dornbirn
-LkhBregenzReferrer;LKH Bregenz
-PrivateSpecialistsReferrer;Niedergelassene Fachärzte
-OtherReferrer;Sonstiger
-UndefinedReferrer;undefiniert
+UNDEFINED_REFERRER;undefiniert
+LKH_FELDKIRCH_REFERRER;LKH Feldkirch
+KH_DORNBIRN_REFERRER;KH Dornbirn
+LKH_BREGENZ_REFERRER;LKH Bregenz
+PRIVATE_SPECIALISTs_REFERRER;Niedergelassene Fachärzte
+OTHER_REFERRER;Sonstiger

@@ -20,6 +20,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Datasets\Hkpv\gender.csv" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="8.6.1" />
 		<PackageReference Include="Google.Protobuf" Version="3.17.2" />
 		<PackageReference Include="Grpc.Tools" Version="2.42.0">
@@ -30,6 +34,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="Datasets\Hkpv\gender.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\admission_location.csv" />
 		<EmbeddedResource Include="Datasets\Agp\activitytypes.csv" />
 		<EmbeddedResource Include="Datasets\Agp\diagnosisgroups.csv" />
@@ -38,8 +43,8 @@
 		<EmbeddedResource Include="Datasets\Agp\staffactivitytypes.csv" />
 		<EmbeddedResource Include="Datasets\care_allowance.csv" />
 		<EmbeddedResource Include="Datasets\care_allowance_arge.csv" />
-		<EmbeddedResource Include="Datasets\Cm\activity_type.csv" />
-		<EmbeddedResource Include="Datasets\Cm\client_activity_type.csv" />
+		<EmbeddedResource Include="Datasets\Cm\activitytypes.csv" />
+		<EmbeddedResource Include="Datasets\Cm\clientactivitytypes.csv" />
 		<EmbeddedResource Include="Datasets\gender.csv" />
 		<EmbeddedResource Include="Datasets\german-iso-3166.csv" />
 		<EmbeddedResource Include="Datasets\Hkpv\postcode_cities.csv" />
@@ -80,6 +85,10 @@
 		<Protobuf Include="Mohi\Model\Mohi.proto" />
 		<Protobuf Include="StatLp\Model\StatLp.proto" />
 		<Protobuf Include="Tb\Model\Tb.proto" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Data\Mohi\" />
 	</ItemGroup>
 
 
