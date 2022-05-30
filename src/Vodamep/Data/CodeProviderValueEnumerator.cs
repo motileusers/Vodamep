@@ -23,7 +23,8 @@ namespace Vodamep.Data
             List<CodeProviderValue> result = new List<CodeProviderValue>();
 
 
-            // Auflisten der Code Provider
+            // Auflisten der der Daten aus den Code Providern
+            // Alle Texte in ein Dictionary mit Keys schreiben
 
             List<Type> codeProviderTypes = Assembly.GetAssembly(typeof(CodeProviderBase))
                                                    .GetTypes()
@@ -34,7 +35,8 @@ namespace Vodamep.Data
 
             foreach (Type codeProviderType in codeProviderTypes)
             {
-                // die 2 sind keine Enum Provider, da gibts nur ungewollte Überschneidungen
+                // das sind keine Enum Provider, sonder nur Listen von Länder, Orten, Versicherungen
+                // da gibts nur ungewollte Überschneidungen, die lassen wir weg
                 if (codeProviderType != typeof(CountryCodeProvider) &&
                     codeProviderType != typeof(Postcode_CityProvider) &&
                     codeProviderType != typeof(Vodamep.Data.Hkpv.Postcode_CityProvider) &&
@@ -53,6 +55,7 @@ namespace Vodamep.Data
                         else
                         {
                             // doppelte Keys, das ist nicht so schön
+                            // potenzielles Problem, dass ein Key in einer anderen Auflistung anders heißt
                         }
                     }
                 }
@@ -60,7 +63,9 @@ namespace Vodamep.Data
             }
 
 
+
             // Auflisten der Enums aus den Proto Definitionen
+            // Mapping mit den Keys aus den Daten vom Code Provider
 
             List<Type> reflectionTypes = Assembly.GetAssembly(typeof(CodeProviderBase))
                                   .GetTypes()
@@ -120,6 +125,5 @@ namespace Vodamep.Data
                 }
             }
         }
-
     }
 }

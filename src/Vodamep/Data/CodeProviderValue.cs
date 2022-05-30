@@ -15,5 +15,15 @@ namespace Vodamep.Data
         public string ProtoValue { get; set; }
 
         public string Text { get; set; }
+
+
+        public override string ToString()
+        {
+            string result = $"{ReportType?.Name} / {EnumType?.Name} / {EnumValue}";
+            if (!String.IsNullOrWhiteSpace(Text))
+                result += " - " + Text;
+
+            return result;
+        }
     }
 }
