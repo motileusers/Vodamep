@@ -152,7 +152,7 @@ namespace Vodamep.Data.Dummy
                 var count = _rand.Next(1, 10); // bis max. 10 Leistungen pro Monat
                 var date = report.FromD.AddDays(_rand.Next(report.ToD.Day - report.FromD.Day + 1));
 
-                for(int i = 0; count > 0; count--)
+                while(count > 0)
                 {
                     // Pro Tag und Person nur ein Eintrag erlaubt
                     if (!result.Where(x => x.PersonId == person.Id && x.DateD.Equals(date)).Any())
@@ -161,6 +161,8 @@ namespace Vodamep.Data.Dummy
 
                         result.Add(a);
                     }
+
+                    count--;
                 }
             }
 
@@ -196,13 +198,15 @@ namespace Vodamep.Data.Dummy
             var result = new List<StaffActivity>();
 
             var count = _rand.Next(1, 50); // bis max. 50 Leistungen pro Monat
-            for (int i = 0; count > 0; count--)
+            while (count > 0)
             {
                 var day = _rand.Next(1, DateTime.DaysInMonth(report.FromD.Year, report.FromD.Month));  // irgenein Datum im aktuellen Berichtszeitraum
                 var date = report.FromD.AddDays(day);
                 var minutes = _rand.Next(1, 60) * 5;       // irgendwas bis max. 5 Std. in 5 Min.-Schritten
 
                 result.Add(CreateStaffActivity(date, minutes));
+
+                count--;
             }
 
             return result.ToArray();
