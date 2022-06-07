@@ -9,7 +9,7 @@ namespace Vodamep.Tests.Data
         public void ListValues()
         {
             CodeProviderValueEnumerator values = new CodeProviderValueEnumerator();
-            values.Test();
+            values.Enumerate();
 
         }
     }

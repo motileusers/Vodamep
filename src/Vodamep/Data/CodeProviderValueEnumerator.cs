@@ -16,7 +16,7 @@ namespace Vodamep.Data
     public class CodeProviderValueEnumerator
     {
 
-        public void Test()
+        public void Enumerate()
         {
 
 
