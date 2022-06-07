@@ -36,8 +36,8 @@ namespace Vodamep.Specs.Agp.StepDefinitions
 
             var date = new DateTime(2021, 05, 01);
             var r = AgpDataGenerator.Instance.CreateAgpReport("", date.Year, date.Month, 1, 1, false, false);
-            AddDummyActivity(r, r.Persons[0].Id, r.Staffs[0].Id);
-            AddDummyStaffActivity(r, r.Staffs[0].Id);
+            AddDummyActivity(r, r.Persons[0].Id);
+            AddDummyStaffActivity(r);
 
             context.Report = r;
         }
@@ -50,7 +50,6 @@ namespace Vodamep.Specs.Agp.StepDefinitions
             {
                 nameof(Person) => this.Report.Persons,
                 nameof(Institution) => new[] { this.Report.Institution },
-                nameof(Staff) => this.Report.Staffs,
                 nameof(StaffActivity) => this.Report.StaffActivities,
                 nameof(Activity) => this.Report.Activities,
                 _ => Array.Empty<IMessage>(),
@@ -73,17 +72,6 @@ namespace Vodamep.Specs.Agp.StepDefinitions
             p.Id = p0.Id;
             p.Id = p0.Id;
         }
-
-        [Given(@"der Id einer AGP-Mitarbeiterin ist nicht eindeutig")]
-        public void GivenStaffIdNotUnique()
-        {
-            var s0 = this.Report.Staffs[0];
-
-            var s = this.Report.AddDummyStaff();
-
-            s.Id = s0.Id;
-        }
-
 
         [Given(@"die Agp-Diagnose\(n\) ist auf '(.*)' gesetzt")]
         public void GivenTheDiagnosisGroupIsSetTo(string value)
@@ -119,7 +107,6 @@ namespace Vodamep.Specs.Agp.StepDefinitions
                 Date = existingTravelTime.Date,
                 DateD = existingTravelTime.DateD,
                 Minutes = 125,
-                StaffId = existingTravelTime.StaffId,
                 ActivityType = StaffActivityType.TravelingSa
             });
         }
@@ -136,7 +123,6 @@ namespace Vodamep.Specs.Agp.StepDefinitions
                 Date = existingActivity.Date,
                 DateD = existingActivity.DateD,
                 Minutes = 125,
-                StaffId = existingActivity.StaffId,
                 PersonId = existingActivity.PersonId,
                 PlaceOfAction = PlaceOfAction.BasePlace,
                 Entries = { ActivityType.GeriatricPsychiatricAt }
@@ -173,13 +159,8 @@ namespace Vodamep.Specs.Agp.StepDefinitions
             this.Report.Activities[0].PersonId = this.Report.Persons.First().Id + "id";
         }
 
-        [Given(@"zu einer AGP-Mitarbeiterin sind keine AGP-Aktivitäten dokumentiert")]
-        public void GivenAStaffMemberWithoutActivities()
-        {
-            this.Report.Activities[0].StaffId = this.Report.Staffs.First().Id + "id";
-        }
 
-        private static void AddDummyActivity(AgpReport report, string personId, string staffId)
+        private static void AddDummyActivity(AgpReport report, string personId)
         {
             var random = new Random();
 
@@ -189,18 +170,18 @@ namespace Vodamep.Specs.Agp.StepDefinitions
 
             var minutes = random.Next(1, 100) * 5;
 
-            var activity = new Activity() { Id = "1", Date = report.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };
+            var activity = new Activity() { Id = "1", Date = report.From, PersonId = personId, Minutes = minutes, PlaceOfAction = placeOfAction };
             activity.Entries.Add(new[] { ActivityType.ClearingAt, ActivityType.ContactPartnerAt, ActivityType.GuidancePartnerAt });
 
             report.Activities.Add(activity);
         }
 
 
-        private void AddDummyStaffActivity(AgpReport report, string staffId)
+        private void AddDummyStaffActivity(AgpReport report)
         {
             int minutes = 45;
 
-            var activity = new StaffActivity() { Id = "1", Date = report.From, StaffId = staffId, Minutes = minutes, ActivityType = StaffActivityType.NetworkingSa };
+            var activity = new StaffActivity() { Id = "1", Date = report.From, Minutes = minutes, ActivityType = StaffActivityType.NetworkingSa };
 
             report.StaffActivities.Add(activity);
         }

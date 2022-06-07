@@ -21,22 +21,6 @@ namespace Vodamep.Data.Dummy
             return p;
         }
 
-        public static Staff AddDummyStaff(this AgpReport report)
-        {
-            var s = AgpDataGenerator.Instance.CreateStaff(report);
-
-            report.Staffs.Add(s);
-            return s;
-        }
-
-        public static Staff[] AddDummyStaffs(this AgpReport report, int count, bool useRandomValues = true)
-        {
-            var s = AgpDataGenerator.Instance.CreateStaffs(report, count, useRandomValues).ToArray();
-            report.Staffs.AddRange(s);
-            return s;
-        }
-
-
         public static StaffActivity[] AddDummyStaffActivities(this AgpReport report)
         {
             if (report.FromD == null)
@@ -44,9 +28,6 @@ namespace Vodamep.Data.Dummy
 
             if (report.ToD == null)
                 report.ToD = report.FromD.LastDateInMonth();
-
-            if (report.Staffs.Count == 0)
-                report.AddDummyStaff();
 
             if (report.Persons.Count == 0)
                 report.AddDummyPerson();
@@ -63,9 +44,6 @@ namespace Vodamep.Data.Dummy
 
             if (report.ToD == null)
                 report.ToD = report.FromD.LastDateInMonth();
-
-            if (report.Staffs.Count == 0)
-                report.AddDummyStaff();
 
             if (report.Persons.Count == 0)
                 report.AddDummyPerson();

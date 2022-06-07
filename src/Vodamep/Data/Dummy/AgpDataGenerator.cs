@@ -45,7 +45,6 @@ namespace Vodamep.Data.Dummy
             report.ToD = report.FromD.LastDateInMonth();
 
             report.AddDummyPersons(persons);
-            report.AddDummyStaffs(staffs, useRandomValues);
 
             if (addActivities)
             {
@@ -79,9 +78,7 @@ namespace Vodamep.Data.Dummy
                                         x != Referrer.UndefinedReferrer)
                             .ElementAt(_rand.Next(Enum.GetValues(typeof(Referrer)).Length - 2)),
 
-                HospitalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
-                LocalDoctor = "Dr. " + _familynames[_rand.Next(_familynames.Length)],
-                Nationality = "AT", 
+                Nationality = "AT",
             };
 
             person.Diagnoses.Add(DiagnosisGroup.AffectiveDisorder);
@@ -112,14 +109,6 @@ namespace Vodamep.Data.Dummy
                             .ElementAt(index),
 
                 Gender = _rand.Next(2) == 1 ? Gender.FemaleGe : Gender.MaleGe,
-
-                //Referrer = ((Referrer[])(Enum.GetValues(typeof(Referrer))))
-                //            .Where(x => x != Referrer.OtherReferrer &&
-                //                        x != Referrer.UndefinedReferrer)
-                //.ElementAt(index),
-
-                HospitalDoctor = "Dr. " + _familynames[index],
-                LocalDoctor = "Dr. " + _familynames[index],
             };
 
             person.Diagnoses.Add(DiagnosisGroup.AffectiveDisorder);
@@ -144,41 +133,6 @@ namespace Vodamep.Data.Dummy
                 yield return CreatePerson((i + 1).ToString());
         }
 
-        public Staff CreateStaff(AgpReport report, bool useRandomValues = true)
-        {
-            var id = (_id++).ToString();
-
-            var staff = new Staff
-            {
-                Id = id,
-                FamilyName = useRandomValues ? _familynames[_rand.Next(_familynames.Length)] : _familynames[0],
-                GivenName = useRandomValues ? _names[_rand.Next(_names.Length)] : _names[0],
-            };
-
-            return staff;
-        }
-
-        public Staff CreateStaff(AgpReport report, int index, int nrOfEmployments, float employment)
-        {
-            var id = index.ToString();
-
-            var staff = new Staff
-            {
-                Id = id,
-                FamilyName = _familynames[index],
-                GivenName = _names[index],
-            };
-
-            return staff;
-        }
-
-        public IEnumerable<Staff> CreateStaffs(AgpReport report, int count, bool useRandomValues = true)
-        {
-            for (var i = 0; i < count; i++)
-                yield return CreateStaff(report, useRandomValues);
-        }
-
-
         private ActivityType[] CreateRandomActivities()
         {
             var a = _activities[_rand.Next(_activities.Length)];
@@ -188,26 +142,36 @@ namespace Vodamep.Data.Dummy
             return a.Split(',').Select(x => (ActivityType)int.Parse(x)).Distinct().ToArray();
         }
 
-        private StaffActivity CreateStaffActivity(string staffId, DateTime date, int minuten)
+
+        public Activity[] CreateActivities(AgpReport report)
         {
-            var result = new StaffActivity()
+            var result = new List<Activity>();
+
+            foreach (var person in report.Persons)
             {
-                StaffId = staffId,
-                DateD = date,
-                ActivityType = StaffActivityType.NetworkingSa,
-                Minutes = 5,
-            };
+                var count = _rand.Next(1, 10); // bis max. 10 Leistungen pro Monat
+                var date = report.FromD.AddDays(_rand.Next(report.ToD.Day - report.FromD.Day + 1));
 
-            result.Minutes = minuten;
+                for(int i = 0; count > 0; count--)
+                {
+                    // Pro Tag und Person nur ein Eintrag erlaubt
+                    if (!result.Where(x => x.PersonId == person.Id && x.DateD.Equals(date)).Any())
+                    {
+                        var a = CreateRandomActivity(person.Id, date);
 
-            return result;
+                        result.Add(a);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
-        private Activity CreateRandomActivity(string personId, string staffId, DateTime date, int minuten)
+        private Activity CreateRandomActivity(string personId, DateTime date)
         {
             var result = new Activity()
             {
-                StaffId = staffId,
+                Id = System.Guid.NewGuid().ToString(),
                 PersonId = personId,
                 DateD = date,
                 PlaceOfAction = ((PlaceOfAction[])(Enum.GetValues(typeof(PlaceOfAction))))
@@ -215,7 +179,9 @@ namespace Vodamep.Data.Dummy
                 .ElementAt(_rand.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1))
             };
 
-            result.Minutes = minuten;
+            var minutes = _rand.Next(1, 60) * 5; // max. 5 Stunden und in 5 Min. Schritten
+
+            result.Minutes = minutes;
 
             var activities = CreateRandomActivities();
             result.Entries.AddRange(activities.OrderBy(x => x));
@@ -224,62 +190,37 @@ namespace Vodamep.Data.Dummy
         }
 
 
+
         public StaffActivity[] CreateStaffActivities(AgpReport report)
         {
             var result = new List<StaffActivity>();
 
-            foreach (Staff staff in report.Staffs)
+            var count = _rand.Next(1, 50); // bis max. 50 Leistungen pro Monat
+            for (int i = 0; count > 0; count--)
             {
-                var date = report.FromD.AddDays(1);
+                var day = _rand.Next(1, DateTime.DaysInMonth(report.FromD.Year, report.FromD.Month));  // irgenein Datum im aktuellen Berichtszeitraum
+                var date = report.FromD.AddDays(day);
+                var minutes = _rand.Next(1, 60) * 5;       // irgendwas bis max. 5 Std. in 5 Min.-Schritten
 
-                result.Add(CreateStaffActivity(staff.Id, date, 5));
+                result.Add(CreateStaffActivity(date, minutes));
             }
 
             return result.ToArray();
         }
 
 
-        public Activity[] CreateActivities(AgpReport report)
+        private StaffActivity CreateStaffActivity(DateTime date, int minutes)
         {
-            var result = new List<Activity>();
-
-            foreach (var staff in report.Staffs)
+            var result = new StaffActivity()
             {
-                // die zu betreuenden Personen zufällig zuordnen
-                var persons = report.Persons.Count == 1 || report.Staffs.Count == 1 ? report.Persons.ToArray() : report.Persons.Where(x => _rand.Next(report.Staffs.Count) == 0).ToArray();
+                Id = System.Guid.NewGuid().ToString(),
+                DateD = date,
+                ActivityType = StaffActivityType.NetworkingSa,
+                Minutes = minutes,
+            };
 
-                // ein Mitarbeiter soll pro Tag max 10h arbeiten und das nur in 5 Minuten Schritten
-                // hier wurde die hälfte gewählt, damit für den nächsten Schritt noch genug puffer ist
-                var minuten = _rand.Next(Math.Min(persons.Count() * 1, 100 / 5)) * 5;
-
-                while (minuten > 0)
-                {
-                    var personId = persons[_rand.Next(persons.Length)].Id;
-
-                    var date = report.FromD.AddDays(_rand.Next(report.ToD.Day - report.FromD.Day + 1));
-
-                    // Pro Tag, Person und Mitarbeiter nur ein Eintrag erlaubt:
-                    if (!result.Where(x => x.PersonId == personId && x.StaffId == staff.Id && x.DateD.Equals(date)).Any())
-                    {
-                        var a = CreateRandomActivity(personId, staff.Id, date, minuten);
-
-                        minuten -= a.Minutes;
-
-                        result.Add(a);
-                    }
-                }
-            }
-
-            //sicherstellen, dass jede Person zumindest einen Eintrag hat
-            foreach (var p in report.Persons.Where(x => !result.Where(a => a.PersonId == x.Id).Any()).ToArray())
-            {
-                var date = report.FromD.AddDays(_rand.Next(report.ToD.Day - report.FromD.Day + 1));
-
-                result.Add(CreateRandomActivity(p.Id, report.Staffs[_rand.Next(report.Staffs.Count)].Id, date, 5));
-            }
-
-
-            return result.ToArray();
+            return result;
         }
+
     }
 }

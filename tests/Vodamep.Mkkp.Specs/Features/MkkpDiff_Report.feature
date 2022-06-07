@@ -1,7 +1,7 @@
 ﻿#language: de-DE
-Funktionalität: Mkkp - Unterschiede zwischen zwei Meldungen
+Funktionalität: Report Unterschiede
 
-Szenario: Alle Properties eines Reports hat sich geändert.
+Szenario: Einige Properties eines Reports haben sich geändert.
 	Angenommen alle Properties des 2. Reports haben sich verändert
 	Dann enthält das Ergebnis '3' Objekte(e)
 	Und ein Element besitzt den Status 'Difference' mit der Id 'Person', dem Wert1 '1' und dem Wert2 ''

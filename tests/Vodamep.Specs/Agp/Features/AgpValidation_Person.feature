@@ -45,8 +45,6 @@ Szenariogrundriss: Eine Eigenschaft muss nicht gesetzt sein
 Beispiele:
 	| Name            |
 	| insurance       |
-	| hospital_doctor |
-	| local_doctor    |
 
 
 
@@ -69,8 +67,6 @@ Beispiele:
 	| Name            | Bezeichnung                                 | Wert | NewName      |
 	| family_name     | Familienname                                | t@st | Peter t@st   |
 	| given_name      | Vorname                                     | t@st | t@st Gruber  |
-	| hospital_doctor | Betreuender Arzt (Krankenhaus)              | t@st | Peter Gruber |
-	| local_doctor    | Betreuender Arzt (Niedergelassener Bereich) | t@st | Peter Gruber |
 	
 Szenariogrundriss: Der Name einer Person enthält ein spezielles, aber gültiges Zeichen
 	Angenommen es ist ein 'AgpReport'
@@ -81,8 +77,6 @@ Beispiele:
 	| family_name     | Familienname                                | Chloé         |
 	| given_name      | Vorname                                     | Raphaël       |
 	| given_name      | Vorname                                     | Sr. Anna      |
-	| hospital_doctor | Betreuender Arzt (Krankenhaus)              | Dr. Frank     |
-	| local_doctor    | Betreuender Arzt (Niedergelassener Bereich) | Dr. Dr. Frank |
 
 Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
 	Angenommen es ist ein 'AgpReport'

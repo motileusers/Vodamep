@@ -32,21 +32,16 @@ namespace Vodamep.Specs.Agp.StepDefinitions
             this.Report1 = AgpDataGenerator.Instance.CreateAgpReport(string.Empty, null, null, 1, 1, true);
 
             this.Report1.Persons.First().Id = "1";
-            this.Report1.Staffs.First().Id = "2";
             this.Report1.Activities.First().PersonId = "1";
-            this.Report1.Activities.First().StaffId = "2";
 
             this.Report2 = this.Report1.Clone();
         }
 
 
-        [Given(@"alle Properties des 2. Reports haben sich verändert")]
+        [Given(@"Ein Property eines Reports hat sich geändert.")]
         public void GivenAllPropertiesOfTheSecondReportHaveChanged()
         {
-            this.Report1.Persons.First().HospitalDoctor = "Test";
-            this.Report1.Staffs.First().FamilyName = "Test";
-            //this.Report1.Activities.First().Entries.Clear();
-            //this.Report1.Activities.First().Entries.Add(ActivityType.Lv05);
+            this.Report1.Persons.First().City = "Test";
         }
 
         [Then(@"enthält das Ergebnis '(.*)' Objekte\(e\)")]

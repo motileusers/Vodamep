@@ -2,6 +2,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <SpecFlowObsoleteCodeBehindFiles Remove="Agp\Features\AgpValidation_Activity - Copy.feature.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
@@ -15,6 +18,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Vodamep\Vodamep.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Agp\Features\AgpValidation_StaffActivity.feature.cs">
+      <DependentUpon>AgpValidation_StaffActivity.feature</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <SpecFlowFeatureFiles Update="Agp\Features\AgpValidation_StaffActivity.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
   </ItemGroup>
   
 </Project>

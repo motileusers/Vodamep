@@ -55,13 +55,7 @@ namespace Vodamep.Agp.Validation
 
             this.RuleForEach(report => report.StaffActivities).SetValidator(r => new StaffActivityValidator(r));
 
-            this.Include(new ActivtiesTimeValidator());
-
-            this.RuleForEach(report => report.Staffs).SetValidator(r => new StaffValidator());
-
             this.Include(new AgpReportPersonIdValidator());
-
-            this.Include(new AgpReportStaffIdValidator());
         }
 
         public override async Task<ValidationResult> ValidateAsync(ValidationContext<AgpReport> context, CancellationToken cancellation = default(CancellationToken))

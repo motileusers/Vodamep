@@ -24,6 +24,8 @@ namespace Vodamep.Agp.Validation
             //alle Ids werden auf "ID" geprüft.
             _dict.Add(nameof(Person), "Klient");
             _dict.Add(nameof(Person.Id), "ID");
+            _dict.Add(nameof(Person.FamilyName), "Familienname");
+            _dict.Add(nameof(Person.GivenName), "Vorname");
             _dict.Add(nameof(Person.Birthday), "Geburtsdatum");
             _dict.Add(nameof(Person.BirthdayD), "Geburtsdatum");
             _dict.Add(nameof(Person.Gender), "Geschlecht");
@@ -34,20 +36,15 @@ namespace Vodamep.Agp.Validation
             _dict.Add(nameof(Person.CareAllowance), "Pflegegeld");
             _dict.Add(nameof(Person.Referrer), "Zuweiser");
             _dict.Add(nameof(Person.OtherReferrer), "Sonstiger Zuweiser");
-            _dict.Add(nameof(Person.HospitalDoctor), "Betreuender Arzt (Krankenhaus)");
-            _dict.Add(nameof(Person.LocalDoctor), "Betreuender Arzt (Niedergelassener Bereich)");
             _dict.Add(nameof(Person.Diagnoses), "Erkrankungen / Diagnose");
 
-            _dict.Add(nameof(Staff.GivenName), "Vorname");
-            _dict.Add(nameof(Staff.FamilyName), "Familienname");
-
-            _dict.Add(nameof(StaffActivity), "Aktivität");
+            _dict.Add(nameof(StaffActivity), "Mitarbeiter Aktivität");
+            _dict.Add(nameof(StaffActivity.ActivityType), "Aktivitätstyp");
 
             _dict.Add(nameof(Activity), "Aktivität");
             _dict.Add(nameof(Activity.Date), "Datum");
             _dict.Add(nameof(Activity.DateD), "Datum");
             _dict.Add(nameof(Activity.PersonId), "Personen-ID");
-            _dict.Add(nameof(Activity.StaffId), "Mitarbeiter-ID");
             _dict.Add(nameof(Activity.PlaceOfAction), "Einsatzort");
             _dict.Add(nameof(Activity.Entries), "Leistungsbereiche");
             _dict.Add(nameof(Activity.Minutes), "Leistungszeit");

@@ -5,7 +5,7 @@ using Vodamep.Agp.Model;
 
 namespace Vodamep.Agp.Validation
 {
-    public abstract class AgpReportValidationResultFormatterBase 
+    public abstract class AgpReportValidationResultFormatterBase
     {
         protected readonly ResultFormatterTemplate _template;
         protected readonly bool _ignoreWarnings;
@@ -18,7 +18,6 @@ namespace Vodamep.Agp.Validation
             _strategies = new[]
             {
                 new GetNameByPatternStrategy(GetIdPattern(nameof(AgpReport.Persons)), GetNameOfPerson),
-                new GetNameByPatternStrategy(GetIdPattern(nameof(AgpReport.Staffs)), GetNameOfStaff),
                 new GetNameByPatternStrategy(GetIdPattern(nameof(AgpReport.Activities)), GetNameOfActivity),
 
                 new GetNameByPatternStrategy($"^{nameof(AgpReport.To)}$",(a,b) => string.Empty),
@@ -70,23 +69,13 @@ namespace Vodamep.Agp.Validation
 
             return string.Empty;
         }
-        private string GetNameOfStaff(AgpReport report, int index)
-        {
-            if (report.Staffs.Count > index && index >= 0)
-            {
-                var e = report.Staffs[index];
-                return $"Mitarbeiter: {e.FamilyName} {e.GivenName}";
-            }
-
-            return string.Empty;
-        }
 
         private string GetNameOfActivity(AgpReport report, int index)
         {
             if (report.Activities.Count > index && index >= 0)
             {
                 var e = report.Activities[index];
-                return $"Aktivität {e.DateD.ToString("dd.MM.yyyy")}{_template.Linefeed}  {String.Join(",", e.Entries)}{_template.Linefeed}  {GetNameOfPersonById(report, e.PersonId)}{_template.Linefeed}  {GetNameOfStaffById(report, e.StaffId)}";
+                return $"Aktivität {e.DateD.ToString("dd.MM.yyyy")}{_template.Linefeed}  {String.Join(",", e.Entries)}{_template.Linefeed}  {GetNameOfPersonById(report, e.PersonId)}{_template.Linefeed}";
             }
 
             return string.Empty;
@@ -103,15 +92,6 @@ namespace Vodamep.Agp.Validation
             return "";
         }
 
-        private string GetNameOfStaffById(AgpReport report, string id)
-        {
-            var e = report.Staffs.Where(x => x.Id == id).FirstOrDefault();
-
-            if (e == null)
-                return string.Empty;
-
-            return $"{e.FamilyName} {e.GivenName}";
-        }
 
         private class GetNameByPatternStrategy
         {

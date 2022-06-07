@@ -6,54 +6,44 @@ import "google/protobuf/timestamp.proto";
 option csharp_namespace = "Vodamep.Agp.Model";
 
 message AgpReport {   
-    Institution institution = 1;   
+    Institution institution = 1;
     google.protobuf.Timestamp from = 2;
     google.protobuf.Timestamp to = 3;
-    repeated Staff staffs = 4; 
-    repeated Person persons = 5;         
-    repeated Activity activities = 6;     
-    repeated StaffActivity staff_activities = 7;     
+    repeated Person persons = 4;
+    repeated Activity activities = 5;
+    repeated StaffActivity staff_activities = 6;
 }
 
 // Einrichtung
 message Institution {
     string id = 1;
-    string name = 2;    
+    string name = 2;
 }
 
-// Mitarbeiter, die im Zeitraum eine Leistung erbracht haben
-message Staff {
-    string id = 1;    
-    string family_name = 3;
-    string given_name = 4;    
-}
 
 // Personen, die im Zeitraum eine Leistung bezogen haben
 message Person {
-    string id = 1;        
+    string id = 1;
     string family_name = 2;
-    string given_name = 3;    
+    string given_name = 3;
     google.protobuf.Timestamp birthday = 4;
 	Gender gender = 5;
-    string postcode = 6;				// postcode und city müssen zusammen einem Wert aus der Liste der Orte entsprechen
+    string postcode = 6;				     // postcode und city müssen zusammen einem Wert aus der Liste der Orte entsprechen
     string city = 7;
-    string nationality = 8;             // Land aus german-iso-3166.csv
-	CareAllowance care_allowance = 9;   // Pflegegeld, zum Stichtag Bis-Datum der Meldung
-	string insurance = 10;               // Ein Wert aus der Liste der Sozialversicherungen
+    string nationality = 8;                  // Land aus german-iso-3166.csv
+	CareAllowance care_allowance = 9;        // Pflegegeld, zum Stichtag Bis-Datum der Meldung
+	string insurance = 10;                   // Ein Wert aus der Liste der Sozialversicherungen
     Referrer referrer = 11;
     string other_referrer = 12;
-    string hospital_doctor = 13;
-    string local_doctor = 14;
-    repeated DiagnosisGroup diagnoses = 15;
+    repeated DiagnosisGroup diagnoses = 13;
 }
 
 // Leistungen
 message StaffActivity {
     string id = 1;
     google.protobuf.Timestamp date = 2;
-    string staff_id = 3;
-    StaffActivityType activity_type = 4; 
-    int32 minutes = 5;
+    StaffActivityType activity_type = 3;
+    int32 minutes = 4;
 }
 
 
@@ -71,10 +61,9 @@ message Activity {
     string id = 1;
     google.protobuf.Timestamp date = 2;
     string person_id = 3;
-    string staff_id = 4;
-    PlaceOfAction place_of_Action = 5;         // Ein Wert aus der Liste places_of_action.csv
-    repeated ActivityType entries = 6; 
-    int32 minutes = 7;
+    PlaceOfAction place_of_Action = 4;      // Ein Wert aus der Liste places_of_action.csv
+    repeated ActivityType entries = 5;
+    int32 minutes = 6;
 }
 
 // Beschreibung in activitytypes.csv
@@ -143,10 +132,10 @@ enum CareAllowance {
   L5 = 5;
   L6 = 6;
   L7 = 7;	
-  ANY = 9;              // Pflegegeld ja, Stufe unbekannt
-  UNKNOWN = 88;         // Keine Angabe, unbekannt ob ja oder nein
-  IN_PROGRESS = 90;     // In Bearbeitung
-  NONE = 99;            // Kein Pflegegeld
+  ANY = 9;// Pflegegeld ja, Stufe unbekannt
+  UNKNOWN = 88;// Keine Angabe, unbekannt ob ja oder nein
+  IN_PROGRESS = 90;// In Bearbeitung
+  NONE = 99;// Kein Pflegegeld
 }
 
 enum Gender {
