@@ -5,7 +5,7 @@ using Vodamep.ReportBase;
 
 namespace Vodamep.Agp.Model
 {
-    public partial class Activity : IMinutesActivity, IComparable<Activity>, IEntriesActivity<ActivityType>
+    public partial class Activity : IMinutesActivity, IComparable<Activity>, IItem
     {
         public DateTime DateD { get => this.Date.AsDate(); set => this.Date = value.AsTimestamp(); }
         public IEnumerable<ActivityType> EntriesT => this.entries_;
@@ -20,9 +20,7 @@ namespace Vodamep.Agp.Model
             if ((result = this.PersonId.CompareTo(other.PersonId)) != 0)
                 return result;
 
-            if ((result = this.StaffId.CompareTo(other.StaffId)) != 0)
-                return result;
-
+            
             for (var i = 0; i < this.Entries.Count; i++)
             {
                 if (other.Entries.Count <= i)

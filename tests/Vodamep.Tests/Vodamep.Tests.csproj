@@ -21,4 +21,8 @@
     <ProjectReference Include="..\..\src\Vodamep\Vodamep.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Agp\Validation\" />
+  </ItemGroup>
+
 </Project>

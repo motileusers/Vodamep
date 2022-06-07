@@ -16,8 +16,9 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.PersonId).NotEmpty()
                 .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmptyWithParentProperty(displayNameResolver.GetDisplayName(nameof(x.PersonId)), displayNameResolver.GetDisplayName(nameof(Activity))));
-            this.RuleFor(x => x.StaffId).NotEmpty()
-                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.StaffId)), displayNameResolver.GetDisplayName(nameof(Activity)), report.GetClient(x.PersonId)));
+
+            this.RuleFor(x => x.Id).NotEmpty()
+                .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Id)), displayNameResolver.GetDisplayName(nameof(Activity)), report.GetClient(x.PersonId)));
             this.RuleFor(x => x.PlaceOfAction).NotEmpty()
                 .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.PlaceOfAction)), displayNameResolver.GetDisplayName(nameof(Activity)), report.GetClient(x.PersonId)));
             this.RuleFor(x => x.Entries).NotEmpty()
@@ -28,7 +29,7 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.DateD)
                 .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
-                    report.GetClient(x.PersonId), report.GetStaffName(x.StaffId), report.FromD, report.ToD, x.Date));
+                    report.GetClient(x.PersonId), null, report.FromD, report.ToD, x.Date));
 
 
             this.RuleFor(x => x).Custom((x, ctx) =>

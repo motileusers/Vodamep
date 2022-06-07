@@ -24,7 +24,7 @@ namespace Vodamep.Agp.Model.Tests
         public void WriteThenRead_ReportsAreEqual()
         {
             
-            AgpReport report = AgpDataGenerator.Instance.CreateAgpReport( string.Empty, 2021, 1, 1, 1, true);
+            AgpReport report = AgpDataGenerator.Instance.CreateAgpReport( string.Empty, 2021, 1, 1, 1, true).AsSorted();
 
             using (var s = report.WriteToStream())
             {

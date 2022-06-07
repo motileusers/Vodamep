@@ -21,7 +21,6 @@ namespace Vodamep.Agp.Model
             result.StaffActivities.AddRange(report.StaffActivities.AsSorted());
 
             result.Persons.AddRange(report.Persons.OrderBy(x => x.Id));
-            result.Staffs.AddRange(report.Staffs.OrderBy(x => x.Id));
 
             return result;
         }

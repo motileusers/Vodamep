@@ -29,20 +29,6 @@ namespace Vodamep.Agp.Model
 
         IList<IPerson> IReport.Persons => this.Persons.Select(x => x as IPerson).ToList();
 
-        public string GetStaffName(string id)
-        {
-            string client = id;
-
-            var staff = this.Staffs.FirstOrDefault(p => p.Id == id);
-
-            if (staff != null)
-            {
-                client = $"{staff.GivenName} {staff.FamilyName}";
-            }
-
-            return client;
-        }
-
         public string GetClient(string id)
         {
             string client = id;
@@ -69,7 +55,6 @@ namespace Vodamep.Agp.Model
             r.ToD = r.FromD.LastDateInMonth();
 
             r.AddDummyPerson();
-            r.AddDummyStaff();
             r.AddDummyActivities();
 
             return r.AsSorted();
