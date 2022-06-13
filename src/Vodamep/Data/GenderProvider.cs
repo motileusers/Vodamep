@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data
 {
@@ -24,7 +25,10 @@ namespace Vodamep.Data
             }
         }
 
+        protected override FileDescriptor Descriptor => Vodamep.StatLp.Model.StatLpReflection.Descriptor;
+
         protected override string ResourceName => "Datasets.gender.csv";
+
         public override string Unknown => "";
     }
 }

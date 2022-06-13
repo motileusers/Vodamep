@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Google.Protobuf.Reflection;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -20,6 +22,10 @@ namespace Vodamep.Data
 
         public virtual bool IsValid(string code) => _dict.ContainsKey(code ?? string.Empty);
 
+
+        // todo: schauen, wo diese Methode verwendet wird
+        // aus dem Code dürfte es keine stelle mehr geben
+        // wenn, dann auf GetEnumValue umbauen
         public string GetValue(string code)
         {
             code = code ?? string.Empty;
@@ -55,11 +61,30 @@ namespace Vodamep.Data
             }
         }
 
+        /// <summary>
+        /// Wert anhand eines CLR Enum Key ausgeben (im Dictionary sind die Proto-Keys hinterlegt)
+        /// </summary>
+        public string GetEnumValue(string code)
+        {
+            EnumDescriptor descriptor = this.Descriptor.EnumTypes.Where(x => x.Name == this.GetType().Name.Replace("Provider", "")).FirstOrDefault();
+            Type clrType = descriptor.ClrType;
+            List<string> names = Enum.GetNames(clrType).ToList();
+            int index = names.IndexOf(code);
+            EnumValueDescriptor valueDescriptior = descriptor.Values[index];
+
+            return this._dict[valueDescriptior.Name];
+        }
+
+
+
         public IEnumerable<string> GetCSV() => _dict.Select(x => $"{x.Key};{x.Value}");
 
         public IReadOnlyDictionary<string, string> Values => new ReadOnlyDictionary<string, string>(_dict);
 
         protected abstract string ResourceName { get; }
+
+        protected abstract FileDescriptor Descriptor { get; }
+
 
         internal static CodeProviderBase GetInstance<T>()
             where T : CodeProviderBase

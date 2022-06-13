@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data.Cm
 {
@@ -23,6 +24,8 @@ namespace Vodamep.Data.Cm
                 return instance;
             }
         }
+
+        protected override FileDescriptor Descriptor => Vodamep.Cm.Model.CmReflection.Descriptor;
 
         public override string Unknown => "";
 
