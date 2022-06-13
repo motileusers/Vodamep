@@ -35,6 +35,13 @@ namespace Vodamep.Data
 
             foreach (Type codeProviderType in codeProviderTypes)
             {
+
+                // todo: das hier kann man als property in den codeprovider einbauen
+                // ... dass er keine auflistung unterstützt
+
+
+                // todo: generell: die list values Methode umbauen (parameter)
+
                 // das sind keine Enum Provider, sonder nur Listen von Länder, Orten, Versicherungen
                 // da gibts nur ungewollte Überschneidungen, die lassen wir weg
                 if (codeProviderType != typeof(CountryCodeProvider) &&
@@ -63,6 +70,10 @@ namespace Vodamep.Data
             }
 
 
+            //todo: umbauen, nur die descriptors auslesen und alle Werte ausgeben
+            // der ober teil ist sinnlos
+
+
 
             // Auflisten der Enums aus den Proto Definitionen
             // Mapping mit den Keys aus den Daten vom Code Provider
@@ -87,7 +98,7 @@ namespace Vodamep.Data
 
                         foreach (EnumDescriptor enumDescriptor in enumDescriptors)
                         {
-                            // Für die hier gibt's eine Beschreibungstexte
+                            // Für die hier gibt's Beschreibungstexte
                             if (enumDescriptor.ClrType != typeof(Vodamep.Hkpv.Model.ActivityType))
                             {
 

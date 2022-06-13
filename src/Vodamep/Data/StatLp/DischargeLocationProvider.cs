@@ -1,4 +1,6 @@
 ﻿using System;
+using Google.Protobuf.Reflection;
+
 
 namespace Vodamep.Data
 {
@@ -23,6 +25,8 @@ namespace Vodamep.Data
                 return instance;
             }
         }
+
+        protected override FileDescriptor Descriptor => Vodamep.StatLp.Model.StatLpReflection.Descriptor;
 
         public override string Unknown => "";
 

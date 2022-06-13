@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data.Agp
 {
@@ -23,6 +24,8 @@ namespace Vodamep.Data.Agp
                 return instance;
             }
         }
+
+        protected override FileDescriptor Descriptor => Vodamep.Agp.Model.ApgReflection.Descriptor;
 
         public override string Unknown => "";
 

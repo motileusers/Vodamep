@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data.Hkpv
 {
@@ -23,6 +24,8 @@ namespace Vodamep.Data.Hkpv
                 return instance;
             }
         }
+
+        protected override FileDescriptor Descriptor => Vodamep.Hkpv.Model.HkpvReflection.Descriptor;
 
         protected override string ResourceName => "Datasets.Hkpv.gender.csv";
         public override string Unknown => "";

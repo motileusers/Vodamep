@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data
 {
@@ -23,7 +24,9 @@ namespace Vodamep.Data
                 return instance;
             }
         }
-        
+
+        protected override FileDescriptor Descriptor => null;
+
         protected override string ResourceName => "Datasets.insurances.csv";
 
         public override string Unknown => "UB";

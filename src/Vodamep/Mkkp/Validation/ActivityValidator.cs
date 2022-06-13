@@ -46,10 +46,11 @@ namespace Vodamep.Mkkp.Validation
                 if (entries.Any(y => y == ActivityType.AccompanyingWithContact) &&
                     entries.Any(y => y == ActivityType.AccompanyingWithoutContact))
                 {
+
                     ctx.AddFailure(new ValidationFailure(nameof(Activity.Entries),
                         Validationmessages.WithinAnActivityTheValuesAreNotAllowedInCombination
-                        (report.GetClient(x.PersonId), ActivityTypeProvider.Instance.GetValue(ActivityType.AccompanyingWithContact.ToString())
-                            , ActivityTypeProvider.Instance.GetValue(ActivityType.AccompanyingWithoutContact.ToString())
+                        (report.GetClient(x.PersonId), ActivityTypeProvider.Instance.GetEnumValue(ActivityType.AccompanyingWithContact.ToString())
+                            , ActivityTypeProvider.Instance.GetEnumValue(ActivityType.AccompanyingWithoutContact.ToString())
                         )));
                 }
 
