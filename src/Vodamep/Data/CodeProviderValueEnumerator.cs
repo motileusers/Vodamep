@@ -16,67 +16,29 @@ namespace Vodamep.Data
     public class CodeProviderValueEnumerator
     {
 
-        public void Enumerate()
+
+        /// <summary>
+        /// Code Provider Werte auflisten
+        /// </summary>
+        public List<CodeProviderValue> Enumerate()
         {
 
+            Dictionary<string, string> textDictionary = GetTextDictionary();
+            List<CodeProviderValue> result = MapTextDictionaryToProtoEnums(textDictionary);
 
+            return result;
+        }
+
+
+
+
+        /// <summary>
+        /// Proto Enums auslesen und die Texte dazumappen
+        /// </summary>
+        private List<CodeProviderValue> MapTextDictionaryToProtoEnums(Dictionary<string, string> textDictionary)
+        {
             List<CodeProviderValue> result = new List<CodeProviderValue>();
 
-
-            // Auflisten der der Daten aus den Code Providern
-            // Alle Texte in ein Dictionary mit Keys schreiben
-
-            List<Type> codeProviderTypes = Assembly.GetAssembly(typeof(CodeProviderBase))
-                                                   .GetTypes()
-                                                   .Where(TheType => TheType.IsClass && !TheType.IsAbstract && TheType.IsSubclassOf(typeof(CodeProviderBase)))
-                                                   .ToList();
-
-            Dictionary<string, string> textDictionary = new Dictionary<string, string>();
-
-            foreach (Type codeProviderType in codeProviderTypes)
-            {
-
-                // todo: das hier kann man als property in den codeprovider einbauen
-                // ... dass er keine auflistung unterstützt
-
-
-                // todo: generell: die list values Methode umbauen (parameter)
-
-                // das sind keine Enum Provider, sonder nur Listen von Länder, Orten, Versicherungen
-                // da gibts nur ungewollte Überschneidungen, die lassen wir weg
-                if (codeProviderType != typeof(CountryCodeProvider) &&
-                    codeProviderType != typeof(Postcode_CityProvider) &&
-                    codeProviderType != typeof(Vodamep.Data.Hkpv.Postcode_CityProvider) &&
-                    codeProviderType != typeof(InsuranceCodeProvider))
-                {
-                    CodeProviderBase baseProvider = Activator.CreateInstance(codeProviderType) as CodeProviderBase;
-
-                    IReadOnlyDictionary<string, string> values = baseProvider.Values;
-
-                    foreach (KeyValuePair<string, string> key in values)
-                    {
-                        if (!textDictionary.ContainsKey(key.Key))
-                        {
-                            textDictionary.Add(key.Key, key.Value);
-                        }
-                        else
-                        {
-                            // doppelte Keys, das ist nicht so schön
-                            // potenzielles Problem, dass ein Key in einer anderen Auflistung anders heißt
-                        }
-                    }
-                }
-
-            }
-
-
-            //todo: umbauen, nur die descriptors auslesen und alle Werte ausgeben
-            // der ober teil ist sinnlos
-
-
-
-            // Auflisten der Enums aus den Proto Definitionen
-            // Mapping mit den Keys aus den Daten vom Code Provider
 
             List<Type> reflectionTypes = Assembly.GetAssembly(typeof(CodeProviderBase))
                                   .GetTypes()
@@ -135,6 +97,55 @@ namespace Vodamep.Data
                     }
                 }
             }
+
+            return result;
+
         }
+
+
+
+
+
+
+        /// <summary>
+        /// Keys und Texte aus den csv Dateien in ein Dictionary schreiben
+        /// </summary>
+        private Dictionary<string, string> GetTextDictionary()
+        {
+            // Alle Texte in ein Dictionary mit Keys schreiben
+
+            List<Type> codeProviderTypes = Assembly.GetAssembly(typeof(CodeProviderBase))
+                                                   .GetTypes()
+                                                   .Where(TheType => TheType.IsClass && !TheType.IsAbstract && TheType.IsSubclassOf(typeof(CodeProviderBase)))
+                                                   .ToList();
+
+            Dictionary<string, string> textDictionary = new Dictionary<string, string>();
+
+            foreach (Type codeProviderType in codeProviderTypes)
+            {
+                CodeProviderBase baseProvider = Activator.CreateInstance(codeProviderType) as CodeProviderBase;
+
+                if (baseProvider.IsEnumProvider)
+                {
+                    IReadOnlyDictionary<string, string> values = baseProvider.Values;
+
+                    foreach (KeyValuePair<string, string> key in values)
+                    {
+                        if (!textDictionary.ContainsKey(key.Key))
+                        {
+                            textDictionary.Add(key.Key, key.Value);
+                        }
+                        else
+                        {
+                            // doppelte Keys, das ist nicht so schön
+                            // potenzielles Problem, dass ein Key in einer anderen Auflistung anders heißt
+                        }
+                    }
+                }
+            }
+
+            return textDictionary;
+        }
+
     }
 }

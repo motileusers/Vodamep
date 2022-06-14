@@ -23,21 +23,6 @@ namespace Vodamep.Data
         public virtual bool IsValid(string code) => _dict.ContainsKey(code ?? string.Empty);
 
 
-        // todo: schauen, wo diese Methode verwendet wird
-        // aus dem Code dürfte es keine stelle mehr geben
-        // wenn, dann auf GetEnumValue umbauen
-        public string GetValue(string code)
-        {
-            code = code ?? string.Empty;
-
-            if (_dict.ContainsKey(code))
-            {
-                return _dict[code];
-            }
-
-            return code;
-        }
-
         private void Init()
         {
             var assembly = this.GetType().Assembly;
@@ -66,13 +51,19 @@ namespace Vodamep.Data
         /// </summary>
         public string GetEnumValue(string code)
         {
-            EnumDescriptor descriptor = this.Descriptor.EnumTypes.Where(x => x.Name == this.GetType().Name.Replace("Provider", "")).FirstOrDefault();
-            Type clrType = descriptor.ClrType;
-            List<string> names = Enum.GetNames(clrType).ToList();
-            int index = names.IndexOf(code);
-            EnumValueDescriptor valueDescriptior = descriptor.Values[index];
-
-            return this._dict[valueDescriptior.Name];
+            try
+            {
+                EnumDescriptor descriptor = this.Descriptor.EnumTypes.Where(x => x.Name == this.GetType().Name.Replace("Provider", "")).FirstOrDefault();
+                Type clrType = descriptor?.ClrType;
+                List<string> names = Enum.GetNames(clrType).ToList();
+                int index = names.IndexOf(code);
+                EnumValueDescriptor valueDescriptior = descriptor.Values[index];
+                return this._dict[valueDescriptior.Name];
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"Error reading enum value {code}.", exception);
+            }
         }
 
 
@@ -84,6 +75,22 @@ namespace Vodamep.Data
         protected abstract string ResourceName { get; }
 
         protected abstract FileDescriptor Descriptor { get; }
+
+
+        /// <summary>
+        /// Das sind Enum Provider
+        /// Wenn der Protobuff Descriptor nicht gesetzt ist, handelt es sich um von Länder, Orten, Versicherungen, ...
+        /// </summary>
+        public bool IsEnumProvider
+        {
+            get
+            {
+                if (Descriptor != null)
+                    return true;
+
+                return false;
+            }
+        }
 
 
         internal static CodeProviderBase GetInstance<T>()
