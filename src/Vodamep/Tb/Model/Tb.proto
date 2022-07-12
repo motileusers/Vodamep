@@ -40,9 +40,10 @@ message Person {
 
     CareAllowance care_allowance = 10;                          // Bezieht Pflegegeld
 
-    MainAttendanceCloseness main_attendance_closeness = 11;     // Räumliche Nähe Hauptbetreuungsperson
+    MainAttendanceRelation main_attendance_relation = 11;       // Verwandtschaftsverhältnis Hauptbetreuungspers.
+    MainAttendanceCloseness main_attendance_closeness = 12;     // Räumliche Nähe Hauptbetreuungsperson
 
-    repeated Service services = 12;                             // Inanspruchnahme anderer Dienste
+    repeated Service services = 13;                             // Inanspruchnahme anderer Dienste
 }
 
 // Leistungen pro Klient pro Monat in Stunden
@@ -85,6 +86,17 @@ enum AdmissionType {
   DAY_CARE_GERONTO_AT = 2;                   // Tagesbetreuung (gerontopsych. Schwerpunkt)                  
 }
 
+
+// Verwandtschaftsverhältnis Hauptbetreuungspers.
+enum MainAttendanceRelation {
+  UNDEFINED_MR = 0;
+  PARTNER_MR = 1;                              // Partner/in           
+  CHILD_MR = 2;                                // Kind/Schwiegerkind          
+  RELATED_PERSON_MR = 3;                       // andere verwandte Person     
+  UNRELATED_PERSON_MR = 4;                     // nicht verwandte Person      
+  NO_MAIN_CARER_MR = 5;                        // keine Hauptbetreuungsperson 
+  NO_MAINATTENDANCERELATION_MR = 6;            // keine Angabe
+}
 
 // Räumliche Nähe Hauptbetreuungsperson
 enum MainAttendanceCloseness {

@@ -123,6 +123,10 @@ namespace Vodamep.Data
 
             foreach (Type codeProviderType in codeProviderTypes)
             {
+                if (codeProviderType.FullName.Contains("Relation"))
+                {
+                }
+
                 CodeProviderBase baseProvider = Activator.CreateInstance(codeProviderType) as CodeProviderBase;
 
                 if (baseProvider.IsEnumProvider)
