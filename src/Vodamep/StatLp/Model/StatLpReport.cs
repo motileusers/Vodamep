@@ -19,7 +19,7 @@ namespace Vodamep.StatLp.Model
         /// <summary>
         /// Liefert das Datum, zu dem der vorherige Report gesendet werden sollte
         /// </summary>
-        public DateTime GetPreviousDate()
+        public DateTime? GetPreviousDate()
         {
             return this.FromD.AddYears(-1);
         }

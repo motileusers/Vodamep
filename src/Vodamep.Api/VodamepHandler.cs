@@ -184,11 +184,11 @@ namespace Vodamep.Api
             IReport previous = engine.GetPrevious(report);
             if (previous != null)
             {
-                validationResult = report.ValidateToText(previous, false);
+                var validationResultPrevious = report.ValidateToText(previous, false);
 
-                if (!validationResult.IsValid)
+                if (!validationResultPrevious.IsValid)
                 {
-                    await RespondError(context, validationResult.Message);
+                    await RespondError(context, validationResultPrevious.Message);
                     return;
                 }
             }

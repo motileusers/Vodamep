@@ -19,9 +19,9 @@ namespace Vodamep.Mkkp.Model
         /// <summary>
         /// Liefert das Datum, zu dem der vorherige Report gesendet werden sollte
         /// </summary>
-        public DateTime GetPreviousDate()
+        public DateTime? GetPreviousDate()
         {
-            return this.FromD.AddMonths(-1);
+            return null;
         }
 
 
