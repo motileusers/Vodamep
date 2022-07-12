@@ -37,9 +37,10 @@ message Person {
                                                                 
     CareAllowance care_allowance = 9;                           // Bezieht Pflegegeld
 
-    MainAttendanceCloseness main_attendance_closeness = 10;     // Räumliche Nähe Hauptbetreuungsperson
+    MainAttendanceRelation main_attendance_relation = 10;       // Verwandtschaftsverhältnis Hauptbetreuungspers.
+    MainAttendanceCloseness main_attendance_closeness = 11;     // Räumliche Nähe Hauptbetreuungsperson
 
-    repeated Service services = 11;                             // Inanspruchnahme anderer Dienste
+    repeated Service services = 12;                             // Inanspruchnahme anderer Dienste
 }
 
 // Leistungen pro Klient pro Monat in Stunden
@@ -75,6 +76,16 @@ enum Gender {
   OPEN_GE = 5;
 }
 
+// Verwandtschaftsverhältnis Hauptbetreuungspers.
+enum MainAttendanceRelation {
+  UNDEFINED_MR = 0;
+  PARTNER_MR = 1;                              // Partner/in           
+  CHILD_MR = 2;                                // Kind/Schwiegerkind          
+  RELATED_PERSON_MR = 3;                       // andere verwandte Person     
+  UNRELATED_PERSON_MR = 4;                     // nicht verwandte Person      
+  NO_MAIN_CARER_MR = 5;                        // keine Hauptbetreuungsperson 
+  NO_MAINATTENDANCERELATION_MR = 6;            // keine Angabe
+}
 
 // Räumliche Nähe Hauptbetreuungsperson
 enum MainAttendanceCloseness {
@@ -84,7 +95,7 @@ enum MainAttendanceCloseness {
   UP_TO_30_MIN_MC = 3;                         // bis zu 30 Minuten
   OVER_TO_30_MIN_MC = 4;                       // über 30 Minuten
   NO_MAINATTENDANCE_MC = 5;                    // keine Hauptbetreuungsperson
-  NO_MAINATTENDANCECLOSENESS_MC = 6;           // keine Angabe
+  NO_MAINATTENDANCE_CLOSENESS_MC = 6;           // keine Angabe
 }
 
 // Inanspruchnahme anderer Dienste

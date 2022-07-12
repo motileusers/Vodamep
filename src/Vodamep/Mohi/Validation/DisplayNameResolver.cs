@@ -33,6 +33,7 @@ namespace Vodamep.Mohi.Validation
             _dict.Add(nameof(Person.City), "Ort");
             _dict.Add(nameof(Person.Gender), "Geschlecht");
             _dict.Add(nameof(Person.Nationality), "Staatsbürgerschaft");
+            _dict.Add(nameof(Person.MainAttendanceRelation), "Verwandtschaftsverhältnis Hauptbetreuungspers.");
             _dict.Add(nameof(Person.MainAttendanceCloseness), "Räumliche Nähe Hauptbetreuungsperson");
         }
 

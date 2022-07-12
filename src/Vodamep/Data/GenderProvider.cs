@@ -1,15 +1,14 @@
 ﻿using System;
 using Google.Protobuf.Reflection;
 
-
 namespace Vodamep.Data
 {
-    public class DischargeLocationProvider : CodeProviderBase
+    public sealed class GenderProvider : CodeProviderBase
     {
-        private static volatile DischargeLocationProvider instance;
-        private static object syncRoot = new Object();
+        private static volatile GenderProvider instance;
+        private static readonly object syncRoot = new Object();        
 
-        public static DischargeLocationProvider Instance
+        public static GenderProvider Instance
         {
             get
             {
@@ -18,7 +17,7 @@ namespace Vodamep.Data
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new DischargeLocationProvider();
+                            instance = new GenderProvider();
                     }
                 }
 
@@ -28,8 +27,8 @@ namespace Vodamep.Data
 
         protected override FileDescriptor Descriptor => Vodamep.StatLp.Model.StatLpReflection.Descriptor;
 
-        public override string Unknown => "";
+        protected override string ResourceName => "Datasets.gender.csv";
 
-        protected override string ResourceName => "Datasets.StatLp.discharge_location.csv";
+        public override string Unknown => "";
     }
 }

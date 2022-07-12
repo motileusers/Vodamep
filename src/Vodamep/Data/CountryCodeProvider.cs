@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data
 {
@@ -25,6 +26,8 @@ namespace Vodamep.Data
         }
 
 
+
+        protected override FileDescriptor Descriptor => null;
 
         public override string Unknown => "ZZ";
 

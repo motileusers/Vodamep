@@ -1,10 +1,10 @@
 ﻿// Einsatzorte
 
-ResidencePlace;Wohnort
-KindergartenPlace;Kindergarten
-SchoolPlace;Schule
-OutpatientHospitalPlace;Ambulanz/Krankenhaus
-LocalDoctorPlace;Niedergel. Fachärztin, -arzt
-OtherPlace;Sonstiger
-UndefinedPlace;undefiniert
+UNDEFINED_PLACE;undefiniert
+RESIDENCE_PLACE;Wohnort
+KINDERGARTEN_PLACE;Kindergarten
+SCHOOL_PLACE;Schule
+OUTPATIENT_HOSPITAL_PLACE;Ambulanz/Krankenhaus
+LOCAL_DOCTOR_PLACE;Niedergel. Fachärztin, -arzt
+OTHER_PLACE;Sonstiger
 

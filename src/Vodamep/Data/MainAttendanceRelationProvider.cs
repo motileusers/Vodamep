@@ -1,6 +1,7 @@
 ﻿using System;
+using Google.Protobuf.Reflection;
 
-namespace Vodamep.Data.StatLp
+namespace Vodamep.Data
 {
     public class MainAttendanceRelationProvider : CodeProviderBase
     {
@@ -24,8 +25,10 @@ namespace Vodamep.Data.StatLp
             }
         }
 
+        protected override FileDescriptor Descriptor => Vodamep.StatLp.Model.StatLpReflection.Descriptor;
+
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.StatLp.main_attendance_relation.csv";
+        protected override string ResourceName => "Datasets.main_attendance_relation.csv";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data
 {
@@ -28,6 +29,8 @@ namespace Vodamep.Data
         {
             return base.IsValid(code);
         }
+
+        protected override FileDescriptor Descriptor => null;
 
         protected override string ResourceName => "Datasets.postcode_cities.csv";
 

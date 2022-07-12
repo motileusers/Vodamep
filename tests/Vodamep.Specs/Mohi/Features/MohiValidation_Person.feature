@@ -22,16 +22,17 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
 	Dann enthält das Validierungsergebnis den Fehler ''<Bezeichnung>' von Klient '(.*)' darf nicht leer sein.'
 
 Beispiele:
-	| Name                      | Bezeichnung                          |
-	| family_name               | Familienname                         |
-	| given_name                | Vorname                              |
-	| birthday                  | Geburtsdatum                         |
-	| gender                    | Geschlecht                           |
-	| nationality               | Staatsbürgerschaft                   |
-	| postcode                  | PLZ                                  |
-	| city                      | Ort                                  |
-	| care_allowance            | Pflegegeld                           |
-	| main_attendance_closeness | Räumliche Nähe Hauptbetreuungsperson |
+	| Name                      | Bezeichnung                                    |
+	| family_name               | Familienname                                   |
+	| given_name                | Vorname                                        |
+	| birthday                  | Geburtsdatum                                   |
+	| gender                    | Geschlecht                                     |
+	| nationality               | Staatsbürgerschaft                             |
+	| postcode                  | PLZ                                            |
+	| city                      | Ort                                            |
+	| care_allowance            | Pflegegeld                                     |
+	| main_attendance_relation  | Verwandtschaftsverhältnis Hauptbetreuungspers. |
+	| main_attendance_closeness | Räumliche Nähe Hauptbetreuungsperson           |
 	
 	# nicht vorhanden
 	#| admission_type            | Aufnahmeart                          |

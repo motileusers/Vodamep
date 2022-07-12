@@ -1,14 +1,14 @@
 ﻿using System;
 using Google.Protobuf.Reflection;
 
-namespace Vodamep.Data.Mkkp
+namespace Vodamep.Data.Tb
 {
-    public class PlaceOfActionProvider : CodeProviderBase
+    public class AdmissionTypeProvider : CodeProviderBase
     {
-        private static volatile PlaceOfActionProvider instance;
+        private static volatile AdmissionTypeProvider instance;
         private static object syncRoot = new Object();
 
-        public static PlaceOfActionProvider Instance
+        public static AdmissionTypeProvider Instance
         {
             get
             {
@@ -17,7 +17,7 @@ namespace Vodamep.Data.Mkkp
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new PlaceOfActionProvider();
+                            instance = new AdmissionTypeProvider();
                     }
                 }
 
@@ -25,10 +25,10 @@ namespace Vodamep.Data.Mkkp
             }
         }
 
-        protected override FileDescriptor Descriptor => Vodamep.Mkkp.Model.MkkpReflection.Descriptor;
+        protected override FileDescriptor Descriptor => Vodamep.Tb.Model.TbReflection.Descriptor;
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.Mkkp.places_of_action.csv";
+        protected override string ResourceName => "Datasets.Tb.admission_type.csv";
     }
 }

@@ -1,12 +1,12 @@
 ﻿// Leistungsbereiche MKKP
 
-Body;Ganzheitliche Körperpflege
-MedicalCommon;Medizinische Pflege: allgemein
-MedicalDiet;Medizinische Pflege: Ernährung
-MedicalVital;Medizinische Pflege: Vitalzeichen/Monitoring
-MedicalWound;Medizinische Pflege: Wundversorgung
-MedicalInjection;Medizinische Pflege: zentraler/peripherer Gefäßzugang bzw. Injektion
-MedicalVentilationTubes;Medizinische Pflege: Beatmung Kanülen Wechsel Tracheostomapflege 
-AccompanyingWithContact;Begleitende Maßnahmen mit Patientenkontakt
-AccompanyingWithoutContact;Begleitende Maßnahmen ohne Patientenkontakt
-UndefinedActivity;undefiniert
+ACCOMPANYING_WITH_CONTACT;Begleitende Maßnahmen mit Patientenkontakt
+ACCOMPANYING_WITHOUT_CONTACT;Begleitende Maßnahmen ohne Patientenkontakt
+BODY;Ganzheitliche Körperpflege
+MEDICAL_COMMON;Medizinische Pflege: allgemein
+MEDICAL_DIET;Medizinische Pflege: Ernährung
+MEDICAL_INJECTION;Medizinische Pflege: zentraler/peripherer Gefäßzugang bzw. Injektion
+MEDICAL_VENTILATION_TUBES;Medizinische Pflege: Beatmung Kanülen Wechsel Tracheostomapflege 
+MEDICAL_VITAL;Medizinische Pflege: Vitalzeichen/Monitoring
+MEDICAL_WOUND;Medizinische Pflege: Wundversorgung
+UNDEFINED_ACTIVITY;undefiniert

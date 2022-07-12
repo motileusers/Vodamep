@@ -12,12 +12,17 @@
 		<PackageIcon></PackageIcon>
 		<RepositoryUrl>https://github.com/connexiadev/Vodamep.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>1.31.0</Version>
+		<Version>1.32.0</Version>
 		<Product>Vorarlberger Datenmeldung Pflege</Product>
 		<PackageReleaseNotes>Stationäre Pflege, Dubleten + Paket ID-Vergleich</PackageReleaseNotes>
-		<AssemblyVersion>1.31.0.0</AssemblyVersion>
-		<FileVersion>1.31.0</FileVersion>
+		<AssemblyVersion>1.32.0.0</AssemblyVersion>
+		<FileVersion>1.32.0</FileVersion>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Datasets\Hkpv\gender.csv" />
+	  <None Remove="Datasets\main_attendance_relation.csv" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="8.6.1" />
@@ -30,6 +35,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="Datasets\Hkpv\gender.csv" />
+		<EmbeddedResource Include="Datasets\main_attendance_relation.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\admission_location.csv" />
 		<EmbeddedResource Include="Datasets\Agp\activitytypes.csv" />
 		<EmbeddedResource Include="Datasets\Agp\diagnosisgroups.csv" />
@@ -38,8 +45,8 @@
 		<EmbeddedResource Include="Datasets\Agp\staffactivitytypes.csv" />
 		<EmbeddedResource Include="Datasets\care_allowance.csv" />
 		<EmbeddedResource Include="Datasets\care_allowance_arge.csv" />
-		<EmbeddedResource Include="Datasets\Cm\activity_type.csv" />
-		<EmbeddedResource Include="Datasets\Cm\client_activity_type.csv" />
+		<EmbeddedResource Include="Datasets\Cm\activitytypes.csv" />
+		<EmbeddedResource Include="Datasets\Cm\clientactivitytypes.csv" />
 		<EmbeddedResource Include="Datasets\gender.csv" />
 		<EmbeddedResource Include="Datasets\german-iso-3166.csv" />
 		<EmbeddedResource Include="Datasets\Hkpv\postcode_cities.csv" />
@@ -60,7 +67,6 @@
 		<EmbeddedResource Include="Datasets\StatLp\finance.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\housing_reason.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\leaving_reason.csv" />
-		<EmbeddedResource Include="Datasets\StatLp\main_attendance_relation.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\personal_change.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\service.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\social_change.csv" />
@@ -80,6 +86,10 @@
 		<Protobuf Include="Mohi\Model\Mohi.proto" />
 		<Protobuf Include="StatLp\Model\StatLp.proto" />
 		<Protobuf Include="Tb\Model\Tb.proto" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Data\Mohi\" />
 	</ItemGroup>
 
 
