@@ -28,7 +28,7 @@ namespace Vodamep.StatLp.Validation
 
                          try
                          {
-                             stays.GetGroupedStays(GroupedStay.SameTypeyGroupMode.Ignore).ToArray();
+                             stays.GetGroupedStays(GroupedStay.SameTypeGroupMode.Ignore).ToArray();
                          }
                          catch (Exception e)
                          {

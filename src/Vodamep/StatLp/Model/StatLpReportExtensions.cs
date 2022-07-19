@@ -38,16 +38,16 @@ namespace Vodamep.StatLp.Model
             return result;
         }
 
-        public static IEnumerable<GroupedStay> GetGroupedStays(this StatLpReport report, string personId, GroupedStay.SameTypeyGroupMode sameTypeyGroupMode = GroupedStay.SameTypeyGroupMode.NotAllowed)
+        public static IEnumerable<GroupedStay> GetGroupedStays(this StatLpReport report, string personId, GroupedStay.SameTypeGroupMode sameTypeGroupMode = GroupedStay.SameTypeGroupMode.NotAllowed)
         {
             var result = new List<(DateTime From, DateTime To, Stay[] Stays)>();
 
             var stays = report.Stays.Where(x => x.PersonId == personId).OrderBy(x => x.From).ToArray();
 
-            return stays.GetGroupedStays(sameTypeyGroupMode);
+            return stays.GetGroupedStays(sameTypeGroupMode);
         }
 
-        public static IEnumerable<GroupedStay> GetGroupedStays(this Stay[] stays, GroupedStay.SameTypeyGroupMode sameTypeyGroupMode = GroupedStay.SameTypeyGroupMode.NotAllowed)
+        public static IEnumerable<GroupedStay> GetGroupedStays(this Stay[] stays, GroupedStay.SameTypeGroupMode sameTypeGroupMode = GroupedStay.SameTypeGroupMode.NotAllowed)
         {
             if (stays.Length == 0)
                 yield break;
@@ -74,9 +74,9 @@ namespace Vodamep.StatLp.Model
 
                 if (current.To.Value.AddDays(1) == stay.FromD)
                 {
-                    if (sameTypeyGroupMode != GroupedStay.SameTypeyGroupMode.Ignore && lastStay.Type == stay.Type)
+                    if (sameTypeGroupMode != GroupedStay.SameTypeGroupMode.Ignore && lastStay.Type == stay.Type)
                     {
-                        if (sameTypeyGroupMode == GroupedStay.SameTypeyGroupMode.NotAllowed)
+                        if (sameTypeGroupMode == GroupedStay.SameTypeGroupMode.NotAllowed)
                         {
                             throw new Exception("Aufeinanderfolgende Aufenthalte müssen unterschiedliche Aufnahmearten haben!");
                         }

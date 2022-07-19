@@ -67,7 +67,7 @@ namespace Vodamep.Tests.StatLp
 
             var stay2 = this.AddAdjacentStay(AdmissionType.ContinuousAt, days: 10);
 
-            var result = this.Report.GetGroupedStays(this.PersonId, GroupedStay.SameTypeyGroupMode.Merge).ToArray();
+            var result = this.Report.GetGroupedStays(this.PersonId, GroupedStay.SameTypeGroupMode.Merge).ToArray();
 
             Assert.Equal(stay1.FromD, result[0].From);
             Assert.Equal(stay2.ToD, result[0].To);
@@ -118,7 +118,7 @@ namespace Vodamep.Tests.StatLp
 
             var stays = new[] { stay1, stay2, stay3 };
 
-            Assert.Throws<Exception>(() => stays.GetGroupedStays(GroupedStay.SameTypeyGroupMode.Merge).ToArray());
+            Assert.Throws<Exception>(() => stays.GetGroupedStays(GroupedStay.SameTypeGroupMode.Merge).ToArray());
         }
 
         protected Stay AddFirstStay(DateTime from, AdmissionType admissionType, int days)

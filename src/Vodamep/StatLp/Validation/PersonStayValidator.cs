@@ -60,7 +60,7 @@ namespace Vodamep.StatLp.Validation
                         try
                         {
                             // mitunter geht das gar nicht, dann wird ein Fehler geworfen
-                            stays = report.GetGroupedStays(person.Id, GroupedStay.SameTypeyGroupMode.NotAllowed).ToArray();
+                            stays = report.GetGroupedStays(person.Id, GroupedStay.SameTypeGroupMode.NotAllowed).ToArray();
                         }
                         catch (Exception e)
                         {
