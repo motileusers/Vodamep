@@ -113,6 +113,65 @@ namespace Vodamep.StatLp.Model
             yield return current;
         }
 
+        public static GroupedStay Clip(this GroupedStay stay, DateTime to)
+        {
+            if (stay == null || !stay.Stays.Any())
+            {
+                return null;
+            }
+
+            var clippedStays = stay.Stays.Clip(to).ToArray();
+
+            if (!clippedStays.Any())
+            {
+                return null;
+            }
+
+            var result = new GroupedStay(clippedStays.First().FromD, clippedStays.Last().ToD, clippedStays);
+
+            return result;
+        }
+
+        public static IEnumerable<Stay> Clip(this IEnumerable<Stay> stays, DateTime to)
+        {
+            var enumerator = stays.GetEnumerator();
+
+            Stay current = null;
+
+            while (enumerator.MoveNext())
+            {               
+                var next = new Stay(enumerator.Current);
+
+                if (current != null)
+                {
+                    if (next.FromD > to)
+                    {
+                        current.ToD = null;
+                        yield return current;
+                        yield break;
+                    }
+
+                    yield return current;
+                }
+
+                current = next;
+
+                if (current.FromD > to)
+                {
+                    yield break;
+                }
+
+                if (current.ToD != null && current.ToD > to)
+                {
+                    current.ToD = null;
+                }
+            }
+
+            if (current != null)
+            {
+                yield return current;
+            }
+        }
 
         public static StatLpReport RemoveDoubletes(this StatLpReport report) => RemoveDoubletes(new[] { report })[0];
 
