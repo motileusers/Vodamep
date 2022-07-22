@@ -6,7 +6,7 @@ namespace Vodamep.StatLp.Model
     public class GroupedStay : IEquatable<GroupedStay>
     {
 
-        public enum SameTypeyGroupMode
+        public enum SameTypeGroupMode
         {
             Ignore,
             Merge,

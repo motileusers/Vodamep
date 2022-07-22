@@ -67,7 +67,7 @@ namespace Vodamep.Tests.StatLp
 
             var stay2 = this.AddAdjacentStay(AdmissionType.ContinuousAt, days: 10);
 
-            var result = this.Report.GetGroupedStays(this.PersonId, GroupedStay.SameTypeyGroupMode.Merge).ToArray();
+            var result = this.Report.GetGroupedStays(this.PersonId, GroupedStay.SameTypeGroupMode.Merge).ToArray();
 
             Assert.Equal(stay1.FromD, result[0].From);
             Assert.Equal(stay2.ToD, result[0].To);
@@ -118,7 +118,119 @@ namespace Vodamep.Tests.StatLp
 
             var stays = new[] { stay1, stay2, stay3 };
 
-            Assert.Throws<Exception>(() => stays.GetGroupedStays(GroupedStay.SameTypeyGroupMode.Merge).ToArray());
+            Assert.Throws<Exception>(() => stays.GetGroupedStays(GroupedStay.SameTypeGroupMode.Merge).ToArray());
+        }
+
+        [Fact]
+        public void Clip_LastToIsGreaterThanClipTo_ToIsSetNull()
+        {
+            var stays = new[] {
+                new Stay
+                {
+                    FromD = new DateTime(2022, 6, 1),
+                    ToD = new DateTime(2022, 7, 1)
+                }
+            };
+
+            var to = new DateTime(2022, 6, 30);
+
+            var clipped = stays.Clip(to).ToArray();
+
+            Assert.Null(clipped.Single().ToD);
+        }
+
+        [Fact]
+        public void Clip_AStayAfterClipTo_IsClipped()
+        {
+            var stays = new[] {
+                new Stay
+                {
+                    FromD = new DateTime(2022, 6, 1),
+                    ToD = new DateTime(2022, 6, 30)
+                },
+                new Stay
+                {
+                    FromD = new DateTime(2022, 7, 1),
+                    ToD = new DateTime(2022, 7, 31)
+                },
+            };
+
+            var to = new DateTime(2022, 6, 30);
+
+            var clipped = stays.Clip(to).ToArray();
+
+            Assert.Single(clipped);
+        }
+
+        [Fact]
+        public void Clip_StaysAreAheadOfClipTo_AreNotClipped()
+        {
+            var stays = new[] {
+                new Stay
+                {
+                    FromD = new DateTime(2022, 6, 1),
+                    ToD = new DateTime(2022, 6, 30)
+                },
+                new Stay
+                {
+                    FromD = new DateTime(2022, 7, 1),
+                    ToD = new DateTime(2022, 7, 31)
+                },
+            };
+
+            var to = new DateTime(2022, 9, 30);
+
+            var clipped = stays.Clip(to).ToArray();
+
+            Assert.Equal(stays, clipped);            
+        }
+
+        [Fact]
+        public void Clip_AllStaysAreAfterClipTo_AreClipped()
+        {
+            var stays = new[] {
+                new Stay
+                {
+                    FromD = new DateTime(2022, 6, 1),
+                    ToD = new DateTime(2022, 6, 30)
+                },
+                new Stay
+                {
+                    FromD = new DateTime(2022, 7, 1),
+                    ToD = new DateTime(2022, 7, 31)
+                }
+            };
+
+            var to = new DateTime(2022, 5, 30);
+
+            var clipped = stays.Clip(to).ToArray();
+
+            Assert.Empty(clipped);
+        }
+
+        [Fact]
+        public void Clip_GroupedStayLastToIsGreaterThanClipTo_GroupedStayToIsSetNull()
+        {
+            var stays = new[] {
+                new Stay
+                {
+                    FromD = new DateTime(2022, 6, 1),
+                    ToD = new DateTime(2022, 7, 1)
+                },
+                new Stay
+                {
+                    FromD = new DateTime(2022, 7, 15),
+                    ToD = new DateTime(2022, 7, 31)
+                }
+            };
+
+            var groupedStay = stays.GetGroupedStays().FirstOrDefault();
+
+            var to = new DateTime(2022, 6, 30);
+
+            var clipped = groupedStay.Clip(to);
+
+            Assert.Null(clipped.To);
         }
 
         protected Stay AddFirstStay(DateTime from, AdmissionType admissionType, int days)
