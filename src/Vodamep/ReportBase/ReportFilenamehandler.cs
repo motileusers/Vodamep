@@ -5,7 +5,7 @@
         public virtual string GetFileName(IReport report, bool asJson, bool compressed = true)
         {
 
-            var filename = $"{report.Institution.Id}_{report.FromD.Year}_{report.FromD.Month.ToString("00")}";
+            var filename = $"{report.Institution.Id}_{report.ToD.Year}_{report.ToD.Month.ToString("00")}";
 
             if (compressed)
                 return $"{filename}.zip";
