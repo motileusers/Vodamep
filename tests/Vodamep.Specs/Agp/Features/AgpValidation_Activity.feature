@@ -25,8 +25,8 @@ Szenario: Einsatzort ist undefiniert
 
 Szenario: Leistungszeit muss > 0 sein
 	Angenommen es ist ein 'AgpReport'
-	Angenommen die Eigenschaft 'minutes' von 'Activity' ist nicht gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Leistungszeit von Klient '(.*)' muss größer 0 sein.'
+	Angenommen die Eigenschaft 'minutes' von 'StaffActivity' ist nicht gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'Leistungszeit mit Id '(.*)' muss größer 0 sein.'
 
 Szenariogrundriss: Minuten Werte müssen > 0 sein
 	Angenommen es ist ein 'AgpReport'

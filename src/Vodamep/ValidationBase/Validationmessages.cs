@@ -44,6 +44,7 @@ namespace Vodamep.ValidationBase
         public static string OnlyONePalliativeDiagnosisGroup(string client) => $"Es darf nur eine Palliativ Diagnose Gruppe für Klient '{client}' vorhanden sein.";
         public static string AtLeastOneDiagnosisGroup(string client) => $"Es muss mindestens eine Diagnosegruppe für Klient '{client}' vorhanden sein.";
         public static string ReportBaseMinutesMustBeGreater0(string propertyName, string clientId) => $"{propertyName} von Klient '{clientId}' muss größer 0 sein.";
+        public static string StaffActivityMinutesMustBeGreater0(string propertyName, string id) => $"{propertyName} mit Id '{id}' muss größer 0 sein. Wenden Sie sich an Ihren Support.";
         public static string ReportBaseStepWidthWrong(string propertyName, string clientName, int nrOfMinutes) => $"{propertyName} von '{clientName}' darf nur in {nrOfMinutes} Minuten Schritten eingegeben werden.";
         public static string ReportBaseMaxSumOfMinutesPerStaffMemberIs12Hours(string date, string name) => $"Die Leistungsminuten von '{name}' am '{date}' dürfen 12 Stunden nicht überschreiten.";
         public static string MaxSumOfMinutesTravelTimesIs5Hours(string staff, string date) => $"Summe Wegzeiten von Mitarbeiter {staff} am {date} darf 5 Stunden nicht überschreiten.";

@@ -7,11 +7,11 @@ namespace Vodamep.Agp.Validation
 {
     internal class StaffActivityMinutesValidator : AbstractValidator<StaffActivity>
     {
-        public StaffActivityMinutesValidator(string propertyName, string client)
+        public StaffActivityMinutesValidator(string propertyName, string id)
         {
             this.RuleFor(x => x.Minutes)
                 .GreaterThan(0)
-                .WithMessage(x => Validationmessages.ReportBaseMinutesMustBeGreater0(propertyName, client));
+                .WithMessage(x => Validationmessages.StaffActivityMinutesMustBeGreater0(propertyName, id));
 
             this.RuleFor(x => x)
                 .Custom((activity, ctx) =>
@@ -20,7 +20,7 @@ namespace Vodamep.Agp.Validation
 
                     if (activityMinutes > 0 && activityMinutes % 5 != 0)
                     {
-                        ctx.AddFailure(new ValidationFailure(propertyName, Validationmessages.ReportBaseStepWidthWrong(propertyName, client, 5)));
+                        ctx.AddFailure(new ValidationFailure(propertyName, Validationmessages.ReportBaseStepWidthWrong(propertyName, id, 5)));
                     }
                 });
         }
