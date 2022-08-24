@@ -35,20 +35,20 @@ namespace Vodamep.StatLp.Validation.Adjacent
 
         private void CheckBirthday((StatLpReport Predecessor, StatLpReport Report) data, CustomContext ctx, string[] personIds)
         {
-            var values1 = data.Report.Persons
+            var curValues = data.Report.Persons
                    .Where(x => personIds.Contains(x.Id))
                    .Select(x => (x.Id, x.BirthdayD))
                    .Distinct()
                    .ToDictionary(x => x.Id, x => x.BirthdayD);
 
-            var values2 = data.Predecessor.Persons
+            var preValues = data.Predecessor.Persons
                 .Where(x => personIds.Contains(x.Id))
                 .Select(x => (x.Id, x.BirthdayD))
                 .Distinct().ToDictionary(x => x.Id, x => x.BirthdayD);
 
             foreach (var personId in personIds)
             {
-                if (!values1.TryGetValue(personId, out var v1) || !values2.TryGetValue(personId, out var v2) || v1 != v2)
+                if (!curValues.TryGetValue(personId, out var v1) || !preValues.TryGetValue(personId, out var v2) || v1 != v2)
                 {
                     var person = data.Report.Persons.Where(x => x.Id == personId).FirstOrDefault();
                     var index = person != null ? data.Report.Persons.IndexOf(person) : -1;
@@ -57,8 +57,8 @@ namespace Vodamep.StatLp.Validation.Adjacent
                         Validationmessages.PersonsPropertyDiffers(
                             data.Report.GetPersonName(personId),
                             DisplayNameResolver.GetDisplayName(nameof(Person.Birthday)),
-                            values1[personId].ToShortDateString(),
-                            values2[personId].ToShortDateString()
+                            curValues[personId].ToShortDateString(),
+                            preValues[personId].ToShortDateString()
                             ))
                     {
                         Severity = Severity.Warning
