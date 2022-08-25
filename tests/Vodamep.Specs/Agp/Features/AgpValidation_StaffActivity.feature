@@ -22,7 +22,7 @@ Szenariogrundriss: Minuten Werte müssen > 0 sein - Mitarbeiter Leistungen
 	Angenommen es ist ein 'AgpReport'
 	Und die Eigenschaft 'minutes' von 'StaffActivity' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis genau einen Fehler
-	Und die Fehlermeldung lautet: 'Leistungszeit von Klient '(.*)' muss größer 0 sein.'
+	Und die Fehlermeldung lautet: 'Leistungszeit mit Id '(.*)' muss größer 0 sein.'
 Beispiele:
 	| Wert |
 	| 0    |
