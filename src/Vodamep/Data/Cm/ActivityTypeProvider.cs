@@ -29,6 +29,6 @@ namespace Vodamep.Data.Cm
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.Cm.activitytypes.csv";
+        protected override string ResourceName => "Datasets.Cm.ActivityType.csv";
     }
 }

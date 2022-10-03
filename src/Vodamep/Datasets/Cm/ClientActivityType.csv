@@ -1,0 +1,8 @@
+﻿// Leistungstypen (klienten-bezogen)
+
+UNDEFINED_CA;;                            
+ASSESSMENT_CA;Assessment;             
+OBJECTIVES_PLANNING_CA;Zielvereinbarung und Hilfeplanung;    
+IMPLEMENTATION_LINKING_CA;Durchführung und Linking;  
+MONITORING_CA;Monitoring;              
+CONCLUSION_EVALUATION_CA;Abschluss und Evaluation;    

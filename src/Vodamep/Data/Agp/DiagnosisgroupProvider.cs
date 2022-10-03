@@ -29,6 +29,6 @@ namespace Vodamep.Data.Agp
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.Agp.diagnosisgroups.csv";
+        protected override string ResourceName => "Datasets.Agp.Diagnosisgroup.csv";
     }
 }

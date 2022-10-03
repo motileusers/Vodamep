@@ -29,6 +29,6 @@ namespace Vodamep.Data.Agp
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.Agp.referrer.csv";
+        protected override string ResourceName => "Datasets.Agp.Referrer.csv";
     }
 }
