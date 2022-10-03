@@ -56,7 +56,7 @@
 		<EmbeddedResource Include="Datasets\Mkkp\diagnosisgroups.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\places_of_action.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\referrer.csv" />
-		<EmbeddedResource Include="Datasets\Mohi\service.csv" />
+		<EmbeddedResource Include="Datasets\Mohi\Service.csv" />
 		<EmbeddedResource Include="Datasets\PostcodeCity.csv" />
 		<EmbeddedResource Include="Datasets\QualificationCode.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\admission_type.csv" />
@@ -71,7 +71,7 @@
 		<EmbeddedResource Include="Datasets\StatLp\service.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\social_change.csv" />
 		<EmbeddedResource Include="Datasets\Tb\admission_type.csv" />
-		<EmbeddedResource Include="Datasets\Tb\service.csv" />
+		<EmbeddedResource Include="Datasets\Tb\Service.csv" />
 		<EmbeddedResource Include="Data\Dummy\Aktivitäten.txt" />
 		<EmbeddedResource Include="Data\Dummy\gemplzstr_8.csv" />
 		<EmbeddedResource Include="Data\Dummy\Nachnamen.txt" />
@@ -86,10 +86,6 @@
 		<Protobuf Include="Mohi\Model\Mohi.proto" />
 		<Protobuf Include="StatLp\Model\StatLp.proto" />
 		<Protobuf Include="Tb\Model\Tb.proto" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Data\Mohi\" />
 	</ItemGroup>
 
 
