@@ -27,7 +27,7 @@ namespace Vodamep.Data
 
         protected override FileDescriptor Descriptor => null;
 
-        protected override string ResourceName => "Datasets.insurances.csv";
+        protected override string ResourceName => "Datasets.InsuranceCode.csv";
 
         public override string Unknown => "UB";
     }

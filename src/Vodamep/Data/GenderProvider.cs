@@ -27,7 +27,7 @@ namespace Vodamep.Data
 
         protected override FileDescriptor Descriptor => Vodamep.StatLp.Model.StatLpReflection.Descriptor;
 
-        protected override string ResourceName => "Datasets.gender.csv";
+        protected override string ResourceName => "Datasets.Gender.csv";
 
         public override string Unknown => "";
     }

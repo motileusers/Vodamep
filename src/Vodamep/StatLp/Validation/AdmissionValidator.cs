@@ -120,7 +120,7 @@ namespace Vodamep.StatLp.Validation
                         if (!String.IsNullOrWhiteSpace(x.LastPostcode) &&
                             !String.IsNullOrWhiteSpace(x.LastCity))
                         {
-                            result = Postcode_CityProvider.Instance.IsValid($"{x.LastPostcode} {x.LastCity}");
+                            result = PostcodeCityProvider.Instance.IsValid($"{x.LastPostcode} {x.LastCity}");
                         }
                     }
 

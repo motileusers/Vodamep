@@ -14,7 +14,7 @@ namespace Vodamep.Agp.Validation
 
             this.RuleFor(x => x.Gender).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
             this.RuleFor(x => $"{x.Postcode} {x.City}")
-                                .SetValidator(new CodeValidator<Postcode_CityProvider>())
+                                .SetValidator(new CodeValidator<PostcodeCityProvider>())
                                 .Unless(x => string.IsNullOrEmpty(x.City) || string.IsNullOrEmpty(x.Postcode))
                                 .WithMessage(Validationmessages.InvalidPostCode_City);
             this.RuleFor(x => x.CareAllowance).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));

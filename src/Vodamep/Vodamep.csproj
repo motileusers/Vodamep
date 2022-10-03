@@ -21,7 +21,7 @@
 
 	<ItemGroup>
 	  <None Remove="Datasets\Hkpv\gender.csv" />
-	  <None Remove="Datasets\main_attendance_relation.csv" />
+	  <None Remove="Datasets\MainAttendanceRelatio.csv" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -36,29 +36,29 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Datasets\Hkpv\gender.csv" />
-		<EmbeddedResource Include="Datasets\main_attendance_relation.csv" />
+		<EmbeddedResource Include="Datasets\MainAttendanceRelatio.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\admission_location.csv" />
 		<EmbeddedResource Include="Datasets\Agp\ActivityType.csv" />
 		<EmbeddedResource Include="Datasets\Agp\Diagnosisgroup.csv" />
 		<EmbeddedResource Include="Datasets\Agp\PlaceOfAction.csv" />
 		<EmbeddedResource Include="Datasets\Agp\Referrer.csv" />
 		<EmbeddedResource Include="Datasets\Agp\StaffActivityType.csv" />
-		<EmbeddedResource Include="Datasets\care_allowance.csv" />
-		<EmbeddedResource Include="Datasets\care_allowance_arge.csv" />
+		<EmbeddedResource Include="Datasets\CareAllowance.csv" />
+		<EmbeddedResource Include="Datasets\CareAllowanceArge.csv" />
 		<EmbeddedResource Include="Datasets\Cm\ActivityType.csv" />
 		<EmbeddedResource Include="Datasets\Cm\ClientActivityType.csv" />
-		<EmbeddedResource Include="Datasets\gender.csv" />
-		<EmbeddedResource Include="Datasets\german-iso-3166.csv" />
+		<EmbeddedResource Include="Datasets\Gender.csv" />
+		<EmbeddedResource Include="Datasets\CountryCode.csv" />
 		<EmbeddedResource Include="Datasets\Hkpv\postcode_cities.csv" />
-		<EmbeddedResource Include="Datasets\insurances.csv" />
-		<EmbeddedResource Include="Datasets\main_attendance_closeness.csv" />
+		<EmbeddedResource Include="Datasets\InsuranceCode.csv" />
+		<EmbeddedResource Include="Datasets\MainAttendanceCloseness.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\activitytypes.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\diagnosisgroups.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\places_of_action.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\referrer.csv" />
 		<EmbeddedResource Include="Datasets\Mohi\service.csv" />
-		<EmbeddedResource Include="Datasets\postcode_cities.csv" />
-		<EmbeddedResource Include="Datasets\qualifications.csv" />
+		<EmbeddedResource Include="Datasets\PostcodeCity.csv" />
+		<EmbeddedResource Include="Datasets\QualificationCode.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\admission_type.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\attribute_type.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\death_location.csv" />

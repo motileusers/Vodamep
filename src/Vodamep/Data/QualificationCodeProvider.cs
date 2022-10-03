@@ -27,7 +27,7 @@ namespace Vodamep.Data
 
         protected override FileDescriptor Descriptor => Vodamep.Hkpv.Model.HkpvReflection.Descriptor;
 
-        protected override string ResourceName => "Datasets.qualifications.csv";
+        protected override string ResourceName => "Datasets.QualificationCode.csv";
 
         public override string Unknown => "";
 

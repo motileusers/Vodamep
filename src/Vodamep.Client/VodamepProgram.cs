@@ -62,7 +62,7 @@ namespace Vodamep.Client
                     }
                     else
                     {
-                        provider = Vodamep.Data.Postcode_CityProvider.Instance;
+                        provider = Vodamep.Data.PostcodeCityProvider.Instance;
                     }
                     break;
 
