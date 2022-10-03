@@ -27,7 +27,7 @@ namespace Vodamep.Data.Hkpv
 
         protected override FileDescriptor Descriptor => Vodamep.Hkpv.Model.HkpvReflection.Descriptor;
 
-        protected override string ResourceName => "Datasets.Hkpv.gender.csv";
+        protected override string ResourceName => "Datasets.Hkpv.Gender.csv";
         public override string Unknown => "";
     }
 }

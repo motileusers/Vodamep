@@ -29,6 +29,6 @@ namespace Vodamep.Data.Tb
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.Tb.admission_type.csv";
+        protected override string ResourceName => "Datasets.Tb.AdmissionType.csv";
     }
 }

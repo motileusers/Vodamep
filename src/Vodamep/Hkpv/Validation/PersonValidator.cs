@@ -34,7 +34,7 @@ namespace Vodamep.Hkpv.Validation
             this.RuleFor(x => x.Postcode).NotEmpty();
             this.RuleFor(x => x.City).NotEmpty();
             this.RuleFor(x => $"{x.Postcode} {x.City}")
-                .SetValidator(new CodeValidator<Data.Hkpv.Postcode_CityProvider>())
+                .SetValidator(new CodeValidator<Data.Hkpv.PostcodeCityProvider>())
                 .Unless(x => string.IsNullOrEmpty(x.City) || string.IsNullOrEmpty(x.Postcode))
                 .WithMessage(Validationmessages.InvalidPostCode_City);
 

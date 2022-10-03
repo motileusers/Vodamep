@@ -30,6 +30,6 @@ namespace Vodamep.Data.Mkkp
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.Mkkp.activitytypes.csv";
+        protected override string ResourceName => "Datasets.Mkkp.ActivityType.csv";
     }
 }

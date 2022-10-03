@@ -1,0 +1,9 @@
+﻿// Räumliche Nähe Hauptbetreuungsperson
+
+UNDEFINED_MC;;
+SAME_FLAT_MC;in der gleichen Wohnung;                 
+SAME_HOUSE_OTHER_FLAT_MC;im gleichen Haus aber in einer anderen Wohnung;     
+UP_TO_30_MIN_MC;bis zu 30 Minuten;              
+OVER_TO_30_MIN_MC;über 30 Minuten;            
+NO_MAINATTENDANCE_MC;keine Hauptbetreuungsperson;         
+NO_MAINATTENDANCE_CLOSENESS_MC;keine Angabe;  

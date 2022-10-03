@@ -30,6 +30,6 @@ namespace Vodamep.Data
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.StatLp.discharge_location.csv";
+        protected override string ResourceName => "Datasets.StatLp.DischargeLocation.csv";
     }
 }

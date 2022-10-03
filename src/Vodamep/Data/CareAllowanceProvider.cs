@@ -29,6 +29,6 @@ namespace Vodamep.Data
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.care_allowance.csv";
+        protected override string ResourceName => "Datasets.CareAllowance.csv";
     }
 }

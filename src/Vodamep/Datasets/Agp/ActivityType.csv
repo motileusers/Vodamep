@@ -1,0 +1,10 @@
+﻿//KlientenbezogeneAktivitätstypen
+UNDEFINED_AT;
+CLEARING_AT;Clearing(Erstkontakt,Abklärung)
+OBSERVATIONS_ASSESSMENT_AT;Klientenbeobachtung/Assessment
+GERIATRIC_PSYCHIATRIC_AT;gerontopsychiatrischePflege
+GUIDANCE_PARTNER_AT;Beratung,Begleitung,Anleitung(Systempartner)
+GUIDANCE_CLIENT_AT;Beratung,Begleitung,Anleitung(Klientensystem)
+CARE_DOCUMENTATION_AT;Pflegedokumentation
+CONTACT_PARTNER_AT;KontaktmitHaus-/Fachärztin,and.Systempartner
+EXECUTION_TRANSPORT_AT;Erledigung,Transport

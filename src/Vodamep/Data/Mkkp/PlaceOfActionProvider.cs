@@ -29,6 +29,6 @@ namespace Vodamep.Data.Mkkp
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.Mkkp.places_of_action.csv";
+        protected override string ResourceName => "Datasets.Mkkp.PlaceOfAction.csv";
     }
 }

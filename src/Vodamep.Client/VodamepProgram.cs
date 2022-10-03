@@ -58,11 +58,11 @@ namespace Vodamep.Client
                 case ListSources.Postcode_City:
                     if (args.Type == ReportBase.ReportType.Hkpv)
                     {
-                        provider = Vodamep.Data.Hkpv.Postcode_CityProvider.Instance;
+                        provider = Vodamep.Data.Hkpv.PostcodeCityProvider.Instance;
                     }
                     else
                     {
-                        provider = Vodamep.Data.Postcode_CityProvider.Instance;
+                        provider = Vodamep.Data.PostcodeCityProvider.Instance;
                     }
                     break;
 

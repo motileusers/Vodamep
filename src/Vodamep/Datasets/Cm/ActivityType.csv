@@ -1,0 +1,11 @@
+﻿// Leistungstypen (nicht klienten-bezogen)
+
+UNDEFINED_CT;;                            
+BRIEFING_CT;Informationsgespräch;                     
+CLEARING_INTAKE_CT;Clearing/Intake;                   
+NURSING_HOME_ADDMISSION_CT;Pflegeheimaufnahme;        
+PREVENTIVE_CONTACT_CT;Präventive Kontaktaufnahme;     
+NETWORKING_LOCAL_CT;Vernetzungsarbeit lokal/regional; 
+NETWORKING_FEDERAL_CT;Vernetzungsarbeit landesweit;   
+ORGANISATION_CT;Organisation;                         
+EDUCATION_CT;Weiterbildung;                           
