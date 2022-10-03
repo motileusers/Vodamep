@@ -24,7 +24,7 @@ namespace Vodamep.Tests.Data
         [InlineData("", false)]
         public void IsValidRecordHkpv(string code, bool expected)
         {
-            var p = Vodamep.Data.Hkpv.Postcode_CityProvider.Instance;
+            var p = Vodamep.Data.Hkpv.PostcodeCityProvider.Instance;
 
             Assert.Equal(expected, p.IsValid(code));
         }

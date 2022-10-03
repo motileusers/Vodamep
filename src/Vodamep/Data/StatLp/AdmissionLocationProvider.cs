@@ -29,6 +29,6 @@ namespace Vodamep.Data.StatLp
 
         public override string Unknown => "";
 
-        protected override string ResourceName => "Datasets.StatLp.admission_location.csv";
+        protected override string ResourceName => "Datasets.StatLp.AdmissionLocation.csv";
     }
 }

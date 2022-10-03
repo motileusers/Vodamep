@@ -3,12 +3,12 @@ using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data.Hkpv
 {
-    public sealed class GenderProvider : CodeProviderBase
+    public sealed class PostcodeCityProvider : CodeProviderBase
     {
-        private static volatile GenderProvider instance;
-        private static readonly object syncRoot = new Object();        
+        private static volatile PostcodeCityProvider instance;
+        private static object syncRoot = new Object();        
 
-        public static GenderProvider Instance
+        public static PostcodeCityProvider Instance
         {
             get
             {
@@ -17,7 +17,7 @@ namespace Vodamep.Data.Hkpv
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new GenderProvider();
+                            instance = new PostcodeCityProvider();
                     }
                 }
 
@@ -27,7 +27,8 @@ namespace Vodamep.Data.Hkpv
 
         protected override FileDescriptor Descriptor => Vodamep.Hkpv.Model.HkpvReflection.Descriptor;
 
-        protected override string ResourceName => "Datasets.Hkpv.Gender.csv";
+        protected override string ResourceName => "Datasets.Hkpv.PostcodeCity.csv";
+
         public override string Unknown => "";
     }
 }
