@@ -1,6 +1,4 @@
-﻿// Postleitzahlen / Orte für Standard Schnittstellen (außer HKPV)
-
-0000 Anderer;00000;
+﻿0000 Anderer;00000;
 6700 Bludenz;80103;
 6700 Lorüns;80114;
 6700 Stallehr;80125;
@@ -18,9 +16,14 @@
 6731 Sonntag;80124;
 6733 Fontanella;80109;
 6741 Raggal;80118;
+6751 Ausserbraz;80103;
 6751 Innerbraz;80111;
 6752 Dalaas;80108;
+6752 Wald am Arlberg;80108;
 6754 Klösterle;80112;
+6754 Langen am Arlberg;80112;
+6762 Stuben;80112;
+6763 Zürs;80113;
 6764 Lech;80113;
 6767 Warth;80239;
 6771 St. Anton im Montafon;80119;
@@ -29,9 +32,24 @@
 6780 Schruns;80122;
 6781 Bartholomäberg;80101;
 6782 Silbertal;80123;
+6787 Gargellen;80120;
+6791 Gortipohl;80120;
 6791 St. Gallenkirch;80120;
 6793 Gaschurn;80110;
+6794 Partenen;80110;
 6800 Feldkirch;80404;
+6800 Feldkirch-Nofels;80404;
+6800 Feldkirch-Levis;80404;
+6800 Feldkirch-Altenstadt;80404;
+6800 Feldkirch-Gisingen;80404;
+6800 Feldkirch-Tosters;80404;
+6800 Feldkirch-Tisis;80404;
+6802 Feldkirch-Nofels;80404;
+6803 Feldkirch-Levis;80404;
+6804 Feldkirch-Altenstadt;80404;
+6805 Feldkirch-Gisingen;80404;
+6806 Feldkirch-Tosters;80404;
+6807 Feldkirch-Tisis;80404;
 6811 Göfis;80407;
 6812 Meiningen;80413;
 6820 Frastanz;80405;
@@ -74,6 +92,7 @@
 6888 Schröcken;80234;
 6890 Lustenau;80303;
 6900 Bregenz;80207;
+6900 Fluh;80207;
 6900 Möggers;80229;
 6911 Eichenberg;80212;
 6911 Lochau;80226;
@@ -96,4 +115,6 @@
 6972 Fußach;80213;
 6973 Höchst;80217;
 6974 Gaißau;80214;
+6991 Riezlern;80228;
+6992 Hirschegg;80228;
 6993 Mittelberg;80228;

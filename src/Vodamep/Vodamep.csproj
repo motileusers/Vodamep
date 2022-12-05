@@ -49,7 +49,6 @@
 		<EmbeddedResource Include="Datasets\Cm\ClientActivityType.csv" />
 		<EmbeddedResource Include="Datasets\Gender.csv" />
 		<EmbeddedResource Include="Datasets\CountryCode.csv" />
-		<EmbeddedResource Include="Datasets\Hkpv\PostcodeCity.csv" />
 		<EmbeddedResource Include="Datasets\InsuranceCode.csv" />
 		<EmbeddedResource Include="Datasets\MainAttendanceCloseness.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\ActivityType.csv" />
