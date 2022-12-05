@@ -28,6 +28,20 @@ namespace Vodamep.StatLp.Validation
                 .WithMessage(x => Validationmessages.PersonIsNotAvailable(report.GetPersonName(x.PersonId)));
 
 
+            // Undefinierte Aufnahmeart
+            this.RuleFor(x => new { x.Type })
+                .Must((a) =>
+                {
+                    if (a.Type == AdmissionType.UndefinedAt)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                })
+                .WithMessage(x => Validationmessages.StatLpAttributeInvalidAdmissionType(report.GetPersonName(x.PersonId), $"{displayNameResolver.GetDisplayName(x.Type.ToString())}", x.FromD.ToShortDateString()));
+
+
             // Ungültige Aufnahmeart 'Probe'
             this.RuleFor(x => new { x.Type, x.FromD })
                 .Must((a) =>
