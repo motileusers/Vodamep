@@ -56,14 +56,7 @@ namespace Vodamep.Client
                     break;
 
                 case ListSources.Postcode_City:
-                    if (args.Type == ReportBase.ReportType.Hkpv)
-                    {
-                        provider = Vodamep.Data.Hkpv.PostcodeCityProvider.Instance;
-                    }
-                    else
-                    {
-                        provider = Vodamep.Data.PostcodeCityProvider.Instance;
-                    }
+                    provider = Vodamep.Data.PostcodeCityProvider.Instance;
                     break;
 
                 case ListSources.Qualifications:

@@ -15,8 +15,8 @@
 		<Version>1.40.0</Version>
 		<Product>Vorarlberger Datenmeldung Pflege</Product>
 		<PackageReleaseNotes>Stationäre Pflege, Dubleten + Paket ID-Vergleich</PackageReleaseNotes>
-		<AssemblyVersion>1.40.0.0</AssemblyVersion>
-		<FileVersion>1.40.0</FileVersion>
+		<AssemblyVersion>1.41.0.0</AssemblyVersion>
+		<FileVersion>1.41.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -49,7 +49,6 @@
 		<EmbeddedResource Include="Datasets\Cm\ClientActivityType.csv" />
 		<EmbeddedResource Include="Datasets\Gender.csv" />
 		<EmbeddedResource Include="Datasets\CountryCode.csv" />
-		<EmbeddedResource Include="Datasets\Hkpv\PostcodeCity.csv" />
 		<EmbeddedResource Include="Datasets\InsuranceCode.csv" />
 		<EmbeddedResource Include="Datasets\MainAttendanceCloseness.csv" />
 		<EmbeddedResource Include="Datasets\Mkkp\ActivityType.csv" />
