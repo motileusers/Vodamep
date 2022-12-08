@@ -13,7 +13,7 @@ namespace Vodamep.Data
     {
         private static Regex _commentPattern = new Regex("//.*$");
         private readonly IDictionary<string, string> _dict = new SortedDictionary<string, string>();
-        protected CodeProviderBase()
+
         {
             this.Init();
         }
