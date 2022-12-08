@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -59,7 +60,9 @@ namespace Vodamep.Data
                         continue;
 
                     var communeValues = line.Split(';');
-                    var postCodeCityValues = communeValues[0].Split(' ');
+                    var postCodeCity = communeValues[0];
+                    var postCode = postCodeCity.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+                    var city = postCodeCity.Substring(postCodeCity.IndexOf(' ') + 1);
 
                     Commune commune;
 
@@ -68,7 +71,7 @@ namespace Vodamep.Data
                         commune = new Commune()
                         {
                             Id = communeValues[1],
-                            Name = postCodeCityValues[1]
+                            Name = city
                         };
 
                         this._dict.Add(commune.Id, commune);
@@ -82,8 +85,8 @@ namespace Vodamep.Data
                     commune.PostcodeCities.Add(
                             new PostcodeCity()
                             {
-                                PoCode = postCodeCityValues[0],
-                                City = postCodeCityValues[1]
+                                PoCode = postCode,
+                                City = city
                             });
 
                 }
