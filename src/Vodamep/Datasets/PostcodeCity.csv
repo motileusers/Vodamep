@@ -1,4 +1,6 @@
 ﻿// Postleitzahlen / Orte für Standard Schnittstellen (inclusive HKPV);
+// Die erste PLZ für eine Gemeindekennzahl ist die PLZ / Bezeichnung für die Gemeinde
+
 
 0000 Anderer;00000;
 6781 Bartholomäberg;80101;
@@ -9,8 +11,8 @@
 6708 Brand;80105;
 6706 Bürs;80106;
 6707 Bürserberg;80107;
-6752 Wald am Arlberg;80108;
 6752 Dalaas;80108;
+6752 Wald am Arlberg;80108;
 6733 Fontanella;80109;
 6793 Gaschurn;80110;
 6794 Partenen;80110;
