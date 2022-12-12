@@ -12,7 +12,8 @@ namespace Vodamep.Data
     public abstract class CodeProviderBase
     {
         private static Regex _commentPattern = new Regex("//.*$");
-        private readonly IDictionary<string, string> _dict = new SortedDictionary<string, string>();
+        private IDictionary<string, string> _dict = new Dictionary<string, string>();
+
         protected CodeProviderBase()
         {
             this.Init();
