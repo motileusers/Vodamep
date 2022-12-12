@@ -8,8 +8,6 @@ namespace Vodamep.Tests.Data
         [Fact]
         public void ListValues()
         {
-            var a = CommuneProvider.Instance.Values;
-
             CodeProviderValueEnumerator values = new CodeProviderValueEnumerator();
             values.Enumerate();
 
