@@ -14,6 +14,8 @@ Beispiele:
 	| main_attendance_relation      | Verwandtschaftsverhältnis Hauptbetreuungspers. |
 	| main_attendance_closeness     | Räumliche Nähe Hauptbetreuungsperson           |
 	| housing_reason                | Wohnraumsituations- und Ausstattungsgründe     |
+	| last_postcode                 | PLZ                                            |
+	| last_city                     | Ort                                            |
 	| gender                        | Geschlecht                                     |
 	| nationality                   | Staatsbürgerschaft                             |
 
@@ -60,25 +62,13 @@ Beispiele:
 
 Szenariogrundriss: Ungültiger Ort / Plz
 	Angenommen es ist ein 'StatLpReport'
-	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
-	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
+	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<PLZ>' gesetzt
+	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Ort>' gesetzt
 	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz'
 
 Beispiele:
-	| Field1        | Field2    | Value1 | Value2    |
-	| last_postcode | last_city | 0349   | Feldkirch |
-
-Szenariogrundriss: Leerer Ort / Plz
-	Angenommen es ist ein 'StatLpReport'
-	Und die Eigenschaft 'last_postcode' von 'Admission' ist auf '<Value1>' gesetzt
-	Und die Eigenschaft 'last_city' von 'Admission' ist auf '<Value2>' gesetzt
-	Dann enthält das Validierungsergebnis den Fehler 'Keine Angabe von Ort/Plz'
-
-Beispiele:
-	| Field1        | Field2    | Value1 | Value2    |
-	| last_postcode | last_city | 0349   |           |
-	| last_postcode | last_city |        | Feldkirch |
-	| last_postcode | last_city |        |           |
+	| PLZ  | Ort       |
+	| 0349 | Feldkirch |
 
 # vor 2019 wird PLZ / Ort nicht geprüft, da konnte alles gesendet werden
 Szenariogrundriss: Gültiger Ort / Plz

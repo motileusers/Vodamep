@@ -97,3 +97,40 @@ Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
 Beispiele:
 	| Name     | Bezeichnung  |
 	| birthday | Geburtsdatum |
+
+
+# Ort / PLZ
+Szenariogrundriss: Gültiger Ort / Plz
+	Angenommen es ist ein 'TbReport'
+	Und die Eigenschaft 'postcode' von 'Person' ist auf '<PLZ>' gesetzt
+	Und die Eigenschaft 'city' von 'Person' ist auf '<Ort>' gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
+
+Beispiele:
+	| PLZ  | Ort       |
+	| 6800 | Feldkirch |
+	| 0000 | Anderer   |
+
+Szenariogrundriss: Ungültiger Ort / Plz
+	Angenommen es ist ein 'TbReport'
+	Und die Eigenschaft 'postcode' von 'Person' ist auf '<PLZ>' gesetzt
+	Und die Eigenschaft 'city' von 'Person' ist auf '<Ort>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Klient (.*)'
+
+Beispiele:
+	| PLZ  | Ort       |
+	| 0349 | Feldkirch |
+	| 6800 | xyz       |
+
+
+Szenariogrundriss: Leerer Ort / Plz
+	Angenommen es ist ein 'TbReport'
+	Und die Eigenschaft 'postcode' von 'Person' ist auf '<PLZ>' gesetzt
+	Und die Eigenschaft 'city' von 'Person' ist auf '<Ort>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler '(.*) von Klient (.*) darf nicht leer sein.'
+
+Beispiele:
+	| PLZ  | Ort |
+	| 0349 |     |
+	|      | xyz |
+	|      |     |

@@ -1,13 +1,6 @@
 ﻿#language: de-DE
 Funktionalität: Hkpv - Validierung der gemeldeten Personen einer Datenmeldung
 
-Szenario: Es wurde ein ungültiger Ort angegeben.
-    Angenommen es ist ein 'HkpvReport'
-    Und die Eigenschaft 'postcode' von 'Person' ist auf '6900' gesetzt
-    Und die Eigenschaft 'city' von 'Person' ist auf 'Dornbirn' gesetzt
-    Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''6900 Dornbirn' ist kein gültiger Ort.'
-
 Szenario: Das Geburtsdatum darf nicht in der Zukunft liegen.
     Angenommen es ist ein 'HkpvReport'
     Und die Eigenschaft 'birthday' von 'Person' ist auf '2058-04-30' gesetzt
@@ -64,7 +57,7 @@ Szenariogrundriss: Eine Eigenschaft ist nicht gesetzt
     Angenommen es ist ein 'HkpvReport'
     Und die Eigenschaft '<Name>' von 'Person' ist nicht gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: ''<Bezeichnung>' darf nicht leer sein.'
+    Und die Fehlermeldung lautet: ''<Bezeichnung>'(.*) darf nicht leer sein.'
 Beispiele:
     | Name        | Bezeichnung           |
     | ssn         | Versicherungsnummer   |
@@ -116,4 +109,29 @@ Szenariogrundriss: Die Datumsfelder dürfen keine Zeit enthalten
 Beispiele:
     | Name     | Bezeichnung  |
     | birthday | Geburtsdatum |
+
+
+# Ort / PLZ
+Szenariogrundriss: Gultiger Ort / Plz
+	Angenommen es ist ein 'HkpvReport'
+	Und die Eigenschaft 'postcode' von 'Person' ist auf '<PLZ>' gesetzt
+	Und die Eigenschaft 'city' von 'Person' ist auf '<Ort>' gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
+
+Beispiele:
+	| PLZ  | Ort       |
+	| 6800 | Feldkirch |
+	| 0000 | Anderer   |
+
+Szenariogrundriss: Ungültiger Ort / Plz
+	Angenommen es ist ein 'HkpvReport'
+	Und die Eigenschaft 'postcode' von 'Person' ist auf '<PLZ>' gesetzt
+	Und die Eigenschaft 'city' von 'Person' ist auf '<Ort>' gesetzt
+	Dann enthält das Validierungsergebnis den Fehler 'Ungültige Kombination Ort/Plz bei Klient (.*)'
+
+Beispiele:
+	| PLZ  | Ort       |
+	| 0349 | Feldkirch |
+	| 6800 | xyz       |
+
     

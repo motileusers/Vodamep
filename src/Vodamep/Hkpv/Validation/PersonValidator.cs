@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
+using System;
 using System.Text.RegularExpressions;
 using Vodamep.Data;
 using Vodamep.Data.Hkpv;
@@ -31,12 +32,21 @@ namespace Vodamep.Hkpv.Validation
 
             this.RuleFor(x => x.CareAllowance).NotEmpty();
 
-            this.RuleFor(x => x.Postcode).NotEmpty();
-            this.RuleFor(x => x.City).NotEmpty();
-            this.RuleFor(x => $"{x.Postcode} {x.City}")
-                .SetValidator(new CodeValidator<Data.PostcodeCityProvider>())
-                .Unless(x => string.IsNullOrEmpty(x.City) || string.IsNullOrEmpty(x.Postcode))
-                .WithMessage(Validationmessages.InvalidPostCode_City);
+            this.RuleFor(x => x.Postcode).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
+            this.RuleFor(x => x.City).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
+            this.RuleFor(x => x)
+                .Must((x) =>
+                {
+                    if (!String.IsNullOrWhiteSpace(x.Postcode) &&
+                        !String.IsNullOrWhiteSpace(x.City))
+                    {
+                        return PostcodeCityProvider.Instance.IsValid($"{x.Postcode} {x.City}");
+                    }
+                    return true;
+
+                })
+                .WithMessage(x => Validationmessages.ClientWrongPostCodeCity(x.GetDisplayName()));
+
 
             this.RuleFor(x => x.Gender).NotEmpty();
 
