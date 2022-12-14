@@ -29,10 +29,15 @@ namespace Vodamep.Tb.Validation
             this.RuleFor(x => x)
                 .Must((x) =>
                 {
-                    if (!String.IsNullOrWhiteSpace(x.Postcode) &&
-                        !String.IsNullOrWhiteSpace(x.City))
+                    // Erst ab 2019 wurden von allen díe Gemeinde Kennzahlen übermittelt
+                    // Davor war nicht sichergestellt, dass in PLZ/Ort ein definiertes Wertepaar enthält
+                    if (reportDate >= new DateTime(2019, 01, 01))
                     {
-                        return PostcodeCityProvider.Instance.IsValid($"{x.Postcode} {x.City}");
+                        if (!String.IsNullOrWhiteSpace(x.Postcode) &&
+                            !String.IsNullOrWhiteSpace(x.City))
+                        {
+                            return PostcodeCityProvider.Instance.IsValid($"{x.Postcode} {x.City}");
+                        }
                     }
                     return true;
                 })
