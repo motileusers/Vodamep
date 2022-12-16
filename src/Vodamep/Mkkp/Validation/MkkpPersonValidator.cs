@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using FluentValidation;
 using Vodamep.Data;
 using Vodamep.Mkkp.Model;
@@ -18,8 +19,6 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.LocalDoctor).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
             this.RuleFor(x => x.Insurance).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
             this.RuleFor(x => x.CareAllowance).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
-            this.RuleFor(x => x.Postcode).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
-            this.RuleFor(x => x.City).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
             this.RuleFor(x => x.Gender).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
 
             // Änderung 5.11.2018, LH
@@ -28,11 +27,21 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.LocalDoctor).Matches(r).Unless(x => string.IsNullOrEmpty(x.LocalDoctor)).WithMessage(x => Validationmessages.ReportBasePropertyInvalidFormat(displayNameResolver.GetDisplayName(nameof(Person)), x.GetDisplayName()));
 
             this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<InsuranceCodeProvider>());
-         
-            this.RuleFor(x => $"{x.Postcode} {x.City}")
-                .SetValidator(new CodeValidator<PostcodeCityProvider>())
-                .Unless(x => string.IsNullOrEmpty(x.City) || string.IsNullOrEmpty(x.Postcode))
-                .WithMessage(x => Validationmessages.ReportBaseInvalidPostCodeCity(x.GetDisplayName()));
+
+            this.RuleFor(x => x.Postcode).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
+            this.RuleFor(x => x.City).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
+            this.RuleFor(x => x)
+                .Must((x) =>
+                {
+                    if (!String.IsNullOrWhiteSpace(x.Postcode) &&
+                        !String.IsNullOrWhiteSpace(x.City))
+                    {
+                        return PostcodeCityProvider.Instance.IsValid($"{x.Postcode} {x.City}");
+                    }
+                    return true;
+
+                })
+                .WithMessage(x => Validationmessages.ClientWrongPostCodeCity(x.GetDisplayName()));
 
             this.RuleFor(x => x.OtherReferrer).NotEmpty()
                 .When(y => y.Referrer == Referrer.OtherReferrer)

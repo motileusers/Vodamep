@@ -80,6 +80,10 @@ namespace Vodamep.ValidationBase
         public static string ReportBaseValueWithIdMustNotBeEmpty(string property, string parentProperty, string id) => $"{property} bei {parentProperty} mit ID {id} darf nicht leer sein.";
 
 
+        public static string ClientWrongPostCodeCity(string clientName) => $"Ungültige Kombination Ort/Plz bei Klient {clientName}.";
+
+
+
         public static string ReportBaseValueMustNotBeEmptyWithProperty(string property) => $"'{{PropertyName}}' von '{property}' darf nicht leer sein.";
         public static string ReportBaseValueMustNotBeEmpty(string clientOrStaff, string clientId) => $"'{{PropertyName}}' von {clientOrStaff} '{clientId}' darf nicht leer sein.";
         public static string ReportBaseValueMustNotBeEmptyWithParentProperty(string property, string parentProperty) => $"'{property}' von {parentProperty} darf nicht leer sein.";

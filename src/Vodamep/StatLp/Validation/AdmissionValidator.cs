@@ -93,26 +93,11 @@ namespace Vodamep.StatLp.Validation
                 .WithMessage(x => Validationmessages.StatLpAdmissionTextTooLong(report.FromD.ToShortDateString()));
 
 
+            this.RuleFor(x => x.LastPostcode).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(this.GetPersonName(x.PersonId, report)));
+            this.RuleFor(x => x.LastCity).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(this.GetPersonName(x.PersonId, report)));
             this.RuleFor(x => x)
                 .Must((x) =>
                 {
-                    // Ort / PLZ dürfen nie leer sein
-                    if (String.IsNullOrWhiteSpace(x.LastPostcode) ||
-                        String.IsNullOrWhiteSpace(x.LastCity))
-                    {
-                        return false;
-                    }
-
-                    return true;
-                })
-                .WithMessage(x => Validationmessages.StatLpAdmissionEmptyPostCode(x.AdmissionDateD.ToShortDateString()));
-
-
-            this.RuleFor(x => x)
-                .Must((x) =>
-                {
-                    bool result = true;
-
                     // Erst ab 2019 wurden von allen díe Gemeinde Kennzahlen übermittelt
                     // Davor war nicht sichergestellt, dass in PLZ/Ort ein definiertes Wertepaar enthält
                     if (x.AdmissionDateD >= new DateTime(2019, 01, 01))
@@ -120,11 +105,11 @@ namespace Vodamep.StatLp.Validation
                         if (!String.IsNullOrWhiteSpace(x.LastPostcode) &&
                             !String.IsNullOrWhiteSpace(x.LastCity))
                         {
-                            result = PostcodeCityProvider.Instance.IsValid($"{x.LastPostcode} {x.LastCity}");
+                            return PostcodeCityProvider.Instance.IsValid($"{x.LastPostcode} {x.LastCity}");
                         }
+                        return true;
                     }
-
-                    return result;
+                    return true;
                 })                
                 .WithMessage(x => Validationmessages.StatLpAdmissionWrongPostCode(x.AdmissionDateD.ToShortDateString()));
 
