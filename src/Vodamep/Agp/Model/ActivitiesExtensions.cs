@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace Vodamep.Agp.Model
 {
+
     public static class ActivitiesExtensions
     {
         public static IEnumerable<Activity> AsSorted(this IEnumerable<Activity> activities)
