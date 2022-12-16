@@ -28,7 +28,7 @@ namespace Vodamep.StatLp.Validation
             this.RuleFor(x => x.To).NotEmpty();
             this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
             this.RuleFor(x => x.To).SetValidator(new TimestampWithOutTimeValidator());
-            this.RuleFor(x => x.ToD).LessThanOrEqualTo(x => new DateTime(DateTime.Today.Year, 12, 31));
+            this.RuleFor(x => x.ToD).LessThanOrEqualTo(x => DateTime.Today);
             this.RuleFor(x => x.ToD).GreaterThan(x => x.FromD).Unless(x => x.From == null || x.To == null);
 
             this.RuleForEach(report => report.Persons).SetValidator(new PersonValidator());
