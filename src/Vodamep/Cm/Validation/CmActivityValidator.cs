@@ -16,7 +16,7 @@ namespace Vodamep.Cm.Validation
                 .WithMessage(x => Validationmessages.ReportBaseActivityWrongValue(x.DateD.ToShortDateString(), $"< {1}"));
 
             this.RuleFor(x => x.Time)
-                .LessThanOrEqualTo(1000)
+                .LessThanOrEqualTo(10000)
                 .WithMessage(x => Validationmessages.ReportBaseActivityWrongValue(x.DateD.ToShortDateString(), $"> {10000}"));
 
         }
