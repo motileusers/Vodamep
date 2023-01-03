@@ -3,7 +3,6 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Vodamep.Mohi.Validation;
 using Vodamep.Tb.Model;
 using Vodamep.ValidationBase;
 

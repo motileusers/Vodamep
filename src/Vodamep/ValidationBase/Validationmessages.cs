@@ -104,7 +104,7 @@ namespace Vodamep.ValidationBase
         public static string ReportBasePersonActivityWrongDate(string personId, string date) => $"Bei der Leistung von Person '{personId}' am {date} wurde ein Datum außerhalb des Meldungszeitraums angegeben.";
         public static string ReportBaseClientActivityUnknownPerson(string date) => $"Unbekannter Klient bei Leistung am {date}.";
         public static string ReportBaseActivityMultipleActivitiesForOnePerson(string personId) => $"Mehrfache Leistungen für Klient '{personId}' vorhanden.";
-        public static string MohiActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
+        public static string ReportBaseActivityContainsNonExistingPerson(string personId) => $"Für Klient '{personId}' wurden keine Personendaten gesendet.";
         public static string ReportBaseItemMustBeInReportPeriod(string clientName) => $"{{PropertyName}} von Person '{clientName}' muss im Meldezeitraum liegen.";
 
         public static string StatLpAdmissionInvalidValueAdmission(string date) => $"Ungültiger Wert für '{{PropertyName}}' bei Aufnahme am {date}.";

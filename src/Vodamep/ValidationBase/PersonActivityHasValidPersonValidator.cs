@@ -2,9 +2,8 @@
 using System.Linq;
 using FluentValidation;
 using Vodamep.ReportBase;
-using Vodamep.ValidationBase;
 
-namespace Vodamep.Mohi.Validation
+namespace Vodamep.ValidationBase
 {
     internal class PersonActivityHasValidPersonValidator : AbstractValidator<IPersonActivity>
     {
@@ -12,7 +11,7 @@ namespace Vodamep.Mohi.Validation
         {
             this.RuleFor(x => x)
                 .Must(x => { return persons.Any(y => y.Id == x.PersonId); })
-                .WithMessage(x => Validationmessages.MohiActivityContainsNonExistingPerson(x.PersonId));
+                .WithMessage(x => Validationmessages.ReportBaseActivityContainsNonExistingPerson(x.PersonId));
         }
     }
 }
