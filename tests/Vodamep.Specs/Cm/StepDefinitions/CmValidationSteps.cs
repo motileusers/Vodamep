@@ -53,7 +53,7 @@ namespace Vodamep.Specs.Cm.StepDefinitions
         public CmReport Report => _context.Report as CmReport;
 
         [Given(@"es ist ein 'CmReport'")]
-        public void GivenItIsAMohiReport()
+        public void GivenItIsACmReport()
         {
 
         }

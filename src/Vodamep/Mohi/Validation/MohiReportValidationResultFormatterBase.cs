@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Vodamep.Tb.Model;
+using Vodamep.Mohi.Model;
 
-namespace Vodamep.Tb.Validation
+namespace Vodamep.Mohi.Validation
 {
-    public abstract class TbReportValidationResultFormatterBase
+    public abstract class MohiReportValidationResultFormatterBase
     {
         protected readonly ResultFormatterTemplate _template;
         protected readonly bool _ignoreWarnings;
 
-        protected TbReportValidationResultFormatterBase(ResultFormatterTemplate template, bool ignoreWarnings = false)
+        protected MohiReportValidationResultFormatterBase(ResultFormatterTemplate template, bool ignoreWarnings = false)
         {
             _template = template;
             _ignoreWarnings = ignoreWarnings;
 
             _strategies = new[]
             {
-                new GetNameByPatternStrategy(GetIdPattern(nameof(TbReport.Persons)), GetNameOfPerson),
-                new GetNameByPatternStrategy(GetIdPattern(nameof(TbReport.Activities)), GetNameOfActivity),
+                new GetNameByPatternStrategy(GetIdPattern(nameof(MohiReport.Persons)), GetNameOfPerson),
+                new GetNameByPatternStrategy(GetIdPattern(nameof(MohiReport.Activities)), GetNameOfActivity),
 
-                new GetNameByPatternStrategy($"^{nameof(TbReport.To)}$",(a,b) => string.Empty),
-                new GetNameByPatternStrategy($"^{nameof(TbReport.ToD)}$",(a,b) => string.Empty),
-                new GetNameByPatternStrategy($"^{nameof(TbReport.From)}$",(a,b) => string.Empty),
-                new GetNameByPatternStrategy($"^{nameof(TbReport.FromD)}$",(a,b) => string.Empty),
+                new GetNameByPatternStrategy($"^{nameof(MohiReport.To)}$",(a,b) => string.Empty),
+                new GetNameByPatternStrategy($"^{nameof(MohiReport.ToD)}$",(a,b) => string.Empty),
+                new GetNameByPatternStrategy($"^{nameof(MohiReport.From)}$",(a,b) => string.Empty),
+                new GetNameByPatternStrategy($"^{nameof(MohiReport.FromD)}$",(a,b) => string.Empty),
             };
 
         }
@@ -43,7 +43,7 @@ namespace Vodamep.Tb.Validation
             }
         }
 
-        protected string GetInfo(TbReport report, string propertyName)
+        protected string GetInfo(MohiReport report, string propertyName)
         {
             foreach (var strategy in _strategies)
             {
@@ -59,7 +59,7 @@ namespace Vodamep.Tb.Validation
 
         private readonly GetNameByPatternStrategy[] _strategies;
 
-        private string GetNameOfPerson(TbReport report, int index)
+        private string GetNameOfPerson(MohiReport report, int index)
         {
             if (report.Persons.Count > index && index >= 0)
             {
@@ -70,7 +70,7 @@ namespace Vodamep.Tb.Validation
             return string.Empty;
         }
 
-        private string GetNameOfActivity(TbReport report, int index)
+        private string GetNameOfActivity(MohiReport report, int index)
         {
             if (report.Activities.Count > index && index >= 0)
             {
@@ -81,7 +81,7 @@ namespace Vodamep.Tb.Validation
             return string.Empty;
         }
 
-        private string GetNameOfPersonById(TbReport report, string id)
+        private string GetNameOfPersonById(MohiReport report, string id)
         {
             var e = report.Persons.FirstOrDefault(x => x.Id == id);
 
@@ -94,15 +94,15 @@ namespace Vodamep.Tb.Validation
         private class GetNameByPatternStrategy
         {
             private readonly Regex _pattern;
-            private readonly Func<TbReport, int, string> _resolveInfo;
+            private readonly Func<MohiReport, int, string> _resolveInfo;
 
-            public GetNameByPatternStrategy(string pattern, Func<TbReport, int, string> resolveInfo)
+            public GetNameByPatternStrategy(string pattern, Func<MohiReport, int, string> resolveInfo)
             {
                 _pattern = new Regex(pattern);
                 _resolveInfo = resolveInfo;
             }
 
-            public (bool Success, string Info) GetInfo(TbReport report, string propertyName)
+            public (bool Success, string Info) GetInfo(MohiReport report, string propertyName)
             {
                 var m = this._pattern.Match(propertyName);
 

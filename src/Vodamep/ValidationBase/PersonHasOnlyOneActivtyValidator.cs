@@ -2,9 +2,8 @@
 using System.Linq;
 using FluentValidation;
 using Vodamep.ReportBase;
-using Vodamep.ValidationBase;
 
-namespace Vodamep.Mohi.Validation
+namespace Vodamep.ValidationBase
 {
     internal class PersonHasOnlyOneActivtyValidator : AbstractValidator<IPerson>
     {
