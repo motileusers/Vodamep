@@ -67,7 +67,7 @@ namespace Vodamep.Api
 
         private void ConfigureValidationClient(IServiceCollection services)
         {
-            var validationClient = new ValidationClient();
+            var validationClient = new ValidateInstitutionClient();
             validationClient.BaseUrl = _authConfig.Url;
 
             services.AddSingleton(typeof(IValidationClient), validationClient);
