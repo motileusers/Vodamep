@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Connexia.Service.Client;
 using Vodamep.Api.CmdQry;
 using Vodamep.ReportBase;
+using Google.Protobuf;
 
 namespace Vodamep.Api
 {
@@ -141,9 +142,24 @@ namespace Vodamep.Api
 
             if (report == null)
             {
-                await RespondError(context, $"Die Daten können nicht gelesen werden.");
+                string error = $"Die Daten können nicht gelesen werden.";
+                await RespondError(context, error);
                 return;
             }
+
+
+            try
+            {
+                IMessage message = report as IMessage;
+                MessageValuesValidator.CheckMessageValues(message);
+            }
+            catch (Exception exception)
+            {
+                await RespondError(context, $"Fehler im Report: {exception.Message}");
+                return;
+            }
+
+
 
             var date = new DateTime(year, month, 1);
             if (report.FromD != date)
@@ -156,10 +172,10 @@ namespace Vodamep.Api
             {
                 var test = await _validationClient.ValidateByUserAndInstitutionAsync(context.User.Identity?.Name, report.Institution.Id);
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                _logger?.LogError(exception, "Benutzer darf keine Daten für diese Einrichtung senden");
                 await RespondError(context, "Benutzer darf keine Daten für diese Einrichtung senden");
+                _logger?.LogError(ex.Message);
                 return;
             }
 
