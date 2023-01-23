@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Protobuf;
+using System;
 using System.IO;
 using Vodamep.Agp.Model;
 using Vodamep.Cm.Model;
