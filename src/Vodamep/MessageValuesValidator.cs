@@ -28,7 +28,7 @@ namespace Vodamep
 
 
         /// <summary>
-        /// Alle Werte in der in der Message iterieren
+        /// Alle Werte in der in der Message iterieren und prüfen, ob der Inhalt auch der Proto Definition entspricht
         /// </summary>
         public static void CheckMessageValues(IMessage protobufMessage)
         {

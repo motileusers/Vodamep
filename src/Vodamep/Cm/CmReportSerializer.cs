@@ -49,8 +49,6 @@ namespace Vodamep.Cm
                 r = CmReport.Parser.ParseFrom(data);
             }
 
-            MessageValuesValidator.CheckMessageValues(r);
-
             return r;
 
         }
