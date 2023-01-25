@@ -71,10 +71,15 @@ namespace Connexia.Service.Client
                 throw new System.ArgumentNullException("userGroup");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Authentication/{user}/{password}/{userGroup}");
-            urlBuilder_.Replace("{user}", System.Uri.EscapeDataString(ConvertToString(user, System.Globalization.CultureInfo.InvariantCulture)));
-            urlBuilder_.Replace("{password}", System.Uri.EscapeDataString(ConvertToString(password, System.Globalization.CultureInfo.InvariantCulture)));
-            urlBuilder_.Replace("{userGroup}", System.Uri.EscapeDataString(ConvertToString(userGroup, System.Globalization.CultureInfo.InvariantCulture)));
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Authentication?");
+            urlBuilder_.Append("user=").Append(System.Uri.EscapeDataString(ConvertToString(user, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            urlBuilder_.Append("password=").Append(System.Uri.EscapeDataString(ConvertToString(password, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            if (userGroup != null)
+            {
+                urlBuilder_.Append("userGroup=").Append(System.Uri.EscapeDataString(ConvertToString(userGroup, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+
 
             var client_ = new System.Net.Http.HttpClient();
             var disposeClient_ = true;
