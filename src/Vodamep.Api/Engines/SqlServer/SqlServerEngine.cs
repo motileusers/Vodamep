@@ -77,14 +77,7 @@ namespace Vodamep.Api.Engines.SqlServer
                 ReportInfo sentInfo = ReportInfo.Create(report, -1, DateTime.Now);
                 ReportInfo databaseInfo = GetReportInfoFromDatabase(connection, sentInfo);
 
-                string state = "";
-
-                if (databaseInfo != null && sentInfo.Equals(databaseInfo))
-                {
-                    state = "DUPLICATE";
-                }
-
-                this.SaveReport(connection, report, sentInfo, state);
+                this.SaveReport(connection, report, sentInfo);
             }
         }
 
@@ -200,7 +193,7 @@ namespace Vodamep.Api.Engines.SqlServer
         }
 
 
-        private void SaveReport(SqlConnection connection, IReport report, ReportInfo info, string state)
+        private void SaveReport(SqlConnection connection, IReport report, ReportInfo info)
         {
 
             using (var ms = report.WriteToStream(asJson: false, compressed: true))
@@ -217,7 +210,7 @@ namespace Vodamep.Api.Engines.SqlServer
                 insert.Parameters.AddWithValue("@month", info.Month);
                 insert.Parameters.AddWithValue("@year", info.Year);
                 insert.Parameters.AddWithValue("@date", DateTime.Now);
-                insert.Parameters.AddWithValue("@state", state);
+                insert.Parameters.AddWithValue("@state", "");
                 insert.Parameters.AddWithValue("@data", ms.ToArray());
                 try
                 {
