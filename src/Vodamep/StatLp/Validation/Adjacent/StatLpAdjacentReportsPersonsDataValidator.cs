@@ -17,7 +17,7 @@ namespace Vodamep.StatLp.Validation.Adjacent
         static StatLpAdjacentReportsPersonsDataValidator()
         {
             var loc = new DisplayNameResolver();
-            ValidatorOptions.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
+            ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
         }
 
         public StatLpAdjacentReportsPersonsDataValidator()
@@ -33,7 +33,7 @@ namespace Vodamep.StatLp.Validation.Adjacent
             });
         }
 
-        private void CheckBirthday((StatLpReport Predecessor, StatLpReport Report) data, CustomContext ctx, string[] personIds)
+        private void CheckBirthday((StatLpReport Predecessor, StatLpReport Report) data, ValidationContext<(StatLpReport Predecessor, StatLpReport Report)> ctx, string[] personIds)
         {
             var curValues = data.Report.Persons
                    .Where(x => personIds.Contains(x.Id))

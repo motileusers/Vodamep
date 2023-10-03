@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentValidation;
+using Google.Protobuf.WellKnownTypes;
 using Vodamep.ReportBase;
 
 namespace Vodamep.ValidationBase
@@ -14,7 +15,7 @@ namespace Vodamep.ValidationBase
             this.RuleFor(x => x.BirthdayD).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
 
             this.RuleFor(x => x.Birthday)
-                .SetValidator(new TimestampWithOutTimeValidator()).WithMessage(x => Validationmessages.ReportBaseDateMustNotHaveTime(x.GetDisplayName(), clientOrStaff));
+                .SetValidator(new TimestampWithOutTimeValidator<IPerson, Timestamp>()).WithMessage(x => Validationmessages.ReportBaseDateMustNotHaveTime(x.GetDisplayName(), clientOrStaff));
 
             RuleFor(x => x.BirthdayD)
                 .LessThan(DateTime.Today)

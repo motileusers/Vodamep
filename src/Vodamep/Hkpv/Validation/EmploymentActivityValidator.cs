@@ -47,7 +47,7 @@ namespace Vodamep.Hkpv.Validation
             this.RuleFor(x => x)
                 .Custom((x, ctx) =>
                {
-                   HkpvReport report = ctx.ParentContext.InstanceToValidate as HkpvReport;
+                   HkpvReport report = ctx.InstanceToValidate;
 
                    var activities = report.Activities;
                    DateTime from = report.FromD;

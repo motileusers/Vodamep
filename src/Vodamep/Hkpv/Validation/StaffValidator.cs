@@ -12,7 +12,7 @@ namespace Vodamep.Hkpv.Validation
 {
     internal class StaffValidator : AbstractValidator<Staff>
     {
-        public StaffValidator(DateTime from, DateTime to)
+        public StaffValidator(HkpvReport report, DateTime from, DateTime to)
         {
             this.RuleFor(x => x.FamilyName).NotEmpty();
             this.RuleFor(x => x.GivenName).NotEmpty();
@@ -30,7 +30,7 @@ namespace Vodamep.Hkpv.Validation
             if (to < new DateTime(2019, 01, 01))
             {
                 this.RuleFor(x => x.Qualification)
-                .SetValidator(new CodeValidator<QualificationCodeProvider>())
+                .SetValidator(new CodeValidator<Staff, string, QualificationCodeProvider>())
                 .Unless(x => string.IsNullOrEmpty(x.Qualification))
                 .WithSeverity(Severity.Warning);
             }
@@ -39,7 +39,7 @@ namespace Vodamep.Hkpv.Validation
                 this.RuleFor(x => x.Qualification).NotEmpty();
 
                 this.RuleFor(x => x.Qualification)
-                .SetValidator(new CodeValidator<QualificationCodeProvider>())
+                .SetValidator(new CodeValidator<Staff, string, QualificationCodeProvider>())
                 .Unless(x => string.IsNullOrEmpty(x.Qualification));
             }
 
@@ -52,8 +52,7 @@ namespace Vodamep.Hkpv.Validation
                 .Custom((staff, ctx) =>
                 {
                     List<Employment> employments = staff.Employments?.OrderBy(x => x.FromD).ToList();
-                    HkpvReport report = ctx.ParentContext.InstanceToValidate as HkpvReport;
-
+                    
                     for (int i = 1; i < employments.Count; i++)
                     {
                         Employment last = employments[i - 1];

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using Google.Protobuf.WellKnownTypes;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
 
@@ -15,7 +16,7 @@ namespace Vodamep.StatLp.Validation
                 .NotEmpty();
 
             RuleFor(x => x.Birthday)
-                .SetValidator(new TimestampWithOutTimeValidator());
+                .SetValidator(new TimestampWithOutTimeValidator<Person,Timestamp>());
 
             RuleFor(x => x.BirthdayD)
                 .LessThan(DateTime.Today)
