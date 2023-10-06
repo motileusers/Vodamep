@@ -1,6 +1,8 @@
 ﻿using System;
+using FluentValidation;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using NLog;
 using NLog.Extensions.Logging;
 using NLog.Web;
 
@@ -12,6 +14,7 @@ namespace Vodamep.Api
         {
 
             var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+
             try
             {
                 logger.Debug("init main");

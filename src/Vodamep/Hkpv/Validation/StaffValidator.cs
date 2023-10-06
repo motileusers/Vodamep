@@ -67,7 +67,7 @@ namespace Vodamep.Hkpv.Validation
                                 if (last.ToD >= current.FromD)
                                 {
                                     var index = staff.Employments.IndexOf(current);
-                                    ctx.AddFailure(new ValidationFailure(ctx.PropertyName, Validationmessages.EmploymentOverlap(staff)));
+                                    ctx.AddFailure(new ValidationFailure(ctx.PropertyPath, Validationmessages.EmploymentOverlap(staff)));
 
                                 }
                             }

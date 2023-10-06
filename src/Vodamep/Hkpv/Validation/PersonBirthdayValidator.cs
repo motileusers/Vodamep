@@ -12,7 +12,7 @@ namespace Vodamep.Hkpv.Validation
     {
         public PersonBirthdayValidator()
         {
-            this.CascadeMode = CascadeMode.StopOnFirstFailure;
+            this.RuleLevelCascadeMode = CascadeMode.Stop;
 
             RuleFor(x => x.Birthday)
                 .NotEmpty();
