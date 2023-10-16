@@ -10,7 +10,7 @@ namespace Vodamep.ValidationBase
     {
         public PersonBirthdayValidator(DateTime earliestBirthday, string clientOrStaff)
         {
-            this.CascadeMode = CascadeMode.StopOnFirstFailure;
+            this.RuleLevelCascadeMode = CascadeMode.Stop;
 
             this.RuleFor(x => x.BirthdayD).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
 
