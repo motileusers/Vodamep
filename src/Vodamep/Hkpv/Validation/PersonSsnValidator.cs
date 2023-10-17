@@ -8,7 +8,7 @@ namespace Vodamep.Hkpv.Validation
     {
         public PersonSsnValidator()   
         {
-            this.CascadeMode = CascadeMode.StopOnFirstFailure;
+            this.RuleLevelCascadeMode = CascadeMode.Stop;
 
             RuleFor(x => x.Ssn)
                 .NotEmpty();

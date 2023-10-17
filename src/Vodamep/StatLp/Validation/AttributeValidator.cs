@@ -14,7 +14,7 @@ namespace Vodamep.StatLp.Validation
 
         public AttributeValidator(StatLpReport report)
         {
-            this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator());
+            this.RuleFor(x => x.From).SetValidator(new TimestampWithOutTimeValidator<Attribute, Timestamp>());
 
             this.RuleFor(x => x.FromD).Must(x => x >= report.FromD && x <= report.ToD)
                 .WithMessage(x => Validationmessages.ReportBaseItemMustBeInReportPeriod(report.GetPersonName(x.PersonId)));
