@@ -6,6 +6,7 @@ namespace Vodamep
 {
     internal static class DateTimeExtensions
     {
+
         public static DateTime LastDateInMonth(this DateTime date) => new DateTime(date.Year, date.Month, 1).AddMonths(1).AddDays(-1);
 
         public static bool IsLastDateInMonth(this DateTime date)

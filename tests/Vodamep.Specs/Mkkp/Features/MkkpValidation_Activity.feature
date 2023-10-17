@@ -76,11 +76,11 @@ Beispiele:
     | 0 |
     | -1 |
 
-Szenario: Summe TravelTimes darf 5 Stunden nicht überschreiten
+Szenario: Summe TravelTimes darf 12 Stunden nicht überschreiten
     Angenommen es ist ein 'MkkpReport'
-    Und die Eigenschaft 'minutes' von 'TravelTime' ist auf '305' gesetzt
+    Und die Eigenschaft 'minutes' von 'TravelTime' ist auf '725' gesetzt
     Dann enthält das Validierungsergebnis genau einen Fehler
-    Und die Fehlermeldung lautet: 'Summe Wegzeiten von Mitarbeiter (.*) am (.*) darf 5 Stunden nicht überschreiten.'
+    Und die Fehlermeldung lautet: 'Summe Wegzeiten von Mitarbeiter (.*) am (.*) darf 12 Stunden nicht überschreiten.'
 
 Szenario: Traveltimes Nur 1 Eintrag pro Mitarbeiter pro Tag        
     Und es werden zusätzliche Wegzeiten für einen Mkkp-Mitarbeiter eingetragen
