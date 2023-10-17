@@ -50,13 +50,13 @@ namespace Vodamep.Mkkp.Validation
 
 
 
-            // Max. 5 Std. pro Mitarbeiter pro Tag Fahrzeit
+            // Max. 12 Std. pro Mitarbeiter pro Tag Fahrzeit
 
             this.RuleFor(x => x)
                 .Custom((report, ctx) =>
                 {
-                    //5 hours max
-                    int maxNoOfMinutes = 5 * 60;
+                    // 12 hours max
+                    int maxNoOfMinutes = 12 * 60;
 
                     var staffs = report.Staffs;
                     var travelTimes = report.TravelTimes;
