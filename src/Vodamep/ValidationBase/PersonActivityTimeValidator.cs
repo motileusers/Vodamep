@@ -8,6 +8,32 @@ namespace Vodamep.ValidationBase
     {
         public PersonActivityTimeValidator(float minValue, float maxValue)
         {
+            #region Documentation
+            // AreaDef: MOHI
+            // OrderDef: 03
+            // SectionDef: Leistung
+            // StrengthDef: Fehler
+
+            // CheckDef: Pflichtfeld
+            // Fields: Leistungszeit
+
+            // CheckDef: Erlaubte Werte
+            // Fields: Leistungszeit, Remark: > 15, < 10000
+            #endregion
+
+            #region Documentation
+            // AreaDef: TB
+            // OrderDef: 03
+            // SectionDef: Leistung
+            // StrengthDef: Fehler
+
+            // CheckDef: Pflichtfeld
+            // Fields: Leistungszeit
+
+            // CheckDef: Erlaubte Werte
+            // Fields: Leistungszeit, Remark: > 15, < 10000
+            #endregion
+
             this.RuleFor(x => x.Time)
                 .GreaterThanOrEqualTo(minValue)
                 .WithMessage(x => Validationmessages.ReportBasePersonActivityWrongValue(x.PersonId, $"< {minValue}"));

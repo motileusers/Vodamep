@@ -14,6 +14,14 @@ namespace Vodamep.Hkpv.Validation
             RuleFor(x => x.Activities)
                 .Custom((list, ctx) =>
                 {
+                    #region Documentation
+                    // AreaDef: HKP
+                    // OrderDef: 04
+                    // SectionDef: Leistung
+                    // StrengthDef: Warnung
+                    // Fields: Leistungen, Check: Gleiche Leistungen, Remark: Max. 5 x die gleiche Leistung pro Person und Tag, Group: Inhaltlich
+                    #endregion
+
                     var moreThan5 = list.Where(x => x.RequiresPersonId())
                                 .Select(x => new { Entry = x, Count = x.Entries.GroupBy(g => g).Select(gg => gg.Count()).Max() })
                                 .Where(x => x.Count > 5);

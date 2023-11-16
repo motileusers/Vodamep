@@ -19,6 +19,15 @@ namespace Vodamep.StatLp.Validation.Update
 
         public StatLpUpdateReportValidator()
         {
+            #region Documentation
+            // AreaDef: STAT
+            // OrderDef: 02
+            // SectionDef: Hauptmerkmal
+            // StrengthDef: Warnung
+            // LocationDef: Eingang
+            // Fields: Pflegestufe, Check: Wesentliche Änderung, Remark: Gleiche Personen, Pflegestufenänderung > 2 Stunfen, Group: Inhaltlich
+            #endregion
+
             this.RuleFor(x => x).Custom((data, ctx) =>
             {
                 foreach (var personId in data.OldReport.Persons.Select(x => x.Id))

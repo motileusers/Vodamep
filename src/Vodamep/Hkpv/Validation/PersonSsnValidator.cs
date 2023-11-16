@@ -8,6 +8,17 @@ namespace Vodamep.Hkpv.Validation
     {
         public PersonSsnValidator()   
         {
+            #region Documentation
+            // AreaDef: HKP
+            // OrderDef: 01
+            // SectionDef: Person
+            // StrengthDef: Fehler
+
+            // CheckDef: Erlaubte Werte
+            // Fields: SVNR, Remark: Gültige SVNR, Prüfziffer, Geburtsdatum
+
+            #endregion
+
             this.RuleLevelCascadeMode = CascadeMode.Stop;
 
             RuleFor(x => x.Ssn)

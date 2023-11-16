@@ -10,6 +10,55 @@ namespace Vodamep.ValidationBase
     {
         public PersonBirthdayValidator(DateTime earliestBirthday, string clientOrStaff)
         {
+            #region Documentation
+            // AreaDef: AGP
+            // OrderDef: 01
+            // SectionDef: Person
+            // StrengthDef: Fehler
+
+            // CheckDef: Pflichtfeld
+            // Fields: Geburtsdatum
+
+            // CheckDef: Erlaubte Werte
+            // Fields: Geburtsdatum, Remark: > 01.01.1900, nicht in der Zukunft
+
+            // AreaDef: CM
+            // OrderDef: 01
+            // SectionDef: Person
+            // StrengthDef: Fehler
+
+            // CheckDef: Pflichtfeld
+            // Fields: Geburtsdatum
+
+            // CheckDef: Erlaubte Werte
+            // Fields: Geburtsdatum, Remark: > 01.01.1890, nicht in der Zukunft
+
+
+            // AreaDef: MOHI
+            // OrderDef: 01
+            // SectionDef: Person
+            // StrengthDef: Fehler
+
+            // CheckDef: Pflichtfeld
+            // Fields: Geburtsdatum
+
+            // CheckDef: Erlaubte Werte
+            // Fields: Geburtsdatum, Remark: > 01.01.1890, nicht in der Zukunft
+
+
+
+            // AreaDef: TB
+            // OrderDef: 01
+            // SectionDef: Person
+            // StrengthDef: Fehler
+
+            // CheckDef: Pflichtfeld
+            // Fields: Geburtsdatum
+
+            // CheckDef: Erlaubte Werte
+            // Fields: Geburtsdatum, Remark: > 01.01.1890, nicht in der Zukunft
+            #endregion
+
             this.RuleLevelCascadeMode = CascadeMode.Stop;
 
             this.RuleFor(x => x.BirthdayD).NotEmpty().WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(x.GetDisplayName()));
