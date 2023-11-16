@@ -19,6 +19,14 @@ namespace Vodamep.Hkpv.Validation
             this.RuleFor(x => new Tuple<IList<Activity>, IEnumerable<Staff>>(x.Activities, x.Staffs))
                 .Custom((a, ctx) =>
                {
+                   #region Documentation
+                   // AreaDef: HKP
+                   // OrderDef: 04
+                   // SectionDef: Leistung
+                   // StrengthDef: Fehler
+                   // Fields: Leistungen, Check: Auszubildende, Remark: Auszubildende dürfen keine med. Leistungen 6-10 durchführen., Group: Inhaltlich
+                   #endregion
+
                    var activities = a.Item1;
                    var staffs = a.Item2;
 

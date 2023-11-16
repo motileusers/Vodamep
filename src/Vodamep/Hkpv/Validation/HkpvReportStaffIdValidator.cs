@@ -12,6 +12,14 @@ namespace Vodamep.Hkpv.Validation
     {
         public HkpvReportStaffIdValidator()
         {
+            #region Documentation
+            // AreaDef: HKP
+            // OrderDef: 04
+            // SectionDef: Leistung
+            // StrengthDef: Fehler
+            // Fields: Leistungen, Check: Mitarbeiter, Remark: Alle Mitarbeiter müssen mind. 1 Leistung haben
+            #endregion
+
             this.RuleFor(x => x.Staffs)
                 .Custom((list, ctx) =>
                 {
