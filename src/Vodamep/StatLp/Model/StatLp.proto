@@ -15,6 +15,7 @@ message StatLpReport {
     repeated Admission admissions = 7;
     repeated Leaving leavings= 8;
     repeated Alias aliases = 9;
+    string source_system_id = 10;           // System ID, die für das Mapping der Personen IDs verwendet wird. Wird von connexia ausgegeben.
 }
 
 // Einrichtung

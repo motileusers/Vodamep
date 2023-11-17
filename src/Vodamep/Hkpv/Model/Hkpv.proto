@@ -12,6 +12,7 @@ message HkpvReport {
     repeated Staff staffs = 4; 
     repeated Person persons = 5;         
     repeated Activity activities = 6;     
+    string source_system_id = 7;           // System ID, die für das Mapping der Personen IDs verwendet wird. Wird von connexia ausgegeben.
 }
 
 // Einrichtung

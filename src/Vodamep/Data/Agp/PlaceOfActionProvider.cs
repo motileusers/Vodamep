@@ -25,7 +25,7 @@ namespace Vodamep.Data.Agp
             }
         }
 
-        protected override FileDescriptor Descriptor => Vodamep.Agp.Model.ApgReflection.Descriptor;
+        protected override FileDescriptor Descriptor => Vodamep.Agp.Model.AgpReflection.Descriptor;
 
         public override string Unknown => "";
 
