@@ -114,7 +114,6 @@ namespace Vodamep
 
 
 
-        [Obsolete("wird das noch benötigt?")]
         public static (bool IsValid, string[] messages) ValidateToEnumable(this IReport report, bool ignoreWarnings)
         {
 
