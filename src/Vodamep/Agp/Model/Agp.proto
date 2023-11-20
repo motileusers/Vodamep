@@ -12,6 +12,7 @@ message AgpReport {
     repeated Person persons = 4;
     repeated Activity activities = 5;
     repeated StaffActivity staff_activities = 6;
+    string source_system_id = 7;           // System ID, die für das Mapping der Personen IDs verwendet wird. Wird von connexia ausgegeben.
 }
 
 // Einrichtung
