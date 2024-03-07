@@ -21,6 +21,13 @@ Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
 Und die Eigenschaft 'to' von 'Stay' ist auf '2021-01-31' gesetzt
 Dann enthält das Validierungsergebnis keine Fehler
 
+Szenario: Eine Person mit unterschiedlichen IDs und gleichem Namen/Geburtsdatum befindet sich in den Meldungen
+Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
+Und die Eigenschaft 'id' von 'Person' ist auf '123' gesetzt
+Und die Eigenschaft 'person_id' von 'Stay' ist auf '123' gesetzt
+Dann enthält das Validierungsergebnis keine Fehler
+
+
 Szenario: Eine Person die nicht entlassen wurde, befindet sich nicht in der darauf folgenden Meldung
 Angenommen es gibt zwei aneinander grenzende StatLp-Datenmeldungen
 Und die Eigenschaft 'id' von 'Person' ist auf '123' gesetzt
