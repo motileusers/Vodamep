@@ -1,5 +1,6 @@
 ﻿using PowerArgs;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Vodamep.Data;
 using Vodamep.Data.Hkpv;
@@ -43,24 +44,24 @@ namespace Vodamep.Client
         [ArgActionMethod, ArgDescription("Listet erlaubte Werte.")]
         public void List(ListArgs args)
         {
-            CodeProviderBase provider = null;
+            IEnumerable<string> lines = new List<string>();
 
             switch (args.Source)
             {
                 case ListSources.Insurances:
-                    provider = InsuranceCodeProvider.Instance;
+                    lines = InsuranceCodeProvider.Instance.GetCSV();
                     break;
 
                 case ListSources.CountryCodes:
-                    provider = CountryCodeProvider.Instance;
+                    lines = CountryCodeProvider.Instance.GetCSV();
                     break;
 
                 case ListSources.Postcode_City:
-                    provider = Vodamep.Data.PostcodeCityProvider.Instance;
+                    lines = Vodamep.Data.PostcodeCityProvider.Instance.GetCSV();
                     break;
 
                 case ListSources.Qualifications:
-                    provider = QualificationCodeProvider.Instance;
+                    lines = QualificationCodeProvider.Instance.GetCSV();
                     break;
 
                 default:
@@ -68,7 +69,7 @@ namespace Vodamep.Client
                     return;
             }
 
-            foreach (var line in provider?.GetCSV())
+            foreach (var line in lines)
                 Console.WriteLine(line);
         }
 
