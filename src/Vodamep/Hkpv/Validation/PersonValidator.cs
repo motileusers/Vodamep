@@ -51,7 +51,7 @@ namespace Vodamep.Hkpv.Validation
             this.Include(new PersonSsnValidator());
 
             this.RuleFor(x => x.Insurance).NotEmpty();
-            this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<Person, string, InsuranceCodeProvider>());
+            this.RuleFor(x => x.Insurance).SetValidator(new ValidCodeValidator<Person, string, InsuranceCodeProvider>());
             
             this.RuleFor(x => x.Nationality).NotEmpty();
             this.RuleFor(x => x.Nationality).SetValidator(new CodeValidator<Person, string, CountryCodeProvider>());

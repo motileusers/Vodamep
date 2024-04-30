@@ -3,7 +3,7 @@ using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data
 {
-    public sealed class InsuranceCodeProvider : CodeProviderBase
+    public sealed class InsuranceCodeProvider : ValidCodeProviderBase
     {
         private static volatile InsuranceCodeProvider instance;
         private static object syncRoot = new Object();
