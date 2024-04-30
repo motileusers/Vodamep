@@ -6,8 +6,8 @@
     <AssemblyName>dmc</AssemblyName>
   </PropertyGroup>
 
-  <ItemGroup>            
-    <PackageReference Include="PowerArgs" Version="3.6.0" />    
+  <ItemGroup>
+    <PackageReference Include="PowerArgs" Version="4.0.3" />
   </ItemGroup> 
   
   <ItemGroup>

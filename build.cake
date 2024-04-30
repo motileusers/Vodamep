@@ -15,7 +15,6 @@ Task("Default")
 Task("Publish")    
 	.IsDependentOn("Default")   
 	.IsDependentOn("PublishNuget") 
-	.IsDependentOn("PublishLegacy")
 	.IsDependentOn("PublishClient")
 	.IsDependentOn("PublishApi")	
 	.IsDependentOn("PublishSpecs");
@@ -74,30 +73,6 @@ Task("Test")
 		}  
         
     });
-
-Task("PublishLegacy")	
-	.Does(() =>
-	{
-		EnsureDirectoryExists(publishDir);
-		CleanDirectory(publishDir + "/dml");
-		if (FileExists(publishDir + "dml.zip"))
-		{
-			DeleteFile(publishDir + "dml.zip");
-		}
-		
-		var settings = new DotNetPublishSettings
-		{         
-			Configuration = "Release",			
-			OutputDirectory = publishDir + "/dml",			
-			Runtime = "win-x64",
-			SelfContained = true
-		};			
-		
-		DotNetPublish("./src/Vodamep.Legacy/Vodamep.Legacy.csproj", settings); 
-
-		
-		Zip(publishDir + "/dml", publishDir + "/dml.zip", publishDir + "/dml/dml.exe");
-	});
 
 Task("PublishClient")	
 	.Does(() =>
