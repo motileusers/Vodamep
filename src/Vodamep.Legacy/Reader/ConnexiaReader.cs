@@ -9,6 +9,7 @@ using Vodamep.Legacy.Model;
 
 namespace Vodamep.Legacy.Reader
 {
+
     public class ConnexiaReader : IReader
     {
         private readonly string _connectionstring;
