@@ -104,15 +104,17 @@ namespace Vodamep.Specs
         }
 
 
-        [Then(@"*enthält (das Validierungsergebnis )?keine Fehler")]
-        public void ThenTheResultContainsNoErrors(string dummy)
+        [Then(@"enthält das Validierungsergebnis keine Fehler")]
+        [Then(@"es enthält keine Fehler")]
+        public void ThenTheResultContainsNoErrors()
         {
             Assert.True(this._context.Result.IsValid);
             Assert.Empty(this._context.Result.Errors.Where(x => x.Severity == Severity.Error));
         }
 
-        [Then(@"*enthält (das Validierungsergebnis )?keine Warnungen")]
-        public void ThenTheResultContainsNoWarnings(string dummy)
+        [Then(@"*enthält das Validierungsergebnis keine Warnungen")]
+        [Then(@"es enthält keine Warnungen")]
+        public void ThenTheResultContainsNoWarnings()
         {
             Assert.Empty(this._context.Result.Errors.Where(x => x.Severity == Severity.Warning));
         }

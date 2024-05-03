@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
+using System;
 using Vodamep.Data;
 
 namespace Vodamep.ValidationBase
@@ -20,7 +21,9 @@ namespace Vodamep.ValidationBase
 
             var provider = ValidCodeProviderBase.GetInstance<TCode>();
 
-            bool isValid = provider.IsValid(code);
+            DateTime date = DateTime.Now;
+
+            bool isValid = provider.IsValid(code, date);
 
             return isValid;
         }
