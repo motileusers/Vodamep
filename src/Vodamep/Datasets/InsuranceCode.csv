@@ -1,90 +1,90 @@
 //Organisationsbeschreibung DVP (Datenaustausch mit Vertragspartner) V3.5 vom 01/2017
 //https://www.sozialversicherung.at/cdscontent/load?contentid=10008.637649&version=1494499223 (Seite 65)
-
 // Frage: Ist Trennung nach Landesstelle notwendig? (Seite 51)
-01;Pensionsversicherungsanstalt der Angestellten
-02;Pensionsversicherungsanstalt der Arbeiter
-03;Sozialversicherungsanstalt der Bauern (UV)
-04;Versicherungsanstalt des österreichischen Bergbaues
-05;Versicherungsanstalt der österreichischen Eisenbahnen
-06;Versicherungsanstalt des österreichischen Notariates
-07;Versicherungsanstalt öffentlich Bediensteter (BVA)
-08;Allgemeine Unfallversicherungsanstalt (allgemein)
-11;Gebietskrankenkasse Wien
-12;Gebietskrankenkasse Niederösterreich
-13;Gebietskrankenkasse Burgenland
-14;Gebietskrankenkasse Oberösterreich
-15;Gebietskrankenkasse Steiermark
-16;Gebietskrankenkasse Kärnten
-17;Gebietskrankenkasse Salzburg
-18;Gebietskrankenkasse Tirol
-19;Gebietskrankenkasse Vorarlberg
-1A;Krankenfürsorgeanstalt der Bediensteten der Stadt Wien
-1P;Post- und Telegraphenverwaltung
-20;Betriebskrankenkasse der Österreichischen Staatsdruckerei
-21;Betriebskrankenkasse der Austria Tabakwerke AG
-22;Betriebskrankenkasse der Wiener Verkehrsbetriebe
-23;Betriebskrankenkasse der Semperit AG
-24;Betriesbkrankenkasse der Neusiedler AG für Papierfabrikation
-25;Betriebskrankenkasse der Hütte Donawitz der VOEST Alpine AG
-26;Betriebskrankenkasse des Werkes Zeltweg der VOEST Alpine AG
-27;Betriebskrankenkasse des Werkes Kindberg der VOEST Alpine AG
-28;Betriebskrankenkasse für die Betriebe Kapfenberg der Firma B
-29;Betriebskrankenkasse der Firma Johann Pengg
-31;ehemalige Landwirtschaftskrankenkasse Wien
-32;ehemalige Landwirtschaftskrankenkasse Niederösterreich
-33;ehemalige Landwirtschaftskrankenkasse Burgenland
-34;ehemalige Landwirtschaftskrankenkasse Oberösterreich
-35;ehemalige Landwirtschaftskrankenkasse Steiermark
-36;ehemalige Landwirtschaftskrankenkasse Kärnten
-37;ehemalige Landwirtschaftskrankenkasse Salzburg
-38;ehemalige Landwirtschaftskrankenkasse Tirol
-39;ehemalige Landwirtschaftskrankenkasse Vorarlberg
-40;Sozialversicherungsanstalt der gewerblichen Wirtschaft (Hauptstelle)
-41;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Wien
-42;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Niederösterreich
-43;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Burgenland
-44;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Oberösterreich
-45;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Steiermark
-46;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Kärnten
-47;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Salzburg
-48;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Tirol
-49;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Vorarlberg
-4A;Krankenfürsorgeanstalt des Magistrates der Landeshauptstadt
-4B;Krankenfürsorge für oberösterreichische Gemeindebeamte
-4C;Krankenfürsorge für oberösterreichische Landesbeamte
-4E;Krankenfürsorgeanstalt der Beamten des Magistrates Steyr
-4F;Krankenfürsoge für die Beamten der Stadt Wels
-50;Sozialversicherungsanstalt der Bauern (PV)
-51;Sozialversicherungsanstalt der Bauern Landesstelle Wien
-52;Sozialversicherungsanstalt der Bauern Landesstelle Niederösterreich
-53;Sozialversicherungsanstalt der Bauern Landesstelle Burgenland
-54;Sozialversicherungsanstalt der Bauern Landesstelle Oberösterreich
-55;Sozialversicherungsanstalt der Bauern Landesstelle Steiermark
-56;Sozialversicherungsanstalt der Bauern Landesstelle Kärnten
-57;Sozialversicherungsanstalt der Bauern Landesstelle Salzburg
-58;Sozialversicherungsanstalt der Bauern Landesstelle Tirol
-59;Sozialversicherungsanstalt der Bauern Landesstelle Vorarlberg
-5A;Krankenfürsorgeanstalt für die Beamten der Landeshauptstadt
-5B;Krankenfürsorgeanstalt der Stadtgemeinde Mürzzuschlag
-6A;Krankenfürsorgeanstalt der Beamten der Stadt Villach
-80;Arbeitsmarktverwaltung - allgemein
-91;Bundesministerium für Unterricht und Kunst
-95;Bundesministerium für Landesverteidigung
-99;Hauptverband der österreichischen Sozialversicherungsträger
-B9;Bezirkshauptmannschaft im Bundesland Vorarlberg
-CH;in der Schweiz versichert
-DV;in Deutschland versichert
-FA;Krankenfürsorgeanstalt der Beamten d.Stadt Bregenz
-FL;in Liechtenstein versichert
-KS;Bezirkshauptmannschaften
-LH;Lebenshilfe-Patienten
-CA;Caritas-Patienten
-NV;nicht versichert
-PV;Privat versichert
-S9;Bundessozialamt Vorarlberg
-SO;Sonstige
-SZ;Selbstzahler
-UB;unbekannt
+
+01;Pensionsversicherungsanstalt der Angestellten;;31.12.2023
+02;Pensionsversicherungsanstalt der Arbeiter;;31.12.2023
+03;Sozialversicherungsanstalt der Bauern (UV);;31.12.2023
+04;Versicherungsanstalt des österreichischen Bergbaues;;31.12.2023
+05;Versicherungsanstalt der österreichischen Eisenbahnen;;
+06;Versicherungsanstalt des österreichischen Notariates;;31.12.2023
+07;Versicherungsanstalt öffentlich Bediensteter;;
+08;Allgemeine Unfallversicherungsanstalt (allgemein);;31.12.2023
+11;Gebietskrankenkasse Wien;;31.12.2023
+12;Gebietskrankenkasse Niederösterreich;;31.12.2023
+13;Gebietskrankenkasse Burgenland;;31.12.2023
+14;Gebietskrankenkasse Oberösterreich;;31.12.2023
+15;Gebietskrankenkasse Steiermark;;31.12.2023
+16;Gebietskrankenkasse Kärnten;;31.12.2023
+17;Gebietskrankenkasse Salzburg;;31.12.2023
+18;Gebietskrankenkasse Tirol;;31.12.2023
+19;Österreichische Gesundheitskasse;;
+1A;Krankenfürsorgeanstalt der Bediensteten der Stadt Wien;;31.12.2023
+1P;Post- und Telegraphenverwaltung;;31.12.2023
+20;Betriebskrankenkasse der Österreichischen Staatsdruckerei;;31.12.2023
+21;Betriebskrankenkasse der Austria Tabakwerke AG;;31.12.2023
+22;Betriebskrankenkasse der Wiener Verkehrsbetriebe;;31.12.2023
+23;Betriebskrankenkasse der Semperit AG;;31.12.2023
+24;Betriesbkrankenkasse der Neusiedler AG für Papierfabrikation;;31.12.2023
+25;Betriebskrankenkasse der Hütte Donawitz der VOEST Alpine AG;;31.12.2023
+26;Betriebskrankenkasse des Werkes Zeltweg der VOEST Alpine AG;;31.12.2023
+27;Betriebskrankenkasse des Werkes Kindberg der VOEST Alpine AG;;31.12.2023
+28;Betriebskrankenkasse für die Betriebe Kapfenberg der Firma B;;31.12.2023
+29;Betriebskrankenkasse der Firma Johann Pengg;;31.12.2023
+31;ehemalige Landwirtschaftskrankenkasse Wien;;31.12.2023
+32;ehemalige Landwirtschaftskrankenkasse Niederösterreich;;31.12.2023
+33;ehemalige Landwirtschaftskrankenkasse Burgenland;;31.12.2023
+34;ehemalige Landwirtschaftskrankenkasse Oberösterreich;;31.12.2023
+35;ehemalige Landwirtschaftskrankenkasse Steiermark;;31.12.2023
+36;ehemalige Landwirtschaftskrankenkasse Kärnten;;31.12.2023
+37;ehemalige Landwirtschaftskrankenkasse Salzburg;;31.12.2023
+38;ehemalige Landwirtschaftskrankenkasse Tirol;;31.12.2023
+39;ehemalige Landwirtschaftskrankenkasse Vorarlberg;;31.12.2023
+40;Sozialversicherungsanstalt der gewerblichen Wirtschaft;;
+41;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Wien;;31.12.2023
+42;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Niederösterreich;;31.12.2023
+43;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Burgenland;;31.12.2023
+44;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Oberösterreich;;31.12.2023
+45;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Steiermark;;31.12.2023
+46;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Kärnten;;31.12.2023
+47;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Salzburg;;31.12.2023
+48;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Tirol;;31.12.2023
+49;Sozialversicherungsanstalt der gewerbl. Wirtschaft - Vorarlberg;;31.12.2023
+4A;Krankenfürsorgeanstalt des Magistrates der Landeshauptstadt;;31.12.2023
+4B;Krankenfürsorge für oberösterreichische Gemeindebeamte;;31.12.2023
+4C;Krankenfürsorge für oberösterreichische Landesbeamte;;31.12.2023
+4E;Krankenfürsorgeanstalt der Beamten des Magistrates Steyr;;31.12.2023
+4F;Krankenfürsoge für die Beamten der Stadt Wels;;31.12.2023
+50;Sozialversicherungsanstalt der Bauern;;
+51;Sozialversicherungsanstalt der Bauern Landesstelle Wien;;31.12.2023
+52;Sozialversicherungsanstalt der Bauern Landesstelle Niederösterreich;;31.12.2023
+53;Sozialversicherungsanstalt der Bauern Landesstelle Burgenland;;31.12.2023
+54;Sozialversicherungsanstalt der Bauern Landesstelle Oberösterreich;;31.12.2023
+55;Sozialversicherungsanstalt der Bauern Landesstelle Steiermark;;31.12.2023
+56;Sozialversicherungsanstalt der Bauern Landesstelle Kärnten;;31.12.2023
+57;Sozialversicherungsanstalt der Bauern Landesstelle Salzburg;;31.12.2023
+58;Sozialversicherungsanstalt der Bauern Landesstelle Tirol;;31.12.2023
+59;Sozialversicherungsanstalt der Bauern Landesstelle Vorarlberg;;31.12.2023
+5A;Krankenfürsorgeanstalt für die Beamten der Landeshauptstadt;;31.12.2023
+5B;Krankenfürsorgeanstalt der Stadtgemeinde Mürzzuschlag;;31.12.2023
+6A;Krankenfürsorgeanstalt der Beamten der Stadt Villach;;31.12.2023
+80;Arbeitsmarktverwaltung - allgemein;;31.12.2023
+91;Bundesministerium für Unterricht und Kunst;;31.12.2023
+95;Bundesministerium für Landesverteidigung;;31.12.2023
+99;Hauptverband der österreichischen Sozialversicherungsträger;;31.12.2023
+B9;Bezirkshauptmannschaft im Bundesland Vorarlberg;;31.12.2023
+CH;In der Schweiz versichert;;
+DV;In Deutschland versichert;;
+FA;Krankenfürsorgeanstalt der Beamten d.Stadt Bregenz;;31.12.2023
+FL;In Liechtenstein versichert;;
+KS;Bezirkshauptmannschaften;;31.12.2023
+LH;Lebenshilfe-Patienten;;
+CA;Caritas-Patienten;;
+NV;Nicht versichert;;
+PV;Privat versichert;;
+S9;Bundessozialamt Vorarlberg;;31.12.2023
+SO;Sonstige;;
+SZ;Selbstzahler;;
+UB;Unbekannt;;
 
  

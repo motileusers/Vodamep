@@ -1,7 +1,9 @@
-﻿using Google.Protobuf.Reflection;
+﻿using Google.Protobuf;
+using Google.Protobuf.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,7 +14,8 @@ namespace Vodamep.Data
     public abstract class ValidCodeProviderBase
     {
         private static Regex _commentPattern = new Regex("//.*$");
-        private IDictionary<string, string> _dict = new Dictionary<string, string>();
+        private IDictionary<string, ValidCode> _dict = new Dictionary<string, ValidCode>();
+        private const string dateFormat = "dd.MM.yyyy";
 
         protected ValidCodeProviderBase()
         {
@@ -21,7 +24,21 @@ namespace Vodamep.Data
 
         public abstract string Unknown { get; }
 
-        public virtual bool IsValid(string code) => _dict.ContainsKey(code ?? string.Empty);
+        public virtual bool IsValid(string code, DateTime date)
+        {
+            if (String.IsNullOrWhiteSpace(code)) { return false; }
+            if (!_dict.ContainsKey(code)) { return false; }
+
+            ValidCode validCode = _dict[code];
+
+            // z.B. Gültigkeit der Meldung 31.12.2022 < Start der Gültigkeit 01.01.2024
+            if (date < validCode.ValidFrom) { return false; }
+
+            // z.B. Gültigkeit der Meldung 01.01.2024 > Ende der Gültigkeit 31.12.2023
+            if (date > validCode.ValidTo) { return false; }
+
+            return true;
+        }
 
 
         private void Init()
@@ -42,7 +59,24 @@ namespace Vodamep.Data
                         continue;
 
                     var values = line.Split(';');
-                    _dict.Add(values[0], values[1]);
+
+                    ValidCode validCode = new ValidCode();
+                    validCode.Code = values[0];
+                    validCode.Description = values[1];
+
+                    if (values.Length > 2 &&
+                        !String.IsNullOrWhiteSpace(values[2]))
+                    {
+                        validCode.ValidFrom = DateTime.ParseExact(values[2], dateFormat, CultureInfo.InvariantCulture);
+                    }
+
+                    if (values.Length > 3 &&
+                        !String.IsNullOrWhiteSpace(values[3]))
+                    {
+                        validCode.ValidTo = DateTime.ParseExact(values[3], dateFormat, CultureInfo.InvariantCulture);
+                    }
+
+                    _dict.Add(validCode.Code, validCode);
                 }
             }
         }
@@ -59,7 +93,7 @@ namespace Vodamep.Data
                 List<string> names = Enum.GetNames(clrType).ToList();
                 int index = names.IndexOf(code);
                 EnumValueDescriptor valueDescriptior = descriptor.Values[index];
-                return this._dict[valueDescriptior.Name];
+                return this._dict[valueDescriptior.Name].Description;
             }
             catch (Exception exception)
             {
@@ -69,9 +103,9 @@ namespace Vodamep.Data
 
 
 
-        public IEnumerable<string> GetCSV() => _dict.Select(x => $"{x.Key};{x.Value}");
+        public IEnumerable<string> GetCSV() => _dict.Select(x => $"{x.Key};{x.Value.Description}");
 
-        public IReadOnlyDictionary<string, string> Values => new ReadOnlyDictionary<string, string>(_dict);
+        public IReadOnlyDictionary<string, ValidCode> Values => new ReadOnlyDictionary<string, ValidCode>(_dict);
 
         protected abstract string ResourceName { get; }
 
