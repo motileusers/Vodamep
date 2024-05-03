@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using Vodamep.Data;
 using Vodamep.Data.Dummy;
 using Vodamep.Hkpv.Model;
 using Vodamep.Hkpv.Validation;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Vodamep.Specs.Hkpv.StepDefinitions
 {
@@ -68,6 +70,25 @@ namespace Vodamep.Specs.Hkpv.StepDefinitions
         public void GivenItIsAHkpvReport()
         {
 
+        }
+
+        [Given(@"und die Meldung stammt aus dem Jahr (.*)")]
+        public void GiveReportYearIs(string yearString)
+        {
+            int year = Convert.ToInt32(yearString);
+            var date = DateTime.Today.AddMonths(-1);
+
+            var r = HkpvDataGenerator.Instance.CreateHkpvReport("", year, date.Month, 1, 1, false);
+
+            _context.Report = r;
+
+            AddDummyActivities(this.Report.Persons[0].Id, this.Report.Staffs[0].Id);
+
+        }
+
+        private DateTime UpdateYear(DateTime date, int year)
+        {
+            return new DateTime(year, date.Month, date.Day);
         }
 
         [Given(@"die Meldung enthält am '(.*)' die Aktivitäten '(.*)'")]

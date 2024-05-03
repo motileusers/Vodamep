@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
 using System;
 using System.Text.RegularExpressions;
 using Vodamep.Data;
@@ -11,7 +10,7 @@ namespace Vodamep.Hkpv.Validation
 {
     internal class PersonValidator : AbstractValidator<Person>
     {
-        public PersonValidator()
+        public PersonValidator(HkpvReport report)
         {
             #region Documentation
             // AreaDef: HKP
@@ -51,8 +50,12 @@ namespace Vodamep.Hkpv.Validation
             this.Include(new PersonSsnValidator());
 
             this.RuleFor(x => x.Insurance).NotEmpty();
-            this.RuleFor(x => x.Insurance).SetValidator(new CodeValidator<Person, string, InsuranceCodeProvider>());
-            
+            this.RuleFor(x => x.Insurance)
+                .Must(x => InsuranceCodeProvider.Instance.IsValid(x, report.FromD))
+                .Unless(x => String.IsNullOrWhiteSpace(x.Insurance))
+                .WithMessage(Validationmessages.InvalidCode);
+
+
             this.RuleFor(x => x.Nationality).NotEmpty();
             this.RuleFor(x => x.Nationality).SetValidator(new CodeValidator<Person, string, CountryCodeProvider>());
 

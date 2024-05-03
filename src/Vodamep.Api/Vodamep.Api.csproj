@@ -22,7 +22,7 @@
   <ItemGroup>    
     <PackageReference Include="Bazinga.AspNetCore.Authentication.Basic" Version="2.0.1" />    
     <PackageReference Include="dbup-sqlserver" Version="5.0.40" />    
-    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.9" />    
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.10" />    
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />    
   </ItemGroup>
   
