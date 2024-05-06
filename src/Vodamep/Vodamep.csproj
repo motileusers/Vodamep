@@ -22,6 +22,7 @@
 	<ItemGroup>
 	  <None Remove="Datasets\Hkpv\Gender.csv" />
 	  <None Remove="Datasets\MainAttendanceRelation.csv" />
+	  <None Remove="Datasets\Mkkp\ActivityScopes.csv" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -37,6 +38,7 @@
 	<ItemGroup>
 		<EmbeddedResource Include="Datasets\Hkpv\Gender.csv" />
 		<EmbeddedResource Include="Datasets\MainAttendanceRelation.csv" />
+		<EmbeddedResource Include="Datasets\Mkkp\ActivityScopes.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\AdmissionLocation.csv" />
 		<EmbeddedResource Include="Datasets\Agp\ActivityType.csv" />
 		<EmbeddedResource Include="Datasets\Agp\Diagnosisgroup.csv" />
