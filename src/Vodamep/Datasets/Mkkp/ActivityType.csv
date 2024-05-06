@@ -1,4 +1,4 @@
-﻿// Leistungsbereiche MKKP
+﻿// Leistungstypen MKKP
 
 ACCOMPANYING_WITH_CONTACT;Begleitende Maßnahmen mit Patientenkontakt
 ACCOMPANYING_WITHOUT_CONTACT;Begleitende Maßnahmen ohne Patientenkontakt
@@ -9,4 +9,4 @@ MEDICAL_INJECTION;Medizinische Pflege: zentraler/peripherer Gefäßzugang bzw. I
 MEDICAL_VENTILATION_TUBES;Medizinische Pflege: Beatmung Kanülen Wechsel Tracheostomapflege 
 MEDICAL_VITAL;Medizinische Pflege: Vitalzeichen/Monitoring
 MEDICAL_WOUND;Medizinische Pflege: Wundversorgung
-UNDEFINED_ACTIVITY;undefiniert
+UNDEFINED_ACTIVITY_SCOPE;undefiniert

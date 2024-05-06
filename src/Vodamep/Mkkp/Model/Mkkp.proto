@@ -53,9 +53,10 @@ message Activity {
     google.protobuf.Timestamp date = 2;
     string person_id = 3;
     string staff_id = 4;
-    PlaceOfAction place_of_Action = 5;          // Ein Wert aus der Liste places_of_action.csv
+    PlaceOfAction place_of_Action = 5;
     repeated ActivityType entries = 6; 
     int32 minutes = 7;
+    ActivityScope activity_scope = 8;
 }
 
 // Wegzeiten
@@ -64,6 +65,14 @@ message TravelTime {
     google.protobuf.Timestamp date = 2;
     string staff_id = 3;
     int32 minutes = 4;
+}
+
+// Leistungsbereich
+// Beschreibung in ActivityScopes.csv
+enum ActivityScope {  
+  UNDEFINED_SCOPE = 0;
+  CHILD_CARE_SCOPE = 1;
+  PALLIATIVE_CARE_SCOPE = 2;
 }
 
 // Leistungstypen
