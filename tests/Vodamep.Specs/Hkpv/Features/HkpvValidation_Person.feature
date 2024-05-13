@@ -84,7 +84,7 @@ Beispiele:
 
 Szenariogrundriss: Die Versicherung einer Person ist mit einem gültigen Wert befüllt
 	Angenommen es ist ein 'HkpvReport'
-	Und und die Meldung stammt aus dem Jahr <Year>
+	Und und die Hkpv-Meldung stammt aus dem Jahr <Year>
 	Und die Eigenschaft 'insurance' von 'Person' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis keine Fehler
 Beispiele:
@@ -96,7 +96,7 @@ Beispiele:
 
 Szenariogrundriss: Die Versicherung einer Person ist mit einem ungültigen Wert befüllt
 	Angenommen es ist ein 'HkpvReport'
-	Und und die Meldung stammt aus dem Jahr <Year>
+	Und und die Hkpv-Meldung stammt aus dem Jahr <Year>
 	Und die Eigenschaft 'insurance' von 'Person' ist auf '<Wert>' gesetzt
 	Dann enthält das Validierungsergebnis genau einen Fehler
 	Und die Fehlermeldung lautet: 'Für '<Bezeichnung>' ist '<Wert>' kein gültiger Code.'

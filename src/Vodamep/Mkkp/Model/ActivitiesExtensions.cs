@@ -18,8 +18,9 @@ namespace Vodamep.Mkkp.Model
                         Minutes = a.Minutes,
                         Date = a.Date, 
                         PersonId = a.PersonId, 
-                        StaffId = a.StaffId
-                    };
+                        StaffId = a.StaffId,
+                        ActivityScope = a.ActivityScope
+                };
                 e.Entries.AddRange(a.Entries.OrderBy(x => x));
 
                 entries.Add(e);

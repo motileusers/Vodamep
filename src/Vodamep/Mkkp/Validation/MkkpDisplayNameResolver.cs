@@ -52,8 +52,10 @@ namespace Vodamep.Mkkp.Validation
                 _dict.Add(nameof(Activity.StaffId), "Mitarbeiter-ID");
             if (!_dict.ContainsKey(nameof(Activity.PlaceOfAction)))
                 _dict.Add(nameof(Activity.PlaceOfAction), "Einsatzort");
+            if (!_dict.ContainsKey(nameof(Activity.ActivityScope)))
+                _dict.Add(nameof(Activity.ActivityScope), "Leistungsbereich");
             if (!_dict.ContainsKey(nameof(Activity.Entries)))
-                _dict.Add(nameof(Activity.Entries), "Leistungsbereiche");
+                _dict.Add(nameof(Activity.Entries), "Leistungstypen");
             if (!_dict.ContainsKey(nameof(Activity.Minutes)))
                 _dict.Add(nameof(Activity.Minutes), "Leistungszeit");
 

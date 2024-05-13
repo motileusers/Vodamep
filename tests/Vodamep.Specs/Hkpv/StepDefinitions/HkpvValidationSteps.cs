@@ -72,7 +72,7 @@ namespace Vodamep.Specs.Hkpv.StepDefinitions
 
         }
 
-        [Given(@"und die Meldung stammt aus dem Jahr (.*)")]
+        [Given(@"und die Hkpv-Meldung stammt aus dem Jahr (.*)")]
         public void GiveReportYearIs(string yearString)
         {
             int year = Convert.ToInt32(yearString);
@@ -83,7 +83,6 @@ namespace Vodamep.Specs.Hkpv.StepDefinitions
             _context.Report = r;
 
             AddDummyActivities(this.Report.Persons[0].Id, this.Report.Staffs[0].Id);
-
         }
 
         private DateTime UpdateYear(DateTime date, int year)

@@ -152,7 +152,8 @@ namespace Vodamep.Data.Dummy
                 PersonId = personId,
                 DateD = date,
                 Minutes = minuten,
-                PlaceOfAction = placeOfAction
+                PlaceOfAction = placeOfAction,
+                ActivityScope = ActivityScope.ChildCareScope,
 
             };
 
