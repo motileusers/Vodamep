@@ -12,16 +12,17 @@
 		<PackageIcon></PackageIcon>
 		<RepositoryUrl>https://github.com/connexiadev/Vodamep.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>2.2.0</Version>
+		<Version>2.3.1</Version>
 		<Product>Vorarlberger Datenmeldung Pflege</Product>
 		<PackageReleaseNotes></PackageReleaseNotes>
-		<AssemblyVersion>2.2.0.0</AssemblyVersion>
-		<FileVersion>2.2.0</FileVersion>
+		<AssemblyVersion>2.3.1.0</AssemblyVersion>
+		<FileVersion>2.3.1</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <None Remove="Datasets\Hkpv\Gender.csv" />
 	  <None Remove="Datasets\MainAttendanceRelation.csv" />
+	  <None Remove="Datasets\Mkkp\ActivityScope.csv" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -37,6 +38,7 @@
 	<ItemGroup>
 		<EmbeddedResource Include="Datasets\Hkpv\Gender.csv" />
 		<EmbeddedResource Include="Datasets\MainAttendanceRelation.csv" />
+		<EmbeddedResource Include="Datasets\Mkkp\ActivityScope.csv" />
 		<EmbeddedResource Include="Datasets\StatLp\AdmissionLocation.csv" />
 		<EmbeddedResource Include="Datasets\Agp\ActivityType.csv" />
 		<EmbeddedResource Include="Datasets\Agp\Diagnosisgroup.csv" />

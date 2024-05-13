@@ -64,6 +64,19 @@ namespace Vodamep.Specs.Mkkp.StepDefinitions
 
         }
 
+        [Given(@"und die Mkkp-Meldung stammt aus dem Jahr (.*)")]
+        public void GiveReportYearIs(string yearString)
+        {
+            int year = Convert.ToInt32(yearString);
+            var date = DateTime.Today.AddMonths(-1);
+
+            var r = MkkpDataGenerator.Instance.CreateMkkpReport("", year, date.Month, 1, 1, false, false);
+
+            _context.Report = r;
+
+            this.AddDummyActivity(r, r.Persons[0].Id, r.Staffs[0].Id);
+        }
+
 
         [Given(@"der Id einer Mkkp-Person ist nicht eindeutig")]
         public void GivenPersonIdNotUnique()
@@ -192,7 +205,16 @@ namespace Vodamep.Specs.Mkkp.StepDefinitions
                 .ElementAt(random.Next(Enum.GetValues(typeof(PlaceOfAction)).Length - 1));
 
             var minutes = random.Next(1, 100) * 5;
-            var dummyActivity = new Activity() { Id = "1", Date = r.From, PersonId = personId, StaffId = staffId, Minutes = minutes, PlaceOfAction = placeOfAction };
+            var dummyActivity = new Activity() 
+            { 
+                Id = "1", 
+                Date = r.From, 
+                PersonId = personId, 
+                ActivityScope = ActivityScope.ChildCareScope,
+                StaffId = staffId, 
+                Minutes = minutes, 
+                PlaceOfAction = placeOfAction 
+            };
             dummyActivity.Entries.Add(new[] { ActivityType.Body, ActivityType.MedicalDiet, ActivityType.MedicalWound });
 
             r.Activities.Add(dummyActivity);
