@@ -46,6 +46,19 @@ namespace Vodamep.Mkkp.Validation
             this.RuleFor(x => x.Date).NotEmpty()
                 .WithMessage(x => Validationmessages.ReportBaseValueMustNotBeEmpty(displayNameResolver.GetDisplayName(nameof(x.Date)), displayNameResolver.GetDisplayName(nameof(Activity)), report.GetClient(x.PersonId)));
 
+            this.RuleFor(x => x).Custom((x, ctx) =>
+            {
+                if (from >= new DateTime(2023, 9, 1))
+                {
+                    if(x.ActivityScope == ActivityScope.UndefinedScope)
+                    {
+                        ctx.AddFailure(new ValidationFailure(nameof(Activity.ActivityScope), Validationmessages.MkkpActivityScopeEmpty(report.GetClient(x.PersonId), x.DateD.ToShortDateString())));
+                    }
+                }
+            });
+
+
+
             this.RuleFor(x => x.DateD)
                 .SetValidator(x => new DateTimeValidator(displayNameResolver.GetDisplayName(nameof(x.Date)),
                     report.GetClient(x.PersonId), report.GetStaffName(x.StaffId), from, to, x.Date));

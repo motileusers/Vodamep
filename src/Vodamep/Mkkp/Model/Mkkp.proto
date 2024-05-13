@@ -68,7 +68,7 @@ message TravelTime {
 }
 
 // Leistungsbereich
-// Beschreibung in ActivityScopes.csv
+// Beschreibung in ActivityScope.csv
 enum ActivityScope {  
   UNDEFINED_SCOPE = 0;
   CHILD_CARE_SCOPE = 1;

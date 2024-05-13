@@ -141,6 +141,9 @@ namespace Vodamep.ValidationBase
 
         public static string PersonsPropertyDiffers(string name, string propertyName, string curValue, string preValue) => $"Für die Person '{name}' wurde für '{propertyName}' bisher '{preValue}' gemeldet. Jetzt ist der Wert '{curValue}'.";
 
+        public static string MkkpActivityScopeEmpty(string clientName, string date) => $"Leistungsbereich für Aktivität vom {date} '{clientName}' nicht angegeben.";
+
+
         public static string GetRange(DateTime minDate, DateTime maxDate)
         {
             if (minDate == maxDate)
