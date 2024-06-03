@@ -1,0 +1,125 @@
+﻿html {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+body {
+    font-size: 1.0rem;
+    line-height: 0.8;
+    max-width: 45em;
+    margin: auto;
+    padding: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.0;
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 150%;
+}
+
+h2 {
+    font-size: 130%;
+}
+
+h3, h4, h5, h6 {
+    font-size: 120%;
+}
+
+p {
+    margin-top: 0px;
+    margin-bottom: 1.0rem;
+}
+
+small, sub, sup {
+    font-size: 75%;
+}
+
+
+ul {
+    padding-left: 1.0em;
+    margin-top: 0px;
+    margin-bottom: 1.0rem;
+}
+
+li {
+    margin-bottom: 0.4em;
+}
+
+blockquote {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 1em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    padding-right: 0.8em;
+    border-left: 5px solid #1d7484;
+    margin-bottom: 1.0rem;
+    background-color: #f1f1f1;
+}
+
+    blockquote p {
+        margin-bottom: 0;
+    }
+
+img {
+    height: auto;
+    max-width: 100%;
+    margin-top: 0px;
+    margin-bottom: 1.0rem;
+}
+
+/* Pre and Code */
+pre {
+    background-color: #f1f1f1;
+    display: block;
+    padding: 1em;
+    overflow-x: auto;
+    margin-top: 0px;
+    margin-bottom: 1.0rem;
+    font-size: 0.9em;
+}
+
+code, kbd, samp {
+    font-size: 0.9em;
+    padding: 0 0.5em;
+    background-color: #f1f1f1;
+    white-space: pre-wrap;
+}
+
+pre > code {
+    padding: 0;
+    background-color: transparent;
+    white-space: pre;
+    font-size: 1em;
+}
+
+/* Tables */
+table {
+    text-align: justify;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+th {
+    font-weight: 250;
+    font-size: 85%;
+}
+
+td, th {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+ins {
+    background-color: #cfc;
+    text-decoration: none;
+}
+
+del {
+    color: #999;
+    background-color: #FEC8C8;
+}
