@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Styles.css" />
+    <None Remove="Template.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Styles.css" />
+    <EmbeddedResource Include="Template.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="htmldiff.net" Version="1.4.2" />
     <PackageReference Include="Markdig" Version="0.37.0" />
   </ItemGroup>
