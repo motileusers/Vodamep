@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Vodamep.Summaries.Extended\Vodamep.Summaries.Extended.csproj" />
     <ProjectReference Include="..\..\src\Vodamep.Summaries\Vodamep.Summaries.csproj" />
   </ItemGroup>
 
