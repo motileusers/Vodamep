@@ -34,12 +34,12 @@ namespace Vodamep.Summaries
         public SummaryRegistryEntry[] GetEntries(ReportType reportType) => _entries.Where(x => x.Type == reportType).ToArray();
 
 
-        public async Task<Summary?> CreateSummary<T>(SummaryRegistryEntry entry, T report)
+        public async Task<Summary?> CreateSummary<T>(SummaryRegistryEntry entry, params T[] reports)
             where T : IReport
         {
 
-            var model = await CreateModel<T>(entry, [report]);
-
+            var model = await CreateModel(entry, reports);
+            
             if (model != null)
             {
                 var summary = await CreateSummary(entry, model);

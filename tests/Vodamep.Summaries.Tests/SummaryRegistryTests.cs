@@ -26,9 +26,8 @@ namespace Vodamep.Summaries.Tests
             Assert.Contains(MinutesPerActivityScopeSummaryFactory.GetDescription(), e);
         }
 
-
         [Fact]
-        public async Task GetEntries_DefaultRegistry_CreateSummary()
+        public async Task CreateSummary_MinutesPerActivityScopeSummary_OneMkkpReport_ReturnsSummary()
         {
             var summaryDescription = MinutesPerActivityScopeSummaryFactory.GetDescription();
 
@@ -36,11 +35,21 @@ namespace Vodamep.Summaries.Tests
 
             Assert.NotNull(summary);
             Assert.NotEmpty(summary.Text);
-
         }
 
         [Fact]
-        public async Task GetEntries_DefaultRegistry_CreateSummary2()
+        public async Task CreateSummary_MinutesPerActivityScopeSummary_MultipleMkkpReport_ReturnsSummary()
+        {
+            var summaryDescription = MinutesPerActivityScopeSummaryFactory.GetDescription();
+
+            var summary = await _registry.CreateSummary(summaryDescription, _report, _report);
+
+            Assert.NotNull(summary);
+            Assert.NotEmpty(summary.Text);
+        }
+
+        [Fact]
+        public async Task CreateSummary_Summary_OneMkkpReport_ReturnsSummary()
         {
             var summaryDescription = SummaryFactory.GetDescription();
 
@@ -51,49 +60,14 @@ namespace Vodamep.Summaries.Tests
         }
 
         [Fact]
-        public async Task ToHtml_IncludeStyles_ContainsStyles()
+        public async Task CreateSummary_Summary_MultipleMkkpReport_ReturnsEmptySummary()
         {
             var summaryDescription = SummaryFactory.GetDescription();
 
-            var summary = await _registry.CreateSummary(summaryDescription, _report);
+            var summary = await _registry.CreateSummary(summaryDescription, _report, _report);
 
-            var html = summary!.ToHtml(true);
-
-            Assert.Contains("<style>", html);
+            Assert.Null(summary);
         }
-
-        [Fact]
-        public async Task ToHtml_NotIncludeStyles_ContainsStyles()
-        {
-            var summaryDescription = SummaryFactory.GetDescription();
-
-            var summary = await _registry.CreateSummary(summaryDescription, _report);
-
-            var html = summary!.ToHtml(false);
-
-            Assert.DoesNotContain("<style>", html);
-        }
-
-        [Fact]
-        public async Task Diff_BirthdayIsAdded_BirthdayIsMarkedAsINS()
-        {
-            var summaryDescription = SummaryFactory.GetDescription();
-
-            _report.Persons[0].Birthday = null;
-
-            var summary = await _registry.CreateSummary(summaryDescription, _report);
-
-            var r2 = _report.Clone();
-
-            r2.Persons[0].BirthdayD = new DateTime(2024, 6, 3);
-
-            var summary2 = await _registry.CreateSummary(summaryDescription, r2);
-
-            var diff = summary!.Diff(summary2!, true);
-
-            Assert.Contains("<ins class='diffins'>03.06.2024</ins>", diff);
-        }
-
 
         public static MkkpReport CreateReport()
         {

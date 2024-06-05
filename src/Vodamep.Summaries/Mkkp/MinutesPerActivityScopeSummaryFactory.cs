@@ -33,8 +33,8 @@ namespace Vodamep.Summaries.Mkkp
             var scopes = model.Values.Select(x => x.Scope).Distinct()
                 .ToDictionary(x => x, x => x switch
                 {
-                    ActivityScope.ChildCareScope => "KKP",
-                    ActivityScope.PalliativeCareScope => "Paliativ",
+                    ActivityScope.ChildCareScope => "MKKP",
+                    ActivityScope.PalliativeCareScope => "Palliativ",
                     _ => "???"
                 });
 
