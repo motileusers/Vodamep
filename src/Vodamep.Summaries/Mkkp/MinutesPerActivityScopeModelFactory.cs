@@ -1,4 +1,5 @@
-﻿using Vodamep.Mkkp.Model;
+﻿using System.Collections;
+using Vodamep.Mkkp.Model;
 
 namespace Vodamep.Summaries.Mkkp
 {
@@ -30,5 +31,13 @@ namespace Vodamep.Summaries.Mkkp
 
             return Task.FromResult(result);
         }
+
+        async Task<object> ISummaryModelFactory.Create(IEnumerable reports)
+        {
+            var r = await this.Create(reports != null ? reports.OfType<MkkpReport>() : []);
+
+            return r;
+        }
+
     }
 }
