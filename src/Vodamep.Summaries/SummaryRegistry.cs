@@ -14,13 +14,16 @@ namespace Vodamep.Summaries
             result.Add(Mkkp.SummaryFactory.GetDescription());
             result.Add(Mkkp.MinutesPerActivityScopeSummaryFactory.GetDescription());
 
+            result.Add(Hkpv.SummaryFactory.GetDescription());
+
             return result;
         }
 
         public void Add(SummaryRegistryEntry entry)
         {
             if (entry.GetType().IsGenericType
-                && entry.GetType().GetGenericTypeDefinition() == typeof(SummaryRegistryEntry<,,,>)
+                && (entry.GetType().GetGenericTypeDefinition() == typeof(SummaryRegistryEntry<,,,>)
+                || entry.GetType().GetGenericTypeDefinition() == typeof(SummaryRegistryEntry<,>))
                 && !_entries.Contains(entry)
                 )
             {
@@ -28,31 +31,7 @@ namespace Vodamep.Summaries
             }
         }
 
-
-        public IEnumerable<SummaryRegistryEntry> GetEntries(IReport report)
-        {
-            if (report == null)
-            {
-                yield break;
-            }
-
-            var reportType = report.GetType();
-
-            foreach (var entry in _entries)
-            {
-                var type = entry.GetType();
-
-                if (!type.IsGenericType)
-                {
-                    continue;
-                }
-
-                if (type.IsGenericType && type.GetGenericArguments().ElementAtOrDefault(0) == reportType)
-                {
-                    yield return entry;
-                }
-            }
-        }
+        public SummaryRegistryEntry[] GetEntries(ReportType reportType) => _entries.Where(x => x.Type == reportType).ToArray();
 
 
         public async Task<Summary?> CreateSummary<T>(SummaryRegistryEntry entry, T report)
@@ -89,15 +68,12 @@ namespace Vodamep.Summaries
             if (entry.GetType().GetGenericTypeDefinition() == typeof(SummaryRegistryEntry<,,,>))
             {
                 var summaryModelFactoryType = entry.GetType().GetGenericArguments()[2];
-                var summaryModelFactory = Activator.CreateInstance(summaryModelFactoryType);
 
-                var createModelMethodInfo = summaryModelFactoryType.GetMethod(nameof(ISummaryModelFactory<T, object>.Create)) ?? throw new ArgumentException();
-
-                if (createModelMethodInfo.Invoke(summaryModelFactory, [reports]) is Task t)
+                if (Activator.CreateInstance(summaryModelFactoryType) is ISummaryModelFactory summaryModelFactory)
                 {
-                    await t;
+                    var result = await summaryModelFactory.Create(reports);
 
-                    return ((dynamic)t).Result;
+                    return result;
                 }
             }
 
