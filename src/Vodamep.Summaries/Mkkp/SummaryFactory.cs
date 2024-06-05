@@ -5,7 +5,7 @@ namespace Vodamep.Summaries.Mkkp
 {
     public class SummaryFactory : ISummaryFactory<MkkpReport>
     {
-        public static SummaryRegistryEntry<MkkpReport, MkkpReport, MkkpReportMergeSummaryModelFactory, SummaryFactory> GetDescription() => new("Inhalt");
+        public static SummaryRegistryEntry<MkkpReport, MkkpReport, MkkpReportDontMergeSummaryModelFactory, SummaryFactory> GetDescription() => new("Inhalt");
 
         public Task<Summary> Create(MkkpReport model)
         {

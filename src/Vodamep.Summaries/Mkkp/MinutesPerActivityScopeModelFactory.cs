@@ -5,7 +5,7 @@ namespace Vodamep.Summaries.Mkkp
 {
     public class MinutesPerActivityScopeModelFactory : ISummaryModelFactory<MkkpReport, MinutesPerActivityScopeModel>
     {
-        public Task<MinutesPerActivityScopeModel> Create(IEnumerable<MkkpReport> reports)
+        public Task<MinutesPerActivityScopeModel?> Create(IEnumerable<MkkpReport> reports)
         {
 
             var from = reports.Select(x => x.FromD).Min();
@@ -29,10 +29,10 @@ namespace Vodamep.Summaries.Mkkp
 
             var result = new MinutesPerActivityScopeModel(from, to, names, values);
 
-            return Task.FromResult(result);
+            return Task.FromResult<MinutesPerActivityScopeModel?>(result);
         }
 
-        async Task<object> ISummaryModelFactory.Create(IEnumerable reports)
+        async Task<object?> ISummaryModelFactory.Create(IEnumerable reports)
         {
             var r = await this.Create(reports != null ? reports.OfType<MkkpReport>() : []);
 
