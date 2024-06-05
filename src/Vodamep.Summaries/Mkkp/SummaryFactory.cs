@@ -16,91 +16,167 @@ namespace Vodamep.Summaries.Mkkp
 
             sb.AppendLine("### Stammdaten");
             WritePersonsDataTable1(sb, model);
-
             sb.AppendLine();
+
             WritePersonsDataTable2(sb, model);
+            sb.AppendLine();
+
+            sb.AppendLine("### Einsätze");
+            WriteActivityTable(sb, model);
+            sb.AppendLine();
+
+
+            sb.AppendLine("### Fahrzeit");
+            WriteTravelTimesTable(sb, model);
+            sb.AppendLine();
 
             var result = new Summary(sb.ToString());
 
             return Task.FromResult(result);
         }
 
-        private static void WritePersonsDataTable1(StringBuilder sb, MkkpReport model)
+        private static void WriteActivityTable(StringBuilder sb, MkkpReport model)
         {
-            const int colWidth1 = 20;
-            const int colWidth2 = 10;
+            var persons = model.Persons.ToDictionary(x => x.Id, x => $"{x.FamilyName} {x.GivenName}");
+            var staffs = model.Staffs.ToDictionary(x => x.Id, x => $"{x.FamilyName} {x.GivenName}");
 
-            static string formatCol(string text, int len) => text.PadRight(len)[..len];
+            int[] colWidths = [10, 20, 20, 10, 10, 10];
+
+            var headers = FormatCols([
+                "Datum",
+                "Person",
+                "MA",
+                "Art",
+                "Ort",
+                "Zeit"
+                ], colWidths).ToArray();
+
+            sb.AppendLine($"| {string.Join(" | ", headers)} |");
+
+            sb.AppendLine($"| {string.Join(" | ", headers.Select(x => new string('-', x.Length)))} |");
 
 
-            var headerCols = new[]
+            foreach (var activity in model.Activities)
             {
-                formatCol("Nachame", colWidth1),
-                formatCol("Vorname", colWidth1),
-                "Geburtsdatum",
-                formatCol("Plz", 4),
-                formatCol("Ort", colWidth2),
-                "Geschlecht"
-            };
+                string[] cols = [
+                    $"{activity.DateD:dd.MM.yyyy}",
+                    model.GetClient(activity.PersonId),
+                    model.GetStaffName(activity.StaffId),
+                    string.Join(",",activity.Entries.Select(x => (int)x)),
+                    $"{(int)activity.PlaceOfAction}",
+                    $"{activity.Minutes}"
+                    ];
 
-            sb.AppendLine($"| {string.Join(" | ", headerCols)} |");
 
-            sb.AppendLine($"| {string.Join(" | ", headerCols.Select(x => new string('-', x.Length)))} |");
+                sb.AppendLine($"| {string.Join(" | ", FormatCols(cols, colWidths))} |");
+            }
 
-            foreach (var person in model.Persons.OrderBy(x => x.FamilyName).ThenBy(x => x.GivenName))
+        }
+
+        private static void WriteTravelTimesTable(StringBuilder sb, MkkpReport model)
+        {
+
+            var staffs = model.Staffs.ToDictionary(x => x.Id, x => $"{x.FamilyName} {x.GivenName}");
+
+            int[] colWidths = [20, 10, 5];
+
+            var headers = FormatCols([
+                "MA",
+                "Datum",
+                "Zeit"
+                ], colWidths).ToArray();
+
+            sb.AppendLine($"| {string.Join(" | ", headers)} |");
+
+            sb.AppendLine($"| {string.Join(" | ", headers.Select(x => new string('-', x.Length)))} |");
+
+
+            foreach (var entriesByStaff in model.TravelTimes.GroupBy(x => x.StaffId))
             {
-                var columns = new[]
+                string[] cols1 = [model.GetStaffName(entriesByStaff.Key), $"", $""];
+
+                sb.AppendLine($"| {string.Join(" | ", FormatCols(cols1, colWidths))} |");
+
+                foreach (var entry in entriesByStaff)
                 {
-                    formatCol(person.FamilyName, colWidth1),
-                    formatCol(person.GivenName, colWidth1),
-                    person.Birthday != null ? person.BirthdayD.ToString("dd.MM.yyyy") : string.Empty,
-                    formatCol(person.Postcode, 4),
-                    formatCol(person.City, colWidth2),
-                    formatCol($"{person.Gender.Format()}", 4)
-                };
+                    string[] cols = [
+                        "",
+                        $"{entry.DateD:dd.MM.yyyy}",
+                        $"{entry.Minutes}"
+                    ];
 
-                sb.AppendLine($"| {string.Join(" | ", columns)} |");
+                    sb.AppendLine($"| {string.Join(" | ", FormatCols(cols, colWidths))} |");
+                }
             }
         }
 
-        private static void WritePersonsDataTable2(StringBuilder sb, MkkpReport model)
+        static string FormatCol(string text, int len) => text.PadRight(len)[..len];
+        static IEnumerable<string> FormatCols(string[] cols, int[] widths) => Enumerable.Range(0, cols.Length).Select(x => x < widths.Length && widths[x] > 0 ? FormatCol(cols[x], widths[x]) : cols[x]);
+
+        private static void WritePersonsDataTable1(StringBuilder sb, MkkpReport model)
         {
-            const int colWidth1 = 20;
-            const int colWidth2 = 10;
+            int[] colWidths = [20, 20, 10, 4, 10, 10];
 
-            static string formatCol(string text, int len) => text.PadRight(len)[..len];
+            var headers = FormatCols([
+                "Nachame",
+                "Vorname",
+                "Geb.datum",
+                "Plz",
+                "Ort",
+                "Geschlecht"
+            ], colWidths).ToArray();
 
-            var headerCols = new[]
-            {
-                formatCol("Name", 2*colWidth1),
-                formatCol("HospitalDoctor", colWidth1),
-                formatCol("LocalDoctor", colWidth1),
-                formatCol("Versicherung", colWidth1),
-                formatCol("Referrer", colWidth1),
-                formatCol("OtherReferrer", colWidth1),
-                formatCol("CareAllowance", colWidth1),
-                formatCol("Diagnoses", colWidth2)
-            };
+            sb.AppendLine($"| {string.Join(" | ", headers)} |");
 
-            sb.AppendLine($"| {string.Join(" | ", headerCols)} |");
-
-            sb.AppendLine($"| {string.Join(" | ", headerCols.Select(x => new string('-', x.Length)))} |");
+            sb.AppendLine($"| {string.Join(" | ", headers.Select(x => new string('-', x.Length)))} |");
 
             foreach (var person in model.Persons.OrderBy(x => x.FamilyName).ThenBy(x => x.GivenName))
             {
                 var columns = new[]
                 {
-                    formatCol($"{person.FamilyName} {person.GivenName}", 2*colWidth1),
-                    formatCol(person.HospitalDoctor, colWidth1),
-                    formatCol(person.LocalDoctor, colWidth1),
-                    formatCol(person.Insurance, colWidth1),
-                    formatCol($"{person.Referrer}", colWidth1),
-                    formatCol(person.OtherReferrer, colWidth1),
-                    formatCol($"{person.CareAllowance}", colWidth1),
-                    formatCol($"{person.Diagnoses}", colWidth1),
+                    person.FamilyName,
+                    person.GivenName,
+                    person.Birthday != null && person.BirthdayD.Year > 1 ? person.BirthdayD.ToString("dd.MM.yyyy") : string.Empty,
+                    person.Postcode,
+                    person.City,
+                    $"{person.Gender.Localize()}"
                 };
 
-                sb.AppendLine($"| {string.Join(" | ", columns)} |");
+                sb.AppendLine($"| {string.Join(" | ", FormatCols(columns, colWidths))} |");
+            }
+        }
+
+
+        private static void WritePersonsDataTable2(StringBuilder sb, MkkpReport model)
+        {
+            int[] colWidths = [20, 20, 20, 20, 20, -1];
+
+            var headers = FormatCols([
+                "Name",
+                "Arzt",
+                "KH Arzt",
+                "Zuweiser",
+                "Pflegestufe",
+                "Diagnosen"
+            ], colWidths).ToArray();
+
+            sb.AppendLine($"| {string.Join(" | ", headers)} |");
+
+            sb.AppendLine($"| {string.Join(" | ", headers.Select(x => new string('-', x.Length)))} |");
+
+            foreach (var person in model.Persons.OrderBy(x => x.FamilyName).ThenBy(x => x.GivenName))
+            {
+                var columns = new[]
+                {
+                    $"{person.FamilyName} {person.GivenName}",
+                    person.LocalDoctor,
+                    person.HospitalDoctor,
+                    person.Referrer == Referrer.OtherReferrer ? person.OtherReferrer : person.Referrer.Localize(),
+                    person.CareAllowance.Localize(),
+                    string.Join(',', person.Diagnoses.Select(x => (int)x))  // als Text zu lange
+                };
+
+                sb.AppendLine($"| {string.Join(" | ", FormatCols(columns, colWidths))} |");
             }
         }
     }

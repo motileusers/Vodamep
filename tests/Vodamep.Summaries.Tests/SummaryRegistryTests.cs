@@ -1,4 +1,5 @@
 using Vodamep.Mkkp.Model;
+using Vodamep.ReportBase;
 using Vodamep.Summaries.Mkkp;
 
 namespace Vodamep.Summaries.Tests
@@ -20,13 +21,7 @@ namespace Vodamep.Summaries.Tests
         {
             var r = SummaryRegistry.CreateDefault();
 
-            var report = new MkkpReport
-            {
-                FromD = DateTime.Today,
-                ToD = DateTime.Today
-            };
-
-            var e = r.GetEntries(report);
+            var e = r.GetEntries(ReportType.Mkkp);
 
             Assert.Contains(MinutesPerActivityScopeSummaryFactory.GetDescription(), e);
         }
@@ -108,15 +103,21 @@ namespace Vodamep.Summaries.Tests
                 ToD = DateTime.Today
             };
 
-            report.Persons.Add(new Person { Id = "1", FamilyName = "Family", GivenName = "Given1" });
-            report.Persons.Add(new Person { Id = "2", FamilyName = "Family", GivenName = "Given2" });
+            report.Persons.Add(new Person { Id = "p1", FamilyName = "Person", GivenName = "Eins", CareAllowance = CareAllowance.L5, Referrer = Referrer.KhDornbirnReferrer });
+            report.Persons.Add(new Person { Id = "p2", FamilyName = "Person", GivenName = "Zwei" });
 
-            report.Activities.Add(new Activity { PersonId = "1", DateD = DateTime.Today, ActivityScope = ActivityScope.PalliativeCareScope, Minutes = 100 });
+            report.Persons[0].Diagnoses.Add(DiagnosisGroup.HeartDisease);
+            report.Persons[1].Diagnoses.Add(DiagnosisGroup.PalliativeCare3);
 
-            report.Activities.Add(new Activity { PersonId = "1", DateD = DateTime.Today, ActivityScope = ActivityScope.ChildCareScope, Minutes = 10 });
+            report.Staffs.Add(new Staff { Id = "s1", FamilyName = "Mitarbeiterin", GivenName = "Eins" });
 
-            report.Activities.Add(new Activity { PersonId = "2", DateD = DateTime.Today, ActivityScope = ActivityScope.ChildCareScope, Minutes = 200 });
+            report.Activities.Add(new Activity { PersonId = "p1", DateD = DateTime.Today, ActivityScope = ActivityScope.PalliativeCareScope, Minutes = 100 });
 
+            report.Activities.Add(new Activity { PersonId = "p1", DateD = DateTime.Today, ActivityScope = ActivityScope.ChildCareScope, Minutes = 10 });
+
+            report.Activities.Add(new Activity { PersonId = "p2", DateD = DateTime.Today, ActivityScope = ActivityScope.ChildCareScope, Minutes = 200 });
+
+            report.TravelTimes.Add(new TravelTime { StaffId = "s1", DateD = DateTime.Today, Minutes = 10 });
             return report;
         }
 
