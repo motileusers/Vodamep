@@ -11,25 +11,27 @@ namespace Vodamep.Summaries.Mkkp
             var from = reports.Select(x => x.FromD).Min();
             var to = reports.Select(x => x.ToD).Max();
 
-            var diagnosisGroups = reports
-                .SelectMany(x => x.Persons)
-                .GroupBy(x => x.Id)
-                .Select(x => (x.Key, x.Select(xx => xx.Diagnoses.ToArray()).Last()))
-                .ToArray();
+            List<(string DiagnosisGroups, ActivityScope Scope, int Minutes)> result = [];
 
-            var values = reports.SelectMany(x => x.Activities)
-               .GroupBy(x => (x.PersonId, x.ActivityScope))
-               .Select(x =>
-               (
-                    x.Key.PersonId,
-                    x.Key.ActivityScope,
-                    x.Sum(x => x.Minutes)
-               )).ToArray();
+            foreach (var report in reports)
+            {
+                var diagnosisGroups = report
+                    .Persons.Select(x => new { PersonId = x.Id, DiagnosisGroups = x.Diagnoses.OrderBy(x => x).ToArray() })
+                    .ToDictionary(x => x.PersonId, x => string.Join(",", x.DiagnosisGroups.Select(xx => xx.Localize())));
 
+                result.AddRange(report.Activities
+                    .GroupBy(x => (diagnosisGroups[x.PersonId], x.ActivityScope))
+                    .Select(x =>
+                    (
+                        x.Key.Item1,
+                        x.Key.ActivityScope,
+                        x.Sum(x => x.Minutes)
+                    )));
+            }
 
-            var result = new MinutesPerDiagnosisModel(from, to, diagnosisGroups, values);
+            var values = result.OrderBy(x => x.DiagnosisGroups).GroupBy(x => (x.DiagnosisGroups, x.Scope)).Select(x => (x.Key.DiagnosisGroups, x.Key.Scope, x.Sum(x => x.Minutes))).ToArray();
 
-            return Task.FromResult<MinutesPerDiagnosisModel?>(result);
+            return Task.FromResult<MinutesPerDiagnosisModel?>(new MinutesPerDiagnosisModel(from, to, values));
         }
 
         async Task<object?> ISummaryModelFactory.Create(IEnumerable reports)
