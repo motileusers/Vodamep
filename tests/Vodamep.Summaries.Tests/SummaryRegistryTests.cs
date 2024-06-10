@@ -49,6 +49,17 @@ namespace Vodamep.Summaries.Tests
         }
 
         [Fact]
+        public async Task CreateSummary_MinutesPerDiagnosisSummaryFactory_MultipleMkkpReport_ReturnsSummary()
+        {
+            var summaryDescription = MinutesPerDiagnosisSummaryFactory.GetDescription();
+
+            var summary = await _registry.CreateSummary(summaryDescription, _report, _report);
+
+            Assert.NotNull(summary);
+            Assert.NotEmpty(summary.Text);
+        }
+
+        [Fact]
         public async Task CreateSummary_Summary_OneMkkpReport_ReturnsSummary()
         {
             var summaryDescription = SummaryFactory.GetDescription();
@@ -77,7 +88,7 @@ namespace Vodamep.Summaries.Tests
                 ToD = DateTime.Today
             };
 
-            report.Persons.Add(new Person { Id = "p1", FamilyName = "Person", GivenName = "Eins", CareAllowance = CareAllowance.L5, Referrer = Referrer.KhDornbirnReferrer });
+            report.Persons.Add(new Person { Id = "p1", FamilyName = "Person", GivenName = "Eins", CareAllowance = CareAllowance.L5, Referrer = Referrer.KhDornbirnReferrer, HospitalDoctor = "Dr. SehrSehrLanger Name" });
             report.Persons.Add(new Person { Id = "p2", FamilyName = "Person", GivenName = "Zwei" });
 
             report.Persons[0].Diagnoses.Add(DiagnosisGroup.HeartDisease);
