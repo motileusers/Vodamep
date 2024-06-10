@@ -37,9 +37,6 @@ namespace Vodamep.Summaries.Mkkp
 
         private static void WriteActivityTable(StringBuilder sb, MkkpReport model)
         {
-            var persons = model.Persons.ToDictionary(x => x.Id, x => $"{x.FamilyName} {x.GivenName}");
-            var staffs = model.Staffs.ToDictionary(x => x.Id, x => $"{x.FamilyName} {x.GivenName}");
-
             int[] colWidths = [10, 20, 20, 10, 10, 10];
 
             var headers = FormatCols([
@@ -56,7 +53,7 @@ namespace Vodamep.Summaries.Mkkp
             sb.AppendLine($"| {string.Join(" | ", headers.Select(x => new string('-', x.Length)))} |");
 
 
-            foreach (var activity in model.Activities)
+            foreach (var activity in model.Activities.OrderBy(x => x.Date))
             {
                 string[] cols = [
                     $"{activity.DateD:dd.MM.yyyy}",
@@ -75,9 +72,6 @@ namespace Vodamep.Summaries.Mkkp
 
         private static void WriteTravelTimesTable(StringBuilder sb, MkkpReport model)
         {
-
-            var staffs = model.Staffs.ToDictionary(x => x.Id, x => $"{x.FamilyName} {x.GivenName}");
-
             int[] colWidths = [20, 10, 5];
 
             var headers = FormatCols([
@@ -91,9 +85,9 @@ namespace Vodamep.Summaries.Mkkp
             sb.AppendLine($"| {string.Join(" | ", headers.Select(x => new string('-', x.Length)))} |");
 
 
-            foreach (var entriesByStaff in model.TravelTimes.GroupBy(x => x.StaffId))
+            foreach (var entriesByStaff in model.TravelTimes.OrderBy(x => model.GetStaffName(x.StaffId)).GroupBy(x => x.StaffId))
             {
-                string[] cols1 = [model.GetStaffName(entriesByStaff.Key), $"", $""];
+                string[] cols1 = [model.GetStaffName(entriesByStaff.Key), $"", FormatMinutes(entriesByStaff.Sum(x => x.Minutes))];
 
                 sb.AppendLine($"| {string.Join(" | ", FormatCols(cols1, colWidths))} |");
 
@@ -102,7 +96,7 @@ namespace Vodamep.Summaries.Mkkp
                     string[] cols = [
                         "",
                         $"{entry.DateD:dd.MM.yyyy}",
-                        $"{entry.Minutes}"
+                        FormatMinutes(entry.Minutes)
                     ];
 
                     sb.AppendLine($"| {string.Join(" | ", FormatCols(cols, colWidths))} |");
@@ -112,6 +106,8 @@ namespace Vodamep.Summaries.Mkkp
 
         static string FormatCol(string text, int len) => text.PadRight(len)[..len];
         static IEnumerable<string> FormatCols(string[] cols, int[] widths) => Enumerable.Range(0, cols.Length).Select(x => x < widths.Length && widths[x] > 0 ? FormatCol(cols[x], widths[x]) : cols[x]);
+
+        static string FormatMinutes(int minutes) => $"{Math.Round(minutes / 60.0, 2)}";
 
         private static void WritePersonsDataTable1(StringBuilder sb, MkkpReport model)
         {
@@ -149,7 +145,7 @@ namespace Vodamep.Summaries.Mkkp
 
         private static void WritePersonsDataTable2(StringBuilder sb, MkkpReport model)
         {
-            int[] colWidths = [20, 20, 20, 20, 20, -1];
+            int[] colWidths = [15, 15, 15, 15, 15, -1];
 
             var headers = FormatCols([
                 "Name",

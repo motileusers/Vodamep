@@ -3,14 +3,14 @@ using Vodamep.Mkkp.Model;
 
 namespace Vodamep.Summaries.Mkkp
 {
-    public class MinutesPerActivityScopeSummaryFactory : ISummaryFactory<MinutesPerActivityScopeModel>
+    public class MinutesPerDiagnosisSummaryFactory : ISummaryFactory<MinutesPerDiagnosisModel>
     {
-        public static SummaryRegistryEntry<MkkpReport, MinutesPerActivityScopeModel, MinutesPerActivityScopeModelFactory, MinutesPerActivityScopeSummaryFactory> GetDescription() => new("Liste nach Personen");
+        public static SummaryRegistryEntry<MkkpReport, MinutesPerDiagnosisModel, MinutesPerDiagnosisModelFactory, MinutesPerDiagnosisSummaryFactory> GetDescription() => new("Liste nach Diagnosen");
 
-        public Task<Summary> Create(MinutesPerActivityScopeModel model)
+        public Task<Summary> Create(MinutesPerDiagnosisModel model)
         {
             var sb = new StringBuilder();
-            sb.AppendLine("# Einsatzzeiten nach betreuten Personen");
+            sb.AppendLine("# Einsatzzeiten nach Diagnosen");
             sb.AppendLine($"## {model.From:dd.MM.yyyy} - {model.To:dd.MM.yyyy} ");
             sb.AppendLine();
 
@@ -22,9 +22,9 @@ namespace Vodamep.Summaries.Mkkp
         }
 
 
-        private static void WriteTable(StringBuilder sb, MinutesPerActivityScopeModel model)
+        private static void WriteTable(StringBuilder sb, MinutesPerDiagnosisModel model)
         {
-            const int col1Width = 20;
+            const int col1Width = 40;
             const int col2Width = 10;
 
             static string formatCol(string text, int len) => text.PadRight(len)[..len];
@@ -37,10 +37,10 @@ namespace Vodamep.Summaries.Mkkp
                     _ => "???"
                 });
 
-            sb.AppendLine($"| {formatCol("Person", col1Width)} | {string.Join(" | ", scopes.Values.Select(x => formatCol(x, col2Width)))} |");
+            sb.AppendLine($"| {formatCol("Diagnosen", col1Width)} | {string.Join(" | ", scopes.Values.Select(x => formatCol(x, col2Width)))} |");
             sb.AppendLine($"| {new string('-', col1Width)} | {string.Join(" | ", scopes.Values.Select(_ => new string('-', col2Width)))} |");
 
-            foreach (var (id, name) in model.Names.OrderBy(x => x.Name))
+            foreach (var (id, diagnosisGroups) in model.Diagnosis)
             {
                 var values = model.Values
                     .Where(x => x.Id == id)
@@ -49,7 +49,7 @@ namespace Vodamep.Summaries.Mkkp
 
                 var valueColumns = scopes.Keys.Select(x => formatCol(values.TryGetValue(x, out var v) ? $"{v}" : "", col2Width));
 
-                sb.AppendLine($"| {formatCol(name, col1Width)} | {string.Join(" | ", valueColumns)} |");
+                sb.AppendLine($"| {string.Join(",", diagnosisGroups.Localize())} | {string.Join(" | ", valueColumns)} |");
             }
 
             if (scopes.Count > 1)

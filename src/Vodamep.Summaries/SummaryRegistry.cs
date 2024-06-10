@@ -1,4 +1,5 @@
 ﻿using Vodamep.ReportBase;
+using Vodamep.Summaries.Mkkp;
 
 namespace Vodamep.Summaries
 {
@@ -13,6 +14,8 @@ namespace Vodamep.Summaries
 
             result.Add(Mkkp.SummaryFactory.GetDescription());
             result.Add(Mkkp.MinutesPerActivityScopeSummaryFactory.GetDescription());
+
+            result.Add(Mkkp.MinutesPerDiagnosisSummaryFactory.GetDescription());
 
             result.Add(Hkpv.SummaryFactory.GetDescription());
 
