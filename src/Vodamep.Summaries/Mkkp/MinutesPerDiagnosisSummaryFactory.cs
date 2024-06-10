@@ -40,16 +40,15 @@ namespace Vodamep.Summaries.Mkkp
             sb.AppendLine($"| {formatCol("Diagnosen", col1Width)} | {string.Join(" | ", scopes.Values.Select(x => formatCol(x, col2Width)))} |");
             sb.AppendLine($"| {new string('-', col1Width)} | {string.Join(" | ", scopes.Values.Select(_ => new string('-', col2Width)))} |");
 
-            foreach (var (id, diagnosisGroups) in model.Diagnosis)
+            foreach (var line in model.Values.GroupBy(x => x.DiagnosisGroups))
             {
-                var values = model.Values
-                    .Where(x => x.Id == id)
+                var values = line
                     .GroupBy(x => x.Scope)
                     .ToDictionary(x => x.Key, x => Math.Round(x.Sum(xx => xx.Minues) / 60.0, 2));
 
                 var valueColumns = scopes.Keys.Select(x => formatCol(values.TryGetValue(x, out var v) ? $"{v}" : "", col2Width));
 
-                sb.AppendLine($"| {string.Join(",", diagnosisGroups.Localize())} | {string.Join(" | ", valueColumns)} |");
+                sb.AppendLine($"| {line.Key} | {string.Join(" | ", valueColumns)} |");
             }
 
             if (scopes.Count > 1)
