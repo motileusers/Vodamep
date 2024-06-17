@@ -15,8 +15,17 @@ namespace Vodamep.Summaries.Mkkp
 
             foreach (var report in reports)
             {
+                bool filterDiagGroup(DiagnosisGroup dg) => dg switch
+                {
+                    DiagnosisGroup.PalliativeCare1 => true,
+                    DiagnosisGroup.PalliativeCare2 => true,
+                    DiagnosisGroup.PalliativeCare3 => true,
+                    DiagnosisGroup.PalliativeCare4 => true,
+                    _ => false
+                };
+
                 var diagnosisGroups = report
-                    .Persons.Select(x => new { PersonId = x.Id, DiagnosisGroups = x.Diagnoses.OrderBy(x => x).ToArray() })
+                    .Persons.Select(x => new { PersonId = x.Id, DiagnosisGroups = x.Diagnoses.Where(filterDiagGroup).OrderBy(x => x).ToArray() })
                     .ToDictionary(x => x.PersonId, x => string.Join(",", x.DiagnosisGroups.Select(xx => xx.Localize())));
 
                 result.AddRange(report.Activities

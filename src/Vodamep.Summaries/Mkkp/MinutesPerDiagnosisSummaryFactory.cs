@@ -5,12 +5,12 @@ namespace Vodamep.Summaries.Mkkp
 {
     public class MinutesPerDiagnosisSummaryFactory : ISummaryFactory<MinutesPerDiagnosisModel>
     {
-        public static SummaryRegistryEntry<MkkpReport, MinutesPerDiagnosisModel, MinutesPerDiagnosisModelFactory, MinutesPerDiagnosisSummaryFactory> GetDescription() => new("Liste nach Diagnosen");
+        public static SummaryRegistryEntry<MkkpReport, MinutesPerDiagnosisModel, MinutesPerDiagnosisModelFactory, MinutesPerDiagnosisSummaryFactory> GetDescription() => new("Einsatzzeiten Palliative Versorgung");
 
         public Task<Summary> Create(MinutesPerDiagnosisModel model)
         {
             var sb = new StringBuilder();
-            sb.AppendLine("# Einsatzzeiten nach Diagnosen");
+            sb.AppendLine("# Einsatzzeiten Palliative Versorgung");
             sb.AppendLine($"## {model.From:dd.MM.yyyy} - {model.To:dd.MM.yyyy} ");
             sb.AppendLine();
 

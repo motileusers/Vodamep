@@ -17,7 +17,7 @@ namespace Vodamep.Summaries
 
             result.Add(Mkkp.MinutesPerDiagnosisSummaryFactory.GetDescription());
 
-            result.Add(Hkpv.SummaryFactory.GetDescription());
+            //später result.Add(Hkpv.SummaryFactory.GetDescription());
 
             return result;
         }
