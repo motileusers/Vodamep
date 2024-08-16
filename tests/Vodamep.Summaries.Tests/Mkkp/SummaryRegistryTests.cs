@@ -1,8 +1,7 @@
 using Vodamep.Mkkp.Model;
 using Vodamep.ReportBase;
-using Vodamep.Summaries.Mkkp;
 
-namespace Vodamep.Summaries.Tests
+namespace Vodamep.Summaries.Mkkp.Tests
 {
     public class SummaryRegistryTests
     {
