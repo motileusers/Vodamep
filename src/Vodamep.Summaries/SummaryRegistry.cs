@@ -1,5 +1,4 @@
 ﻿using Vodamep.ReportBase;
-using Vodamep.Summaries.Mkkp;
 
 namespace Vodamep.Summaries
 {
@@ -7,6 +6,7 @@ namespace Vodamep.Summaries
     {
 
         private readonly List<SummaryRegistryEntry> _entries = [];
+        private readonly List<(Type ReportType, Func<object, Task<object>> Configure)> _summaryConfigurations = [];
 
         public static SummaryRegistry CreateDefault()
         {
@@ -18,6 +18,8 @@ namespace Vodamep.Summaries
             result.Add(Mkkp.MinutesPerDiagnosisSummaryFactory.GetDescription());
 
             //später result.Add(Hkpv.SummaryFactory.GetDescription());
+            result.Add(Agp.SummaryFactory.GetDescription());
+            result.Add(Agp.IdSummaryFactory.GetDescription());
 
             return result;
         }
@@ -34,6 +36,22 @@ namespace Vodamep.Summaries
             }
         }
 
+        public void AddConfiguration<T>(Func<ISummaryFactory<T>, Task<ISummaryFactory<T>>> configuration) where T : IReport
+        {
+
+            async Task<object> translate(object x)
+            {
+                if (x is ISummaryFactory<T> s)
+                {
+                    return await configuration(s);
+                }
+
+                return x;
+            }
+
+            _summaryConfigurations.Add((typeof(T), translate));
+        }
+
         public SummaryRegistryEntry[] GetEntries(ReportType reportType) => _entries.Where(x => x.Type == reportType).ToArray();
 
 
@@ -42,7 +60,7 @@ namespace Vodamep.Summaries
         {
 
             var model = await CreateModel(entry, reports);
-            
+
             if (model != null)
             {
                 var summary = await CreateSummary(entry, model);
@@ -85,21 +103,30 @@ namespace Vodamep.Summaries
 
         private async Task<Summary?> CreateSummary(SummaryRegistryEntry entry, object model)
         {
+            var reportType = entry.GetType().GetGenericArguments().First();
             var summaryFactoryType = entry.GetType().GetGenericArguments().Last();
             var summaryFactory = Activator.CreateInstance(summaryFactoryType);
 
-            var createMethodInfo = summaryFactoryType.GetMethod(nameof(ISummaryFactory<object>.Create)) ?? throw new ArgumentException();
-
-
-            if (createMethodInfo.Invoke(summaryFactory, [model]) is Task<Summary> t)
+            foreach (var configuration in _summaryConfigurations.Where(x => x.ReportType == reportType))
             {
-                await t;
-
-                return t.Result;
+                if (summaryFactory != null)
+                {
+                    summaryFactory = await configuration.Configure(summaryFactory);
+                }
             }
 
+            if (summaryFactory != null)
+            {
+                var createMethodInfo = summaryFactoryType.GetMethod(nameof(ISummaryFactory<object>.Create)) ?? throw new ArgumentException();
+
+                if (createMethodInfo.Invoke(summaryFactory, [model]) is Task<Summary> t)
+                {
+                    await t;
+
+                    return t.Result;
+                }
+            }
             return null;
         }
-
     }
 }
