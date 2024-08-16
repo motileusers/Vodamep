@@ -3,12 +3,12 @@ using Google.Protobuf.Reflection;
 
 namespace Vodamep.Data.Agp
 {
-    public class DiagnosisgroupProvider : CodeProviderBase
+    public class DiagnosisGroupProvider : CodeProviderBase
     {
-        private static volatile DiagnosisgroupProvider instance;
+        private static volatile DiagnosisGroupProvider instance;
         private static object syncRoot = new Object();
 
-        public static DiagnosisgroupProvider Instance
+        public static DiagnosisGroupProvider Instance
         {
             get
             {
@@ -17,7 +17,7 @@ namespace Vodamep.Data.Agp
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new DiagnosisgroupProvider();
+                            instance = new DiagnosisGroupProvider();
                     }
                 }
 
