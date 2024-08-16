@@ -1,5 +1,6 @@
 using Vodamep.Mkkp.Model;
 using Vodamep.Summaries.Mkkp;
+using Vodamep.Summaries.Mkkp.Tests;
 
 namespace Vodamep.Summaries.Tests
 {
@@ -12,7 +13,8 @@ namespace Vodamep.Summaries.Tests
         {
             _registry = SummaryRegistry.CreateDefault();
 
-            _report =  SummaryRegistryTests.CreateReport();
+            _report = 
+                SummaryRegistryTests.CreateReport();
         }
 
         [Fact]
