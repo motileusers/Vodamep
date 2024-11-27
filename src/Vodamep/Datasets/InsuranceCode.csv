@@ -73,10 +73,11 @@
 95;Bundesministerium für Landesverteidigung;;31.12.2023
 99;Hauptverband der österreichischen Sozialversicherungsträger;;31.12.2023
 B9;Bezirkshauptmannschaft im Bundesland Vorarlberg;;31.12.2023
-CH;In der Schweiz versichert;;
-DV;In Deutschland versichert;;
+NA;Nicht in Österreich versichert;;
+CH;In der Schweiz versichert;;31.12.2024
+DV;In Deutschland versichert;;31.12.2024
 FA;Krankenfürsorgeanstalt der Beamten d.Stadt Bregenz;;31.12.2023
-FL;In Liechtenstein versichert;;
+FL;In Liechtenstein versichert;;31.12.2024
 KS;Bezirkshauptmannschaften;;31.12.2023
 LH;Lebenshilfe-Patienten;;
 CA;Caritas-Patienten;;
