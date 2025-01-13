@@ -73,6 +73,7 @@ enum ActivityScope {
   UNDEFINED_SCOPE = 0;
   CHILD_CARE_SCOPE = 1;
   PALLIATIVE_CARE_SCOPE = 2;
+  ONCOLOGICAL_CARE_SCOPE = 3;
 }
 
 // Leistungstypen
