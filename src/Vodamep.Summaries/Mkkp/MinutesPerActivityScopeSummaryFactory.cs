@@ -34,6 +34,7 @@ namespace Vodamep.Summaries.Mkkp
                 {
                     ActivityScope.ChildCareScope => "MKKP",
                     ActivityScope.PalliativeCareScope => "Palliativ",
+                    ActivityScope.OncologicalCareScope => "Onkolologisch",
                     _ => "???"
                 });
 
