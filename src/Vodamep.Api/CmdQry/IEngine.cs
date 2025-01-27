@@ -11,5 +11,6 @@ namespace Vodamep.Api.CmdQry
 
         IReport GetPrevious(IReport current);
 
+        void Test();
     }
 }
