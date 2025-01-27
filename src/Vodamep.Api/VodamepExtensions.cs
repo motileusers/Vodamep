@@ -12,23 +12,19 @@ namespace Vodamep.Api
     {
         public static IApplicationBuilder UseVodamep(this IApplicationBuilder app, ILogger<Startup> logger)
         {
+            IApplicationBuilder result = null;
+
             try
             {
                 var handler = app.ApplicationServices.GetService<VodamepHandler>();
 
-                // engine korrekt konfiguriert? 
-                var engineFactory = app.ApplicationServices.GetService<Func<IEngine>>();
-                engineFactory().Execute(new TestCommand());
-
                 var defaultHandler = new RequestDelegate(handler.HandleDefault);
                 var vodamepHandler = new RequestDelegate(handler.HandlePut);
 
-                return app.UseRouter(r =>
+                result = app.UseRouter(r =>
                 {
-                    //todo legacy code
                     r.MapPut("{year:int}/{month:int}", vodamepHandler);
                     r.MapPost("{year:int}/{month:int}", vodamepHandler); // auch Post akzeptieren
-                    //end legacy code
 
                     r.MapPut("{report}/{year:int}/{month:int}", vodamepHandler);
                     r.MapPost("{report}/{year:int}/{month:int}", vodamepHandler); // auch Post akzeptieren
@@ -40,10 +36,24 @@ namespace Vodamep.Api
             }
             catch (Exception exception)
             {
-                logger.LogError(exception.Message);                
+                logger.LogError(exception.Message);
             }
 
-            return null;
+
+
+            // engine korrekt konfiguriert? 
+            try
+            {
+                var engineFactory = app.ApplicationServices.GetService<Func<IEngine>>();
+                engineFactory().Execute(new TestCommand());
+
+            }
+            catch (Exception exception)
+            {
+                logger.LogError(exception.Message);
+            }
+
+            return result;
 
         }
     }

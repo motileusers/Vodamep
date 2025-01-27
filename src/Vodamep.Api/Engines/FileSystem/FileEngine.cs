@@ -5,8 +5,6 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
 using Vodamep.Api.CmdQry;
-using Vodamep.Hkpv;
-using Vodamep.Hkpv.Model;
 using Vodamep.ReportBase;
 
 namespace Vodamep.Api.Engines.FileSystem
@@ -97,6 +95,10 @@ namespace Vodamep.Api.Engines.FileSystem
         public IReport GetPrevious(IReport current)
         {
             throw new NotImplementedException();
+        }
+
+        public void Test()
+        {
         }
     }
 }
