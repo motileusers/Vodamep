@@ -77,6 +77,20 @@ namespace Vodamep.Api
         {
             _logger?.LogInformation("Handle Put");
 
+            IReport report;
+            var engine = _engineFactory();
+
+            try
+            {
+                engine.Test();
+            }
+            catch (Exception exception)
+            {
+                await RespondError(context, $"Fehler beim connexia Dienst. Bitte wenden Sie sich an connexia.");
+                _logger?.LogError(exception.Message);
+                return;
+            }
+
             if (context.Request.Method != HttpMethods.Put && context.Request.Method != HttpMethods.Post)
             {
                 await HandleDefault(context);
@@ -101,7 +115,7 @@ namespace Vodamep.Api
 
             int.TryParse((string)context.GetRouteValue("year"), out int year);
             int.TryParse((string)context.GetRouteValue("month"), out int month);
-            var reportTypeAsString = (string) context.GetRouteValue("report");
+            var reportTypeAsString = (string)context.GetRouteValue("report");
 
             _logger?.LogInformation($"Report type from route: {reportTypeAsString}");
 
@@ -126,12 +140,10 @@ namespace Vodamep.Api
             _logger?.LogInformation("Reading data.");
 
 
-            IReport report;
-            var engine = _engineFactory();
 
             try
             {
-                ReportType reportType = (ReportType) Enum.Parse(typeof(ReportType), reportTypeAsString, true);
+                ReportType reportType = (ReportType)Enum.Parse(typeof(ReportType), reportTypeAsString, true);
                 report = new ReportFactory().Create(reportType, context.Request.Body);
             }
             catch
