@@ -225,10 +225,6 @@ namespace Vodamep.Api.Engines.SqlServer
 
                 _logger.LogInformation("Report saved");
             }
-
-            report.WriteToFile(@"C:\ProgramData\Connexia\Logging\LastMessage.json", asJson: true, compressed: false);
-
-
         }
 
         private int GetRowId(string tablename, string name, SqlConnection connection)
