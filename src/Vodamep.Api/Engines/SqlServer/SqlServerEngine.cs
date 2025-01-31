@@ -49,17 +49,18 @@ namespace Vodamep.Api.Engines.SqlServer
         }
 
 
-        private void Test()
+        public void Test()
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                var cmd = new SqlCommand("select count(*) from Message", connection);
+                var cmd = new SqlCommand("select 0 from Message where 1 = 0", connection);
 
                 var c = cmd.ExecuteScalar();
             }
         }
+
 
         private void Save(IReport report)
         {
@@ -255,7 +256,6 @@ namespace Vodamep.Api.Engines.SqlServer
 
             throw new Exception($"Can not resolve Id '{name}' from '{tablename}'");
         }
-
 
     }
 }
