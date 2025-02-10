@@ -58,6 +58,11 @@ namespace Vodamep.StatLp.Model
 
             var stays = report.Stays.Where(x => x.PersonId == personId).OrderBy(x => x.From).ToArray();
 
+            if (personId == "2939")
+            {
+            }
+
+
             return stays.GetGroupedStays(sameTypeGroupMode);
         }
 
