@@ -65,11 +65,11 @@ namespace Vodamep.StatLp.Validation
 
                     foreach (var person in a.Persons)
                     {
-                        GroupedStay[] stays;
+                        GroupedStay[] groupedStays;
                         try
                         {
                             // mitunter geht das gar nicht, dann wird ein Fehler geworfen
-                            stays = report.GetGroupedStays(person.Id, GroupedStay.SameTypeGroupMode.NotAllowed).ToArray();
+                            groupedStays = report.GetGroupedStays(person.Id, GroupedStay.SameTypeGroupMode.NotAllowed).ToArray();
                         }
                         catch (Exception e)
                         {
@@ -78,39 +78,39 @@ namespace Vodamep.StatLp.Validation
                             return;
                         }
 
-                        foreach (var s in stays)
+                        foreach (var groupedStay in groupedStays)
                         {
                             // Aufenthalte vor Meldezeitraum
-                            if (s.To < report.FromD)
+                            if (groupedStay.To < report.FromD)
                             {
                                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
-                                    Validationmessages.StatLpStayAheadOfPeriod(report.GetPersonName(person.Id), s.From.ToShortDateString(), s.To?.ToShortDateString())));
+                                    Validationmessages.StatLpStayAheadOfPeriod(report.GetPersonName(person.Id), groupedStay.From.ToShortDateString(), groupedStay.To?.ToShortDateString())));
                             }
 
                             // Aufenthalte nach Meldezeitraum
-                            if (s.To > report.ToD)
+                            if (groupedStay.To > report.ToD)
                             {
                                 ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
-                                    Validationmessages.StatLpStayAfterPeriod(report.GetPersonName(person.Id), s.From.ToShortDateString(), s.To?.ToShortDateString())));
+                                    Validationmessages.StatLpStayAfterPeriod(report.GetPersonName(person.Id), groupedStay.From.ToShortDateString(), groupedStay.To?.ToShortDateString())));
                             }
 
-                            StayLengthValidation(ctx, report, s, AdmissionType.HolidayAt, 42);
+                            StayLengthValidation(ctx, report, groupedStay, AdmissionType.HolidayAt, 42);
 
-                            StayLengthValidation(ctx, report, s, AdmissionType.TransitionalAt, 365);
+                            StayLengthValidation(ctx, report, groupedStay, AdmissionType.TransitionalAt, 365);
 
-                            AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.HolidayAt);
+                            AdmissionTypeChangeValidation(ctx, report, groupedStay, AdmissionType.ContinuousAt, AdmissionType.HolidayAt);
 
-                            AdmissionTypeChangeValidation(ctx, report, s, AdmissionType.ContinuousAt, AdmissionType.TransitionalAt);
+                            AdmissionTypeChangeValidation(ctx, report, groupedStay, AdmissionType.ContinuousAt, AdmissionType.TransitionalAt);
 
-                            AttributeValidation(ctx, report, s);
+                            AttributeValidation(ctx, report, groupedStay);
 
-                            AdmissionValidation(ctx, report, person, s);
+                            AdmissionValidation(ctx, report, person, groupedStay);
 
-                            LeavingValidation(ctx, report, person, s);
+                            LeavingValidation(ctx, report, person, groupedStay);
                         }
                     }
                 });
-        }      
+        }
 
         private void AttributeValidation(ValidationContext<StatLpReport> ctx, StatLpReport report, GroupedStay s)
         {
@@ -124,32 +124,32 @@ namespace Vodamep.StatLp.Validation
             // Fields: Hauptmerkmale, Remark: Meldung der 3 Hauptmerkmale bei Aufnahme, Group: Inhaltlich
             #endregion
 
-            var attributes = report.Attributes
-                .Where(x => x.PersonId == s.Stays[0].PersonId)
-                .GroupBy(x => x.ValueCase)
-                .Select(x => new { AttributeType = x.Key, From = x.Select(y => y.FromD).Min() })
-                .ToArray();
-
-            var from = s.From > report.FromD ? s.From : report.FromD;
-
             var attributTypes = new[]
-            {
+{
                 Model.Attribute.ValueOneofCase.Finance,
                 Model.Attribute.ValueOneofCase.CareAllowance,
                 Model.Attribute.ValueOneofCase.CareAllowanceArge
             };
 
+            var attributesPerson = report.Attributes
+                .Where(x => x.PersonId == s.Stays[0].PersonId);
+
+            // Wenn der Aufenthalt im gleichen Jahr gestartet hat, dann müssen die Attribute zum Aufenthaltsstart gemeldet worden sein
+            // Ansonsten zum 1.1. (Start des Berichts)
+            var from = s.From > report.FromD ? s.From : report.FromD;
+
             foreach (var type in attributTypes)
             {
-                if (!attributes.Where(x => x.AttributeType == type && x.From <= from).Any())
+                Model.Attribute attribute = attributesPerson.Where(x => x.ValueCase == type && x.FromD == from).FirstOrDefault();
+
+                if (attribute == null)
                 {
                     ctx.AddFailure(new ValidationFailure($"{nameof(StatLpReport.Stays)}",
                         Validationmessages.StatLpAdmissionAttributeMissing(report.GetPersonName(s.Stays[0].PersonId), from.ToShortDateString(), DisplayNameResolver.GetDisplayName(type.ToString()))));
                 }
             }
-
-
         }
+
 
         #region Documentation
         // AreaDef: STAT

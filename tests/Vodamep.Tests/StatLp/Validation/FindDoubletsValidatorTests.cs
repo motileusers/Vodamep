@@ -1,11 +1,15 @@
 ﻿using System;
 using Vodamep.StatLp.Model;
 using Xunit;
+using System.IO;
 
 namespace Vodamep.StatLp.Validation.Tests
 {
     public class FindDoubletsValidatorTests
     {
+
+
+
         [Fact]
         public void Validate_StatLpReportWithDoublets_ReturnsErrorResult()
         {
@@ -36,7 +40,7 @@ namespace Vodamep.StatLp.Validation.Tests
 
             //'Test A' wurde mehrfach gemeldet."
             Assert.False(vr.IsValid);
-          
+
         }
     }
 }
