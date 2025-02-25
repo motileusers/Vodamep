@@ -68,7 +68,7 @@ namespace Vodamep.Agp
             using (var ms = WriteToStream(report, asJson, compressed))
             {
                 ms.Position = 0;
-                using (var s = File.OpenWrite(filename))
+                using (var s = File.Create(filename))
                 {
                     ms.CopyTo(s);
                 }
