@@ -145,6 +145,8 @@ namespace Vodamep.Api
             {
                 ReportType reportType = (ReportType)Enum.Parse(typeof(ReportType), reportTypeAsString, true);
                 report = new ReportFactory().Create(reportType, context.Request.Body);
+                _logger?.LogInformation($"Instituion: {report.Institution}, Report: {reportType} {report.FromD}-{report.ToD}");
+
             }
             catch
             {
