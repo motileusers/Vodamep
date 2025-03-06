@@ -10,7 +10,7 @@ namespace Vodamep.StatLp.Validation
         public FindDoubletsValidator()
         {
             this.RuleFor(x => x)
-                 .Custom((report, ctx) =>
+                 .Custom((Action<StatLpReport, ValidationContext<StatLpReport>>)((report, ctx) =>
                  {
                      //mögliche Dubletten identifizieren.
                      var aliases = report.CreatePatientIdMap();
@@ -24,7 +24,7 @@ namespace Vodamep.StatLp.Validation
                      foreach (var personId in aliases.Select(x => x.Value).Distinct())
                      {
                          //Dubletten dürfen keine Aufenhalte haben, die sich überschneiden
-                         var stays = report.Stays.Where(x => x.PersonId == personId).ToArray();
+                         var stays = report.Stays.Where((Func<Stay, bool>)(x => x.PersonId == personId)).ToArray();
 
                          try
                          {
@@ -36,7 +36,7 @@ namespace Vodamep.StatLp.Validation
                              ctx.AddFailure($"'{person?.FamilyName} {person?.GivenName}' wurde mehrfach gemeldet. {e.Message}");
                          }
                      }
-                 });
+                 }));
         }
     }
 }
