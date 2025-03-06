@@ -9,6 +9,11 @@ namespace Vodamep.StatLp.Model
 {
     public partial class StatLpReport : IReport
     {
+        /// <summary>
+        /// Referenz Id, die verwendet werden kann um externe IDs zu speichern (wird nicht übermittelt)
+        /// </summary>
+        public string ReferenceId { get; set; }
+
         public ReportType ReportType => ReportType.StatLp;
 
 

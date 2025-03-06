@@ -12,7 +12,18 @@ namespace Vodamep.StatLp.Model
         /// </summary>
         public string ClearingId { get; set; }
 
+        /// <summary>
+        /// Id, die verwendet werden kann um externe IDs zu speichern (wird nicht übermittelt)
+        /// </summary>
+        public string ExternalId { get; set; }
+
+        /// <summary>
+        /// Referenz Datum, das verwendet werden kann um externe Daten zu speichern (wird nicht übermittelt)
+        /// </summary>
+        public DateTime ReferenceDate { get; set; }
+
         public DateTime BirthdayD { get => this.Birthday.AsDate(); set => this.Birthday = value.AsTimestamp(); }
+
         public string GetDisplayName()
         {
             return PersonNameBuilder.FullNameOrId(this.GivenName, this.FamilyName, this.Id);

@@ -4,6 +4,21 @@ namespace Vodamep.StatLp.Model
 {
     public partial class Attribute
     {
+        /// <summary>
+        /// Eindeutige Id, die verwendet werden kann um externe IDs zu speichern (wird nicht übermittelt)
+        /// </summary>
+        public string ExternalId { get; set; }
+
+        /// <summary>
+        /// Referenz Id, die verwendet werden kann um externe IDs zu speichern (wird nicht übermittelt)
+        /// </summary>
+        public string ExternalStayId { get; set; }
+
+        /// <summary>
+        /// Referenz Datum, das verwendet werden kann um externe Daten zu speichern (wird nicht übermittelt)
+        /// </summary>
+        public DateTime ReferenceDate { get; set; }
+
         public DateTime FromD { get => this.From.AsDate(); set => this.From = value.AsTimestamp(); }
 
         public void SetValue(string attributeType, string value)
