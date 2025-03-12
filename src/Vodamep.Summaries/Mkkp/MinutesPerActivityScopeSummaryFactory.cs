@@ -25,7 +25,7 @@ namespace Vodamep.Summaries.Mkkp
         private static void WriteTable(StringBuilder sb, MinutesPerActivityScopeModel model)
         {
             const int col1Width = 20;
-            const int col2Width = 10;
+            const int col2Width = 14;
 
             static string formatCol(string text, int len) => text.PadRight(len)[..len];
 
