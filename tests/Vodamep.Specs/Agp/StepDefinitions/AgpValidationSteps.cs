@@ -35,7 +35,7 @@ namespace Vodamep.Specs.Agp.StepDefinitions
             ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) => loc.GetDisplayName(memberInfo?.Name);
 
             var date = new DateTime(2021, 05, 01);
-            var r = AgpDataGenerator.Instance.CreateAgpReport("", date.Year, date.Month, 1, 1, false, false);
+            var r = AgpDataGenerator.Instance.CreateAgpReport("0004", date.Year, date.Month, 1, 1, false, false);
             AddDummyActivity(r, r.Persons[0].Id);
             AddDummyStaffActivity(r);
 
@@ -108,6 +108,51 @@ namespace Vodamep.Specs.Agp.StepDefinitions
                 DateD = existingTravelTime.DateD,
                 Minutes = 125,
                 ActivityType = StaffActivityType.TravelingSa
+            });
+        }
+
+        [Given(@"es erfolgt ein Wechsel bei einem Klient zwischen AGP und PDS")]
+        public void Given1ChangeAgpPds()
+        {
+            var existingActivity = this.Report.Activities.First();
+
+            // PDS Aktivität
+            this.Report.Activities.Add(new Activity()
+            {
+                Id = existingActivity.Id,
+                DateD = existingActivity.DateD + TimeSpan.FromDays(1),
+                Minutes = 15,
+                PersonId = existingActivity.PersonId,
+                PlaceOfAction = PlaceOfAction.BasePlace,
+                Entries = { ActivityType.PdsSocialParticipationAt }
+            });
+        }
+
+        [Given(@"es erfolgen zwei Wechsel bei einem Klient zwischen AGP und PDS")]
+        public void Given2ChangesAgpPds()
+        {
+            var existingActivity = this.Report.Activities.First();
+
+            // PDS Aktivität
+            this.Report.Activities.Add(new Activity()
+            {
+                Id = existingActivity.Id,
+                DateD = existingActivity.DateD + TimeSpan.FromDays(1),
+                Minutes = 15,
+                PersonId = existingActivity.PersonId,
+                PlaceOfAction = PlaceOfAction.BasePlace,
+                Entries = { ActivityType.PdsSocialParticipationAt }
+            });
+
+            // AGP Aktivität
+            this.Report.Activities.Add(new Activity()
+            {
+                Id = existingActivity.Id,
+                DateD = existingActivity.DateD + TimeSpan.FromDays(2),
+                Minutes = 15,
+                PersonId = existingActivity.PersonId,
+                PlaceOfAction = PlaceOfAction.BasePlace,
+                Entries = { ActivityType.GuidanceClientAt }
             });
         }
 
