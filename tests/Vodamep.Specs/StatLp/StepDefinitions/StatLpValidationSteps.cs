@@ -222,6 +222,72 @@ namespace Vodamep.Specs.StatLp.StepDefinitions
             attribute.SetValue(attributeType, value);
         }
 
+
+        [Given(@"die Arge Pflegestufe fehlt")]
+        public void MissingCareAllowanceArge()
+        {
+            var attributesToRemove = this.Report.Attributes
+                .Where(x => x.HasCareAllowanceArge)
+                .ToList();
+
+            foreach (var attribute in attributesToRemove)
+            {
+                this.Report.Attributes.Remove(attribute);
+            }
+        }
+
+        [Given(@"der Report ist vom Jahr '(.*)'")]
+        public void GivenReportYear(int year)
+        {
+            // Report-Ebene Datumsfelder
+            this.Report.FromD = SetYear(Report.FromD, year);
+            this.Report.ToD = SetYear(Report.ToD, year);
+
+            // Personen: BirthdayD
+            foreach (var person in this.Report.Persons)
+            {
+            }
+
+            // Stays: FromD und ToD
+            foreach (var stay in this.Report.Stays)
+            {
+                stay.FromD = SetYear(stay.FromD, year);
+                if (stay.ToD.HasValue)
+                {
+                    stay.ToD = SetYear(stay.ToD.Value, year);
+                }
+            }
+
+            // Attributes: FromD
+            foreach (var attribute in this.Report.Attributes)
+            {
+                attribute.FromD = SetYear(attribute.FromD, year);
+            }
+
+            // Admissions: AdmissionDateD
+            foreach (var admission in this.Report.Admissions)
+            {
+                admission.AdmissionDateD = SetYear(admission.AdmissionDateD, year);
+            }
+
+            // Leavings: LeavingDateD
+            foreach (var leaving in this.Report.Leavings)
+            {
+                leaving.LeavingDateD = SetYear(leaving.LeavingDateD, year);
+            }
+        }
+
+        private DateTime? SetYear(DateTime? date, int year)
+        {
+            return date.HasValue ? SetYear(date.Value, year) : null;
+        }
+
+        private DateTime SetYear(DateTime date, int year)
+        {
+            return new DateTime(year, date.Month, date.Day);
+        }
+
+
         [Given(@"es gibt am '(.*)' ein zusätzliches Attribut vom Typ '(.*)' und dem Wert '(.*)'")]
         public void GivenThereIsOneAdditionalAttribute(string date, string attributeType, string value)
         {
