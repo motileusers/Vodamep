@@ -12,11 +12,11 @@
 		<PackageIcon></PackageIcon>
 		<RepositoryUrl>https://github.com/connexiadev/Vodamep.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>2.13.0</Version>
+		<Version>2.14.0</Version>
 		<Product>Vorarlberger Datenmeldung Pflege</Product>
 		<PackageReleaseNotes></PackageReleaseNotes>
-		<AssemblyVersion>2.13.0.0</AssemblyVersion>
-		<FileVersion>2.13.0.0</FileVersion>
+		<AssemblyVersion>2.14.0.0</AssemblyVersion>
+		<FileVersion>2.14.0.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
