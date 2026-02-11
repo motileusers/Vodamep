@@ -61,7 +61,10 @@ namespace Vodamep.StatLp.Validation
 
                     AddFailureIfUndefined(x.HasFinance, x.Finance == Finance.UndefinedFi);
                     AddFailureIfUndefined(x.HasCareAllowance, x.CareAllowance == CareAllowance.UndefinedAllowance);
-                    AddFailureIfUndefined(x.HasCareAllowanceArge, x.CareAllowanceArge == CareAllowanceArge.UndefinedAr);
+
+                    // Ab 2026 muss ARGE nicht mehr befüllt werden
+                    if (report.FromD.Year < 2026)
+                        AddFailureIfUndefined(x.HasCareAllowanceArge, x.CareAllowanceArge == CareAllowanceArge.UndefinedAr);
                 });
 
 
@@ -70,6 +73,8 @@ namespace Vodamep.StatLp.Validation
             {
                 if (string.IsNullOrEmpty(personId) || date == null)
                     return null;
+
+                string test = report.ToString();
 
                 return report.Stays
                     .Where(x => !string.IsNullOrEmpty(x.PersonId) && x.PersonId == personId)

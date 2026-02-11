@@ -270,7 +270,7 @@ enum Finance {
 }
 
 
-// Pflegegeld
+// Einstufung nach Bundes Pflegegeld Gesetz
 enum CareAllowance {
   UNDEFINED_ALLOWANCE = 0;
   L1 = 1;
@@ -287,8 +287,7 @@ enum CareAllowance {
 }
 
 
-// 06 Einstufung nach Pflegegeld Gesetz
-// Pflegestufe ARGE
+// 06 Einstufung nach ARGE Heimleitungen
 // Werte aus Bestand (xp_IGK_2002_GNV.mdb, Tabelle TB_Doku, TB_Doku_Gruppe)
 enum CareAllowanceArge {
   UNDEFINED_AR = 0;
