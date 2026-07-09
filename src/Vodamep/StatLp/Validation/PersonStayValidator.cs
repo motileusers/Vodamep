@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Vodamep.StatLp.Model;
 using Vodamep.ValidationBase;
@@ -124,12 +125,17 @@ namespace Vodamep.StatLp.Validation
             // Fields: Hauptmerkmale, Remark: Meldung der 3 Hauptmerkmale bei Aufnahme, Group: Inhaltlich
             #endregion
 
-            var attributTypes = new[]
-{
+            var attributTypes = new List<Model.Attribute.ValueOneofCase>
+            {
                 Model.Attribute.ValueOneofCase.Finance,
-                Model.Attribute.ValueOneofCase.CareAllowance,
-                Model.Attribute.ValueOneofCase.CareAllowanceArge
+                Model.Attribute.ValueOneofCase.CareAllowance
             };
+
+            // Ab 2026 ist ARGE keine Pflicht mehr
+            if (report.FromD.Year < 2026)
+            {
+                attributTypes.Add(Model.Attribute.ValueOneofCase.CareAllowanceArge);
+            }
 
             var attributesPerson = report.Attributes
                 .Where(x => x.PersonId == s.Stays[0].PersonId);

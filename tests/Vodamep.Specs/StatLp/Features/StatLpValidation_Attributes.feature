@@ -24,19 +24,31 @@ Szenario: Von darf keine Zeit beinhalten
 # - innerhalb der Connexia Logik
 
 Szenario: Ein Attribut hat keinen Typ
-	Angenommen es gibt am '2021-03-01' ein zusätzliches Attribut vom Typ 'Something' und dem Wert 'Unspecified'
+	Angenommen es gibt am '2021-01-15' ein zusätzliches Attribut vom Typ 'Something' und dem Wert 'Unspecified'
 	Dann enthält das Validierungsergebnis den Fehler 'Ein Merkmal von Klient '(.*)' darf nicht leer sein'
 	
 Szenario: Pflegegeld ist undefiniert
-	Angenommen es gibt am '2021-03-01' ein zusätzliches Attribut vom Typ 'CareAllowance' und dem Wert 'Unspecified'
+	Angenommen es gibt am '2021-01-15' ein zusätzliches Attribut vom Typ 'CareAllowance' und dem Wert 'Unspecified'
 	Dann enthält das Validierungsergebnis den Fehler 'Für die Person '(.*)' wurde am (.*) kein Wert bei'
 	
-Szenario: Pflegstufe Arge ist undefiniert
+Szenario: Pflegstufe Arge muss vor 2026 angegeben werden
 	Angenommen es gibt am '2021-03-01' ein zusätzliches Attribut vom Typ 'CareAllowanceArge' und dem Wert 'Unspecified'
 	Dann enthält das Validierungsergebnis den Fehler 'Für die Person '(.*)' wurde am (.*) kein Wert bei'
+
+Szenario: Pflegstufe Arge kann ab 2026 undefiniert sein
+	Angenommen es gibt am '2021-01-16' ein zusätzliches Attribut vom Typ 'CareAllowanceArge' und dem Wert 'Unspecified'
+	Und der Report ist vom Jahr '2026'
+	Und die Eigenschaft 'to' von 'StatLpReport' ist auf '2026-01-31' gesetzt
+	Dann enthält das Validierungsergebnis keine Fehler
+	
+Szenario: Pflegstufe Arge kann ab 2026 nicht mehr angegeben werden
+	Angenommen der Report ist vom Jahr '2026'
+	Und die Eigenschaft 'to' von 'StatLpReport' ist auf '2026-01-31' gesetzt
+	Und die Arge Pflegestufe fehlt
+	Dann enthält das Validierungsergebnis keine Fehler
 	
 Szenario: Finanzierung ist undefiniert
-	Angenommen es gibt am '2021-03-01' ein zusätzliches Attribut vom Typ 'Finance' und dem Wert 'Unspecified'
+	Angenommen es gibt am '2021-01-15' ein zusätzliches Attribut vom Typ 'Finance' und dem Wert 'Unspecified'
 	Dann enthält das Validierungsergebnis den Fehler 'Für die Person '(.*)' wurde am (.*) kein Wert bei'
 	
 Szenariogrundriss: Fehlende Pflichtfelder für die Aufnahme
